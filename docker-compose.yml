@@ -6,11 +6,11 @@ volumes:
     driver: local
 
 services:
-  ovos_bus:
-    container_name: ovos_bus
-    hostname: ovos_bus
+  ovos_messagebus:
+    container_name: ovos_messagebus
+    hostname: ovos_messagebus
     restart: unless-stopped
-    image: smartgic/ovos-bus:${VERSION}
+    image: smartgic/ovos-messagebus:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -34,7 +34,7 @@ services:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ${CACHE_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_bus
+      - ovos_messagebus
 
   ovos_phal:
     container_name: ovos_phal
@@ -54,7 +54,7 @@ services:
       - ${CACHE_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
-      - ovos_bus
+      - ovos_messagebus
 
   ovos_phal_admin:
     container_name: ovos_phal_admin
@@ -77,7 +77,7 @@ services:
       - /sys:/sys:ro
       - /dev:/dev:ro
     depends_on:
-      - ovos_bus
+      - ovos_messagebus
 
   ovos_listener:
     container_name: ovos_listener
@@ -101,7 +101,7 @@ services:
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
       - ${VOSK_DATA}:/home/${OVOS_USER}/.local/share/vosk
     depends_on:
-      - ovos_bus
+      - ovos_messagebus
       - ovos_phal
 
   ovos_audio:
@@ -124,7 +124,7 @@ services:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
-      - ovos_bus
+      - ovos_messagebus
       - ovos_phal
 
   ovos_skills:
@@ -142,5 +142,5 @@ services:
       - ${CACHE_FOLDER}:/tmp/mycroft
       - ${SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
     depends_on:
-      - ovos_bus
+      - ovos_messagebus
       - ovos_phal
