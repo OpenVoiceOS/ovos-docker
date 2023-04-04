@@ -1,0 +1,4 @@
+ovos-tts-plugin-mimic
+ovos-tts-plugin-mimic2
+ovos-tts-plugin-mimic3[all]
+neon-tts-plugin-polly
