@@ -117,7 +117,7 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CACHE_FOLDER}:/tmp/mycroft
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       - ovos_messagebus
