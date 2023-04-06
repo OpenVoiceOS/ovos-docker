@@ -25,6 +25,7 @@ RUN apt-get update \
   && pip3 install -f 'https://whl.smartgic.io/' onnxruntime \
   && pip3 install -r /tmp/requirements.txt \
   && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
+  && mkdir -p /home/${USER}/.config/mycroft/apps \
   && chown ${USER}:${USER} -R /home/${USER}/ \
   && rm -rf /tmp/requirements.txt \
   && apt-get autoremove -y \
