@@ -1,4 +1,3 @@
--f https://github.com/alphacep/vosk-api/releases/download/v0.3.45/vosk-0.3.45-py3-none-linux_x86_64.whl
 git+https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite.git
 git+https://github.com/OpenVoiceOS/ovos-vad-plugin-silero.git
 ovos-vad-plugin-webrtcvad
