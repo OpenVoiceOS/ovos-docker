@@ -19,6 +19,7 @@ RUN apt-get update \
     && pip3 install ovos-skills-manager \
     && mkdir -p /var/log/mycroft \
     && chown ${USER}:${USER} -R /home/${USER}/ /var/log/mycroft \
+    && apt-get clean \
     && rm -rf ${HOME}/.cache
 
 USER $USER
