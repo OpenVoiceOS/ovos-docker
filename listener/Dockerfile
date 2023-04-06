@@ -22,7 +22,7 @@ COPY files/requirements.txt /tmp/requirements.txt
 RUN apt-get update \
   && apt-get install -y portaudio19-dev libpulse-dev \
   && git clone https://github.com/OpenVoiceOS/ovos-listener.git $OVOS_DIR -b $BRANCH \
-  && pip3 install -f 'https://whl.smartgic.io/' tflite_runtime onnxruntime \
+  && pip3 install -f 'https://whl.smartgic.io/' tflite_runtime onnxruntime vosk \
   && pip3 install -r /tmp/requirements.txt \
   && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
   && mkdir -p /home/${USER}/.local/share/vosk /home/${USER}/.local/share/precise-lite \
