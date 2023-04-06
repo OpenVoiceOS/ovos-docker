@@ -25,7 +25,8 @@ RUN apt-get update \
   && pip3 install -f 'https://whl.smartgic.io/' onnxruntime \
   && pip3 install -r /tmp/requirements.txt \
   && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
-  && chown ${USER}:${USER} -R /home/${USER}/ /tmp/requirements.txt \
+  && chown ${USER}:${USER} -R /home/${USER}/ \
+  && rm -rf /tmp/requirements.txt \
   && apt-get autoremove -y \
   && apt-get clean
 
