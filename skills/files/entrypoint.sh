@@ -1,6 +1,9 @@
 #!/bin/bash
 
 skills_directory=~/.local/share/mycroft/skills
+if ! test -d $skills_directory; then
+    mkdir -p $skills_directory
+fi
 cd $skills_directory || exit
 
 # shellcheck disable=SC2045
