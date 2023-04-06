@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:bookworm-backports
 
 LABEL org.opencontainers.image.title="OpenVoiceOS OCI GUI image"
 LABEL org.opencontainers.image.description="Mycroft GUI with the OpenVoiceOS Shell layer"

@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:bookworm-backports
 
 LABEL org.opencontainers.image.title="OpenVoiceOS OCI base image"
 LABEL org.opencontainers.image.description="Used as base image for other OCI images"
