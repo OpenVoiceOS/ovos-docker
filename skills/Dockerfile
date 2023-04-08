@@ -16,20 +16,19 @@ ENV OVOS_DIR /home/${USER}/core
 
 USER root
 
-COPY files/requirements.txt /tmp/requirements.txt
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN apt-get update \
     && apt-get install -y swig libfann-dev \
     && git clone https://github.com/OpenVoiceOS/ovos-core.git $OVOS_DIR -b $BRANCH \
-    && pip3 install -r /tmp/requirements.txt ovos-skills-manager \
-    && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements/minimal.txt -r ${OVOS_DIR}/requirements/extra-skills-lgpl.txt -r ${OVOS_DIR}/requirements/skills-essential.txt \
+    && pip3 install ovos-skills-manager \
+    && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements/minimal.txt -r ${OVOS_DIR}/requirements/extra-skills-lgpl.txt \
     && pip3 uninstall neon-utils neon-skill-alerts -y \
     && mkdir -p /home/${USER}/.local/share/mycroft/skills \
     && chown ${USER}:${USER} -R /home/${USER}/ \
     && apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf ${HOME}/.cache $OVOS_DIR /tmp/requirements.txt
+    && rm -rf ${HOME}/.cache $OVOS_DIR
 
 USER $USER
 
