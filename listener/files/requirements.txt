@@ -2,3 +2,4 @@ git+https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite.git
 git+https://github.com/OpenVoiceOS/ovos-vad-plugin-silero.git
 ovos-vad-plugin-webrtcvad
 ovos-bus-client
+tensorflow
