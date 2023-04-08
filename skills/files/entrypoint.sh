@@ -1,11 +1,20 @@
 #!/bin/bash
 
+# Install skills via pip command when a setup.py exists
+skills_list=~/.config/mycroft/skills.list
+if test -f $skills_list; then
+    pip3 install -r $skills_list
+fi
+
+# Create skills directory if doesn't exist
 skills_directory=~/.local/share/mycroft/skills
 if ! test -d $skills_directory; then
     mkdir -p $skills_directory
 fi
 cd $skills_directory || exit
 
+# Loop over each skills into the skills directory and install
+# Python requirements if a requirements.txt file exists.
 # shellcheck disable=SC2045
 for skill in $(ls -d -- */); do
     cd "$skill" || exit
@@ -16,6 +25,8 @@ for skill in $(ls -d -- */); do
     cd ..
 done
 
+# Clear Python cache
 rm -rf "${HOME}"/.cache
 
+# Run ovos-core
 ovos-core
