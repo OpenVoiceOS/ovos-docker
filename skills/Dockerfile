@@ -22,7 +22,7 @@ RUN apt-get update \
     && apt-get install -y swig libfann-dev \
     && git clone https://github.com/OpenVoiceOS/ovos-core.git $OVOS_DIR -b $BRANCH \
     && pip3 install ovos-skills-manager ovos-plugin-common-play \
-    && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements/minimal.txt -r ${OVOS_DIR}/requirements/extra-skills-lgpl.txt \
+    && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements/minimal.txt -r ${OVOS_DIR}/requirements/extra-skills-lgpl.txt -r ${OVOS_DIR}/requirements/skills-essential.txt \
     && pip3 uninstall neon-utils neon-skill-alerts -y \
     && mkdir -p /home/${USER}/.local/share/mycroft/skills \
     && chown ${USER}:${USER} -R /home/${USER}/ \
