@@ -2,4 +2,5 @@ git+https://github.com/OpenVoiceOS/ovos-tts-plugin-marytts.git
 ovos-tts-plugin-mimic
 ovos-tts-plugin-mimic2
 ovos-tts-plugin-mimic3[all]
+ovos-tts-plugin-mimic3-server
 neon-tts-plugin-polly
