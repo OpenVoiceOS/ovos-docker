@@ -22,6 +22,7 @@ services:
     ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
 
   ovos_gui_websocket:
     container_name: ovos_gui_websocket
@@ -35,6 +36,7 @@ services:
     ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       - ovos_messagebus
 
@@ -53,6 +55,7 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       - ovos_messagebus
@@ -74,6 +77,7 @@ services:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
       - /sys:/sys:ro
       - /dev:/dev:ro
     depends_on:
@@ -98,6 +102,7 @@ services:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
       - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
+      - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       - ovos_messagebus
@@ -120,7 +125,7 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${IPC_FOLDER}:/tmp/mycroft/ipc
+      - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       - ovos_messagebus
@@ -143,8 +148,8 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${IPC_FOLDER}:/tmp/mycroft/ipc
       - ${SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       - ovos_messagebus
@@ -168,6 +173,7 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
       - ${SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
     depends_on:
