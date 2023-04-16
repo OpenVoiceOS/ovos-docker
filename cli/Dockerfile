@@ -24,4 +24,4 @@ RUN apt-get update \
 
 USER $USER
 
-ENTRYPOINT /bin/bash
+ENTRYPOINT ["sleep", "infinity"]
