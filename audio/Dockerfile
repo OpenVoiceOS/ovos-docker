@@ -2,7 +2,7 @@ ARG TAG=dev
 FROM smartgic/ovos-sound-base:${TAG}
 
 LABEL org.opencontainers.image.title="OpenVoiceOS OCI audio image"
-LABEL org.opencontainers.image.description="The audio service handles playback and queueing of tracks."
+LABEL org.opencontainers.image.description="The audio service handles playback and queueing of tracks"
 LABEL org.opencontainers.image.version="0.0.8"
 LABEL org.opencontainers.image.created="2023-03-23T21:16:00Z"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
