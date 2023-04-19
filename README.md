@@ -9,6 +9,9 @@
   - [Supported architectures and tags](#supported-architectures-and-tags)
     - [Architectures](#architectures)
     - [Tags](#tags)
+  - [Requirements](#requirements)
+  - [How to build these images](#how-to-build-these-images)
+  - [Support](#support)
 
 ## What is Open Voice OS?
 
@@ -53,6 +56,41 @@ To allow data persistance, Docker/Podman volumes are required which will avoid t
 
 ### Tags
 
-| Tag | Description                                                                         |
-| --  | ---                                                                                 |
-| `dev`/`latest`    | Nightly build based on the latest commits applied to the `dev` branch |
+| Tag | Description                                                                      |
+| --  | ---                                                                              |
+| `dev`/`latest` | Nightly build based on the latest commits applied to the `dev` branch |
+| `stable`       | The latest stable version based on release versions                   |
+
+## Requirements
+
+Docker or Podman is of course required and `docker-compose`/`podman-compose` is a nice to have to simplify the whole process by using the `docker-compose.yml` files.
+
+**PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow the containers to use microphone and speakers.**
+
+On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire.
+
+## How to build these images
+
+The `base` image is the main image for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, *etc...*
+
+```bash
+git clone https://github.com/OpenVoiceOS/ovos-docker.git
+cd ovos-docker
+docker buildx build base/ -t smartgic/ovos-base:dev --build-arg BRANCH=dev --no-cache --push
+```
+
+Open Voice OS provides two *(2)* different implementations for the bus message:
+
+- `ovos-messagebus` which is a Python implementation
+- `ovos-bus-server` which is a C++ implementation *(better performances but lack of configuration)*
+
+Only one implementation can be used at a time.
+
+Ten *(10)* images needs to be build; `ovos-base`, `ovos-listener`, `ovos-skills`, `ovos-cli`, `ovos-messagebus` or `ovos-bus-server`, `ovos-phal`, `ovos-phal-admin`, `ovos-sound-base`, `ovos-audio` and `ovos-gui-websocket`.
+
+## Support
+
+- [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
+- [Open Voice OS documentation](https://openvoiceos.github.io/community-docs/)
+- [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
+- [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)
