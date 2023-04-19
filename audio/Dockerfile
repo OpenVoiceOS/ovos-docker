@@ -20,7 +20,7 @@ USER root
 COPY files/requirements.txt /tmp/requirements.txt
 
 RUN curl -sS https://forslund.github.io/mycroft-desktop-repo/mycroft-desktop.gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/mimic.gpg \
-  && echo "deb http://forslund.github.io/mycroft-desktop-repo bionic main" | tee -a /etc/apt/sources.list.d/mycroft-desktop.list \
+  && echo "deb http://forslund.github.io/mycroft-desktop-repo bionic main" | tee -a /etc/apt/sources.list.d/mimic.list \
   && apt-get update \
   && apt-get install -y portaudio19-dev mimic \
   && git clone https://github.com/OpenVoiceOS/ovos-audio.git $OVOS_DIR -b $BRANCH \
