@@ -11,6 +11,7 @@
     - [Tags](#tags)
   - [Requirements](#requirements)
   - [How to build these images](#how-to-build-these-images)
+  - [How to use these images](#how-to-use-these-images)
   - [Support](#support)
 
 ## What is Open Voice OS?
@@ -63,11 +64,9 @@ To allow data persistance, Docker/Podman volumes are required which will avoid t
 
 ## Requirements
 
-Docker or Podman is of course required and `docker-compose`/`podman-compose` is a nice to have to simplify the whole process by using the `docker-compose.yml` files.
+Docker or Podman is of course required and `docker compose`/`podman compose` is a nice to have to simplify the whole process by using the `docker-compose.yml` files *(this will be embedded depending your Docker/Podman version)*.
 
-**PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow the containers to use microphone and speakers.**
-
-On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire.
+PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow the containers to use microphone and speakers. On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire.
 
 ## How to build these images
 
@@ -76,7 +75,7 @@ The `base` image is the main image for the other images, for example the `messag
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
 cd ovos-docker
-docker buildx build base/ -t smartgic/ovos-base:dev --build-arg BRANCH=dev --no-cache --push
+docker buildx build base/ -t smartgic/ovos-base:dev --build-arg BRANCH=dev --no-cache
 ```
 
 Open Voice OS provides two *(2)* different implementations for the bus message:
@@ -87,6 +86,18 @@ Open Voice OS provides two *(2)* different implementations for the bus message:
 Only one implementation can be used at a time.
 
 Ten *(10)* images needs to be build; `ovos-base`, `ovos-listener`, `ovos-skills`, `ovos-cli`, `ovos-messagebus` or `ovos-bus-server`, `ovos-phal`, `ovos-phal-admin`, `ovos-sound-base`, `ovos-audio` and `ovos-gui-websocket`.
+
+## How to use these images
+
+`docker-compose.yml` files provides an easy way to provision the Docker stack *(volumes and containers)* with the required configuration for each of them. `docker compose` supports environment file, check the `.env` *(`.env-raspberrypi` for Raspberry Pi)* files prior the execution to set your custom values.
+
+```bash
+git clone https://github.com/OpenVoiceOS/ovos-docker.git
+mkdir -p ~/ovos/{config,share,tmp}
+chown 1000:1000 -R ~/ovos
+cd ovos-docker
+docker compose up -d
+```
 
 ## Support
 
