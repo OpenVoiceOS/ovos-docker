@@ -131,11 +131,11 @@ services:
       - ovos_messagebus
       - ovos_phal
 
-  ovos_skills:
-    container_name: ovos_skills
-    hostname: ovos_skills
+  ovos_core:
+    container_name: ovos_core
+    hostname: ovos_core
     restart: unless-stopped
-    image: smartgic/ovos-skills:${VERSION}
+    image: smartgic/ovos-core:${VERSION}
     pull_policy: always
     environment:
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
