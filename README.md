@@ -33,7 +33,7 @@ Open Voice OS is a complex piece of software which has several core services. Th
 | `ovos_phal_admin`    | This service is intended for handling any OS-level interactions requiring escalation of privileges                           |
 | `ovos_audio`         | The audio service handles playback and queueing of tracks                                                                    |
 | `ovos_listener`      | The speech client is responsible for loading STT, VAD and Wake Word plugins                                                  |
-| `ovos_skills`        | The skills service is responsible for loading skills and intent parsers                                                      |
+| `ovos_core`          | The skills service (running under `core`) is responsible for loading skills and intent parsers                               |
 | `ovos_cli`           | Command line for OpenVoiceOS                                                                                                 |
 | `ovos_gui_websocket` | Websocket process to handle messages for the OpenVoiceOS GUI                                                                 |
 

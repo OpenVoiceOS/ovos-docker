@@ -1,7 +1,7 @@
 ARG TAG=dev
 FROM smartgic/ovos-sound-base:${TAG}
 
-LABEL org.opencontainers.image.title="Open Voice OS OCI skills image"
+LABEL org.opencontainers.image.title="Open Voice OS OCI core image"
 LABEL org.opencontainers.image.description="The skills service is responsible for loading skills and intent parsers"
 LABEL org.opencontainers.image.version="0.0.8"
 LABEL org.opencontainers.image.created="2023-04-20T00:00:00Z"
