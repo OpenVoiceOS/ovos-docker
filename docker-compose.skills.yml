@@ -1,0 +1,99 @@
+---
+version: "3.9"
+
+services:
+  ovos_skill_wikipedia:
+    container_name: ovos_skill_wikipedia
+    hostname: ovos_skill_wikipedia
+    restart: unless-stopped
+    image: smartgic/ovos-skill-wikipedia:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+     - ovos_core
+
+  ovos_skill_weather:
+    container_name: ovos_skill_weather
+    hostname: ovos_skill_weather
+    restart: unless-stopped
+    image: smartgic/ovos-skill-weather:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+     - ovos_core
+
+  ovos_skill_volume:
+    container_name: ovos_skill_volume
+    hostname: ovos_skill_volume
+    restart: unless-stopped
+    image: smartgic/ovos-skill-volume:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+     - ovos_core
+
+  ovos_skill_date_time:
+    container_name: ovos_skill_date_time
+    hostname: ovos_skill_date_time
+    restart: unless-stopped
+    image: smartgic/ovos-skill-date-time:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+     - ovos_core
+
+  ovos_skill_stop:
+    container_name: ovos_skill_stop
+    hostname: ovos_skill_stop
+    restart: unless-stopped
+    image: smartgic/ovos-skill-stop:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+     - ovos_core
+
+  ovos_skill_personal:
+    container_name: ovos_skill_personal
+    hostname: ovos_skill_personal
+    restart: unless-stopped
+    image: smartgic/ovos-skill-personal:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+     - ovos_core
