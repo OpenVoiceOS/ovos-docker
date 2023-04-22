@@ -8,6 +8,9 @@ volumes:
   ovos_vosk:
     name: ovos_vosk
     driver: local
+  ovos_listener_records:
+    name: ovos_listener_records
+    driver: local
 
 services:
   ovos_messagebus:
@@ -118,6 +121,7 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ovos_listener_records:/home/${OVOS_USER}/.local/share/mycroft/listener
       - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
       - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
       - ${TMP_FOLDER}:/tmp/mycroft
