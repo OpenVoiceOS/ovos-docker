@@ -25,7 +25,7 @@ ARG USER=ovos
 
 COPY --from=build /usr/src/ovos-bus-server/server/ovos-bus-server /usr/local/bin/
 
-RUN useradd --no-log-init $USER -m -c "OpenVoiceOS user"
+RUN useradd --no-log-init $USER -m -c "Open Voice OS user"
 
 USER $USER
 
