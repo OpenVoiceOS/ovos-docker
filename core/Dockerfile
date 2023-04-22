@@ -18,6 +18,8 @@ USER root
 
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get update \
     && apt-get install -y swig libfann-dev \
     && git clone https://github.com/OpenVoiceOS/ovos-core.git $OVOS_DIR -b $BRANCH \

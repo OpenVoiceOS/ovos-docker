@@ -17,6 +17,8 @@ COPY files/client.conf /etc/pulse/client.conf
 
 USER root
 
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get update \
     && apt-get install -o Dpkg::Options::="--force-confold" -y curl alsa-utils libasound2-plugins flac libportaudio2 pulseaudio-utils mpg123 music123 swig \
     && apt-get autoremove -y \

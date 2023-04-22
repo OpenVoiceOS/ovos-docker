@@ -16,6 +16,8 @@ ENV OVOS_DIR /home/${USER}/phal
 
 USER root
 
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get update \
     && apt-get install -y libasound2-dev procps ddcutil \
     && git clone https://github.com/OpenVoiceOS/ovos-phal.git $OVOS_DIR -b $BRANCH \
