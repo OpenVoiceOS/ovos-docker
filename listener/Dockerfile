@@ -19,6 +19,8 @@ USER root
 
 COPY files/requirements.txt /tmp/requirements.txt
 
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get update \
   && apt-get install -y portaudio19-dev libpulse-dev \
   && git clone https://github.com/OpenVoiceOS/ovos-listener.git $OVOS_DIR -b $BRANCH \
