@@ -1,4 +1,4 @@
-FROM debian:bookworm-backports AS build
+FROM debian:bookworm-slim AS build
 
 ARG BRANCH
 
@@ -11,7 +11,7 @@ WORKDIR /usr/src/ovos-bus-server/server
 RUN cmake . \
     && make
 
-FROM debian:bookworm-backports
+FROM debian:bookworm-slim
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI message bus, C++ implementation"
 LABEL org.opencontainers.image.description="Alternative C++ messagebus server implementation for ovos-core using the WebSocket++ WebSocket library"
