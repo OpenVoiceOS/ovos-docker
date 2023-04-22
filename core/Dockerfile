@@ -21,16 +21,15 @@ COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-    && apt-get install -y swig libfann-dev \
-    && git clone https://github.com/OpenVoiceOS/ovos-core.git $OVOS_DIR -b $BRANCH \
-    && pip3 install ovos-skills-manager ovos-plugin-common-play \
-    && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements/minimal.txt -r ${OVOS_DIR}/requirements/extra-skills-lgpl.txt -r ${OVOS_DIR}/requirements/skills-essential.txt \
-    && pip3 uninstall neon-utils neon-skill-alerts -y \
+    && apt-get install -y swig libfann-dev build-essential python3-dev \
+    && pip3 install ovos-plugin-common-play \
+    && pip3 install git+https://github.com/OpenVoiceOS/ovos-core.git#egg=ovos-core[skills_lgpl] \
     && mkdir -p /home/${USER}/.local/share/mycroft/skills \
-    && chown ${USER}:${USER} -R /home/${USER}/ \
-    && apt-get autoremove -y \
+    && chown ${USER}:${USER} -R /home/${USER} \
+    && apt-get --purge remove -y libfann-dev build-essential python3-dev \
+    && apt-get --purge autoremove -y \
     && apt-get clean \
-    && rm -rf ${HOME}/.cache $OVOS_DIR
+    && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log}
 
 USER $USER
 

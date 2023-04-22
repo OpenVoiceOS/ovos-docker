@@ -16,17 +16,18 @@ ENV DEBIAN_FRONTEND noninteractive
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-  && apt-get install -y git python3 python3-pip python3-venv \
+  && apt-get install -y git python3-minimal python3-pip python3-venv \
   && c_rehash \
-  && useradd --no-log-init $USER -m -c "OpenVoiceOS user" \
+  && useradd --no-log-init $USER -m -c "Open Voice OS user" \
   && python3 -m venv /home/${USER}/.venv \
   && . /home/${USER}/.venv/bin/activate \
-  && pip3 install -U pip wheel ovos-core \
-  && mkdir -p /home/${USER}/.config/mycroft /home/${USER}/.cache/mycroft /home/${USER}/.local/share/mycroft /tmp/mycroft/ipc /tmp/mycroft/cache \
-  && chown ${USER}:${USER} -R /home/${USER}/ /tmp/mycroft/ \
-  && apt-get autoremove -y \
+  && pip3 install -U pip git+https://github.com/OpenVoiceOS/ovos-core.git \
+  && mkdir -p /home/${USER}/.config/mycroft /home/${USER}/.cache/mycroft /home/${USER}/.local/share/mycroft /tmp/mycroft/{ipc,cache} \
+  && chown ${USER}:${USER} -R /home/${USER} /tmp/mycroft \
+  && apt-get --purge remove python3-dev build-essential -y \
+  && apt-get --purge autoremove -y \
   && apt-get clean \
-  && rm -rf ${HOME}/.cache /var/lib/apt /var/log/dpkg.log
+  && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log}
 
 USER $USER
 

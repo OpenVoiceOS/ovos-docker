@@ -19,15 +19,15 @@ USER root
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-    && apt-get install -y libasound2-dev procps ddcutil \
+    && apt-get install -y libasound2-dev procps ddcutil build-essential python3-dev \
     && git clone https://github.com/OpenVoiceOS/ovos-phal.git $OVOS_DIR -b $BRANCH \
     && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements/requirements.txt \
     && pip3 install ovos-PHAL-plugin-alsa ovos-PHAL-plugin-pulseaudio ovos-PHAL-plugin-system ovos-plugin-manager RPi.GPIO \
-    && chown ${USER}:${USER} -R /home/${USER}/ \
-    && apt-get remove --purge -y libasound2-dev \
-    && apt-get autoremove -y \
+    && chown ${USER}:${USER} -R /home/${USER} \
+    && apt-get --purge remove --purge -y libasound2-dev build-essential python3-dev \
+    && apt-get --purge autoremove -y \
     && apt-get clean \
-    && rm -rf ${HOME}/.cache $OVOS_DIR
+    && rm -rf ${HOME}/.cache $OVOS_DIR /var/lib/apt /var/log/{apt,dpkg.log}
 
 USER $USER
 

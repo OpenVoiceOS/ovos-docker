@@ -20,11 +20,12 @@ USER root
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-    && apt-get install -o Dpkg::Options::="--force-confold" -y curl alsa-utils libasound2-plugins flac libportaudio2 pulseaudio-utils mpg123 music123 swig \
-    && apt-get autoremove -y \
+    && apt-get install -o Dpkg::Options::="--force-confold" -y curl gpg alsa-utils libasound2-plugins flac libportaudio2 pulseaudio-utils mpg123 music123 swig \
+    && apt-get --purge autoremove -y \
     && apt-get clean \
+    && rm -rf /var/lib/apt /var/log/{apt,dpkg.log} \
     && mkdir -p /home/${USER}/.config/pulse \
-    && chown ${USER}:${USER} -R /home/${USER}/ \
+    && chown ${USER}:${USER} -R /home/${USER} \
     && usermod -a -G audio $USER
 
 USER $USER

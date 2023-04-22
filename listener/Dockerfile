@@ -22,17 +22,17 @@ COPY files/requirements.txt /tmp/requirements.txt
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-  && apt-get install -y portaudio19-dev libpulse-dev \
+  && apt-get install -o Dpkg::Options::="--force-confold" -y libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
   && git clone https://github.com/OpenVoiceOS/ovos-listener.git $OVOS_DIR -b $BRANCH \
   && pip3 install -f 'https://whl.smartgic.io/' tflite_runtime onnxruntime vosk \
   && pip3 install -r /tmp/requirements.txt \
   && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
-  && mkdir -p /home/${USER}/.local/share/vosk /home/${USER}/.local/share/precise-lite \
-  && chown ${USER}:${USER} -R /home/${USER}/ \
-  && apt-get remove --purge -y portaudio19-dev libpulse-dev \
-  && apt-get autoremove -y \
+  && mkdir -p /home/${USER}/.local/share/{vosk,precise-lite} \
+  && chown ${USER}:${USER} -R /home/${USER} \
+  && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \
+  && apt-get --purge autoremove -y \
   && apt-get clean \
-  && rm -rf ${HOME}/.cache $OVOS_DIR /var/lib/apt /var/log/dpkg.log /tmp/requirements.txt
+  && rm -rf ${HOME}/.cache $OVOS_DIR /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
 USER $USER
 
