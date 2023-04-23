@@ -1,0 +1,8 @@
+git+https://github.com/OpenVoiceOS/ovos-vad-plugin-precise.git
+ovos-vad-plugin-silero
+ovos-ww-plugin-pocketsphinx
+ovos-ww-plugin-precise
+git+https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite
+ovos-ww-plugin-vosk
+ovos-stt-plugin-server
+ovos-stt-plugin-vosk
