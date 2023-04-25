@@ -21,7 +21,6 @@ RUN apt-get update \
   && useradd --no-log-init $USER -m -c "Open Voice OS user" \
   && python3 -m venv /home/${USER}/.venv \
   && . /home/${USER}/.venv/bin/activate \
-  && pip3 install -U pip git+https://github.com/OpenVoiceOS/ovos-core.git \
   && mkdir -p /home/${USER}/.config/mycroft /home/${USER}/.cache/mycroft /home/${USER}/.local/share/mycroft /tmp/mycroft/{ipc,cache} \
   && chown ${USER}:${USER} -R /home/${USER} /tmp/mycroft \
   && apt-get --purge remove python3-dev build-essential -y \
