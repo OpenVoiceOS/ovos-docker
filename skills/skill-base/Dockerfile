@@ -10,11 +10,13 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 
 ARG USER=ovos
 
+COPY files/requirements.txt /tmp/requirements.txt
+
 RUN adduser --disabled-password $USER \
     && mkdir -p /home/${USER}/.config/mycroft /home/${USER}/.cache/mycroft /home/${USER}/.local/share/mycroft /tmp/mycroft/ipc /tmp/mycroft/cache \
     && chown ${USER}:${USER} -R /home/${USER} /tmp/mycroft \
     && apk add --no-cache git python3 py3-pip py3-wheel \
-    && pip3 install adapt-parser git+https://github.com/OpenVoiceOS/OVOS-workshop.git git+https://github.com/OpenVoiceOS/ovos-core.git ovos-plugin-common-play mycroft-messagebus-client \
-    && rm -rf ${HOME}/.cache
+    && pip3 install -r /tmp/requirements.txt \
+    && rm -rf ${HOME}/.cache /tmp/requirements.txt
 
 USER $USER

@@ -1,0 +1,4 @@
+adapt-parser
+git+https://github.com/OpenVoiceOS/OVOS-workshop.git
+git+https://github.com/OpenVoiceOS/ovos-core.git
+ovos-plugin-common-play
