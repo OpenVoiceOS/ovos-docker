@@ -1,3 +1,4 @@
+git+https://github.com/OpenVoiceOS/ovos-audio-plugin-simple.git
 git+https://github.com/OpenVoiceOS/ovos-tts-plugin-marytts.git
 ovos-tts-plugin-mimic
 ovos-tts-plugin-mimic2
