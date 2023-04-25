@@ -27,7 +27,7 @@ RUN apt-get update \
   && pip3 install -f 'https://whl.smartgic.io/' tflite_runtime onnxruntime vosk \
   && pip3 install -r /tmp/requirements.txt \
   && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
-  && mkdir -p /home/${USER}/.local/share/{vosk,precise-lite,mycroft/listener/wake_words} \
+  && mkdir -p /home/${USER}/.local/share/{vosk,precise-lite,mycroft/listener} \
   && chown ${USER}:${USER} -R /home/${USER} \
   && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
