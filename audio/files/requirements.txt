@@ -4,4 +4,5 @@ ovos-tts-plugin-mimic
 ovos-tts-plugin-mimic2
 ovos-tts-plugin-mimic3[all]
 ovos-tts-plugin-mimic3-server
+git+https://github.com/NeonGeckoCom/neon-g2p-plugin-mimic.git
 neon-tts-plugin-polly
