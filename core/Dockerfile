@@ -22,8 +22,8 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
     && apt-get install -y swig libfann-dev build-essential python3-dev \
-    && pip3 install ovos-plugin-common-play git+https://github.com/OpenVoiceOS/OVOS-workshop.git git+https://github.com/OpenVoiceOS/skill-ovos-fallback-unknown \
-    && pip3 install git+https://github.com/OpenVoiceOS/ovos-core.git#egg=ovos-core[skills_lgpl] \
+    && pip3 install adapt-parser ovos-plugin-common-play git+https://github.com/OpenVoiceOS/OVOS-workshop.git \
+    && pip3 install git+https://github.com/OpenVoiceOS/ovos-core.git@${BRANCH} \
     && mkdir -p /home/${USER}/.local/share/mycroft/skills \
     && chown ${USER}:${USER} -R /home/${USER} \
     && apt-get --purge remove -y libfann-dev build-essential python3-dev \
