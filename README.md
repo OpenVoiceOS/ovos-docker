@@ -15,8 +15,8 @@
     - [Listener](#listener)
   - [How to use these images](#how-to-use-these-images)
   - [Skills management](#skills-management)
-    - [Skill running inside ovos-core](#skill-running-inside-ovos-core)
-    - [Skill running as standalone](#skill-running-as-standalone)
+    - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
+    - [Skill running as standalone container](#skill-running-as-standalone-container)
   - [Support](#support)
 
 ## What is Open Voice OS?
@@ -122,7 +122,7 @@ docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-fil
 
 There are two *(2)* different ways to install a skill with Open Voice OS, each having pros and cons.
 
-### Skill running inside ovos-core
+### Skill running inside ovos-core container
 
 The first way is to use the `skills.list` file within the `~/ovos/config/` director, this file will act as a Python `requirements.txt` file. When the `ovos-core` container will start, it will look for this file and install the skills defined in there.
 
@@ -136,7 +136,7 @@ If the `ovos-core` container is wiped for any reason, the skill(s) will be reins
 
 The advantage is the simplicity but the cost will be more Python dependancies within the `ovos-core` container and potential conflicts across versions.
 
-### Skill running as standalone
+### Skill running as standalone container
 
 The second way is to leverage the `ovos-workshop` by running a skill as standalone. This means that the skill will be not be part of the same container as `ovos-core` but it will be running inside it's own container.
 
