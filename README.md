@@ -11,6 +11,8 @@
     - [Tags](#tags)
   - [Requirements](#requirements)
   - [How to build these images](#how-to-build-these-images)
+    - [Message bus](#message-bus)
+    - [Listener](#listener)
   - [How to use these images](#how-to-use-these-images)
   - [Support](#support)
 
@@ -33,16 +35,17 @@ Open Voice OS is a complex piece of software which has several core services. Th
 | `ovos_phal_admin`    | This service is intended for handling any OS-level interactions requiring escalation of privileges                           |
 | `ovos_audio`         | The audio service handles playback and queueing of tracks                                                                    |
 | `ovos_listener`      | The speech client is responsible for loading STT, VAD and Wake Word plugins                                                  |
-| `ovos_core`          | The skills service (running under `core`) is responsible for loading skills and intent parsers                               |
+| `ovos_core`          | The core service is responsible for loading skills and intent parsers                                                        |
 | `ovos_cli`           | Command line for OpenVoiceOS                                                                                                 |
 | `ovos_gui_websocket` | Websocket process to handle messages for the OpenVoiceOS GUI                                                                 |
 
 To allow data persistance, Docker/Podman volumes are required which will avoid to download requirements everytime that the the containers are re-created.
 
-| Volume        | Description                                      |
-| ---           | ---                                              |
-| `ovos_models` | Models downloaded by `precise-lite`              |
-| `ovos_vosk`   | Data downloaded by VOSK during the initial boot  |
+| Volume                  | Description                                      |
+| ---                     | ---                                              |
+| `ovos_listener_records` | Wake word and utterance records                  |
+| `ovos_models`           | Models downloaded by `precise-lite`              |
+| `ovos_vosk`             | Data downloaded by VOSK during the initial boot  |
 
 ## Supported architectures and tags
 
@@ -78,14 +81,21 @@ cd ovos-docker
 docker buildx build base/ -t smartgic/ovos-base:dev --build-arg BRANCH=dev --no-cache
 ```
 
-Open Voice OS provides two *(2)* different implementations for the bus message:
+Open Voice OS provides two *(2)* different implementations for the bus message as well for the listener:
 
-- `ovos-messagebus` which is a Python implementation
-- `ovos-bus-server` which is a C++ implementation *(better performances but lack of configuration)*
+### Message bus
+
+- `ovos-messagebus` image which is a Python implementation
+- `ovos-bus-server` image which is a C++ implementation *(better performances but lack of configuration)*
+
+### Listener
+
+- `ovos-listener` image which is currently the default listener
+- `ovos-listener-dinkum` image which is a port from Mycroft DinKum *(better performances, less resources consumption but still under heavy development)*
 
 Only one implementation can be used at a time.
 
-Ten *(10)* images needs to be build; `ovos-base`, `ovos-listener`, `ovos-skills`, `ovos-cli`, `ovos-messagebus` or `ovos-bus-server`, `ovos-phal`, `ovos-phal-admin`, `ovos-sound-base`, `ovos-audio` and `ovos-gui-websocket`.
+Thirteen *(13)* images needs to be build; `ovos-base`, `ovos-listener` or `ovos-listener-dinkum`, `ovos-core`, `ovos-cli`, `ovos-messagebus` or `ovos-bus-server`, `ovos-phal`, `ovos-phal-admin`, `ovos-sound-base`, `ovos-audio`, `ovos-gui` and `ovos-gui-websocket`.
 
 ## How to use these images
 
