@@ -14,7 +14,9 @@
     - [Message bus](#message-bus)
     - [Listener](#listener)
   - [How to use these images](#how-to-use-these-images)
-  - [Skills](#skills)
+  - [Skills manamgement](#skills-manamgement)
+    - [Skill running inside ovos-core](#skill-running-inside-ovos-core)
+    - [Skill running as standalone](#skill-running-as-standalone)
   - [Support](#support)
 
 ## What is Open Voice OS?
@@ -116,7 +118,35 @@ By default, `docker compose` will look for a `docker-compose.yml` and an `.env` 
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
 ```
 
-## Skills
+## Skills manamgement
+
+There are two *(2)* different ways to install a skill with Open Voice OS, each having pros and cons.
+
+### Skill running inside ovos-core
+
+The first way is to use the `skills.list` file within the `~/ovos/config/` director, this file will act as a Python `requirements.txt` file. When the `ovos-core` container will start, it will look for this file and install the skills defined in there.
+
+```pip
+ovos-skill-volume==0.0.1
+ovos-skill-stop
+git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git@fix/whatever
+```
+
+If the `ovos-core` container is wiped for any reason, the skill(s) will be reinstalled automatically.
+
+The advantage is the simplicity but the cost will be more Python dependancies within the `ovos-core` container and potential conflicts across versions.
+
+### Skill running as standalone
+
+The second way is to leverage the `ovos-workshop` by running a skill as standalone. This means that the skill will be not be part of the same container as `ovos-core` but it will be running inside it's own container.
+
+The advantage is that each skill are isolated which provide more flexibility about Python libraries version, packages, etc... but the downside will be that more system resources will be consumed and a container image has to be build.
+
+Few skills are already build and a `docker-compose` file is available. Just run the following command to install the skills as containers.
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
+```
 
 ## Support
 
