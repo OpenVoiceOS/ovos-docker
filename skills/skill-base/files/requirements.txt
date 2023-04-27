@@ -1,4 +1,4 @@
 adapt-parser
 git+https://github.com/OpenVoiceOS/OVOS-workshop.git
-git+https://github.com/OpenVoiceOS/ovos-core.git
+git+https://github.com/OpenVoiceOS/ovos-core.git@clean_core_all_patches
 ovos-plugin-common-play
