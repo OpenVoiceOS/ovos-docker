@@ -14,7 +14,7 @@
     - [Message bus](#message-bus)
     - [Listener](#listener)
   - [How to use these images](#how-to-use-these-images)
-  - [Skills manamgement](#skills-manamgement)
+  - [Skills management](#skills-management)
     - [Skill running inside ovos-core](#skill-running-inside-ovos-core)
     - [Skill running as standalone](#skill-running-as-standalone)
   - [Support](#support)
@@ -118,7 +118,7 @@ By default, `docker compose` will look for a `docker-compose.yml` and an `.env` 
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
 ```
 
-## Skills manamgement
+## Skills management
 
 There are two *(2)* different ways to install a skill with Open Voice OS, each having pros and cons.
 
@@ -147,6 +147,8 @@ Few skills are already build and a `docker-compose` file is available. Just run 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 ```
+
+New containers will be created, if the `ovos-core` is restarted for any reason, then the skill containers will have to be restarted as well in order to re-register again.
 
 ## Support
 
