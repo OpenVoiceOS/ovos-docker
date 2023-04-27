@@ -15,8 +15,10 @@ COPY files/requirements.txt /tmp/requirements.txt
 RUN adduser --disabled-password $USER \
     && mkdir -p /home/${USER}/.config/mycroft /home/${USER}/.cache/mycroft /home/${USER}/.local/share/mycroft /tmp/mycroft/ipc /tmp/mycroft/cache \
     && chown ${USER}:${USER} -R /home/${USER} /tmp/mycroft \
-    && apk add --no-cache git python3 py3-pip py3-wheel \
+    && apk add --no-cache git python3 py3-pip py3-wheel py3-numpy \
+    && apk add --no-cache --virtual .build-deps gcc g++ gfortran openblas-dev python3-dev linux-headers \
     && pip3 install -r /tmp/requirements.txt \
-    && rm -rf ${HOME}/.cache /tmp/requirements.txt
+    && rm -rf ${HOME}/.cache /tmp/requirements.txt \
+    && apk del .build-deps
 
 USER $USER
