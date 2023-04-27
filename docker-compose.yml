@@ -73,6 +73,8 @@ services:
       TZ: $TZ
     network_mode: host
     ipc: host
+    devices:
+      - /dev/snd
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
