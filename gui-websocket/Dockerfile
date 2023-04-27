@@ -14,7 +14,8 @@ ARG USER=ovos
 
 ENV OVOS_DIR /home/${USER}/gui-ws
 
-RUN git clone https://github.com/OpenVoiceOS/ovos-gui.git $OVOS_DIR -b $BRANCH \
+RUN pip install git+https://github.com/OpenVoiceOS/ovos-plugin-manager.git#egg=ovos-plugin-manager[offline] \
+    && git clone https://github.com/OpenVoiceOS/ovos-gui.git $OVOS_DIR -b $BRANCH \
     && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
     && rm -rf ${HOME}/.cache $OVOS_DIR
 
