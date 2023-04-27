@@ -14,6 +14,7 @@
     - [Message bus](#message-bus)
     - [Listener](#listener)
   - [How to use these images](#how-to-use-these-images)
+  - [Skills](#skills)
   - [Support](#support)
 
 ## What is Open Voice OS?
@@ -63,17 +64,17 @@ To allow data persistance, Docker/Podman volumes are required which will avoid t
 | Tag | Description                                                                      |
 | --  | ---                                                                              |
 | `dev`/`latest` | Nightly build based on the latest commits applied to the `dev` branch |
-| `stable`       | The latest stable version based on release versions                   |
+| `stable`       | The latest stable version based on release versions *(e.g `0.0.8`)*   |
 
 ## Requirements
 
 Docker or Podman is of course required and `docker compose`/`podman compose` is a nice to have to simplify the whole process by using the `docker-compose.yml` files *(this will be embedded depending your Docker/Podman version)*.
 
-PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow the containers to use microphone and speakers. On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire.
+PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow as well the containers to use the microphone and speakers. On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire.
 
 ## How to build these images
 
-The `base` image is the main image for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, *etc...*
+The `base` image is the main image for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, `phal` *etc...*
 
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
@@ -81,7 +82,7 @@ cd ovos-docker
 docker buildx build base/ -t smartgic/ovos-base:dev --build-arg BRANCH=dev --no-cache
 ```
 
-Open Voice OS provides two *(2)* different implementations for the bus message as well for the listener:
+Open Voice OS provides two *(2)* different implementations for the bus as well for the listener:
 
 ### Message bus
 
@@ -93,7 +94,7 @@ Open Voice OS provides two *(2)* different implementations for the bus message a
 - `ovos-listener` image which is currently the default listener
 - `ovos-listener-dinkum` image which is a port from Mycroft DinKum *(better performances, less resources consumption but still under heavy development)*
 
-Only one implementation can be used at a time.
+Only one implementation can be selected at a time.
 
 Thirteen *(13)* images needs to be build; `ovos-base`, `ovos-listener` or `ovos-listener-dinkum`, `ovos-core`, `ovos-cli`, `ovos-messagebus` or `ovos-bus-server`, `ovos-phal`, `ovos-phal-admin`, `ovos-sound-base`, `ovos-audio`, `ovos-gui` and `ovos-gui-websocket`.
 
@@ -108,6 +109,14 @@ chown 1000:1000 -R ~/ovos
 cd ovos-docker
 docker compose up -d
 ```
+
+By default, `docker compose` will look for a `docker-compose.yml` and an `.env` files but more files could be added to the command to extend the services configuration.
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
+```
+
+## Skills
 
 ## Support
 
