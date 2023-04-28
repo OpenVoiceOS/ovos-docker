@@ -65,10 +65,9 @@ To allow data persistance, Docker/Podman volumes are required which will avoid t
 
 ### Tags
 
-| Tag | Description                                                                      |
-| --  | ---                                                                              |
-| `dev`/`latest` | Nightly build based on the latest commits applied to the `dev` branch |
-| `stable`       | The latest stable version based on release versions *(e.g `0.0.8`)*   |
+| Tag | Description                                                             |
+| --  | ---                                                                     |
+| `dev` | Nightly build based on the latest commits applied to the `dev` branch |
 
 ## Requirements
 
@@ -84,6 +83,7 @@ The `base` image is the main image for the other images, for example the `messag
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
 cd ovos-docker
 docker buildx build base/ -t smartgic/ovos-base:dev --build-arg BRANCH=dev --no-cache
+docker buildx build gui/ -t smartgic/ovos-gui:dev --build-arg BRANCH_OVOS=master --build-arg BRANCH_MYCROFT=stable-qt5 --no-cache
 ```
 
 Open Voice OS provides two *(2)* different implementations for the bus as well for the listener:
