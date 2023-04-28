@@ -148,8 +148,6 @@ Few skills are already build and a `docker-compose` file is available. Just run 
 docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 ```
 
-If the `ovos-core` is restarted for any reason, then the skill containers will have to be restarted as well in order to re-register again.
-
 ## Support
 
 - [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
