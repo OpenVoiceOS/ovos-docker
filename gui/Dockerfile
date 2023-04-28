@@ -43,8 +43,8 @@ RUN apt-get update \
     && chown ${USER}:${USER} -R /home/${USER}/.local/share/OpenVoiceOS \
     && groupdel kvm \
     && groupdel render \
-    && apt-get remove -y git-core g++ cmake extra-cmake-modules gettext pkg-config pkg-kde-tools \
-    && apt-get autoremove -y \
+    && apt-get --purge remove -y git-core g++ cmake extra-cmake-modules gettext pkg-config pkg-kde-tools \
+    && apt-get --purge autoremove -y \
     && apt-get clean \
     && rm -rf $OVOS_DIR_SHELL $MYCROFT_DIR_GUI $LOTTIE_DIR
 
