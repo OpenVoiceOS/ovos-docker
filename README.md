@@ -18,6 +18,7 @@
     - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
     - [Skill running as standalone container](#skill-running-as-standalone-container)
   - [Open Voice OS GUI](#open-voice-os-gui)
+  - [FAQ](#faq)
   - [Support](#support)
 
 ## What is Open Voice OS?
@@ -162,6 +163,11 @@ xhost +local:ovos_gui
 ```
 
 `xhost` is part of the `x11-xserver-utils` package on Debian and Ubuntu distributions.
+
+## FAQ
+
+- [When mycroft.conf changed the listener doesn't listen anymore](https://github.com/OpenVoiceOS/ovos-listener/issues/15)
+- [Killed if previous bus.pid exists](https://github.com/OpenVoiceOS/ovos-messagebus/issues/4)
 
 ## Support
 
