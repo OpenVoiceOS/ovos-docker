@@ -65,10 +65,9 @@ To allow data persistance, Docker/Podman volumes are required which will avoid t
 
 ### Tags
 
-| Tag | Description                                                                      |
-| --  | ---                                                                              |
-| `dev`/`latest` | Nightly build based on the latest commits applied to the `dev` branch |
-| `stable`       | The latest stable version based on release versions *(e.g `0.0.8`)*   |
+| Tag | Description                                                             |
+| --  | ---                                                                     |
+| `dev` | Nightly build based on the latest commits applied to the `dev` branch |
 
 ## Requirements
 
