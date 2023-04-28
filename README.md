@@ -17,6 +17,7 @@
   - [Skills management](#skills-management)
     - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
     - [Skill running as standalone container](#skill-running-as-standalone-container)
+  - [Open Voice OS GUI](#open-voice-os-gui)
   - [Support](#support)
 
 ## What is Open Voice OS?
@@ -124,7 +125,7 @@ There are two *(2)* different ways to install a skill with Open Voice OS, each h
 
 ### Skill running inside ovos-core container
 
-The first way is to use the `skills.list` file within the `~/ovos/config/` director, this file will act as a Python `requirements.txt` file. When the `ovos-core` container will start, it will look for this file and install the skills defined in there.
+The first way is to use the `skills.list` file within the `~/ovos/config/` directory, this file will act as a Python `requirements.txt` file. When the `ovos-core` container will start, it will look for this file and install the skills defined in there.
 
 ```pip
 ovos-skill-volume==0.0.1
@@ -147,6 +148,20 @@ Few skills are already build and a `docker-compose` file is available. Just run 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 ```
+
+If the `ovos_core` container is deleted, the skill will remained available until the `ovos_core` container comes back.
+
+## Open Voice OS GUI
+
+The Open Voice OS GUI is available with the Open Voice OS Shell layout on top of it. This container still under some development mostly because of the skill's QML files not been shared between `ovos_gui` container and `ovos_skill_*` containers.
+
+In order to allow only the `ovos_gui` container to access to the X server, you will have to allow this container to run X application(s).
+
+```bash
+xhost +local:ovos_gui
+```
+
+`xhost` is part of the `x11-xserver-utils` package on Debian and Ubuntu distributions.
 
 ## Support
 
