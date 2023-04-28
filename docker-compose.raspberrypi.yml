@@ -19,3 +19,9 @@ services:
       - /dev/gpiomem
     group_add:
       - "$GPIO_GID"
+
+  ovos_gui:
+    devices:
+      - /dev/vchiq
+    group_add:
+      - $RENDER_GID

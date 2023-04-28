@@ -219,9 +219,11 @@ services:
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
       TZ: $TZ
       DISPLAY: :0
+      QT_QPA_PLATFORM: eglfs
     network_mode: host
     ipc: host
     devices:
+      - /dev/dri
       - /dev/snd
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
