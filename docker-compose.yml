@@ -236,3 +236,17 @@ services:
       - ovos_messagebus
       - ovos_gui_websocket
       - ovos_phal
+
+  ovos_cli:
+    container_name: ovos_cli
+    hostname: ovos_cli
+    restart: unless-stopped
+    image: smartgic/ovos-cli:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
