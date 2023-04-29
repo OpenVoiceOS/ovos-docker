@@ -35,14 +35,14 @@ Open Voice OS is a complex piece of software which has several core services. Th
 
 | Container            | Description                                                                                                                  |
 | ---                  | ---                                                                                                                          |
-| `ovos_messagebus`    | Message bus service, the nervous system of OpenVoiceOS                                                                       |
+| `ovos_messagebus`    | Message bus service, the nervous system of Open Voice OS                                                                       |
 | `ovos_phal`          | PHAL is our Platform/Hardware Abstraction Layer, it completely replaces the concept of hardcoded enclosure from mycroft-core |
 | `ovos_phal_admin`    | This service is intended for handling any OS-level interactions requiring escalation of privileges                           |
 | `ovos_audio`         | The audio service handles playback and queueing of tracks                                                                    |
 | `ovos_listener`      | The speech client is responsible for loading STT, VAD and Wake Word plugins                                                  |
 | `ovos_core`          | The core service is responsible for loading skills and intent parsers                                                        |
-| `ovos_cli`           | Command line for OpenVoiceOS                                                                                                 |
-| `ovos_gui_websocket` | Websocket process to handle messages for the OpenVoiceOS GUI                                                                 |
+| `ovos_cli`           | Command line for Open Voice OS                                                                                                 |
+| `ovos_gui_websocket` | Websocket process to handle messages for the Open Voice OS GUI                                                                 |
 
 To allow data persistance, Docker/Podman volumes are required which will avoid to download requirements everytime that the the containers are re-created.
 
