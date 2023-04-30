@@ -161,7 +161,7 @@ The command line allows a user to send message directly to the bus by using the 
 docker exec -ti ovos_cli ovos-cli-client
 ```
 
-To display or manage the current configuration, the `ovos-config` should be.
+To display or manage the current configuration, the `ovos-config` command should be used.
 
 ## Open Voice OS GUI
 
