@@ -17,6 +17,7 @@
   - [Skills management](#skills-management)
     - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
     - [Skill running as standalone container](#skill-running-as-standalone-container)
+  - [Open Voice OS CLI](#open-voice-os-cli)
   - [Open Voice OS GUI](#open-voice-os-gui)
   - [FAQ](#faq)
   - [Support](#support)
@@ -151,6 +152,16 @@ docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 ```
 
 If the `ovos_core` container is deleted, the skill will remained available until the `ovos_core` container comes back.
+
+## Open Voice OS CLI
+
+The command line allows a user to send message directly to the bus by using the `ovos-cli-client` command.
+
+```bash
+docker exec -ti ovos_cli ovos-cli-client
+```
+
+To display or manage the current configuration, the `ovos-config` should be.
 
 ## Open Voice OS GUI
 
