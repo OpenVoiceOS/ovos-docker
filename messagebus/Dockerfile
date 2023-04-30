@@ -12,10 +12,7 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG BRANCH
 ARG USER=ovos
 
-ENV OVOS_DIR /home/${USER}/bus
-
-RUN git clone https://github.com/OpenVoiceOS/ovos-bus.git $OVOS_DIR -b $BRANCH \
-    && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
-    && rm -rf ${HOME}/.cache $OVOS_DIR
+RUN pip3 install mycroft-messagebus-client git+https://github.com/OpenVoiceOS/ovos-messagebus.git@${BRANCH} \
+    && rm -rf ${HOME}/.cache
 
 ENTRYPOINT ovos-messagebus
