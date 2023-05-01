@@ -9,11 +9,10 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
-ARG BRANCH
+ARG ALPHA=false
 ARG USER=ovos
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV OVOS_DIR /home/${USER}/listener
 
 USER root
 
@@ -23,16 +22,18 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
   && apt-get install -o Dpkg::Options::="--force-confold" -y libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
-  && git clone https://github.com/OpenVoiceOS/ovos-listener.git $OVOS_DIR -b $BRANCH \
   && pip3 install -f 'https://whl.smartgic.io/' tflite_runtime onnxruntime vosk \
-  && pip3 install -r /tmp/requirements.txt \
-  && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
+  && if [ "${ALPHA}" == "true" ]; then \
+  pip3 install -r /tmp/requirements.txt --pre; \
+  else \
+  pip3 install -r /tmp/requirements.txt; \
+  fi \
   && mkdir -p /home/${USER}/.local/share/{vosk,precise-lite,mycroft/listener} \
   && chown ${USER}:${USER} -R /home/${USER} \
   && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
   && apt-get clean \
-  && rm -rf ${HOME}/.cache $OVOS_DIR /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+  && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
 USER $USER
 
