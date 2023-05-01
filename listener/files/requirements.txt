@@ -1,2 +1,4 @@
-git+https://github.com/OpenVoiceOS/ovos-vad-plugin-precise.git
+git+https://github.com/goldyfruit/ovos-config.git
+ovos-listener
+ovos-vad-plugin-precise
 ovos-vad-plugin-silero
