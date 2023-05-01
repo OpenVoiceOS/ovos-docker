@@ -9,10 +9,13 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
-ARG BRANCH
-ARG USER=ovos
+ARG ALPHA=false
 
-RUN pip3 install mycroft-messagebus-client git+https://github.com/OpenVoiceOS/ovos-messagebus.git@${BRANCH} \
+RUN if [ "${ALPHA}" == "true" ]; then \
+    pip3 install git+https://github.com/goldyfruit/ovos-config.git ovos-messagebus --pre; \
+    else \
+    pip3 install ovos-messagebus; \
+    fi \
     && rm -rf ${HOME}/.cache
 
 ENTRYPOINT ovos-messagebus
