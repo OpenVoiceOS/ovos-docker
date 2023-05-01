@@ -16,6 +16,8 @@ ENV OVOS_DIR /home/${USER}/phal
 
 USER root
 
+COPY files/requirements.txt /tmp/requirements.txt
+
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
@@ -27,7 +29,7 @@ RUN apt-get update \
     && apt-get --purge remove --purge -y libasound2-dev build-essential python3-dev \
     && apt-get --purge autoremove -y \
     && apt-get clean \
-    && rm -rf ${HOME}/.cache $OVOS_DIR /var/lib/apt /var/log/{apt,dpkg.log}
+    && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
 USER $USER
 
