@@ -9,10 +9,8 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
-ARG BRANCH
+ARG ALPHA=false
 ARG USER=ovos
-
-ENV OVOS_DIR /home/${USER}/core
 
 USER root
 
@@ -22,8 +20,12 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
     && apt-get install -y swig libfann-dev build-essential python3-dev \
-    && pip3 install adapt-parser ovos-plugin-common-play git+https://github.com/OpenVoiceOS/OVOS-workshop.git \
-    && pip3 install git+https://github.com/OpenVoiceOS/ovos-core.git@${BRANCH} \
+    && if [ "${ALPHA}" == "true" ]; then \
+    # Until PR #313 is merged
+    pip3 install git+https://github.com/goldyfruit/ovos-config.git git+https://github.com/OpenVoiceOS/ovos-core.git@refactor/double_pkg#egg=ovos-core[lgpl] --pre; \
+    else \
+    pip3 install ovos-core; \
+    fi \
     && mkdir -p /home/${USER}/.local/share/mycroft/skills \
     && chown ${USER}:${USER} -R /home/${USER} \
     && apt-get --purge remove -y libfann-dev build-essential python3-dev \
