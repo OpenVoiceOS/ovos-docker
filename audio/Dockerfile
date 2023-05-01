@@ -9,11 +9,10 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
-ARG BRANCH
+ARG ALPHA=false
 ARG USER=ovos
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV OVOS_DIR /home/${USER}/audio
 
 USER root
 
@@ -25,16 +24,18 @@ RUN curl -sS https://forslund.github.io/mycroft-desktop-repo/mycroft-desktop.gpg
   && echo "deb http://forslund.github.io/mycroft-desktop-repo bionic main" | tee -a /etc/apt/sources.list.d/mimic.list \
   && apt-get update \
   && apt-get install -y portaudio19-dev mimic build-essential python3-dev \
-  && git clone https://github.com/OpenVoiceOS/ovos-audio.git $OVOS_DIR -b $BRANCH \
   && pip3 install -f 'https://whl.smartgic.io/' onnxruntime \
-  && pip3 install -r /tmp/requirements.txt \
-  && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
+  && if [ "${ALPHA}" == "true" ]; then \
+  pip3 install -r /tmp/requirements.txt --pre; \
+  else \
+  pip3 install -r /tmp/requirements.txt; \
+  fi \
   && mkdir -p /home/${USER}/.config/mycroft/apps \
   && chown ${USER}:${USER} -R /home/${USER} \
   && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
   && apt-get clean \
-  && rm -rf ${HOME}/.cache $OVOS_DIR /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+  && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
 USER $USER
 
