@@ -16,9 +16,8 @@ USER root
 
 RUN apt-get update \
     && apt-get install vim nano -y \
-    && pip3 install ovos-skills-manager git+https://github.com/OpenVoiceOS/ovos-plugin-manager.git git+https://github.com/OpenVoiceOS/ovos-cli-client.git \
-    && mkdir -p /var/log/mycroft \
-    && chown ${USER}:${USER} -R /home/${USER}/ /var/log/mycroft \
+    && mkdir -p /home/${USER}/.local/state/mycroft /var/log/mycroft \
+    && chown ${USER}:${USER} -R /home/${USER} /var/log/mycroft \
     && apt-get clean \
     && rm -rf ${HOME}/.cache
 
