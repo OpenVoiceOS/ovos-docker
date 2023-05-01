@@ -2,7 +2,6 @@ git+https://github.com/OpenVoiceOS/ovos-audio-plugin-simple.git
 git+https://github.com/OpenVoiceOS/ovos-tts-plugin-marytts.git
 ovos-tts-plugin-mimic
 ovos-tts-plugin-mimic2
-ovos-tts-plugin-mimic3[all]
 ovos-tts-plugin-mimic3-server
 git+https://github.com/NeonGeckoCom/neon-g2p-plugin-mimic.git
 neon-tts-plugin-polly
