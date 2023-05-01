@@ -9,14 +9,14 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
-ARG BRANCH
+ARG ALPHA=false
 ARG USER=ovos
 
-ENV OVOS_DIR /home/${USER}/gui-ws
-
-RUN pip install git+https://github.com/OpenVoiceOS/ovos-plugin-manager.git#egg=ovos-plugin-manager[offline] \
-    && git clone https://github.com/OpenVoiceOS/ovos-gui.git $OVOS_DIR -b $BRANCH \
-    && pip3 install $OVOS_DIR -r ${OVOS_DIR}/requirements.txt \
-    && rm -rf ${HOME}/.cache $OVOS_DIR
+RUN if [ "${ALPHA}" == "true" ]; then \
+    pip install ovos-plugin-manager[offline] ovos-gui git+https://github.com/goldyfruit/ovos-config.git --pre; \
+    else \
+    pip install ovos-plugin-manager[offline] ovos-gui; \
+    fi \
+    && rm -rf ${HOME}/.cache
 
 ENTRYPOINT ovos-gui-service
