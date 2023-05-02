@@ -92,14 +92,14 @@ docker buildx build gui/ -t smartgic/ovos-gui:alpha --build-arg BRANCH_OVOS=mast
 
 There are few arguments available that could be used during the image build process.
 
-| Name             | Value           | Default                            | Description                                                      |
-| ---              | ---             | ---                                | ---                                                              |
-| `ALPHA`          | `true`/`false`  | `false`                            | Using the alpha releases from PyPi                               |
-| `BUILD_DATE`     | `unknown`       | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | Use as `LABEL` within the Dockerfile to determine the build date |
-| `BRANCH_OVOS`    | `master`        | `master`                           | Branch of `ovos-shell`Git  repository                            |
-| `BRANCH_MYCROFT` | `stable-qt5`    | `stable-qt5`                       | Branch of `mycroft-gui` Git repository                           |
-| `TAG`            | `alpha`         | `alpha`                            | OCI image tag                                                    |
-| `VERSION`        | `0.0.8`         | `unknown`                          | Use as `LABEL` within the Dockerfile to determine the version    |
+| Name             | Value                              | Default      | Description                                                      |
+| ---              | ---                                | ---          | ---                                                              |
+| `ALPHA`          | `true`/`false`                     | `false`      | Using the alpha releases from PyPi                               |
+| `BUILD_DATE`     | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | `unkown`     | Use as `LABEL` within the Dockerfile to determine the build date |
+| `BRANCH_OVOS`    | `master`                           | `master`     | Branch of `ovos-shell`Git  repository                            |
+| `BRANCH_MYCROFT` | `stable-qt5`                       | `stable-qt5` | Branch of `mycroft-gui` Git repository                           |
+| `TAG`            | `alpha`                            | `alpha`      | OCI image tag                                                    |
+| `VERSION`        | `0.0.8`                            | `unknown`    | Use as `LABEL` within the Dockerfile to determine the version    |
 
 Open Voice OS provides two *(2)* different implementations for the bus as well for the listener:
 
