@@ -66,9 +66,9 @@ To allow data persistance, Docker/Podman volumes are required which will avoid t
 
 ### Tags
 
-| Tag | Description                                                             |
-| --  | ---                                                                     |
-| `dev` | Nightly build based on the latest commits applied to the `dev` branch |
+| Tag | Description                                                                 |
+| --  | ---                                                                         |
+| `alpha` | Nightly build based on the latest commits applied to the `dev` branches |
 
 ## Requirements
 
@@ -83,8 +83,8 @@ The `base` image is the main image for the other images, for example the `messag
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
 cd ovos-docker
-docker buildx build base/ -t smartgic/ovos-base:dev --build-arg BRANCH=dev --no-cache
-docker buildx build gui/ -t smartgic/ovos-gui:dev --build-arg BRANCH_OVOS=master --build-arg BRANCH_MYCROFT=stable-qt5 --no-cache
+docker buildx build base/ -t smartgic/ovos-base:alpha --build-arg ALPHA=true --no-cache
+docker buildx build gui/ -t smartgic/ovos-gui:alpha --build-arg BRANCH_OVOS=master --build-arg BRANCH_MYCROFT=stable-qt5 --no-cache
 ```
 
 Open Voice OS provides two *(2)* different implementations for the bus as well for the listener:
@@ -115,11 +115,13 @@ cd ovos-docker
 docker compose up -d
 ```
 
-By default, `docker compose` will look for a `docker-compose.yml` and an `.env` files but more files could be added to the command to extend the services configuration.
+By default, `docker compose` will look for a `docker-compose.yml` and an `.env` files, but more files could be added to the command to extend the services configuration.
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
 ```
+
+Some variables might need to be updated to match your setup/environment, please have a look into the `.env` and `.env-raspberrypi` files before running `docker compose`.
 
 ## Skills management
 
