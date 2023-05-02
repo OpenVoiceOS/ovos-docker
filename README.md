@@ -12,8 +12,9 @@
   - [Requirements](#requirements)
   - [How to build these images](#how-to-build-these-images)
     - [Arguments](#arguments)
-    - [Message bus](#message-bus)
-    - [Listener](#listener)
+    - [Image alternatives](#image-alternatives)
+      - [Message bus](#message-bus)
+      - [Listener](#listener)
   - [How to use these images](#how-to-use-these-images)
   - [Skills management](#skills-management)
     - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
@@ -101,14 +102,16 @@ There are few arguments available that could be used during the image build proc
 | `TAG`            | `alpha`                            | `alpha`      | OCI image tag                                                    |
 | `VERSION`        | `0.0.8`                            | `unknown`    | Use as `LABEL` within the Dockerfile to determine the version    |
 
+### Image alternatives
+
 Open Voice OS provides two *(2)* different implementations for the bus as well for the listener:
 
-### Message bus
+#### Message bus
 
 - `ovos-messagebus` image which is a Python implementation
 - `ovos-bus-server` image which is a C++ implementation *(better performances but lack of configuration)*
 
-### Listener
+#### Listener
 
 - `ovos-listener` image which is currently the default listener
 - `ovos-listener-dinkum` image which is a port from Mycroft DinKum *(better performances, less resources consumption but still under heavy development)*
