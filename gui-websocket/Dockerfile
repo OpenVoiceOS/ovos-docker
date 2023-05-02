@@ -13,7 +13,7 @@ ARG ALPHA=false
 ARG USER=ovos
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip install ovos-plugin-manager[offline] ovos-gui.git --pre; \
+    pip install ovos-plugin-manager[offline] ovos-gui --pre; \
     else \
     pip install ovos-plugin-manager[offline] ovos-gui; \
     fi \
