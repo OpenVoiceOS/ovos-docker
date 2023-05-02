@@ -22,9 +22,9 @@ RUN apt-get update \
     && apt-get install -y swig libfann-dev build-essential python3-dev \
     && if [ "${ALPHA}" == "true" ]; then \
     # Until PR #313 is merged
-    pip3 install it+https://github.com/OpenVoiceOS/ovos-core.git@refactor/double_pkg#egg=ovos-core[lgpl] --pre; \
+    pip3 install ovos-core[lgpl] --pre; \
     else \
-    pip3 install ovos-core; \
+    pip3 install ovos-core[lgpl]; \
     fi \
     && mkdir -p /home/${USER}/.local/share/mycroft/skills \
     && chown ${USER}:${USER} -R /home/${USER} \
