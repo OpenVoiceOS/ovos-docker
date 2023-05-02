@@ -17,7 +17,7 @@ USER root
 RUN apt-get update \
     && apt-get install vim nano -y \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install git+https://github.com/goldyfruit/ovos-config.git ovos-skills-manager ovos-plugin-manager ovos-cli-client --pre; \
+    pip3 install ovos-skills-manager ovos-plugin-manager ovos-cli-client --pre; \
     else \
     pip3 install ovos-skills-manager ovos-plugin-manager ovos-cli-client; \
     fi \

@@ -1,6 +1,5 @@
 ovos-audio
 ovos-audio-plugin-simple
-git+https://github.com/goldyfruit/ovos-config.git
 ovos-tts-plugin-mimic
 ovos-tts-plugin-mimic2
 ovos-tts-plugin-mimic3-server

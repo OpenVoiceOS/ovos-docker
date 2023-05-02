@@ -1,4 +1,3 @@
-git+https://github.com/goldyfruit/ovos-config.git
 ovos-PHAL
 ovos-PHAL-plugin-alsa
 ovos-PHAL-plugin-pulseaudio

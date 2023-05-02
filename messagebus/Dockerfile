@@ -12,7 +12,7 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install git+https://github.com/goldyfruit/ovos-config.git ovos-messagebus --pre; \
+    pip3 install ovos-messagebus --pre; \
     else \
     pip3 install ovos-messagebus; \
     fi \

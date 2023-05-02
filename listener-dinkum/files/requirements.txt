@@ -1,4 +1,3 @@
-git+https://github.com/goldyfruit/ovos-config.git
 ovos-dinkum-listener
 ovos-stt-plugin-server
 ovos-stt-plugin-vosk
