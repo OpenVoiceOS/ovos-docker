@@ -17,7 +17,7 @@ USER root
 RUN apt-get update \
     && apt-get install vim nano -y \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skills-manager ovos-plugin-manager ovos-cli-client --pre; \
+    pip3 install ovos-config PyYAML==6.0 ovos-skills-manager ovos-plugin-manager git+https://github.com/OpenVoiceOS/ovos-cli-client.git --pre; \
     else \
     pip3 install ovos-skills-manager ovos-plugin-manager ovos-cli-client; \
     fi \
