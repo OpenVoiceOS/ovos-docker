@@ -94,7 +94,7 @@ There are few arguments available that could be used during the image build proc
 
 | Name             | Value                              | Default      | Description                                                      |
 | ---              | ---                                | ---          | ---                                                              |
-| `ALPHA`          | `true`/`false`                     | `false`      | Using the alpha releases from PyPi                               |
+| `ALPHA`          | `true`                             | `false`      | Using the alpha releases from PyPi                               |
 | `BUILD_DATE`     | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | `unkown`     | Use as `LABEL` within the Dockerfile to determine the build date |
 | `BRANCH_OVOS`    | `master`                           | `master`     | Branch of `ovos-shell`Git  repository                            |
 | `BRANCH_MYCROFT` | `stable-qt5`                       | `stable-qt5` | Branch of `mycroft-gui` Git repository                           |
