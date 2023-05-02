@@ -8,17 +8,19 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
+ARG ALPHA=false
 ARG USER=ovos
-
-COPY files/requirements.txt /tmp/requirements.txt
 
 RUN adduser --disabled-password $USER \
     && mkdir -p /home/${USER}/.config/mycroft /home/${USER}/.cache/mycroft /home/${USER}/.local/share/mycroft /tmp/mycroft/ipc /tmp/mycroft/cache \
     && chown ${USER}:${USER} -R /home/${USER} /tmp/mycroft \
-    && apk add --no-cache git python3 py3-pip py3-wheel py3-numpy \
-    && apk add --no-cache --virtual .build-deps gcc g++ gfortran openblas-dev python3-dev linux-headers \
-    && pip3 install -r /tmp/requirements.txt \
-    && rm -rf ${HOME}/.cache /tmp/requirements.txt \
-    && apk del .build-deps
+    && apk add --no-cache git python3 py3-pip py3-wheel \
+    && if [ "${ALPHA}" == "true" ]; then \
+    # Until PR #313 is merged
+    pip3 install ovos-core[lgpl] --pre; \
+    else \
+    pip3 install ovos-core[lgpl]; \
+    fi \
+    && rm -rf ${HOME}/.cache
 
 USER $USER
