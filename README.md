@@ -1,9 +1,9 @@
 # Open Voice OS running on Docker/Podman
 
 [![Open Voice OS version](https://img.shields.io/badge/OpenVoiceOS-0.0.8-blue)](https://openvoiceos.com/)
-[![Debian version](https://img.shields.io/badge/Debian-Bookworm-yellow.svg)](https://www.debian.org)
+[![Debian version](https://img.shields.io/badge/Debian-Bookworm-yellow)](https://www.debian.org)
 [![Chat](https://img.shields.io/matrix/openvoiceos-general:matrix.org)](https://matrix.to/#/#OpenVoiceOS-general:matrix.org)
-[![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-base.svg)](https://hub.docker.com/r/smartgic/ovos-base)
+[![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-base)](https://hub.docker.com/r/smartgic/ovos-base)
 
 - [Open Voice OS running on Docker/Podman](#open-voice-os-running-on-dockerpodman)
   - [What is Open Voice OS?](#what-is-open-voice-os)
