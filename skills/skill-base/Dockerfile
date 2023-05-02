@@ -14,13 +14,16 @@ ARG USER=ovos
 RUN adduser --disabled-password $USER \
     && mkdir -p /home/${USER}/.config/mycroft /home/${USER}/.cache/mycroft /home/${USER}/.local/share/mycroft /tmp/mycroft/ipc /tmp/mycroft/cache \
     && chown ${USER}:${USER} -R /home/${USER} /tmp/mycroft \
-    && apk add --no-cache git python3 py3-pip py3-wheel \
+    && apk add --no-cache git python3 py3-pip py3-wheel swig \
+    && apk add --no-cache --virtual .build-deps python3-dev fann-dev gcc g++ \
     && if [ "${ALPHA}" == "true" ]; then \
-    # Until PR #313 is merged
+    # Install PyYAML before as a workaround to avoid AttributeError: cython_sources error.
+    pip3 install PyYAML; \
     pip3 install ovos-core[lgpl] --pre; \
     else \
     pip3 install ovos-core[lgpl]; \
     fi \
+    && apk del .build-deps \
     && rm -rf ${HOME}/.cache
 
 USER $USER
