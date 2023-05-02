@@ -1,12 +1,15 @@
-ARG TAG=dev
+ARG TAG=alpha
 FROM smartgic/ovos-base:${TAG}
+
+ARG BUILD_DATE=unknown
+ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI message bus image"
 LABEL org.opencontainers.image.description="Message bus service, the nervous system of OpenVoiceOS (Python implementation)"
-LABEL org.opencontainers.image.version="0.0.8"
-LABEL org.opencontainers.image.created="2023-04-20T00:00:00Z"
+LABEL org.opencontainers.image.version=${VERSION}
+LABEL org.opencontainers.image.created=${BUILD_DATE}
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
-LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
+LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
 ARG ALPHA=false

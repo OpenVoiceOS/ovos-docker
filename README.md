@@ -36,14 +36,14 @@ Open Voice OS is a complex piece of software which has several core services. Th
 
 | Container            | Description                                                                                                                  |
 | ---                  | ---                                                                                                                          |
-| `ovos_messagebus`    | Message bus service, the nervous system of Open Voice OS                                                                       |
+| `ovos_messagebus`    | Message bus service, the nervous system of Open Voice OS                                                                     |
 | `ovos_phal`          | PHAL is our Platform/Hardware Abstraction Layer, it completely replaces the concept of hardcoded enclosure from mycroft-core |
 | `ovos_phal_admin`    | This service is intended for handling any OS-level interactions requiring escalation of privileges                           |
 | `ovos_audio`         | The audio service handles playback and queueing of tracks                                                                    |
 | `ovos_listener`      | The speech client is responsible for loading STT, VAD and Wake Word plugins                                                  |
 | `ovos_core`          | The core service is responsible for loading skills and intent parsers                                                        |
-| `ovos_cli`           | Command line for Open Voice OS                                                                                                 |
-| `ovos_gui_websocket` | Websocket process to handle messages for the Open Voice OS GUI                                                                 |
+| `ovos_cli`           | Command line for Open Voice OS                                                                                               |
+| `ovos_gui_websocket` | Websocket process to handle messages for the Open Voice OS GUI                                                               |
 
 To allow data persistance, Docker/Podman volumes are required which will avoid to download requirements everytime that the the containers are re-created.
 
@@ -86,6 +86,17 @@ cd ovos-docker
 docker buildx build base/ -t smartgic/ovos-base:alpha --build-arg ALPHA=true --no-cache
 docker buildx build gui/ -t smartgic/ovos-gui:alpha --build-arg BRANCH_OVOS=master --build-arg BRANCH_MYCROFT=stable-qt5 --no-cache
 ```
+
+There are few arguments available that could be used during the image build process.
+
+| Name             | Value           | Default                            | Description                                                      |
+| ---              | ---             | ---                                | ---                                                              |
+| `ALPHA`          | `true`/`false`  | `false`                            | Using the alpha releases from PyPi                               |
+| `BUILD_DATE`     | `unknown`       | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | Use as `LABEL` within the Dockerfile to determine the build date |
+| `BRANCH_OVOS`    | `master`        | `master`                           | Branch of `ovos-shell`Git  repository                            |
+| `BRANCH_MYCROFT` | `stable-qt5`    | `stable-qt5`                       | Branch of `mycroft-gui` Git repository                           |
+| `TAG`            | `alpha`         | `alpha`                            | OCI image tag                                                    |
+| `VERSION`        | `0.0.8`         | `unknown`                          | Use as `LABEL` within the Dockerfile to determine the version    |
 
 Open Voice OS provides two *(2)* different implementations for the bus as well for the listener:
 
