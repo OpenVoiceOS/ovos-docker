@@ -9,6 +9,7 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
+ARG ALPHA=false
 ARG USER=ovos
 
 USER root
@@ -17,7 +18,11 @@ RUN apk add --no-cache py3-numpy
 
 USER $USER
 
-RUN pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-date-time.git \
+RUN if [ "${ALPHA}" == "true" ]; then \
+    pip3 install ovos-skill-date-time --pre; \
+    else \
+    pip3 install ovos-skill-date-time; \
+    fi \
     && rm -rf ${HOME}/.cache
 
 ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-date-time.openvoiceos"]

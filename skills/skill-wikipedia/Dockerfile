@@ -9,7 +9,13 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
-RUN pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git \
+ARG ALPHA=false
+
+RUN if [ "${ALPHA}" == "true" ]; then \
+    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git --pre; \
+    else \
+    pip3 install ovos-skill-wikipedia; \
+    fi \
     && rm -rf ${HOME}/.cache
 
 ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-wikipedia.openvoiceos"]

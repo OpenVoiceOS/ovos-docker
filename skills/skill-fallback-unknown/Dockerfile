@@ -9,15 +9,13 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/smartgic/docker-mycroft/commit/fe816972b4509e77542698fa6fe0330fdc78740a"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
-ARG USER=ovos
+ARG ALPHA=false
 
-USER root
-
-RUN apk add --no-cache py3-numpy
-
-USER $USER
-
-RUN pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-fallback-unknown.git \
+RUN if [ "${ALPHA}" == "true" ]; then \
+    pip3 install ovos-skill-fallback-unknown --pre; \
+    else \
+    pip3 install ovos-skill-fallback-unknown; \
+    fi \
     && rm -rf ${HOME}/.cache
 
 ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-fallback-unknown.openvoiceos"]
