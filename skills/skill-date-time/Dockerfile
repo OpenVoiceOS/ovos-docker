@@ -22,7 +22,8 @@ RUN apk add --no-cache py3-numpy
 USER $USER
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skill-date-time --pre; \
+    # ovos-audio is required because of https://github.com/OpenVoiceOS/skill-ovos-date-time/issues/22
+    pip3 install ovos-skill-date-time ovos-audio --pre; \
     else \
     pip3 install ovos-skill-date-time; \
     fi \
