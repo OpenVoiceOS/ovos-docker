@@ -25,7 +25,7 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     # ovos-audio is required because of https://github.com/OpenVoiceOS/skill-ovos-date-time/issues/22
     pip3 install ovos-skill-date-time ovos-audio --pre; \
     else \
-    pip3 install ovos-skill-date-time; \
+    pip3 install ovos-skill-date-time ovos-audio; \
     fi \
     && rm -rf ${HOME}/.cache
 
