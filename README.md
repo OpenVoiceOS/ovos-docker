@@ -27,6 +27,7 @@
     - [Skill running as standalone container](#skill-running-as-standalone-container)
   - [Open Voice OS CLI](#open-voice-os-cli)
   - [Open Voice OS GUI](#open-voice-os-gui)
+  - [Debug](#debug)
   - [FAQ](#faq)
   - [Support](#support)
 
@@ -89,7 +90,11 @@ Docker or Podman is of course required and `docker compose`/`podman compose` is 
 
 ### PulseAudio
 
-PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow as well the containers to use the microphone and speakers. On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`.
+PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow as well the containers to use the microphone and speakers.
+
+On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers has to be part of the `audio` system group.
+
+A quick check to see if PulseAudio is running fine anf if the user has access is to run `pactl info`, the command should return information without any error or connection refused.
 
 ## How to build these images
 
@@ -236,6 +241,26 @@ xhost +local:ovos_gui
 This command is not permanent, when your operating system will reboot, you will have to run the command again.
 
 `xhost` is part of the `x11-xserver-utils` package on Debian based distributions.
+
+## Debug
+
+To access the logs of a container, run the following command:
+
+```bash
+docker logs -f --tail 200 ovos_audio
+```
+
+To execute a command inside a container without going into it, run the following command:
+
+```bash
+docker exec -ti ovos_audio pactl info
+```
+
+To go inside a container and run commands, run the following command:
+
+```bash
+docker exec -ti ovos_audio sh
+```
 
 ## FAQ
 
