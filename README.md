@@ -2,7 +2,7 @@
 
 [![Open Voice OS version](https://img.shields.io/badge/OpenVoiceOS-0.0.8-blue)](https://openvoiceos.com/)
 [![Debian version](https://img.shields.io/badge/Debian-Bookworm-yellow)](https://www.debian.org)
-[![Python version](https://img.shields.io/badge/Python-3.11-orang)](https://python.org)
+[![Python version](https://img.shields.io/badge/Python-3.11-orange)](https://python.org)
 [![Chat](https://img.shields.io/matrix/openvoiceos-general:matrix.org)](https://matrix.to/#/#OpenVoiceOS-general:matrix.org)
 [![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-base)](https://hub.docker.com/r/smartgic/ovos-base)
 
