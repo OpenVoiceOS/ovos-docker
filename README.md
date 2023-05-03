@@ -93,6 +93,8 @@ PulseAudio is a requirement and has to be up and running on the host to expose a
 
 The `base` image is the main image for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, `phal`, *etc...*
 
+**Since there is not yet a stable Open Voice OS release compatible with this current container architecture, the `--build-arg ALPHA=true` is "mandatory" to build working images *(except the `ovos-gui` and `ovos-bus-server` images)*.**
+
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
 cd ovos-docker
@@ -106,7 +108,7 @@ There are few arguments available that could be used during the image build proc
 
 | Name             | Value                              | Default      | Description                                                      |
 | ---              | ---                                | ---          | ---                                                              |
-| `ALPHA`          | `true`                             | `false`      | Using the alpha releases from PyPi                               |
+| `ALPHA`          | `true`                             | `false`      | Using the alpha releases from PyPi built from the `dev` branches |
 | `BUILD_DATE`     | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | `unkown`     | Use as `LABEL` within the Dockerfile to determine the build date |
 | `BRANCH_OVOS`    | `master`                           | `master`     | Branch of `ovos-shell`Git  repository                            |
 | `BRANCH_MYCROFT` | `stable-qt5`                       | `stable-qt5` | Branch of `mycroft-gui` Git repository                           |
