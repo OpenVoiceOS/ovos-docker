@@ -204,6 +204,12 @@ docker exec -ti ovos_cli ovos-config show
 
 `vim` and `nano` editors are available within the `ovos-cli` image, `vim` as be set as default.
 
+An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
+
+```bash
+docker exec -ti ovos_cli ovos-speak "hello world"
+```
+
 ## Open Voice OS GUI
 
 The Open Voice OS GUI is available with the Open Voice OS Shell layer on top of it. **This container still under some development** mostly because of the skill's QML files not been shared between `ovos_gui` container and `ovos_skill_*` containers.
