@@ -1,8 +1,10 @@
 ovos-audio
 ovos-audio-plugin-simple
+ovos-tts-plugin-marytts
 ovos-tts-plugin-mimic
 ovos-tts-plugin-mimic2
 ovos-tts-plugin-mimic3-server
 ovos-workshop
 git+https://github.com/NeonGeckoCom/neon-g2p-plugin-mimic.git
+neon-tts-plugin-mozilla-remote
 neon-tts-plugin-polly
