@@ -220,6 +220,8 @@ In order to allow only the `ovos_gui` container to access to the X server, you w
 xhost +local:ovos_gui
 ```
 
+This command is not permanent, when your operating system will reboot, you will have to run the command again.
+
 `xhost` is part of the `x11-xserver-utils` package on Debian based distributions.
 
 ## FAQ
