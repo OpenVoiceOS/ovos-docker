@@ -21,6 +21,7 @@
       - [Message bus](#message-bus)
       - [Listener](#listener)
   - [How to use these images](#how-to-use-these-images)
+  - [How to update the current stack](#how-to-update-the-current-stack)
   - [Skills management](#skills-management)
     - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
     - [Skill running as standalone container](#skill-running-as-standalone-container)
@@ -155,6 +156,18 @@ docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-fil
 ```
 
 Some variables might need to be updated to match your setup/environment such as timezone, directories, etc..., please have a look into the `.env` and `.env-raspberrypi` files before running `docker compose`.
+
+## How to update the current stack
+
+The easiest way to update a stack already deployed by `docker compose` is to use `docker compose`. :relaxed:
+
+Because the `pull_policy` option of each service is set to `always`, everytime that a new image is uploaded with the same tag then `docker compose` will pull-it and re-create the container based on this new image.
+
+```bash
+docker compose up -d
+```
+
+If you want to change tag to deploy, update the `.env` file with the new value.
 
 ## Skills management
 
