@@ -246,7 +246,7 @@ This command is not permanent, when your operating system will reboot, you will 
 
 ## Debug
 
-Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the logs, all the containers will have to be restarted to receive the configuration change.
+Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the logs. All containers will have to be restarted to receive the configuration change.
 
 ```json
 {
