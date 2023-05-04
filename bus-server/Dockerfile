@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim AS build
 
-ARG BRANCH
+ARG BRANCH=master
 
 RUN apt-get update \
     && apt-get install -y git cmake gcc g++ build-essential \
