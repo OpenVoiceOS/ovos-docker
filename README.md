@@ -185,8 +185,8 @@ There are two *(2)* different ways to install a skill with Open Voice OS, each h
 The first way is to use the `skills.list` file within the `~/ovos/config/` directory, this file will act as a Python `requirements.txt` file. When the `ovos-core` container will start, it will look for this file and install the skills defined in there. These skills will have to be compatible with the `pip install` method which requires a `setup.py` file.
 
 ```ini
-ovos-skill-volume==0.0.1 # Specific skill version
-ovos-skill-stop # Latest skill version
+ovos-skill-volume==0.0.1 # Specific skill version on PyPi
+ovos-skill-stop # Latest skill version on PyPi
 git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git@fix/whatever # Specific branch of a skill on GitHub
 ```
 
