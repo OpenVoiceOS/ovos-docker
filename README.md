@@ -96,6 +96,8 @@ On modern Linux distribution, Pipewire handles the sound stack on the system, ma
 
 A quick check to see if PulseAudio is running fine anf if the user has access is to run `pactl info`, the command should return information without any error or connection refused.
 
+Remember to check the permissions of `~/.config/pulse` and `/run/user/1000`directories as well, they should belong to the user running the stack, not `root`.
+
 ## How to build these images
 
 The `base` image is the main image for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, `phal`, *etc...*
@@ -260,6 +262,18 @@ To go inside a container and run commands, run the following command:
 
 ```bash
 docker exec -ti ovos_audio sh
+```
+
+Make sure your `mycroft.conf` configuration is JSON valid by using the `jq` command.
+
+```bash
+cat ~/ovos/config/mycroft.conf | jq
+```
+
+If not valid JSON valid, `jq` will return something like this:
+
+```text
+parse error: Expected another key-value pair at line 81, column 3
 ```
 
 ## FAQ
