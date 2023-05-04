@@ -96,7 +96,7 @@ On modern Linux distribution, Pipewire handles the sound stack on the system, ma
 
 A quick check to see if PulseAudio is running fine anf if the user has access is to run `pactl info`, the command should return information without any error or connection refused.
 
-Remember to check the permissions of `~/.config/pulse` and `/run/user/1000`directories as well, they should belong to the user running the stack, not `root`.
+Remember to check the permissions of `~/.config/pulse` and `/run/user/1000` directories as well, they should belong to the user running the stack, not `root`.
 
 ## How to build these images
 
