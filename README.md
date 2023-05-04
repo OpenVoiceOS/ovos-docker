@@ -4,7 +4,7 @@
 [![Debian version](https://img.shields.io/badge/Debian-Bookworm-yellow)](https://www.debian.org)
 [![Python version](https://img.shields.io/badge/Python-3.11-orange)](https://python.org)
 [![Chat](https://img.shields.io/matrix/openvoiceos-general:matrix.org)](https://matrix.to/#/#OpenVoiceOS-general:matrix.org)
-[![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-base)](https://hub.docker.com/r/smartgic/ovos-base)
+[![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-core)](https://hub.docker.com/r/smartgic/ovos-core)
 
 - [Open Voice OS running on Docker/Podman](#open-voice-os-running-on-dockerpodman)
   - [What is Open Voice OS?](#what-is-open-voice-os)
