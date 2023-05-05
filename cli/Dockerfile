@@ -18,14 +18,16 @@ ARG USER=ovos
 USER root
 
 RUN apt-get update \
-    && apt-get install vim nano -y \
+    && apt-get install vim nano python3-dev build-essential -y \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-config PyYAML==6.0 ovos-skills-manager ovos-plugin-manager git+https://github.com/OpenVoiceOS/ovos-cli-client.git --pre; \
+    pip3 install ovos-config PyYAML==6.0 ovos-skills-manager ovos-plugin-manager git+https://github.com/OpenVoiceOS/ovos-cli-client.git neon-mana-utils --pre; \
     else \
-    pip3 install ovos-skills-manager ovos-plugin-manager ovos-cli-client; \
+    pip3 install ovos-skills-manager ovos-plugin-manager ovos-cli-client neon-mana-utils; \
     fi \
     && mkdir -p /home/${USER}/.local/state/mycroft /var/log/mycroft \
     && chown ${USER}:${USER} -R /home/${USER} /var/log/mycroft \
+    && apt-get --purge remove python3-dev build-essential -y \
+    && apt-get --purge autoremove -y \
     && apt-get clean \
     && rm -rf ${HOME}/.cache
 
