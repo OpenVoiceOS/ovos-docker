@@ -28,7 +28,7 @@ RUN apt-get update \
     else \
     pip3 install ovos-core[lgpl]; \
     fi \
-    && mkdir -p /home/${USER}/.local/share/mycroft/skills \
+    && mkdir -p /home/${USER}/.local/share/mycroft/skills /home/${USER}/nltk_data \
     && chown ${USER}:${USER} -R /home/${USER} \
     && apt-get --purge remove -y libfann-dev build-essential python3-dev \
     && apt-get --purge autoremove -y \

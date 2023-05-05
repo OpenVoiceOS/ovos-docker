@@ -11,6 +11,9 @@ volumes:
   ovos_listener_records:
     name: ovos_listener_records
     driver: local
+  ovos_nltk:
+    name: ovos_nltk
+    driver: local
 
 services:
   ovos_messagebus:
@@ -203,6 +206,7 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_nltk:/home/${OVOS_USER}/nltk_data
       - ${SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
