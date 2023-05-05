@@ -11,8 +11,8 @@ LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/comm
 LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
-ARG BRANCH_OVOS
-ARG BRANCH_MYCROFT
+ARG BRANCH_OVOS=master
+ARG BRANCH_MYCROFT=stable-qt5
 ARG USER=ovos
 
 ENV TERM linux
