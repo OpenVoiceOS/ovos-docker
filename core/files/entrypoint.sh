@@ -16,7 +16,7 @@ cd $skills_directory || exit
 # Loop over each skills into the skills directory and install
 # Python requirements if a requirements.txt file exists.
 # shellcheck disable=SC2045
-for skill in $(ls -d -- */); do
+for skill in $(ls -d -- */ 2> /dev/null); do
     cd "$skill" || exit
     if test -f requirements.txt; then
         pip3 install -r requirements.txt
