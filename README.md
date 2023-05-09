@@ -101,6 +101,8 @@ Remember to check the permissions of `~/.config/pulse` and `/run/user/1000` dire
 
 ## How to build these images
 
+**All the `Dockerfile` provided in this repository are already built and available on [Docker Hub](https://hub.docker.com/r/smartgic/ovos-core), there is no need to rebuild them except if you want to change something specific into them.**
+
 The `base` image is the main image for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, `phal`, *etc...*
 
 **Since there is not yet a stable Open Voice OS release compatible with this current container architecture, the `--build-arg ALPHA=true` is "mandatory" to build working images *(except the `ovos-gui` and `ovos-bus-server` images)*.**
@@ -156,6 +158,8 @@ chown 1000:1000 -R ~/ovos
 cd ovos-docker
 docker compose up -d
 ```
+
+The `1000` UID/GID could be different depending your system, just run the `id` command to determine your UID/GID.
 
 By default, `docker compose` will look for a `docker-compose.yml` and an `.env` files, but more files could be added to the command to extend the services configuration.
 
