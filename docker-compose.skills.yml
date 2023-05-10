@@ -129,3 +129,19 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
      - ovos_core
+
+  ovos_skill_alert:
+    container_name: ovos_skill_alert
+    hostname: ovos_skill_alert
+    restart: unless-stopped
+    image: smartgic/ovos-skill-alerts:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+     - ovos_core
