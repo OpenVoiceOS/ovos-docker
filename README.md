@@ -263,10 +263,16 @@ Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the
 }
 ```
 
-To access the logs of a container, run the following command:
+To access all the containers logs as the same time, run the following command *(make sure it matches the `docker compose` you run to deploy the stack)*:
 
 ```bash
-docker logs -f --tail 200 ovos_audio
+docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env --env-file .env-raspberrypi logs -f -n 200
+```
+
+To access the logs of a specific container, run the following command:
+
+```bash
+docker logs -f -n 200 ovos_audio
 ```
 
 To execute a command inside a container without going into it, run the following command:
