@@ -85,6 +85,8 @@ To allow data persistence, Docker/Podman volumes are required which will prevent
 
 ## Requirements
 
+For Mac OS users, please follow this [requirements](README_MACOS.md).
+
 ### Docker / Podman
 
 Docker or Podman is of course required and `docker compose`/`podman compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(this command will be embedded depending your Docker/Podman version)*.
