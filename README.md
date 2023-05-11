@@ -169,6 +169,12 @@ By default, `docker compose` will look for a `docker-compose.yml` and an `.env` 
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
 ```
 
+For Mac OS users, the file to pass to `docker compose` is `docker-compose.macos.yml`, there is no specific environement variables file.
+
+```bash
+docker compose -f docker-compose.macos.yml --env-file .env up -d
+```
+
 Some variables might need to be updated to match your setup/environment such as timezone, directories, etc..., please have a look into the `.env` and `.env-raspberrypi` files before running `docker compose`.
 
 ## How to update the current stack
