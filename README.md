@@ -85,6 +85,8 @@ To allow data persistence, Docker/Podman volumes are required which will prevent
 
 ## Requirements
 
+For Mac OS users, please follow this [requirements](README_MACOS.md).
+
 ### Docker / Podman
 
 Docker or Podman is of course required and `docker compose`/`podman compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(this command will be embedded depending your Docker/Podman version)*.
@@ -165,6 +167,12 @@ By default, `docker compose` will look for a `docker-compose.yml` and an `.env` 
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
+```
+
+For Mac OS users, the file to pass to `docker compose` is `docker-compose.macos.yml`, there is no specific environement variables file.
+
+```bash
+docker compose -f docker-compose.macos.yml --env-file .env up -d
 ```
 
 Some variables might need to be updated to match your setup/environment such as timezone, directories, etc..., please have a look into the `.env` and `.env-raspberrypi` files before running `docker compose`.

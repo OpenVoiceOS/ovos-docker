@@ -1,0 +1,191 @@
+---
+version: "3.9"
+
+volumes:
+  ovos_models:
+    name: ovos_models
+    driver: local
+  ovos_vosk:
+    name: ovos_vosk
+    driver: local
+  ovos_listener_records:
+    name: ovos_listener_records
+    driver: local
+  ovos_nltk:
+    name: ovos_nltk
+    driver: local
+
+services:
+  ovos_messagebus:
+    container_name: ovos_messagebus
+    hostname: ovos_messagebus
+    restart: unless-stopped
+    image: smartgic/ovos-messagebus:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
+
+  ########################
+  # Uncomment this service if you want to use the C++ implementation
+  # of the message bus.
+  ########################
+  # ovos_messagebus:
+  #   container_name: ovos_messagebus
+  #   hostname: ovos_messagebus
+  #   restart: unless-stopped
+  #   image: smartgic/ovos-bus-server:${VERSION}
+  #   pull_policy: always
+  #   environment:
+  #     TZ: $TZ
+  #   network_mode: host
+  #   ipc: host
+  #   volumes:
+  #     - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+  #     - ${TMP_FOLDER}:/tmp/mycroft
+
+  ovos_phal:
+    container_name: ovos_phal
+    hostname: ovos_phal
+    restart: unless-stopped
+    image: smartgic/ovos-phal:${VERSION}
+    pull_policy: always
+    environment:
+      PULSE_SERVER: docker.for.mac.host.internal
+      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      - ovos_messagebus
+
+  ovos_phal_admin:
+    container_name: ovos_phal_admin
+    hostname: ovos_phal_admin
+    restart: unless-stopped
+    image: smartgic/ovos-phal-admin:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    privileged: true
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - /dev:/dev:ro
+    depends_on:
+      - ovos_messagebus
+
+  ovos_listener:
+    container_name: ovos_listener
+    hostname: ovos_listener
+    restart: unless-stopped
+    image: smartgic/ovos-listener:${VERSION}
+    pull_policy: always
+    environment:
+      PULSE_SERVER: docker.for.mac.host.internal
+      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ovos_listener_records:/home/${OVOS_USER}/.local/share/mycroft/listener
+      - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
+      - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      - ovos_messagebus
+      - ovos_phal
+
+  ########################
+  # Uncomment this service if you want to use the Dinkum listener
+  ########################
+  # ovos_listener:
+  #   container_name: ovos_listener
+  #   hostname: ovos_listener
+  #   restart: unless-stopped
+  #   image: smartgic/ovos-listener-dinkum:${VERSION}
+  #   pull_policy: always
+  #   environment:
+  #     PULSE_SERVER: docker.for.mac.host.internal
+  #     PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
+  #     TZ: $TZ
+  #   network_mode: host
+  #   ipc: host
+  #   volumes:
+  #     - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+  #     - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+  #     - ovos_listener_records:/home/${OVOS_USER}/.local/share/mycroft/listener
+  #     - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
+  #     - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
+  #     - ${TMP_FOLDER}:/tmp/mycroft
+  #   depends_on:
+  #     - ovos_messagebus
+  #     - ovos_phal
+
+  ovos_audio:
+    container_name: ovos_audio
+    hostname: ovos_audio
+    restart: unless-stopped
+    image: smartgic/ovos-audio:${VERSION}
+    pull_policy: always
+    environment:
+      PULSE_SERVER: docker.for.mac.host.internal
+      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      - ovos_messagebus
+      - ovos_phal
+
+  ovos_core:
+    container_name: ovos_core
+    hostname: ovos_core
+    restart: unless-stopped
+    image: smartgic/ovos-core:${VERSION}
+    pull_policy: always
+    environment:
+      PULSE_SERVER: docker.for.mac.host.internal
+      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_nltk:/home/${OVOS_USER}/nltk_data
+      - ${SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      - ovos_messagebus
+      - ovos_phal
+
+  ovos_cli:
+    container_name: ovos_cli
+    hostname: ovos_cli
+    restart: unless-stopped
+    image: smartgic/ovos-cli:${VERSION}
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    ipc: host
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
