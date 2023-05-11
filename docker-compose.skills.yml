@@ -130,9 +130,9 @@ services:
     depends_on:
      - ovos_core
 
-  ovos_skill_alert:
-    container_name: ovos_skill_alert
-    hostname: ovos_skill_alert
+  ovos_skill_alerts:
+    container_name: ovos_skill_alerts
+    hostname: ovos_skill_alerts
     restart: unless-stopped
     image: smartgic/ovos-skill-alerts:${VERSION}
     pull_policy: always
