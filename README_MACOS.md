@@ -24,13 +24,15 @@ brew doctor
 
 ### Docker
 
-Docker Desktop is required in order to provide the container engine. For more information about Docker Desktop, please visit <https://www.docker.com/products/docker-desktop>.
+Even if Podman is available on Mac OS, Docker Desktop is required in order to provide the container engine. For more information about Docker Desktop, please visit <https://www.docker.com/products/docker-desktop>.
 
 Once installed and started, run the following command to ensure that Docker engine is up and running.
 
 ```bash
 docker system info
 ```
+
+*Docker Desktop doesn't start by default when Mac OS boots up.*
 
 ### PulseAudio
 
@@ -47,7 +49,7 @@ brew services stop pulseaudio
 sed -i "" "s/#load-module module-native-protocol-tcp/load-module module-native-protocol-tcp/g" $(brew ls pulseaudio | grep default.pa$)
 ```
 
-Once the `default.pa` file is edited, start the service.
+Once the `default.pa` file is edited, start the service *(the service will be started at each login)*.
 
 ```bash
 brew services start pulseaudio
@@ -87,3 +89,14 @@ was set buffer_size = 1048576
  1 - Front Right
 Time per period = 3.278807
 ```
+
+## Thanks
+
+Thanks to [@mikejgray](https://github.com/mikejgray/) and [@rushic24](https://github.com/rushic24) for helping :clap::punch:.
+
+## Support
+
+- [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
+- [Open Voice OS documentation](https://openvoiceos.github.io/community-docs/)
+- [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
+- [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)
