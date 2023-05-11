@@ -81,7 +81,6 @@ services:
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
-      - /sys:/sys:ro
       - /dev:/dev:ro
     depends_on:
       - ovos_messagebus
