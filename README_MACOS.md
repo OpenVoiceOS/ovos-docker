@@ -1,5 +1,15 @@
 # Open Voice OS running on Mac OS with Docker
 
+- [Open Voice OS running on Mac OS with Docker](#open-voice-os-running-on-mac-os-with-docker)
+  - [Limitations](#limitations)
+  - [Requirements](#requirements)
+    - [Brew](#brew)
+    - [Docker](#docker)
+    - [PulseAudio](#pulseaudio)
+  - [How to use these images](#how-to-use-these-images)
+  - [Thanks](#thanks)
+  - [Support](#support)
+
 ## Limitations
 
 Because Open Voice OS was designed to run on Linux operating system, some limitations exist on Mac OS.
@@ -89,6 +99,10 @@ was set buffer_size = 1048576
  1 - Front Right
 Time per period = 3.278807
 ```
+
+## How to use these images
+
+Please refer to [this section](README.md#how-to-use-these-images) of the documentation.
 
 ## Thanks
 
