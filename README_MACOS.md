@@ -100,6 +100,18 @@ was set buffer_size = 1048576
 Time per period = 3.278807
 ```
 
+In case of issues, you could have a look to the PulseAudio log file.
+
+- Apple Silicon based: `cat /opt/homebrew/var/log/pulseaudio.log`
+- Intel based: `cat /usr/local/var/log/pulseaudio.log`
+
+Check for lines starting with `E:`, like:
+
+```text
+E: [] socket-server.c: bind(): Address already in use
+E: [] module.c: Failed to load module "module-esound-protocol-unix" (argument: ""): initialization failed.
+```
+
 ## How to use these images
 
 Please refer to [this section](README.md#how-to-use-these-images) of the documentation.
