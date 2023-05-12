@@ -22,7 +22,7 @@ Because Open Voice OS was designed to run on Linux operating system, some limita
 
 ### Brew
 
-In order to run Open Voice OS on Mac OS, some component such as PulseAudio or DBus are required. Because these components come from the Linux ecosystem, `brew` package manager will be a requirement to install them.
+In order to run Open Voice OS on Mac OS, some components such as PulseAudio or DBus are required. Because these components come from the Linux ecosystem, `brew` package manager will be a requirement to install them.
 
 For more information about Homebrew and how to install it, please read the [documentation](https://brew.sh/).
 
@@ -98,6 +98,18 @@ was set buffer_size = 1048576
  0 - Front Left
  1 - Front Right
 Time per period = 3.278807
+```
+
+In case of issues, you could have a look to the PulseAudio log file.
+
+- Apple Silicon based: `cat /opt/homebrew/var/log/pulseaudio.log`
+- Intel based: `cat /usr/local/var/log/pulseaudio.log`
+
+Check for lines starting with `E:`, like:
+
+```text
+E: [] socket-server.c: bind(): Address already in use
+E: [] module.c: Failed to load module "module-esound-protocol-unix" (argument: ""): initialization failed.
 ```
 
 ## How to use these images
