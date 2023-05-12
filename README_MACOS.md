@@ -22,7 +22,7 @@ Because Open Voice OS was designed to run on Linux operating system, some limita
 
 ### Brew
 
-In order to run Open Voice OS on Mac OS, some component such as PulseAudio or DBus are required. Because these components come from the Linux ecosystem, `brew` package manager will be a requirement to install them.
+In order to run Open Voice OS on Mac OS, some components such as PulseAudio or DBus are required. Because these components come from the Linux ecosystem, `brew` package manager will be a requirement to install them.
 
 For more information about Homebrew and how to install it, please read the [documentation](https://brew.sh/).
 
