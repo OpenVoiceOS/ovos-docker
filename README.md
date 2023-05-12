@@ -1,6 +1,6 @@
 # Open Voice OS running on Docker/Podman
 
-[![Open Voice OS version](https://img.shields.io/badge/OpenVoiceOS-0.0.8-blue)](https://openvoiceos.com/)
+[![Open Voice OS version](https://img.shields.io/badge/OpenVoiceOS-0.0.8a-blue)](https://openvoiceos.com/)
 [![Debian version](https://img.shields.io/badge/Debian-Bookworm-yellow)](https://www.debian.org)
 [![Python version](https://img.shields.io/badge/Python-3.11-orange)](https://python.org)
 [![Chat](https://img.shields.io/matrix/openvoiceos-general:matrix.org)](https://matrix.to/#/#OpenVoiceOS-general:matrix.org)
