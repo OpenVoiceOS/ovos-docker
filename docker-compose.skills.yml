@@ -6,7 +6,7 @@ services:
     container_name: ovos_skill_wikipedia
     hostname: ovos_skill_wikipedia
     restart: unless-stopped
-    image: smartgic/ovos-skill-wikipedia:${VERSION}
+    image: docker.io/smartgic/ovos-skill-wikipedia:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -22,7 +22,7 @@ services:
     container_name: ovos_skill_weather
     hostname: ovos_skill_weather
     restart: unless-stopped
-    image: smartgic/ovos-skill-weather:${VERSION}
+    image: docker.io/smartgic/ovos-skill-weather:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -38,7 +38,7 @@ services:
     container_name: ovos_skill_volume
     hostname: ovos_skill_volume
     restart: unless-stopped
-    image: smartgic/ovos-skill-volume:${VERSION}
+    image: docker.io/smartgic/ovos-skill-volume:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -54,7 +54,7 @@ services:
     container_name: ovos_skill_date_time
     hostname: ovos_skill_date_time
     restart: unless-stopped
-    image: smartgic/ovos-skill-date-time:${VERSION}
+    image: docker.io/smartgic/ovos-skill-date-time:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -70,7 +70,7 @@ services:
     container_name: ovos_skill_stop
     hostname: ovos_skill_stop
     restart: unless-stopped
-    image: smartgic/ovos-skill-stop:${VERSION}
+    image: docker.io/smartgic/ovos-skill-stop:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -86,7 +86,7 @@ services:
     container_name: ovos_skill_personal
     hostname: ovos_skill_personal
     restart: unless-stopped
-    image: smartgic/ovos-skill-personal:${VERSION}
+    image: docker.io/smartgic/ovos-skill-personal:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -102,7 +102,7 @@ services:
     container_name: ovos_skill_fallback_unknown
     hostname: ovos_skill_fallback_unknown
     restart: unless-stopped
-    image: smartgic/ovos-skill-fallback-unknown:${VERSION}
+    image: docker.io/smartgic/ovos-skill-fallback-unknown:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -118,7 +118,7 @@ services:
     container_name: ovos_skill_hello_world
     hostname: ovos_skill_hello_world
     restart: unless-stopped
-    image: smartgic/ovos-skill-hello-world:${VERSION}
+    image: docker.io/smartgic/ovos-skill-hello-world:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -134,7 +134,7 @@ services:
     container_name: ovos_skill_alerts
     hostname: ovos_skill_alerts
     restart: unless-stopped
-    image: smartgic/ovos-skill-alerts:${VERSION}
+    image: docker.io/smartgic/ovos-skill-alerts:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ

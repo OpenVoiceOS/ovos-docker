@@ -20,7 +20,7 @@ services:
     container_name: ovos_messagebus
     hostname: ovos_messagebus
     restart: unless-stopped
-    image: smartgic/ovos-messagebus:${VERSION}
+    image: docker.io/smartgic/ovos-messagebus:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -38,7 +38,7 @@ services:
   #   container_name: ovos_messagebus
   #   hostname: ovos_messagebus
   #   restart: unless-stopped
-  #   image: smartgic/ovos-bus-server:${VERSION}
+  #   image: docker.io/smartgic/ovos-bus-server:${VERSION}
   #   pull_policy: always
   #   environment:
   #     TZ: $TZ
@@ -52,7 +52,7 @@ services:
     container_name: ovos_gui_websocket
     hostname: ovos_gui_websocket
     restart: unless-stopped
-    image: smartgic/ovos-gui-websocket:${VERSION}
+    image: docker.io/smartgic/ovos-gui-websocket:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -68,7 +68,7 @@ services:
     container_name: ovos_phal
     hostname: ovos_phal
     restart: unless-stopped
-    image: smartgic/ovos-phal:${VERSION}
+    image: docker.io/smartgic/ovos-phal:${VERSION}
     pull_policy: always
     environment:
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
@@ -90,7 +90,7 @@ services:
     container_name: ovos_phal_admin
     hostname: ovos_phal_admin
     restart: unless-stopped
-    image: smartgic/ovos-phal-admin:${VERSION}
+    image: docker.io/smartgic/ovos-phal-admin:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
@@ -109,7 +109,7 @@ services:
     container_name: ovos_listener
     hostname: ovos_listener
     restart: unless-stopped
-    image: smartgic/ovos-listener:${VERSION}
+    image: docker.io/smartgic/ovos-listener:${VERSION}
     pull_policy: always
     environment:
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
@@ -138,7 +138,7 @@ services:
   #   container_name: ovos_listener
   #   hostname: ovos_listener
   #   restart: unless-stopped
-  #   image: smartgic/ovos-listener-dinkum:${VERSION}
+  #   image: docker.io/smartgic/ovos-listener-dinkum:${VERSION}
   #   pull_policy: always
   #   environment:
   #     PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
@@ -164,7 +164,7 @@ services:
     container_name: ovos_audio
     hostname: ovos_audio
     restart: unless-stopped
-    image: smartgic/ovos-audio:${VERSION}
+    image: docker.io/smartgic/ovos-audio:${VERSION}
     pull_policy: always
     environment:
       DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
@@ -189,7 +189,7 @@ services:
     container_name: ovos_core
     hostname: ovos_core
     restart: unless-stopped
-    image: smartgic/ovos-core:${VERSION}
+    image: docker.io/smartgic/ovos-core:${VERSION}
     pull_policy: always
     environment:
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
@@ -214,7 +214,7 @@ services:
     container_name: ovos_gui
     hostname: ovos_gui
     restart: unless-stopped
-    image: smartgic/ovos-gui:${VERSION}
+    image: docker.io/smartgic/ovos-gui:${VERSION}
     pull_policy: always
     environment:
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
@@ -243,7 +243,7 @@ services:
     container_name: ovos_cli
     hostname: ovos_cli
     restart: unless-stopped
-    image: smartgic/ovos-cli:${VERSION}
+    image: docker.io/smartgic/ovos-cli:${VERSION}
     pull_policy: always
     environment:
       TZ: $TZ
