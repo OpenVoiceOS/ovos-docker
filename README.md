@@ -87,19 +87,55 @@ To allow data persistence, Docker/Podman volumes are required which will prevent
 
 For Mac OS users, please follow this [requirements](README_MACOS.md).
 
-### Docker / Podman
+### Docker/Podman
 
-Docker or Podman is of course required and `docker compose`/`podman compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(this command will be embedded depending your Docker/Podman version)*.
+Docker or Podman *(rootless)* is of course required and `docker compose`/`podman-compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(for Docker this command will be embedded depending version, for Podman, the `podman-compose` command comes from a different package)*.
+
+This is what looks like the container creation via `podman run` command for one container *(when not using `podman-compose`)*...
+
+```bash
+podman run \
+  --name=ovos_listener \
+  -d \
+  --requires=ovos_messagebus,ovos_phal \
+  --security-opt label=disable \
+  --label io.podman.compose.config-hash=056f36a6c3697f2c85d5165a67732ddbf9e3932633430783a597037805f268ff \
+  --label io.podman.compose.project=ovos-docker \
+  --label io.podman.compose.version=1.0.6 \
+  --label PODMAN_SYSTEMD_UNIT=podman-compose@ovos-docker.service \
+  --label com.docker.compose.project=ovos-docker \
+  --label com.docker.compose.project.working_dir=/home/goldyfruit/Development/OpenVoiceOS/ovos-docker \
+  --label com.docker.compose.project.config_files=docker-compose.yml,docker-compose.skills.yml \
+  --label com.docker.compose.container-number=1 \
+  --label com.docker.compose.service=ovos_listener \
+  --device /dev/snd \
+  -e PULSE_SERVER=unix:/run/user/1000/pulse/native \
+  -e PULSE_COOKIE=/home/ovos/.config/pulse/cookie \
+  -e TZ=America/Montreal \
+  -v /home/goldyfruit/.config/pulse/cookie:/home/ovos/.config/pulse/cookie:ro \
+  -v /home/goldyfruit/ovos/config:/home/ovos/.config/mycroft:ro \
+  -v ovos_listener_records:/home/ovos/.local/share/mycroft/listener \
+  -v ovos_models:/home/ovos/.local/share/precise-lite \
+  -v ovos_vosk:/home/ovos/.local/share/vosk \
+  -v /home/goldyfruit/ovos/tmp:/tmp/mycroft \
+  -v /run/user/1000/pulse:/run/user/1000/pulse:ro \
+  --network host \
+  --userns keep-id \
+  --hostname ovos_listener \
+  --pull always \
+  --restart unless-stopped \
+  docker.io/smartgic/ovos-listener:alpha
+```
 
 ### PulseAudio
 
 PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow as well the containers to use the microphone and speakers.
 
-On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers has to be part of the `audio` system group.
+On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers has to be part of the `audio` system group *(depending the Linux distribution)*.
 
 A quick check to see if PulseAudio is running fine anf if the user has access is to run `pactl info`, the command should return information without any error or connection refused.
 
-Remember to check the permissions of `~/.config/pulse` and `/run/user/1000` directories as well, they should belong to the user running the stack, not `root`.
+Remember to check the permissions of `~/.config/pulse` and `/run/user/1000` directories as well, they should belong to the user running the stack, not `root`!
 
 ## How to build these images
 
@@ -151,7 +187,7 @@ Pre-build images are already available [here](https://hub.docker.com/u/smartgic)
 
 ## How to use these images
 
-`docker-compose.yml` files provides an easy way to provision the container stack *(volumes and services)* with the required configuration for each of them. `docker compose` supports environment file, check the `.env` *(`.env-raspberrypi` for Raspberry Pi)* files.
+`docker-compose.yml` files provides an easy way to provision the container stack *(volumes and services)* with the required configuration for each of them. `docker compose`/`podman-compose` supports environment file, check the `.env` *(`.env-raspberrypi` for Raspberry Pi)* files.
 
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
@@ -159,20 +195,26 @@ mkdir -p ~/ovos/{config,share,tmp}
 chown 1000:1000 -R ~/ovos
 cd ovos-docker
 docker compose up -d
+  # Or:
+podman-compose up -d
 ```
 
 The `1000` UID/GID could be different depending your system, just run the `id` command to determine your UID/GID.
 
-By default, `docker compose` will look for a `docker-compose.yml` and an `.env` files, but more files could be added to the command to extend the services configuration.
+By default, `docker compose`/`podman-compose` will look for a `docker-compose.yml` and an `.env` files, but more files could be added to the command to extend the services configuration.
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
+  # Or:
+podman-compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
 ```
 
 For Mac OS users, the file to pass to `docker compose` is `docker-compose.macos.yml`, there is no specific environement variables file.
 
 ```bash
 docker compose -f docker-compose.macos.yml --env-file .env up -d
+  # Or:
+podman-compose -f docker-compose.macos.yml --env-file .env up -d
 ```
 
 Some variables might need to be updated to match your setup/environment such as timezone, directories, etc..., please have a look into the `.env` and `.env-raspberrypi` files before running `docker compose`.
@@ -185,6 +227,8 @@ Because the `pull_policy` option of each service is set to `always`, everytime t
 
 ```bash
 docker compose up -d
+  # Or:
+podman-compose up -d
 ```
 
 If you want to change tag to deploy, update the `.env` file with the new value.
@@ -217,6 +261,8 @@ Few skills are already build [here](https://hub.docker.com/u/smartgic) and a `do
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
+  # Or:
+podman-compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 ```
 
 If the `ovos_core` container is deleted, the skill will remained available until the `ovos_core` container comes back.
@@ -227,12 +273,16 @@ The command line allows a user to send message directly but not only to the bus 
 
 ```bash
 docker exec -ti ovos_cli ovos-cli-client
+  # Or:
+podman exec -ti ovos_cli ovos-cli-client
 ```
 
 To display or manage the current configuration, the `ovos-config` command could be used.
 
 ```bash
 docker exec -ti ovos_cli ovos-config show
+  # Or:
+podman exec -ti ovos_cli ovos-config show
 ```
 
 `vim` and `nano` editors are available within the `ovos-cli` image, `vim` as be set as default.
@@ -241,6 +291,8 @@ An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
 
 ```bash
 docker exec -ti ovos_cli ovos-speak "hello world"
+  # Or:
+podman exec -ti ovos_cli ovos-speak "hello world"
 ```
 
 ## Open Voice OS GUI
@@ -274,25 +326,33 @@ Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the
 To access all the containers logs as the same time, run the following command *(make sure it matches the `docker compose` you run to deploy the stack)*:
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env --env-file .env-raspberrypi logs -f -n 200
+docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env --env-file .env-raspberrypi logs -f --tail 200
+  # Or:
+podman-compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env --env-file .env-raspberrypi logs -n -f --tail 200
 ```
 
 To access the logs of a specific container, run the following command:
 
 ```bash
-docker logs -f -n 200 ovos_audio
+docker logs -f --tail 200 ovos_audio
+  # Or:
+podman logs -f --tail 200 ovos_audio
 ```
 
 To execute a command inside a container without going into it, run the following command:
 
 ```bash
 docker exec -ti ovos_audio pactl info
+  # Or:
+podman exec -ti ovos_audio pactl info
 ```
 
 To go inside a container and run commands, run the following command:
 
 ```bash
 docker exec -ti ovos_audio sh
+  # Or:
+podman exec -ti ovos_audio sh
 ```
 
 Make sure your `mycroft.conf` configuration is JSON valid by using the `jq` command.
