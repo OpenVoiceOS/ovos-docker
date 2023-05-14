@@ -1,8 +1,14 @@
 ---
 version: "3.9"
 
+x-podman-function: &podman-function
+  userns_mode: keep-id
+  security_opt:
+    - "label=disable"
+
 services:
   ovos_skill_wikipedia:
+    <<: *podman-function
     container_name: ovos_skill_wikipedia
     hostname: ovos_skill_wikipedia
     restart: unless-stopped
@@ -19,6 +25,7 @@ services:
      - ovos_core
 
   ovos_skill_weather:
+    <<: *podman-function
     container_name: ovos_skill_weather
     hostname: ovos_skill_weather
     restart: unless-stopped
@@ -35,6 +42,7 @@ services:
      - ovos_core
 
   ovos_skill_volume:
+    <<: *podman-function
     container_name: ovos_skill_volume
     hostname: ovos_skill_volume
     restart: unless-stopped
@@ -51,6 +59,7 @@ services:
      - ovos_core
 
   ovos_skill_date_time:
+    <<: *podman-function
     container_name: ovos_skill_date_time
     hostname: ovos_skill_date_time
     restart: unless-stopped
@@ -67,6 +76,7 @@ services:
      - ovos_core
 
   ovos_skill_stop:
+    <<: *podman-function
     container_name: ovos_skill_stop
     hostname: ovos_skill_stop
     restart: unless-stopped
@@ -83,6 +93,7 @@ services:
      - ovos_core
 
   ovos_skill_personal:
+    <<: *podman-function
     container_name: ovos_skill_personal
     hostname: ovos_skill_personal
     restart: unless-stopped
@@ -99,6 +110,7 @@ services:
      - ovos_core
 
   ovos_skill_fallback_unknown:
+    <<: *podman-function
     container_name: ovos_skill_fallback_unknown
     hostname: ovos_skill_fallback_unknown
     restart: unless-stopped
@@ -115,6 +127,7 @@ services:
      - ovos_core
 
   ovos_skill_hello_world:
+    <<: *podman-function
     container_name: ovos_skill_hello_world
     hostname: ovos_skill_hello_world
     restart: unless-stopped
@@ -131,6 +144,7 @@ services:
      - ovos_core
 
   ovos_skill_alerts:
+    <<: *podman-function
     container_name: ovos_skill_alerts
     hostname: ovos_skill_alerts
     restart: unless-stopped
