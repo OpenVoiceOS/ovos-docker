@@ -1,4 +1,4 @@
-# Open Voice OS running on Docker/Podman
+# Open Voice OS running on Docker or Podman
 
 [![Open Voice OS version](https://img.shields.io/badge/OpenVoiceOS-0.0.8a-blue)](https://openvoiceos.com/)
 [![Debian version](https://img.shields.io/badge/Debian-Bookworm-yellow)](https://www.debian.org)
@@ -6,14 +6,14 @@
 [![Chat](https://img.shields.io/matrix/openvoiceos-general:matrix.org)](https://matrix.to/#/#OpenVoiceOS-general:matrix.org)
 [![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-core)](https://hub.docker.com/r/smartgic/ovos-core)
 
-- [Open Voice OS running on Docker/Podman](#open-voice-os-running-on-dockerpodman)
+- [Open Voice OS running on Docker or Podman](#open-voice-os-running-on-docker-or-podman)
   - [What is Open Voice OS?](#what-is-open-voice-os)
-  - [How does it work with Docker/Podman?](#how-does-it-work-with-dockerpodman)
+  - [How does it work with Docker or Podman?](#how-does-it-work-with-docker-or-podman)
   - [Supported architectures and tags](#supported-architectures-and-tags)
     - [Architectures](#architectures)
     - [Tags](#tags)
   - [Requirements](#requirements)
-    - [Docker / Podman](#docker--podman)
+    - [Docker or Podman](#docker-or-podman)
     - [PulseAudio](#pulseaudio)
   - [How to build these images](#how-to-build-these-images)
     - [Arguments](#arguments)
@@ -39,14 +39,14 @@
 
 More information about Open Voice OS genesis [here](https://openvoiceos.com/a-brief-history-of-open-voice-os/).
 
-## How does it work with Docker/Podman?
+## How does it work with Docker or Podman?
 
 Open Voice OS is a complex piece of software which has several core components. These core components have been split into containers to provide a better isolation and a microservice approach.
 
 | Container            | Description                                                                                                                    |
 | ---                  | ---                                                                                                                            |
 | `ovos_messagebus`    | Message bus service, the nervous system of Open Voice OS                                                                       |
-| `ovos_phal`          | PHAL is the Platform/Hardware Abstraction Layer, it completely replaces the concept of hardcoded enclosure from `mycroft-core` |
+| `ovos_phal`          | PHAL is the Platform Hardware Abstraction Layer, it completely replaces the concept of hardcoded enclosure from `mycroft-core` |
 | `ovos_phal_admin`    | This service is intended for handling any OS-level interactions requiring escalation of privileges                             |
 | `ovos_audio`         | The audio service handles playback and queueing of tracks                                                                      |
 | `ovos_listener`      | The speech client is responsible for loading STT, VAD and Wake Word plugins                                                    |
@@ -55,7 +55,7 @@ Open Voice OS is a complex piece of software which has several core components. 
 | `ovos_gui_websocket` | Websocket process to handle messages for the Open Voice OS GUI                                                                 |
 | `ovos_gui`           | Open Voice OS graphical user interface                                                                                         |
 
-To allow data persistence, Docker/Podman volumes are required which will prevent to download requirements everytime that the containers are re-created.
+To allow data persistence, Docker or Podman volumes are required which will prevent to download the requirements everytime the containers are re-created.
 
 | Volume                  | Description                                      |
 | ---                     | ---                                              |
@@ -64,7 +64,7 @@ To allow data persistence, Docker/Podman volumes are required which will prevent
 | `ovos_nltk`             | Punkt package required by NLTK                   |
 | `ovos_vosk`             | Data downloaded by VOSK during the initial boot  |
 
-`ovos_listener_records` will allow you to retrieve recorded wake words which could help you to build or improve models. By default, the recording feature is disabled, `"record_wake_words": true` and `"save_utterances": true` will have to be added to the `listener` section of `mycroft.conf` to enable these capabilities.
+`ovos_listener_records` will allow you to retrieve recorded wake words which could help you to build or improve models. By default, the recording features are disabled, `"record_wake_words": true` and `"save_utterances": true` will have to be added to the `listener` section of `mycroft.conf` to enable these capabilities.
 
 ## Supported architectures and tags
 
@@ -85,13 +85,13 @@ To allow data persistence, Docker/Podman volumes are required which will prevent
 
 ## Requirements
 
-For Mac OS users, please follow this [requirements](README_MACOS.md).
+For Mac OS users, please follow this [requirements](README_MACOS.md) before going further.
 
-### Docker/Podman
+### Docker or Podman
 
-Docker or Podman *(rootless)* is of course required and `docker compose`/`podman-compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(for Docker this command will be embedded depending version, for Podman, the `podman-compose` command comes from a different package)*.
+Docker or Podman *(rootless)* is of course required and `docker compose` or `podman-compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(for Docker, this command will be embedded depending the version, for Podman, `podman-compose` command comes from a different package)*.
 
-This is what looks like the container creation via `podman run` command for one container *(when not using `podman-compose`)*...
+This is what looks like the container creation via `podman run` *(it will be very similar with Docker)* command for one container only *(when not using `podman-compose`)*.
 
 ```bash
 podman run \
@@ -129,32 +129,31 @@ podman run \
 
 ### PulseAudio
 
-PulseAudio is a requirement and has to be up and running on the host to expose a socket and a cookie and to allow as well the containers to use the microphone and speakers.
+PulseAudio is a requirement and has to be up and running on the host to expose a socket *(for communication)* and a cookie *(for authentication)* to allow the containers to have access to the microphone and speakers.
 
-On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers has to be part of the `audio` system group *(depending the Linux distribution)*.
+On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers could have to be part of the `audio` system group *(depending the Linux distribution)*.
 
-A quick check to see if PulseAudio is running fine anf if the user has access is to run `pactl info`, the command should return information without any error or connection refused.
-
-Remember to check the permissions of `~/.config/pulse` and `/run/user/1000` directories as well, they should belong to the user running the stack, not `root`!
+The `pactl info` command should return information without any error or connection refused. Remember to check the permissions of `~/.config/pulse` and `/run/user/1000` directories as well, they should belong to the user running the stack, not `root`.
 
 ## How to build these images
 
-**All the `Dockerfile` provided in this repository are already built and available on [Docker Hub](https://hub.docker.com/r/smartgic/ovos-core), there is no need to rebuild them except if you want to change something specific into them.**
+The `base` image is the main layer for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, `phal`, *etc...*
 
-The `base` image is the main image for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, `phal`, *etc...*
-
-**Since there is not yet a stable Open Voice OS release compatible with this current container architecture, the `--build-arg ALPHA=true` is "mandatory" to build working images *(except the `ovos-gui` and `ovos-bus-server` images)*.**
+**Since there is not yet any stable Open Voice OS release compatible with the current container architecture, the `--build-arg ALPHA=true` is "mandatory" to build working images *(except the `ovos-gui` and `ovos-bus-server` images)*.**
 
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
 cd ovos-docker
 docker buildx build base/ -t smartgic/ovos-base:alpha --build-arg ALPHA=true --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --no-cache
 docker buildx build gui/ -t smartgic/ovos-gui:alpha --build-arg BRANCH_OVOS=master --build-arg BRANCH_MYCROFT=stable-qt5 --no-cache
+  # Or:
+podman buildx build base/ -t smartgic/ovos-base:alpha --build-arg ALPHA=true --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --no-cache
+podman buildx build gui/ -t smartgic/ovos-gui:alpha --build-arg BRANCH_OVOS=master --build-arg BRANCH_MYCROFT=stable-qt5 --no-cache
 ```
 
 ### Arguments
 
-There are few arguments available that could be used during the image build process.
+There are a list of arguments available that could be used during the image build process.
 
 | Name             | Value                              | Default      | Description                                                      |
 | ---              | ---                                | ---          | ---                                                              |
@@ -172,7 +171,7 @@ Open Voice OS provides two *(2)* different implementations for the bus as well a
 #### Message bus
 
 - `ovos-messagebus` image which is a Python implementation *(default)*
-- `ovos-bus-server` image which is a C++ implementation *(better performances but lack of configuration)*
+- `ovos-bus-server` image which is a C++ implementation *(better performances but lack of configuration as it doesn't support `mycroft.conf` yet)*
 
 #### Listener
 
@@ -183,25 +182,23 @@ Open Voice OS provides two *(2)* different implementations for the bus as well a
 
 Thirteen *(13)* images needs to be build; `ovos-base`, `ovos-listener` or `ovos-listener-dinkum`, `ovos-core`, `ovos-cli`, `ovos-messagebus` or `ovos-bus-server`, `ovos-phal`, `ovos-phal-admin`, `ovos-sound-base`, `ovos-audio`, `ovos-gui` and `ovos-gui-websocket`.
 
-Pre-build images are already available [here](https://hub.docker.com/u/smartgic) and are the default referenced with the `docker-compose.yml` and `docker-compose.skills.yml` files.
+Pre-build images are already available [here](https://hub.docker.com/u/smartgic) and are the default referenced with the `docker-compose.*.yml` files.
 
 ## How to use these images
 
-`docker-compose.yml` files provides an easy way to provision the container stack *(volumes and services)* with the required configuration for each of them. `docker compose`/`podman-compose` supports environment file, check the `.env` *(`.env-raspberrypi` for Raspberry Pi)* files.
+`docker-compose.yml` files provides an easy way to provision the container stack *(volumes and services)* with the required configuration for each of them. `docker compose` or `podman-compose` both support environment files, check the `.env` *(`.env-raspberrypi` for Raspberry Pi)* file.
 
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
 mkdir -p ~/ovos/{config,share,tmp}
-chown 1000:1000 -R ~/ovos
+chown ${USER}:${USER} -R ~/ovos
 cd ovos-docker
 docker compose up -d
   # Or:
 podman-compose up -d
 ```
 
-The `1000` UID/GID could be different depending your system, just run the `id` command to determine your UID/GID.
-
-By default, `docker compose`/`podman-compose` will look for a `docker-compose.yml` and an `.env` files, but more files could be added to the command to extend the services configuration.
+By default, `docker compose` or `podman-compose` will look for a `docker-compose.yml` and an `.env` file, but more files could be added to the command to extend the services configuration and the environment as well.
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
@@ -209,7 +206,7 @@ docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-fil
 podman-compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
 ```
 
-For Mac OS users, the file to pass to `docker compose` is `docker-compose.macos.yml`, there is no specific environement variables file.
+For Mac OS users, the file to pass to `docker compose` or `podman-compose` is `docker-compose.macos.yml`, there is no specific environment variable file.
 
 ```bash
 docker compose -f docker-compose.macos.yml --env-file .env up -d
@@ -217,13 +214,13 @@ docker compose -f docker-compose.macos.yml --env-file .env up -d
 podman-compose -f docker-compose.macos.yml --env-file .env up -d
 ```
 
-Some variables might need to be updated to match your setup/environment such as timezone, directories, etc..., please have a look into the `.env` and `.env-raspberrypi` files before running `docker compose`.
+Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`.
 
 ## How to update the current stack
 
-The easiest way to update a stack already deployed by `docker compose` is to use `docker compose`. :relaxed:
+The easiest way to update a stack already deployed by `docker compose` or `podman-compose` is to use `docker compose` or `podman-compose`. :relaxed:
 
-Because the `pull_policy` option of each service is set to `always`, everytime that a new image is uploaded with the same tag then `docker compose` will pull-it and re-create the container based on this new image.
+Because the `pull_policy` option of each service is set to `always`, everytime that a new image is uploaded with the same tag then `docker compose` or `podman-compose` will pull-it and re-create the container based on this new image.
 
 ```bash
 docker compose up -d
@@ -231,15 +228,15 @@ docker compose up -d
 podman-compose up -d
 ```
 
-If you want to change tag to deploy, update the `.env` file with the new value.
+If you want to change the tag to deploy, update the `.env` file with the new value.
 
 ## Skills management
 
-There are two *(2)* different ways to install a skill with Open Voice OS, each having pros and cons.
+There are two *(2)* different ways to install an Open Voice OS skill, each having pros and cons.
 
 ### Skill running inside ovos-core container
 
-The first way is to use the `skills.list` file within the `~/ovos/config/` directory, this file will act as a Python `requirements.txt` file. When the `ovos-core` container will start, it will look for this file and install the skills defined in there. These skills will have to be compatible with the `pip install` method which requires a `setup.py` file.
+The first way is to use the `skills.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos-core` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
 ```ini
 ovos-skill-volume==0.0.1 # Specific skill version on PyPi
@@ -247,17 +244,17 @@ ovos-skill-stop # Latest skill version on PyPi
 git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git@fix/whatever # Specific branch of a skill on GitHub
 ```
 
-If the `ovos-core` container is wiped for any reason, the skill(s) will be reinstalled automatically.
+If the `ovos-core` container is wiped for any reason, the skill(s) will be reinstalled automatically but the skill configurations will not be erased.
 
-The advantage is the simplicity but the cost will be more Python dependancies *(libraries)* within the `ovos-core` container and potential conflicts across versions.
+The main advantage is the simplicity, but the downside will be more Python dependancies *(libraries)* within the `ovos-core` container and potential conflicts across them.
 
 ### Skill running as standalone container
 
-The second way is to leverage the `ovos-workshop` component by running a skill as standalone. This means that the skill will not be part of the same container as `ovos-core` but it will be running inside it's own container.
+The second way is to leverage the `ovos-workshop` component by running a skill as standalone. This means the skill will not be part as `ovos-core` container but it will be running inside it's own container.
 
-The advantage is that each skill are isolated which provide more flexibility about Python libraries version, packages, etc... and more security but the downside will be that more system resources will be consumed and a container image has to be build.
+The advantage is that each skill are isolated which provide more flexibility about Python libraries, packages, *etc...* and more security but the downside will be that more system resources will be consumed and a container image has to be build.
 
-Few skills are already build [here](https://hub.docker.com/u/smartgic) and a `docker-compose.skills.yml` file is available. Run the following command to install the skills in there as containers.
+Few skills are already available on [here](https://hub.docker.com/u/smartgic) as well as a `docker-compose.skills.yml` file. Run the following command to install the pre-build containers.
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
@@ -265,7 +262,7 @@ docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 podman-compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 ```
 
-If the `ovos_core` container is deleted, the skill will remained available until the `ovos_core` container comes back.
+If `ovos_core` container is deleted, the skill will remained available until the `ovos_core` container comes back.
 
 ## Open Voice OS CLI
 
@@ -285,7 +282,7 @@ docker exec -ti ovos_cli ovos-config show
 podman exec -ti ovos_cli ovos-config show
 ```
 
-`vim` and `nano` editors are available within the `ovos-cli` image, `vim` as be set as default.
+`vim` and `nano` editors are available within the `ovos-cli` image, `vim` as been set as default.
 
 An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
 
@@ -297,9 +294,9 @@ podman exec -ti ovos_cli ovos-speak "hello world"
 
 ## Open Voice OS GUI
 
-The Open Voice OS GUI is available with the Open Voice OS Shell layer on top of it. **This container still under some development** mostly because of the skill's QML files not been shared between `ovos_gui` container and `ovos_skill_*` containers.
+The Open Voice OS GUI is available with the Open Voice OS Shell layer on top of it. **This container still under some development** mostly because of the skill's QML files are not been shared between `ovos_gui` container and `ovos_skill_*` containers.
 
-In order to allow only the `ovos_gui` container to access to the X server, you will have to allow this container to connect to X.
+In order to allow only the `ovos_gui` container to access to the X server, you will have to allow the container to connect to X.
 
 ```bash
 xhost +local:ovos_gui
@@ -323,7 +320,7 @@ Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the
 }
 ```
 
-To access all the containers logs as the same time, run the following command *(make sure it matches the `docker compose` you run to deploy the stack)*:
+To access all the container logs as the same time, run the following command *(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)*:
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env --env-file .env-raspberrypi logs -f --tail 200
@@ -347,7 +344,7 @@ docker exec -ti ovos_audio pactl info
 podman exec -ti ovos_audio pactl info
 ```
 
-To go inside a container and run commands, run the following command:
+To go inside a container and run multiple commands, run the following command *(where `sh` is the available shell in there)*:
 
 ```bash
 docker exec -ti ovos_audio sh
@@ -355,13 +352,13 @@ docker exec -ti ovos_audio sh
 podman exec -ti ovos_audio sh
 ```
 
-Make sure your `mycroft.conf` configuration is JSON valid by using the `jq` command.
+Make sure `mycroft.conf` configuration file is JSON valid by using the `jq` command.
 
 ```bash
 cat ~/ovos/config/mycroft.conf | jq
 ```
 
-If not valid JSON valid, `jq` will return something like this:
+If the configuration file is not valid JSON, `jq` will return something like this:
 
 ```text
 parse error: Expected another key-value pair at line 81, column 3
