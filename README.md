@@ -198,12 +198,12 @@ docker compose up -d
 podman-compose up -d
 ```
 
-By default, `docker compose` or `podman-compose` will look for a `docker-compose.yml` and an `.env` file, but more files could be added to the command to extend the services configuration and the environment as well.
+By default, `docker compose` or `podman-compose` will look for a `docker-compose.yml` and an `.env` file, but more files could be added to the command to extend the services configuration. **`podman-compose` supports for now only one environment file.**
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
+docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env-raspberrypi up -d
   # Or:
-podman-compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env --env-file .env-raspberrypi up -d
+podman-compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env-raspberrypi up -d
 ```
 
 For Mac OS users, the file to pass to `docker compose` or `podman-compose` is `docker-compose.macos.yml`, there is no specific environment variable file.
