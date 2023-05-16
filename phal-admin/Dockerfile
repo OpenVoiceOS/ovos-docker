@@ -14,4 +14,6 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 
 USER root
 
-ENTRYPOINT ovos_PHAL_admin
+COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
