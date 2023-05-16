@@ -20,6 +20,7 @@ ENV DEBIAN_FRONTEND noninteractive
 USER root
 
 COPY files/requirements.txt /tmp/requirements.txt
+COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 SHELL ["/bin/bash", "-c"]
 
@@ -42,4 +43,4 @@ RUN curl -sS https://forslund.github.io/mycroft-desktop-repo/mycroft-desktop.gpg
 
 USER $USER
 
-ENTRYPOINT ovos-audio
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
