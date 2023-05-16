@@ -155,14 +155,14 @@ podman buildx build gui/ -t smartgic/ovos-gui:alpha --build-arg BRANCH_OVOS=mast
 
 There are a list of arguments available that could be used during the image build process.
 
-| Name             | Value                              | Default      | Description                                                      |
-| ---              | ---                                | ---          | ---                                                              |
-| `ALPHA`          | `true`                             | `false`      | Using the alpha releases from PyPi built from the `dev` branches |
-| `BUILD_DATE`     | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | `unkown`     | Use as `LABEL` within the Dockerfile to determine the build date |
-| `BRANCH_OVOS`    | `master`                           | `master`     | Branch of `ovos-shell`Git  repository                            |
-| `BRANCH_MYCROFT` | `stable-qt5`                       | `stable-qt5` | Branch of `mycroft-gui` Git repository                           |
-| `TAG`            | `alpha`                            | `alpha`      | OCI image tag, (e.g. `docker pull smartgic/ovos-base:alpha`)     |
-| `VERSION`        | `0.0.8`                            | `unknown`    | Use as `LABEL` within the Dockerfile to determine the version    |
+| Name             | Value                              | Default      | Description                                                       |
+| ---              | ---                                | ---          | ---                                                               |
+| `ALPHA`          | `true`                             | `false`      | Using the alpha releases from PyPi built from the `dev` branches  |
+| `BUILD_DATE`     | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | `unkown`     | Used as `LABEL` within the Dockerfile to determine the build date |
+| `BRANCH_OVOS`    | `master`                           | `master`     | Branch of `ovos-shell`Git  repository                             |
+| `BRANCH_MYCROFT` | `stable-qt5`                       | `stable-qt5` | Branch of `mycroft-gui` Git repository                            |
+| `TAG`            | `alpha`                            | `alpha`      | OCI image tag, (e.g. `docker pull smartgic/ovos-base:alpha`)      |
+| `VERSION`        | `0.0.8`                            | `unknown`    | Used as `LABEL` within the Dockerfile to determine the version    |
 
 ### Image alternatives
 
@@ -250,7 +250,7 @@ The main advantage is the simplicity, but the downside will be more Python depen
 
 ### Skill running as standalone container
 
-The second way is to leverage the `ovos-workshop` component by running a skill as standalone. This means the skill will not be part as `ovos-core` container but it will be running inside it's own container.
+The second way is to leverage the `ovos-workshop` component by running a skill as standalone. This means the skill will not be part of `ovos-core` container but it will be running inside it's own container.
 
 The advantage is that each skill are isolated which provide more flexibility about Python libraries, packages, *etc...* and more security but the downside will be that more system resources will be consumed and a container image has to be build.
 
@@ -282,7 +282,7 @@ docker exec -ti ovos_cli ovos-config show
 podman exec -ti ovos_cli ovos-config show
 ```
 
-`vim` and `nano` editors are available within the `ovos-cli` image, `vim` as been set as default.
+`vim` and `nano` editors are available within the `ovos-cli` image, `vim` has been set as default.
 
 An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
 
@@ -320,7 +320,7 @@ Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the
 }
 ```
 
-To access all the container logs as the same time, run the following command *(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)*:
+To access all the container logs at the same time, run the following command *(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)*:
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env --env-file .env-raspberrypi logs -f --tail 200
