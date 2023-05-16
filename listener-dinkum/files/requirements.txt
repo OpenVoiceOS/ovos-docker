@@ -5,6 +5,5 @@ ovos-vad-plugin-precise
 ovos-vad-plugin-silero
 ovos-vad-plugin-webrtcvad
 ovos-ww-plugin-pocketsphinx
-ovos-ww-plugin-precise
 ovos-ww-plugin-precise-lite
 ovos-ww-plugin-vosk
