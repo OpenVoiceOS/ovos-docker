@@ -1,7 +1,7 @@
 ---
 version: "3.9"
 
-x-podman-function: &podman-function
+x-podman: &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
@@ -28,7 +28,7 @@ volumes:
 
 services:
   ovos_messagebus:
-    <<: *podman-function
+    <<: *podman
     container_name: ovos_messagebus
     hostname: ovos_messagebus
     restart: unless-stopped
@@ -47,7 +47,7 @@ services:
   # of the message bus.
   ########################
   # ovos_messagebus:
-  #   <<: *podman-function
+  #   <<: *podman
   #   container_name: ovos_messagebus
   #   hostname: ovos_messagebus
   #   restart: unless-stopped
@@ -63,7 +63,7 @@ services:
   #     - ${TMP_FOLDER}:/tmp/mycroft
 
   ovos_phal:
-    <<: *podman-function
+    <<: *podman
     container_name: ovos_phal
     hostname: ovos_phal
     restart: unless-stopped
@@ -84,7 +84,7 @@ services:
       - ovos_messagebus
 
   ovos_phal_admin:
-    <<: *podman-function
+    <<: *podman
     container_name: ovos_phal_admin
     hostname: ovos_phal_admin
     restart: unless-stopped
@@ -104,7 +104,7 @@ services:
       - ovos_messagebus
 
   ovos_listener:
-    <<: *podman-function
+    <<: *podman
     container_name: ovos_listener
     hostname: ovos_listener
     restart: unless-stopped
@@ -132,7 +132,7 @@ services:
   # Uncomment this service if you want to use the Dinkum listener
   ########################
   # ovos_listener:
-  #   <<: *podman-function
+  #   <<: *podman
   #   container_name: ovos_listener
   #   hostname: ovos_listener
   #   restart: unless-stopped
@@ -157,7 +157,7 @@ services:
   #     - ovos_phal
 
   ovos_audio:
-    <<: *podman-function
+    <<: *podman
     container_name: ovos_audio
     hostname: ovos_audio
     restart: unless-stopped
@@ -179,7 +179,7 @@ services:
       - ovos_phal
 
   ovos_core:
-    <<: *podman-function
+    <<: *podman
     container_name: ovos_core
     hostname: ovos_core
     restart: unless-stopped
@@ -203,7 +203,7 @@ services:
       - ovos_phal
 
   ovos_cli:
-    <<: *podman-function
+    <<: *podman
     container_name: ovos_cli
     hostname: ovos_cli
     restart: unless-stopped
