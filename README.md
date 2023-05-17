@@ -79,9 +79,9 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 
 ### Tags
 
-| Tag | Description                                                                 |
-| --  | ---                                                                         |
-| `alpha` | Nightly build based on the latest commits applied to the `dev` branches |
+| Tag | Description                                                                                                                   |
+| --  | ---                                                                                                                           |
+| `alpha`/`0.0.8.a` | Nightly build based on the latest commits applied to the `dev` branches then packaged as alpha releases on PyPi |
 
 ## Requirements
 
