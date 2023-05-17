@@ -15,6 +15,7 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
+    pip3 install PyYAML==5.4.1; \
     pip3 install neon-skill-alerts --pre; \
     else \
     pip3 install neon-skill-alerts; \
