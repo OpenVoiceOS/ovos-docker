@@ -37,7 +37,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -57,7 +56,6 @@ services:
   #   environment:
   #     TZ: $TZ
   #   network_mode: host
-  #   ipc: host
   #   volumes:
   #     - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
   #     - ${TMP_FOLDER}:/tmp/mycroft
@@ -75,7 +73,6 @@ services:
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
@@ -94,7 +91,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     privileged: true
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
@@ -116,7 +112,6 @@ services:
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
@@ -144,7 +139,6 @@ services:
   #     PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
   #     TZ: $TZ
   #   network_mode: host
-  #   ipc: host
   #   volumes:
   #     - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
   #     - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
@@ -169,7 +163,6 @@ services:
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
@@ -191,7 +184,6 @@ services:
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
@@ -213,7 +205,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft

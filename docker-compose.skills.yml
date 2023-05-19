@@ -24,7 +24,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -42,7 +41,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -60,7 +58,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -78,7 +75,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -96,7 +92,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -114,7 +109,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -132,7 +126,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -150,7 +143,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -168,7 +160,6 @@ services:
     environment:
       TZ: $TZ
     network_mode: host
-    ipc: host
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
