@@ -20,6 +20,7 @@ ENV DEBIAN_FRONTEND noninteractive
 USER root
 
 COPY files/requirements.txt /tmp/requirements.txt
+COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 SHELL ["/bin/bash", "-c"]
 
@@ -40,4 +41,4 @@ RUN apt-get update \
 
 USER $USER
 
-ENTRYPOINT ovos-listener
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
