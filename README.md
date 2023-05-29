@@ -77,11 +77,28 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 
 *These are examples, many other boards use these CPU architectures.*
 
+#### Hardware tested on
+
+- Raspberry Pi 3B+ *(aarch64)* with ReSpeaker Mic Array v2.0 USB
+- Raspberry Pi 4B *(aarch64)* with ReSpeaker Mic Array v2.0 USB
+- Rock Pi 4B Plus *(aarch64)* with ReSpeaker Mic Array v2.0 USB
+- AMD Ryzen 7 *(amd64)* with Rode PODMIC and EVO4 interface
+- Lenovo X270 Intel based *(amd64)* with embedded microphone
+- MacBook Air Intel based *(amd64)* with embedded microphone
+
+#### Operating systems *(64-bit version)* tested on
+
+- Debian Bullseye 11.x
+- Debian Bookworm 12.x
+- Fedora 37
+- Fedora 38
+- Mac OS Ventura 13.x
+
 ### Tags
 
 | Tag | Description                                                                                                                   |
 | --  | ---                                                                                                                           |
-| `alpha`/`0.0.8.a` | Nightly build based on the latest commits applied to the `dev` branches then packaged as alpha releases on PyPi |
+| `alpha`/`0.0.8a` | Nightly build based on the latest commits applied to the `dev` branches then packaged as alpha releases on PyPi |
 
 ## Requirements
 
