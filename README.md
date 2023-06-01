@@ -33,11 +33,11 @@
 
 ## What is Open Voice OS?
 
-[![Open Voice OS logo](https://openvoiceos.com/wp-content/uploads/2021/04/ovos-egg.png)](https://openvoiceos.com/)
+[![Open Voice OS logo](https://openvoiceos.org/wp-content/uploads/2021/04/ovos-egg.png)](https://openvoiceos.org/)
 
-[Open Voice OS](https://openvoiceos.com/) is a community-driven, open-source voice AI platform for creating custom voice-controlled ​interfaces across devices with NLP, a customizable UI, and a focus on privacy and security.
+[Open Voice OS](https://openvoiceos.org/) is a community-driven, open-source voice AI platform for creating custom voice-controlled interfaces across devices with NLP, a customizable UI, and a focus on privacy and security.
 
-More information about Open Voice OS genesis [here](https://openvoiceos.com/a-brief-history-of-open-voice-os/).
+More information about Open Voice OS genesis [here](https://openvoiceos.org/a-brief-history-of-open-voice-os/).
 
 ## How does it work with Docker or Podman?
 
