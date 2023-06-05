@@ -106,7 +106,7 @@ For Mac OS users, please follow this [requirements](README_MACOS.md) before goin
 
 ### Docker or Podman
 
-Docker or Podman *(rootless)* is of course required and `docker compose` or `podman-compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(for Docker, this command will be embedded depending the version, for Podman, `podman-compose` command comes from a different package)*.
+Docker or Podman *(rootless)* is of course required and `docker compose` *(not `docker-compose`!!)* or `podman-compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(for Docker, this command will be embedded depending the version, for Podman, `podman-compose` command comes from a different package)*.
 
 This is what looks like the container creation via `podman run` *(it will be very similar with Docker)* command for one container only *(when not using `podman-compose`)*.
 
@@ -179,7 +179,7 @@ There are a list of arguments available that could be used during the image buil
 | `BRANCH_OVOS`    | `master`                           | `master`     | Branch of `ovos-shell`Git  repository                             |
 | `BRANCH_MYCROFT` | `stable-qt5`                       | `stable-qt5` | Branch of `mycroft-gui` Git repository                            |
 | `TAG`            | `alpha`                            | `alpha`      | OCI image tag, (e.g. `docker pull smartgic/ovos-base:alpha`)      |
-| `VERSION`        | `0.0.8`                            | `unknown`    | Used as `LABEL` within the Dockerfile to determine the version    |
+| `VERSION`        | `0.0.8a`                           | `unknown`    | Used as `LABEL` within the Dockerfile to determine the version    |
 
 ### Image alternatives
 
@@ -215,6 +215,14 @@ docker compose up -d
 podman-compose up -d
 ```
 
+To reduce the potential overhead due to the image downloads and extracts, the `--parallel` option could be user in order to process the images by batch of `x` *(where `x` is an integer)*.
+
+```bash
+docker compose --parallel 3 up -d
+  # Or:
+podman-compose up --parallel 3 -d
+```
+
 By default, `docker compose` or `podman-compose` will look for a `docker-compose.yml` and an `.env` file, but more files could be added to the command to extend the services configuration. **`podman-compose` supports for now only one environment file.**
 
 ```bash
@@ -231,7 +239,7 @@ docker compose -f docker-compose.macos.yml --env-file .env up -d
 podman-compose -f docker-compose.macos.yml --env-file .env up -d
 ```
 
-Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`.
+Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`. The `OVOS_USER` variable in should be changed **only** if you build the Docker images with a different user than `ovos`.
 
 ## How to update the current stack
 
@@ -385,6 +393,7 @@ parse error: Expected another key-value pair at line 81, column 3
 
 - [When mycroft.conf changed the listener doesn't listen anymore](https://github.com/OpenVoiceOS/ovos-listener/issues/15)
 - [Killed if previous bus.pid exists](https://github.com/OpenVoiceOS/ovos-messagebus/issues/4)
+- [Invalid value for userns_mode param: keep-id](https://github.com/OpenVoiceOS/ovos-docker/issues/12)
 
 ## Support
 
