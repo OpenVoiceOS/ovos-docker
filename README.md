@@ -239,7 +239,9 @@ docker compose -f docker-compose.macos.yml --env-file .env up -d
 podman-compose -f docker-compose.macos.yml --env-file .env up -d
 ```
 
-Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`. The `OVOS_USER` variable in should be changed **only** if you build the Docker images with a different user than `ovos`.
+Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`.
+
+The `OVOS_USER` variable should be changed **only** if you build the Docker images with a different user than `ovos`.
 
 ## How to update the current stack
 
