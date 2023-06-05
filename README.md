@@ -1,35 +1,36 @@
 # Open Voice OS running on Docker or Podman
 
-[![Open Voice OS version](https://img.shields.io/badge/OpenVoiceOS-0.0.8a-blue)](https://openvoiceos.com/)
-[![Debian version](https://img.shields.io/badge/Debian-Bookworm-yellow)](https://www.debian.org)
-[![Python version](https://img.shields.io/badge/Python-3.11-orange)](https://python.org)
-[![Chat](https://img.shields.io/matrix/openvoiceos-general:matrix.org)](https://matrix.to/#/#OpenVoiceOS-general:matrix.org)
-[![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-core)](https://hub.docker.com/r/smartgic/ovos-core)
-
 - [Open Voice OS running on Docker or Podman](#open-voice-os-running-on-docker-or-podman)
-  - [What is Open Voice OS?](#what-is-open-voice-os)
-  - [How does it work with Docker or Podman?](#how-does-it-work-with-docker-or-podman)
-  - [Supported architectures and tags](#supported-architectures-and-tags)
-    - [Architectures](#architectures)
-    - [Tags](#tags)
-  - [Requirements](#requirements)
-    - [Docker or Podman](#docker-or-podman)
-    - [PulseAudio](#pulseaudio)
-  - [How to build these images](#how-to-build-these-images)
-    - [Arguments](#arguments)
-    - [Image alternatives](#image-alternatives)
+  * [What is Open Voice OS?](#what-is-open-voice-os-)
+  * [How does it work with Docker or Podman?](#how-does-it-work-with-docker-or-podman-)
+  * [Supported architectures and tags](#supported-architectures-and-tags)
+    + [Architectures](#architectures)
+      - [Hardware tested on](#hardware-tested-on)
+      - [Operating systems *(64-bit version)* tested on](#operating-systems---64-bit-version---tested-on)
+    + [Tags](#tags)
+  * [Requirements](#requirements)
+    + [Docker or Podman](#docker-or-podman)
+    + [PulseAudio](#pulseaudio)
+  * [How to build these images](#how-to-build-these-images)
+    + [Arguments](#arguments)
+    + [Image alternatives](#image-alternatives)
       - [Message bus](#message-bus)
       - [Listener](#listener)
-  - [How to use these images](#how-to-use-these-images)
-  - [How to update the current stack](#how-to-update-the-current-stack)
-  - [Skills management](#skills-management)
-    - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
-    - [Skill running as standalone container](#skill-running-as-standalone-container)
-  - [Open Voice OS CLI](#open-voice-os-cli)
-  - [Open Voice OS GUI](#open-voice-os-gui)
-  - [Debug](#debug)
-  - [FAQ](#faq)
-  - [Support](#support)
+  * [How to use these images](#how-to-use-these-images)
+  * [How to update the current stack](#how-to-update-the-current-stack)
+  * [Skills management](#skills-management)
+    + [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
+    + [Skill running as standalone container](#skill-running-as-standalone-container)
+  * [TTS (Text-to-Speech) and STT (Speech-to-Text)](#tts--text-to-speech--and-stt--speech-to-text-)
+    + [TTS](#tts)
+    + [STT](#stt)
+  * [PHAL plugins](#phal-plugins)
+  * [Open Voice OS CLI](#open-voice-os-cli)
+  * [Open Voice OS GUI](#open-voice-os-gui)
+  * [Security](#security)
+  * [Debug](#debug)
+  * [FAQ](#faq)
+  * [Support](#support)
 
 ## What is Open Voice OS?
 
@@ -263,7 +264,7 @@ There are two *(2)* different ways to install an Open Voice OS skill, each havin
 
 ### Skill running inside ovos-core container
 
-The first way is to use the `skills.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos-core` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+The first way is to use the `skills.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_core` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
 ```ini
 ovos-skill-volume==0.0.1 # Specific skill version on PyPi
@@ -290,6 +291,55 @@ podman-compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 ```
 
 If `ovos_core` container is deleted, the skill will remained available until the `ovos_core` container comes back.
+
+## TTS (Text-to-Speech) and STT (Speech-to-Text)
+
+### TTS
+
+The `ovos_audio` container comes with few TTS plugins such as:
+
+- `ovos-tts-plugin-mimic` is the original Mycroft AI Text-to-Speech with the iconic Alan Pope's voice sample
+- `ovos-tts-plugin-mimic2` is the cloud based version hosted on Mycroft AI infrastructure
+- `ovos-tts-plugin-mimic3-server` is the latest Mycroft AI Text-to-Speech engine
+
+If the existing TTS plugins are not enough then you can install yours by following the same principle as for the skills by adding a `tts.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_audio` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+
+```ini
+ovos-tts-plugin-marytts==0.0.1a1 # Specific plugin version on PyPi
+neon-tts-plugin-mozilla-remote # Latest plugin version on PyPi
+git+https://github.com/NeonGeckoCom/neon-tts-plugin-polly.git@fix/whatever # Specific branch of a plugin on GitHub
+```
+
+The `ovos_audio` container must be restarted if a change occurs into the `tts.list` file.
+
+### STT
+
+The `ovos_listener` container comes with few STT plugins such as:
+
+- `ovos-stt-plugin-server` is a componion plugin that allows you to reach an external STT service
+- `ovos-stt-plugin-vosk` is an offline STT service
+
+If the existing STT plugins are not enough then you can install yours by following the same principle as for the TTS plugins *(from above)* by adding a `stt.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+
+```ini
+ovos-stt-plugin-vosk==0.2.0a1 # Specific plugin version on PyPi
+ovos-stt-plugin-server # Latest plugin version on PyPi
+git+https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium.git@fix/whatever # Specific branch of a plugin on GitHub
+```
+
+The `ovos_listener` container must be restarted if a change occurs into the `stt.list` file.
+
+## PHAL plugins
+
+The `ovos_phal` and `ovos_phal_admin` containers work with plugins. In order to install a plugin into either one of these two containers, the `phal.list` and/or `phal_admin.list` will have be to be populated with the wanted plugins.
+
+```ini
+ovos-phal-plugin-ipgeo==0.0.1 # Specific plugin version on PyPi
+ovos-PHAL-plugin-alsa # Latest plugin version on PyPi
+git+https://github.com/OpenVoiceOS/ovos-PHAL-plugin-homeassistant.git@fix/whatever # Specific branch of a plugin on GitHub
+```
+
+The `ovos_phal` and/or `ovos_phal_admin` containers must be restarted if a change occurs into the `phal.list` and/or `phal_admin.list` files.
 
 ## Open Voice OS CLI
 
@@ -332,6 +382,19 @@ xhost +local:ovos_gui
 This command is not permanent, when your operating system will reboot, you will have to run the command again.
 
 `xhost` is part of the `x11-xserver-utils` package on Debian based distributions.
+
+## Security
+
+By default, the message bus is listening on `0.0.0.0` port `8181`, this could be a security issue as a device could connect to the message bus and send/read messages. To prevent potential security issue, its recommended to firewall port `8181`.
+
+`iptables` will be demonstarted as an example but if `firewalld` or `ufw` services are used, then make sure to be compliant with your distribution/operating system.
+
+```bash
+sudo iptables -A INPUT -p tcp -s localhost --dport 8181 -j ACCEPT
+sudo iptables iptables -A INPUT -p tcp --dport 8181 -j DROP
+```
+
+This will allow connections to port `8181` **only** from localhost **(internal)**.
 
 ## Debug
 
@@ -389,6 +452,14 @@ If the configuration file is not valid JSON, `jq` will return something like thi
 
 ```text
 parse error: Expected another key-value pair at line 81, column 3
+```
+
+To get the CPU, memory and I/O consumption per container, run the following command:
+
+```bash
+docker stats -a --no-trunc
+  # Or:
+podman stats -a --no-trunc
 ```
 
 ## FAQ
