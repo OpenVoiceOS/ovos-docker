@@ -220,7 +220,7 @@ To reduce the potential overhead due to the image downloads and extracts, the `-
 ```bash
 docker compose --parallel 3 up -d
   # Or:
-podman-compose up --parallel 3 -d
+podman-compose --parallel 3 up -d
 ```
 
 By default, `docker compose` or `podman-compose` will look for a `docker-compose.yml` and an `.env` file, but more files could be added to the command to extend the services configuration. **`podman-compose` supports for now only one environment file.**
