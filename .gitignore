@@ -1,3 +1,4 @@
 *.orig
 .vscode
 build.sh
+.cache
