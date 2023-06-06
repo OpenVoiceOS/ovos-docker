@@ -1,4 +1,5 @@
 ovos-dinkum-listener
+ovos-microphone-plugin-sounddevice
 ovos-stt-plugin-server
 ovos-stt-plugin-vosk
 ovos-vad-plugin-precise
