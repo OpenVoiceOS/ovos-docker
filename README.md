@@ -219,17 +219,19 @@ podman-compose up -d
 To reduce the potential overhead due to the image downloads and extracts, the `--parallel` option could be user in order to process the images by batch of `x` *(where `x` is an integer)*.
 
 ```bash
-docker compose --parallel 3 up -d
+docker compose --parallel 3 pull
+docker compose up -d
   # Or:
-podman-compose --parallel 3 up -d
+podman-compose --parallel 3 pull
+podman-compose up -d
 ```
 
 By default, `docker compose` or `podman-compose` will look for a `docker-compose.yml` and an `.env` file, but more files could be added to the command to extend the services configuration. **`podman-compose` supports for now only one environment file.**
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env-raspberrypi up -d
+docker compose -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml --env-file .env-raspberrypi up -d
   # Or:
-podman-compose -f docker-compose.yml -f docker-compose.raspberrypi.yml --env-file .env-raspberrypi up -d
+podman-compose -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml --env-file .env-raspberrypi up -d
 ```
 
 For Mac OS users, the file to pass to `docker compose` or `podman-compose` is `docker-compose.macos.yml`, there is no specific environment variable file.
