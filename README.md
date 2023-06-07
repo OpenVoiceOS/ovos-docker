@@ -229,6 +229,8 @@ podman-compose up -d
 
 By default, `docker compose` or `podman-compose` will look for a `docker-compose.yml` and an `.env` file, but more files could be added to the command to extend the services configuration. **`podman-compose` supports for now only one environment file.**
 
+When passing the `docker-compose.gui.yml` file to the compose command, the voice assistant will not be **headless** anymore which means that a GUI *(Graphical user Interface)* will be available. For more details about the GUI please go to [this section](#open-voice-os-gui).
+
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml --env-file .env-raspberrypi up -d
   # Or:
