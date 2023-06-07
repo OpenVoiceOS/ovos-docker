@@ -1,0 +1,9 @@
+---
+version: "3.9"
+
+services:
+  ovos_gui:
+    devices:
+      - /dev/vchiq
+    group_add:
+      - $RENDER_GID
