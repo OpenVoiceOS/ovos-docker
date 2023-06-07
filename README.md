@@ -184,21 +184,16 @@ There are a list of arguments available that could be used during the image buil
 
 ### Image alternatives
 
-Open Voice OS provides two *(2)* different implementations for the bus as well as for the listener.
+Open Voice OS provides two *(2)* different implementations for the message bus.
 
 #### Message bus
 
 - `ovos-messagebus` image which is a Python implementation *(default)*
 - `ovos-bus-server` image which is a C++ implementation *(better performances but lack of configuration as it doesn't support `mycroft.conf` yet)*
 
-#### Listener
-
-- `ovos-listener` image which is currently the original implementation *(default)*
-- `ovos-listener-dinkum` image which is a port from Mycroft DinKum *(better performances, less resources consumption but still under heavy development)*
-
 **Only one implementation can be selected at a time.**
 
-Thirteen *(13)* images needs to be build; `ovos-base`, `ovos-listener` or `ovos-listener-dinkum`, `ovos-core`, `ovos-cli`, `ovos-messagebus` or `ovos-bus-server`, `ovos-phal`, `ovos-phal-admin`, `ovos-sound-base`, `ovos-audio`, `ovos-gui` and `ovos-gui-websocket`.
+Twelve *(12)* images needs to be build; `ovos-base`, `ovos-listener-dinkum`, `ovos-core`, `ovos-cli`, `ovos-messagebus` or `ovos-bus-server`, `ovos-phal`, `ovos-phal-admin`, `ovos-sound-base`, `ovos-audio`, `ovos-gui` and `ovos-gui-websocket`.
 
 Pre-build images are already available [here](https://hub.docker.com/u/smartgic) and are the default referenced with the `docker-compose.*.yml` files.
 

@@ -104,7 +104,7 @@ services:
     container_name: ovos_listener
     hostname: ovos_listener
     restart: unless-stopped
-    image: docker.io/smartgic/ovos-listener:${VERSION}
+    image: docker.io/smartgic/ovos-listener-dinkum:${VERSION}
     logging: *default-logging
     pull_policy: always
     environment:
@@ -122,33 +122,6 @@ services:
     depends_on:
       - ovos_messagebus
       - ovos_phal
-
-  ########################
-  # Uncomment this service if you want to use the Dinkum listener
-  ########################
-  # ovos_listener:
-  #   <<: *podman
-  #   container_name: ovos_listener
-  #   hostname: ovos_listener
-  #   restart: unless-stopped
-  #   image: docker.io/smartgic/ovos-listener-dinkum:${VERSION}
-  #   logging: *default-logging
-  #   pull_policy: always
-  #   environment:
-  #     PULSE_SERVER: docker.for.mac.host.internal
-  #     PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
-  #     TZ: $TZ
-  #   network_mode: host
-  #   volumes:
-  #     - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-  #     - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
-  #     - ovos_listener_records:/home/${OVOS_USER}/.local/share/mycroft/listener
-  #     - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
-  #     - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
-  #     - ${TMP_FOLDER}:/tmp/mycroft
-  #   depends_on:
-  #     - ovos_messagebus
-  #     - ovos_phal
 
   ovos_audio:
     <<: *podman

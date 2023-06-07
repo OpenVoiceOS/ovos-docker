@@ -1,3 +1,0 @@
-ovos-listener
-ovos-vad-plugin-precise
-ovos-vad-plugin-silero
