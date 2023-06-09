@@ -1,6 +1,9 @@
 ARG TAG=alpha
 FROM smartgic/ovos-base:${TAG}
 
+HEALTHCHECK --interval=30s --timeout=3s \
+    CMD curl --header "Connection: Upgrade" http://127.0.0.1:8181 || exit 1
+
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
 

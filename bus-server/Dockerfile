@@ -13,6 +13,9 @@ RUN cmake . \
 
 FROM debian:bookworm-slim
 
+HEALTHCHECK --interval=30s --timeout=3s \
+    CMD curl --header "Connection: Upgrade" http://127.0.0.1:8181 || exit 1
+
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
 
@@ -28,7 +31,12 @@ ARG USER=ovos
 
 COPY --from=build /usr/src/ovos-bus-server/server/ovos-bus-server /usr/local/bin/
 
-RUN useradd --no-log-init $USER -m -c "Open Voice OS user"
+RUN apt-get update \
+    && apt-get install -y curl \
+    && useradd --no-log-init $USER -m -c "Open Voice OS user" \
+    && apt-get --purge autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt /var/log/{apt,dpkg.log}
 
 USER $USER
 
