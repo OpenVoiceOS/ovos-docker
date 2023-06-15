@@ -1,3 +1,4 @@
+onnxruntime
 ovos-dinkum-listener
 ovos-microphone-plugin-sounddevice
 ovos-stt-plugin-server
@@ -8,3 +9,4 @@ ovos-vad-plugin-webrtcvad
 ovos-ww-plugin-pocketsphinx
 ovos-ww-plugin-precise-lite
 ovos-ww-plugin-vosk
+vosk
