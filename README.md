@@ -155,7 +155,7 @@ podman run \
 You should not run `docker compose` as `root` or using `sudo` command, if so then you will get some error message such as `Permission denied:` and some containers could restart in loop. To allow a simple user to execute the `docker` command, make sure to add the user to the `docker` group.
 
 ```bash
-usermod -a -G docker $USER
+sudo usermod -a -G docker $USER
 ```
 
 Once added, logout from the current session *(graphical or SSH)*.
