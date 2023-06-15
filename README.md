@@ -114,7 +114,7 @@ For Mac OS users, please follow this [requirements](README_MACOS.md) before goin
 
 Docker or Podman *(rootless)* is of course required and `docker compose` *(not `docker-compose`!!)* or `podman-compose` is a nice to have to simplify the whole process of deploying the whole stack by using the `docker-compose.yml` files *(for Docker, this command will be embedded depending the version, for Podman, `podman-compose` command comes from a different package)*.
 
-This is what looks like the container creation via `podman run` *(it will be very similar with Docker)* command for one container only *(when not using `podman-compose`)*.
+This is what looks like the container creation via `podman run` *(it will be very similar with Docker)* command for one container only *(when not using `podman-compose`)*. Don't try to run this command, this is just an example!
 
 ```bash
 podman run \
@@ -149,6 +149,16 @@ podman run \
   --restart unless-stopped \
   docker.io/smartgic/ovos-listener:alpha
 ```
+
+You should not run `docker compose` as `root` or using `sudo` command if so, then you will get some error message such as `Permission denied:` and some containers could restart in loop.
+
+To allow a simple user to execute the `docker` command, make sure to add the user to the `docker` group.
+
+```bash
+usermod -a -G docker $USER
+```
+
+Once added, logout from the current session *(graphical or SSH)*.
 
 ### PulseAudio
 
@@ -210,7 +220,7 @@ Pre-build images are already available [here](https://hub.docker.com/u/smartgic)
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
 mkdir -p ~/ovos/{config,share,tmp}
 chown ${USER}:${USER} -R ~/ovos
-cd ovos-docker
+cd ovos-docker/compose
 docker compose up -d
   # Or:
 podman-compose up -d
