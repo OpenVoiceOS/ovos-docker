@@ -1,0 +1,3 @@
+git+https://github.com/JarbasHiveMind/hivemind_websocket_client.git
+git+https://github.com/JarbasHiveMind/HiveMind-core.git
+git+https://github.com/JarbasHiveMind/HiveMind-presence.git

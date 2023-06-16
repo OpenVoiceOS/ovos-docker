@@ -32,7 +32,7 @@
   - [PHAL plugins](#phal-plugins)
   - [Open Voice OS CLI](#open-voice-os-cli)
   - [Open Voice OS GUI](#open-voice-os-gui)
-  - [Security](#security)
+  - [Security and HiveMind](#security-and-hivemind)
   - [Debug](#debug)
   - [FAQ](#faq)
   - [Support](#support)
@@ -49,17 +49,19 @@ More information about Open Voice OS genesis [here](https://openvoiceos.org/a-br
 
 Open Voice OS is a complex piece of software which has several core components. These core components have been split into containers to provide a better isolation and a microservice approach.
 
-| Container            | Description                                                                                                                    |
-| ---                  | ---                                                                                                                            |
-| `ovos_messagebus`    | Message bus service, the nervous system of Open Voice OS                                                                       |
-| `ovos_phal`          | PHAL is the Platform Hardware Abstraction Layer, it completely replaces the concept of hardcoded enclosure from `mycroft-core` |
-| `ovos_phal_admin`    | This service is intended for handling any OS-level interactions requiring escalation of privileges                             |
-| `ovos_audio`         | The audio service handles playback and queueing of tracks                                                                      |
-| `ovos_listener`      | The speech client is responsible for loading STT, VAD and Wake Word plugins                                                    |
-| `ovos_core`          | The core service is responsible for loading skills and intent parsers                                                          |
-| `ovos_cli`           | Command line for Open Voice OS                                                                                                 |
-| `ovos_gui_websocket` | Websocket process to handle messages for the Open Voice OS GUI                                                                 |
-| `ovos_gui`           | Open Voice OS graphical user interface                                                                                         |
+| Container                | Description                                                                                                                    |
+| ---                      | ---                                                                                                                            |
+| `ovos_messagebus`        | Message bus service, the nervous system of Open Voice OS                                                                       |
+| `ovos_phal`              | PHAL is the Platform Hardware Abstraction Layer, it completely replaces the concept of hardcoded enclosure from `mycroft-core` |
+| `ovos_phal_admin`        | This service is intended for handling any OS-level interactions requiring escalation of privileges                             |
+| `ovos_audio`             | The audio service handles playback and queueing of tracks                                                                      |
+| `ovos_listener`          | The speech client is responsible for loading STT, VAD and Wake Word plugins                                                    |
+| `ovos_core`              | The core service is responsible for loading skills and intent parsers                                                          |
+| `ovos_cli`               | Command line for Open Voice OS                                                                                                 |
+| `ovos_gui_websocket`     | Websocket process to handle messages for the Open Voice OS GUI                                                                 |
+| `ovos_gui`               | Open Voice OS graphical user interface                                                                                         |
+| `ovos_hivemind_listener` | The HiveMind listener handles the authenticated connections using the secured protocol                                         |
+| `ovos_hivemind_cli`      | Command line to interact with HiveMind                                                                                         |
 
 To allow data persistence, Docker or Podman volumes are required which will prevent to download the requirements everytime the containers are re-created.
 
@@ -218,8 +220,8 @@ Pre-build images are already available [here](https://hub.docker.com/u/smartgic)
 
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
-mkdir -p ~/ovos/{config,share,tmp}
-chown ${USER}:${USER} -R ~/ovos
+mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
+chown ${USER}:${USER} -R ~/ovos ~/hivemind
 cd ovos-docker/compose
 docker compose up -d
   # Or:
@@ -397,7 +399,7 @@ This command is not permanent, when your operating system will reboot, you will 
 
 `xhost` is part of the `x11-xserver-utils` package on Debian based distributions.
 
-## Security
+## Security and HiveMind
 
 By default, the message bus is listening on `0.0.0.0` port `8181`, this could be a security issue as a device could connect to the message bus and send/read messages. To prevent potential security issue, its recommended to firewall port `8181`.
 
@@ -409,6 +411,26 @@ sudo iptables iptables -A INPUT -p tcp --dport 8181 -j DROP
 ```
 
 This will allow connections to port `8181` **only** from localhost **(internal)**.
+
+### HiveMind to the rescue
+
+What is HiveMind *(from the [official documentation](https://jarbashivemind.github.io/HiveMind-community-docs/))*?
+
+> HiveMind is a community-developed superset or extension of OpenVoiceOS the open-source voice operating system.
+>
+> With HiveMind, you can extend one (or more, but usually just one!) instance of OpenVoiceOS to as many devices as you want, including devices that can't ordinarily run OpenVoiceOS!
+
+What it means, is that HiveMind allows external connections to the message bus by using a secured protocol.
+
+A `docker-compose.hivemind.yml` file is available in order to deploy `ovos_hivemind_listener` and `ovos_hivemind_cli` containers.
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.hivemind.yml up -d
+  Or:
+podman-compose -f docker-compose.yml -f docker-compose.hivemind.yml up -d
+```
+
+For more information about howto authenticate, please read [HiveMind-core readme](https://github.com/JarbasHiveMind/HiveMind-core).
 
 ## Debug
 
