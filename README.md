@@ -152,7 +152,7 @@ podman run \
   docker.io/smartgic/ovos-listener:alpha
 ```
 
-You should not run `docker compose` as `root` or using `sudo` command, if so then you will get some error message such as `Permission denied:` and some containers could restart in loop. To allow a simple user to execute the `docker` command, make sure to add the user to the `docker` group.
+:warning: You should not run `docker compose` as `root` or using `sudo` command, if so then you will get some error message such as `Permission denied:` and some containers could restart in loop. To allow a simple user to execute the `docker` command, make sure to add the user to the `docker` group. :warning:
 
 ```bash
 sudo usermod -a -G docker $USER
