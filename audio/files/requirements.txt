@@ -4,5 +4,6 @@ ovos-audio-plugin-simple
 ovos-tts-plugin-mimic
 ovos-tts-plugin-mimic2
 ovos-tts-plugin-mimic3-server
+ovos-tts-plugin-server
 ovos-workshop
 onnxruntime
