@@ -152,7 +152,7 @@ podman run \
   docker.io/smartgic/ovos-listener:alpha
 ```
 
-:warning: You should not run `docker compose` as `root` or using `sudo` command, if so then you will get some error message such as `Permission denied:` and some containers could restart in loop. To allow a simple user to execute the `docker` command, make sure to add the user to the `docker` group. :warning:
+:warning: You should not run `docker compose` as `root` or using `sudo` command, if so then you will get some error message such as `Permission denied:` and some containers could restart in loop. To allow a simple user to execute the `docker` command, make sure to add the user to the `docker` group.
 
 ```bash
 sudo usermod -a -G docker $USER
@@ -385,7 +385,7 @@ podman exec -ti ovos_cli ovos-speak "hello world"
 
 ## Open Voice OS GUI
 
-The Open Voice OS GUI is available with the Open Voice OS Shell layer on top of it. **This container still under some development** mostly because of the skill's QML files are not been shared between `ovos_gui` container and `ovos_skill_*` containers.
+:mega: The Open Voice OS GUI is available with the Open Voice OS Shell layer on top of it. **This container still under some development** mostly because of the skill's QML files are not been shared between `ovos_gui` container and `ovos_skill_*` containers.
 
 In order to allow only the `ovos_gui` container to access to the X server, you will have to allow the container to connect to X.
 
@@ -411,6 +411,8 @@ sudo iptables iptables -A INPUT -p tcp --dport 8181 -j DROP
 This will allow connections to port `8181` **only** from localhost **(internal)**.
 
 ## Debug
+
+:warning: The commands below are not *steps*, they don't have to be followed in the same order as there are presented!
 
 Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the logs. All containers will have to be restarted to receive the configuration change.
 
