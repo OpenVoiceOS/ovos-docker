@@ -28,8 +28,8 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:ro,z
-      - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/HiveMind
+      - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:z
+      - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
 
   ovos_hivemind_cli:
     <<: *podman
@@ -44,7 +44,7 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:ro,z
-      - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/HiveMind
+      - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:z
+      - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
     depends_on:
       - ovos_hivemind_listener
