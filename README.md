@@ -51,7 +51,7 @@ Open Voice OS is a complex piece of software which has several core components. 
 
 | Container                | Description                                                                                                                    |
 | ---                      | ---                                                                                                                            |
-| `ovos_messagebus`        | Message bus service, the nervous system of Open Voice OS                                                                       |
+| `ovos_messagebus`        | Message bus service provides a websocket where all internal events travel, the nervous system of Open Voice OS                 |
 | `ovos_phal`              | PHAL is the Platform Hardware Abstraction Layer, it completely replaces the concept of hardcoded enclosure from `mycroft-core` |
 | `ovos_phal_admin`        | This service is intended for handling any OS-level interactions requiring escalation of privileges                             |
 | `ovos_audio`             | The audio service handles playback and queueing of tracks                                                                      |
@@ -63,7 +63,7 @@ Open Voice OS is a complex piece of software which has several core components. 
 | `ovos_hivemind_listener` | The HiveMind listener handles the authenticated connections using the secured protocol                                         |
 | `ovos_hivemind_cli`      | Command line to interact with HiveMind                                                                                         |
 
-To allow data persistence, Docker or Podman volumes are required which will prevent to download the requirements everytime the containers are re-created.
+To allow data persistence, Docker or Podman volumes are required which will prevent downloading the requirements everytime the containers are re-created.
 
 | Volume                  | Description                                      |
 | ---                     | ---                                              |
@@ -154,7 +154,7 @@ podman run \
   docker.io/smartgic/ovos-listener:alpha
 ```
 
-:warning: You should not run `docker compose` as `root` or using `sudo` command, if so then you will get some error message such as `Permission denied:` and some containers could restart in loop. To allow a simple user to execute the `docker` command, make sure to add the user to the `docker` group.
+:warning: You should not run `docker compose` as `root` or using `sudo` command, if so then you will get some error message such as `Permission denied:` and some containers could restart in a loop. To allow a simple user to execute the `docker` command, make sure to add the user to the `docker` group.
 
 ```bash
 sudo usermod -a -G docker $USER
@@ -166,13 +166,13 @@ Once added, logout from the current session *(graphical or SSH)*.
 
 PulseAudio is a requirement and has to be up and running on the host to expose a socket *(for communication)* and a cookie *(for authentication)* to allow the containers to have access to the microphone and speakers.
 
-On modern Linux distribution, Pipewire handles the sound stack on the system, make sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers could have to be part of the `audio` system group *(depending the Linux distribution)*.
+On modern Linux distribution, Pipewire handles the sound stack on the system, making sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers could have to be part of the `audio` system group *(depending the Linux distribution)*.
 
 The `pactl info` command should return information without any error or connection refused. Remember to check the permissions of `~/.config/pulse` and `/run/user/1000` directories as well, they should belong to the user running the stack, not `root`.
 
 ## How to build these images
 
-The `base` image is the main layer for the other images, for example the `messagebus` image requires the `base` image to be build. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, `phal`, *etc...*
+The `base` image is the main layer for the other images, for example the `messagebus` image requires the `base` image to be built. The `sound-base` image is based on the `base` image as well but it's role is dedicated to images that requires sound capabilities such as `audio`, `listener`, `phal`, *etc...*
 
 **Since there is not yet any stable Open Voice OS release compatible with the current container architecture, the `--build-arg ALPHA=true` is "mandatory" to build working images *(except the `ovos-gui` and `ovos-bus-server` images)*.**
 
@@ -193,7 +193,7 @@ There are a list of arguments available that could be used during the image buil
 | Name             | Value                              | Default      | Description                                                       |
 | ---              | ---                                | ---          | ---                                                               |
 | `ALPHA`          | `true`                             | `false`      | Using the alpha releases from PyPi built from the `dev` branches  |
-| `BUILD_DATE`     | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | `unkown`     | Used as `LABEL` within the Dockerfile to determine the build date |
+| `BUILD_DATE`     | `$(date -u +'%Y-%m-%dT%H:%M:%SZ')` | `unknown`    | Used as `LABEL` within the Dockerfile to determine the build date |
 | `BRANCH_OVOS`    | `master`                           | `master`     | Branch of `ovos-shell`Git  repository                             |
 | `BRANCH_MYCROFT` | `stable-qt5`                       | `stable-qt5` | Branch of `mycroft-gui` Git repository                            |
 | `TAG`            | `alpha`                            | `alpha`      | OCI image tag, (e.g. `docker pull smartgic/ovos-base:alpha`)      |
@@ -248,7 +248,7 @@ docker compose -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose
 podman-compose -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml -f docker-compose.raspberrypi.gui.yml --env-file .env-raspberrypi up -d
 ```
 
-For Mac OS users, the file to pass to `docker compose` or `podman-compose` is `docker-compose.macos.yml`, there is no specific environment variable file.
+For Mac OS users, the file to pass to `docker compose` or `podman-compose` is `docker-compose.macos.yml`; there is no specific environment variable file.
 
 ```bash
 docker compose -f docker-compose.macos.yml --env-file .env up -d
@@ -290,13 +290,13 @@ git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git@fix/whatever # Speci
 
 If the `ovos-core` container is wiped for any reason, the skill(s) will be reinstalled automatically but the skill configurations will not be erased.
 
-The main advantage is the simplicity, but the downside will be more Python dependancies *(libraries)* within the `ovos-core` container and potential conflicts across them.
+The main advantage is the simplicity, but the downside will be more Python dependencies *(libraries)* within the `ovos-core` container and potential conflicts across them.
 
 ### Skill running as standalone container
 
-The second way is to leverage the `ovos-workshop` component by running a skill as standalone. This means the skill will not be part of `ovos-core` container but it will be running inside it's own container.
+The second way is to leverage the `ovos-workshop` component by running a skill as standalone. This means the skill will not be part of `ovos-core` container but it will be running inside its own container.
 
-The advantage is that each skill are isolated which provide more flexibility about Python libraries, packages, *etc...* and more security but the downside will be that more system resources will be consumed and a container image has to be build.
+The advantage is that each skill are isolated which provide more flexibility about Python libraries, packages, *etc...* and more security but the downside will be that more system resources will be consumed and a container image has to be built.
 
 Few skills are already available on [here](https://hub.docker.com/u/smartgic) as well as a `docker-compose.skills.yml` file. Run the following command to install the pre-build containers.
 
@@ -306,7 +306,7 @@ docker compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 podman-compose -f docker-compose.yml -f docker-compose.skills.yml up -d
 ```
 
-If `ovos_core` container is deleted, the skill will remained available until the `ovos_core` container comes back.
+If the `ovos_core` container is deleted, the skill will remain available until the `ovos_core` container comes back.
 
 ## TTS (Text-to-Speech) and STT (Speech-to-Text)
 
@@ -317,6 +317,7 @@ The `ovos_audio` container comes with few TTS plugins such as:
 - `ovos-tts-plugin-mimic` is the original Mycroft AI Text-to-Speech with the iconic Alan Pope's voice sample
 - `ovos-tts-plugin-mimic2` is the cloud based version hosted on Mycroft AI infrastructure
 - `ovos-tts-plugin-mimic3-server` is the latest Mycroft AI Text-to-Speech engine
+- `ovos-tts-plugin-server` is a companion plugin that allows you to reach an external TTS service
 
 If the existing TTS plugins are not enough then you can install yours by following the same principle as for the skills by adding a `tts.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_audio` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
@@ -326,13 +327,13 @@ neon-tts-plugin-mozilla-remote # Latest plugin version on PyPi
 git+https://github.com/NeonGeckoCom/neon-tts-plugin-polly.git@fix/whatever # Specific branch of a plugin on GitHub
 ```
 
-The `ovos_audio` container must be restarted if a change occurs into the `tts.list` file.
+The `ovos_audio` container must be restarted if a change occurs in the `tts.list` file.
 
 ### STT
 
 The `ovos_listener` container comes with few STT plugins such as:
 
-- `ovos-stt-plugin-server` is a componion plugin that allows you to reach an external STT service
+- `ovos-stt-plugin-server` is a companion plugin that allows you to reach an external STT service
 - `ovos-stt-plugin-vosk` is an offline STT service
 
 If the existing STT plugins are not enough then you can install yours by following the same principle as for the TTS plugins *(from above)* by adding a `stt.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
@@ -343,11 +344,11 @@ ovos-stt-plugin-server # Latest plugin version on PyPi
 git+https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium.git@fix/whatever # Specific branch of a plugin on GitHub
 ```
 
-The `ovos_listener` container must be restarted if a change occurs into the `stt.list` file.
+The `ovos_listener` container must be restarted if a change occurs in the `stt.list` file.
 
 ## PHAL plugins
 
-The `ovos_phal` and `ovos_phal_admin` containers work with plugins. In order to install a plugin into either one of these two containers, the `phal.list` and/or `phal_admin.list` will have be to be populated with the wanted plugins.
+The `ovos_phal` and `ovos_phal_admin` containers work with plugins. In order to install a plugin into either one of these two containers, the `phal.list` and/or `phal_admin.list` will have to be populated with the wanted plugins.
 
 ```ini
 ovos-phal-plugin-ipgeo==0.0.1 # Specific plugin version on PyPi
@@ -359,7 +360,7 @@ The `ovos_phal` and/or `ovos_phal_admin` containers must be restarted if a chang
 
 ## Open Voice OS CLI
 
-The command line allows a user to send message directly but not only to the bus by using the `ovos-cli-client` command.
+The command line allows a user to send a message directly but not only to the bus by using the `ovos-cli-client` command.
 
 ```bash
 docker exec -ti ovos_cli ovos-cli-client
@@ -377,7 +378,7 @@ podman exec -ti ovos_cli ovos-config show
 
 `vim` and `nano` editors are available within the `ovos-cli` image, `vim` has been set as default.
 
-An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
+An easy way to make Open Voice OS speak is to run the `ovos-speak` command.
 
 ```bash
 docker exec -ti ovos_cli ovos-speak "hello world"
@@ -401,9 +402,9 @@ This command is not permanent, when your operating system will reboot, you will 
 
 ## Security and HiveMind
 
-By default, the message bus is listening on `0.0.0.0` port `8181`, this could be a security issue as a device could connect to the message bus and send/read messages. To prevent potential security issue, its recommended to firewall port `8181`.
+By default, the message bus is listening on `0.0.0.0` port `8181`, this could be a security issue as a device could connect to the message bus and send/read messages. To prevent potential security issues, it is recommended to use a firewall on port `8181`.
 
-`iptables` will be demonstarted as an example but if `firewalld` or `ufw` services are used, then make sure to be compliant with your distribution/operating system.
+`iptables` will be demonstrated as an example but if `firewalld` or `ufw` services are used, then make sure to be compliant with your distribution/operating system.
 
 ```bash
 sudo iptables -A INPUT -p tcp -s localhost --dport 8181 -j ACCEPT
@@ -416,11 +417,11 @@ This will allow connections to port `8181` **only** from localhost **(internal)*
 
 What is HiveMind *(from the [official documentation](https://jarbashivemind.github.io/HiveMind-community-docs/))*?
 
-> HiveMind is a community-developed superset or extension of OpenVoiceOS the open-source voice operating system.
+> HiveMind is a community-developed superset or extension of OpenVoiceOS, the open-source voice operating system.
 >
 > With HiveMind, you can extend one (or more, but usually just one!) instance of OpenVoiceOS to as many devices as you want, including devices that can't ordinarily run OpenVoiceOS!
 
-What it means, is that HiveMind allows external connections to the message bus by using a secured protocol.
+What it mean is that HiveMind allows external connections to the message bus by using a secured protocol.
 
 A `docker-compose.hivemind.yml` file is available in order to deploy `ovos_hivemind_listener` and `ovos_hivemind_cli` containers.
 
@@ -430,11 +431,11 @@ docker compose -f docker-compose.yml -f docker-compose.hivemind.yml up -d
 podman-compose -f docker-compose.yml -f docker-compose.hivemind.yml up -d
 ```
 
-For more information about howto authenticate, please read [HiveMind-core readme](https://github.com/JarbasHiveMind/HiveMind-core).
+For more information about how to authenticate, please read [HiveMind-core readme](https://github.com/JarbasHiveMind/HiveMind-core).
 
 ## Debug
 
-:warning: The commands below are not *steps*, they don't have to be followed in the same order as there are presented!
+:warning: The commands below are not *steps*, they don't have to be followed in the same order as they are presented!
 
 Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the logs. All containers will have to be restarted to receive the configuration change.
 
@@ -480,7 +481,7 @@ docker exec -ti ovos_audio sh
 podman exec -ti ovos_audio sh
 ```
 
-Make sure `mycroft.conf` configuration file is JSON valid by using the `jq` command.
+Make sure the `mycroft.conf` configuration file is JSON valid by using the `jq` command.
 
 ```bash
 cat ~/ovos/config/mycroft.conf | jq
