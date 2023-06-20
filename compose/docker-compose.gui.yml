@@ -1,12 +1,14 @@
 ---
 version: "3.9"
 
-x-podman: &podman
+x-podman:
+  &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
 
-x-logging: &default-logging
+x-logging:
+  &default-logging
   driver: json-file
   options:
     mode: non-blocking
@@ -25,7 +27,7 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       - ovos_messagebus
@@ -50,11 +52,11 @@ services:
       - /dev/snd
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR}:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
-      - ${SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
+      - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
     depends_on:
       - ovos_messagebus
       - ovos_gui_websocket

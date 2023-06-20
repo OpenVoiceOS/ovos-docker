@@ -1,12 +1,14 @@
 ---
 version: "3.9"
 
-x-podman: &podman
+x-podman:
+  &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
 
-x-logging: &default-logging
+x-logging:
+  &default-logging
   driver: json-file
   options:
     mode: non-blocking
@@ -25,10 +27,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_weather:
     <<: *podman
@@ -42,10 +44,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_volume:
     <<: *podman
@@ -59,10 +61,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_date_time:
     <<: *podman
@@ -76,10 +78,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_stop:
     <<: *podman
@@ -93,10 +95,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_personal:
     <<: *podman
@@ -110,10 +112,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_fallback_unknown:
     <<: *podman
@@ -127,10 +129,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_hello_world:
     <<: *podman
@@ -144,10 +146,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_alerts:
     <<: *podman
@@ -161,10 +163,10 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core
 
   ovos_skill_persona:
     <<: *podman
@@ -178,7 +180,7 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-     - ovos_core
+      - ovos_core

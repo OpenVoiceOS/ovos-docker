@@ -1,12 +1,14 @@
 ---
 version: "3.9"
 
-x-podman: &podman
+x-podman:
+  &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
 
-x-logging: &default-logging
+x-logging:
+  &default-logging
   driver: json-file
   options:
     mode: non-blocking
@@ -39,7 +41,7 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ${TMP_FOLDER}:/tmp/mycroft
 
   ########################
@@ -58,7 +60,7 @@ services:
   #     TZ: $TZ
   #   network_mode: host
   #   volumes:
-  #     - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+  #     - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
   #     - ${TMP_FOLDER}:/tmp/mycroft
 
   ovos_phal:
@@ -78,7 +80,7 @@ services:
       - /dev/snd
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
@@ -97,7 +99,7 @@ services:
     network_mode: host
     privileged: true
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - /sys:/sys:ro
       - /dev:/dev:ro
@@ -121,7 +123,7 @@ services:
       - /dev/snd
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ovos_listener_records:/home/${OVOS_USER}/.local/share/mycroft/listener
       - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
       - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
@@ -149,7 +151,7 @@ services:
       - /dev/snd
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/bus:${XDG_RUNTIME_DIR}/bus:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
@@ -174,9 +176,9 @@ services:
       - /dev/snd
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ovos_nltk:/home/${OVOS_USER}/nltk_data
-      - ${SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
+      - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
@@ -195,5 +197,5 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
