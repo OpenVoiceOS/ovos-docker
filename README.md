@@ -511,7 +511,6 @@ podman stats -a --no-trunc
 
 ## FAQ
 
-- [When mycroft.conf changed the listener doesn't listen anymore](https://github.com/OpenVoiceOS/ovos-listener/issues/15)
 - [Killed if previous bus.pid exists](https://github.com/OpenVoiceOS/ovos-messagebus/issues/4)
 - [Invalid value for userns_mode param: keep-id](https://github.com/OpenVoiceOS/ovos-docker/issues/12)
 
