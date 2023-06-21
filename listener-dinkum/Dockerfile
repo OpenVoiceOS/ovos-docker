@@ -26,7 +26,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
   && apt-get install -o Dpkg::Options::="--force-confold" -y libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
-  && pip3 install -f 'https://artifacts.smartgic.io/whl/' tflite_runtime \
+  && pip3 install -f 'https://whl.smartgic.io/' tflite_runtime \
   && if [ "${ALPHA}" == "true" ]; then \
   pip3 install -r /tmp/requirements.txt --pre; \
   else \
