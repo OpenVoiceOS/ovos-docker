@@ -336,7 +336,7 @@ The `ovos_listener` container comes with few STT plugins such as:
 - `ovos-stt-plugin-server` is a companion plugin that allows you to reach an external STT service
 - `ovos-stt-plugin-vosk` is an offline STT service
 
-If the existing STT plugins are not enough then you can install yours by following the same principle as for the TTS plugins *(from above)* by adding a `stt.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+If the existing STT plugins are not enough then you can install yours by following the same principle as for the STT plugins *(from above)* by adding a `stt.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
 ```ini
 ovos-stt-plugin-vosk==0.2.0a1 # Specific plugin version on PyPi
@@ -429,6 +429,14 @@ A `docker-compose.hivemind.yml` file is available in order to deploy `ovos_hivem
 docker compose -f docker-compose.yml -f docker-compose.hivemind.yml up -d
   Or:
 podman-compose -f docker-compose.yml -f docker-compose.hivemind.yml up -d
+```
+
+Once the HiveMind containers are up and running, the HiveMind command line allows you to add client, list client, delete client, etc...
+
+```bash
+docker exec -it ovos_hivemind_cli hivemind-core --help
+  Or:
+podman exec -it ovos_hivemind_cli hivemind-core --help
 ```
 
 For more information about how to authenticate, please read [HiveMind-core readme](https://github.com/JarbasHiveMind/HiveMind-core).
