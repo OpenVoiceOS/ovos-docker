@@ -259,6 +259,12 @@ docker compose --project-name ovos -f docker-compose.macos.yml --env-file .env u
 podman-compose --project-name ovos -f docker-compose.macos.yml --env-file .env up -d
 ```
 
+For Windows users, the file to pass to `docker compose` is `docker-compose.windows.yml`; there is no specific environment variable file.
+
+```bash
+docker compose --project-name ovos -f docker-compose.windows.yml --env-file .env up -d
+```
+
 Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`.
 
 The `OVOS_USER` variable should be changed **only** if you build the Docker images with a different user than `ovos`.
