@@ -1,0 +1,183 @@
+---
+version: "3.9"
+
+x-podman: &podman
+  userns_mode: keep-id
+  security_opt:
+    - "label=disable"
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    mode: non-blocking
+    max-buffer-size: 4m
+
+volumes:
+  ovos_models:
+    name: ovos_models
+    driver: local
+  ovos_vosk:
+    name: ovos_vosk
+    driver: local
+  ovos_listener_records:
+    name: ovos_listener_records
+    driver: local
+  ovos_nltk:
+    name: ovos_nltk
+    driver: local
+
+services:
+  ovos_messagebus:
+    <<: *podman
+    container_name: ovos_messagebus
+    hostname: ovos_messagebus
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-messagebus:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
+
+  ########################
+  # Uncomment this service if you want to use the C++ implementation
+  # of the message bus.
+  ########################
+  # ovos_messagebus:
+  #   <<: *podman
+  #   container_name: ovos_messagebus
+  #   hostname: ovos_messagebus
+  #   restart: unless-stopped
+  #   image: docker.io/smartgic/ovos-bus-server:${VERSION}
+  #   logging: *default-logging
+  #   pull_policy: always
+  #   environment:
+  #     TZ: $TZ
+  #   network_mode: host
+  #   volumes:
+  #     - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+  #     - ${TMP_FOLDER}:/tmp/mycroft
+
+  ovos_phal:
+    <<: *podman
+    container_name: ovos_phal
+    hostname: ovos_phal
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-phal:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      PULSE_SERVER: ${PULSE_SERVER}
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - /mnt/wslg/:/mnt/wslg/
+    depends_on:
+      - ovos_messagebus
+
+  ovos_phal_admin:
+    <<: *podman
+    container_name: ovos_phal_admin
+    hostname: ovos_phal_admin
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-phal-admin:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    privileged: true
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - /sys:/sys:ro
+      - /dev:/dev:ro
+    depends_on:
+      - ovos_messagebus
+
+  ovos_listener:
+    <<: *podman
+    container_name: ovos_listener
+    hostname: ovos_listener
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-listener-dinkum:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      PULSE_SERVER: ${PULSE_SERVER}
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ovos_listener_records:/home/${OVOS_USER}/.local/share/mycroft/listener
+      - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
+      - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - /mnt/wslg/:/mnt/wslg/
+    depends_on:
+      - ovos_messagebus
+      - ovos_phal
+
+  ovos_audio:
+    <<: *podman
+    container_name: ovos_audio
+    hostname: ovos_audio
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-audio:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
+      PULSE_SERVER: ${PULSE_SERVER}
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - ${XDG_RUNTIME_DIR}/bus:${XDG_RUNTIME_DIR}/bus:ro
+      - /mnt/wslg/:/mnt/wslg/
+    depends_on:
+      - ovos_messagebus
+      - ovos_phal
+
+  ovos_core:
+    <<: *podman
+    container_name: ovos_core
+    hostname: ovos_core
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-core:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      PULSE_SERVER: ${PULSE_SERVER}
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_nltk:/home/${OVOS_USER}/nltk_data
+      - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - /mnt/wslg/:/mnt/wslg/
+    depends_on:
+      - ovos_messagebus
+      - ovos_phal
+
+  ovos_cli:
+    <<: *podman
+    container_name: ovos_cli
+    hostname: ovos_cli
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-cli:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft

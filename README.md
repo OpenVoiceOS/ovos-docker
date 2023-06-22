@@ -101,6 +101,7 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 - Fedora 37
 - Fedora 38
 - Mac OS Ventura 13.x
+- Windows 11 with WSL2 Ubuntu 20.04
 
 ### Tags
 
@@ -111,6 +112,8 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 ## Requirements
 
 For Mac OS users, please follow this [requirements](README_MACOS.md) before going further.
+
+For Windows users, please follow these [requirements](README_WINDOWS.md) before going further.
 
 ### Docker or Podman
 
