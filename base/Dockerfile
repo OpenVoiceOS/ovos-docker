@@ -24,7 +24,7 @@ RUN apt-get update \
   && python3 -m venv /home/${USER}/.venv \
   && . /home/${USER}/.venv/bin/activate \
   && mkdir -p /home/${USER}/{.config,.cache,.local/share}/mycroft \
-  && chown ${USER}:${USER} -R /home/${USER} /tmp/mycroft \
+  && chown ${USER}:${USER} -R /home/${USER} \
   && apt-get --purge remove python3-dev build-essential -y \
   && apt-get --purge autoremove -y \
   && apt-get clean \
