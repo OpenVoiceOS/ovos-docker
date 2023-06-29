@@ -17,6 +17,7 @@
   - [Requirements](#requirements)
     - [Docker or Podman](#docker-or-podman)
     - [PulseAudio](#pulseaudio)
+    - [CPU instruction for TensorFlow](#cpu-instruction-for-tensorflow)
   - [How to build these images](#how-to-build-these-images)
     - [Arguments](#arguments)
     - [Image alternatives](#image-alternatives)
@@ -169,9 +170,21 @@ Once added, logout from the current session *(graphical or SSH)*.
 
 PulseAudio is a requirement and has to be up and running on the host to expose a socket *(for communication)* and a cookie *(for authentication)* to allow the containers to have access to the microphone and speakers.
 
-On modern Linux distribution, Pipewire handles the sound stack on the system, making sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers could have to be part of the `audio` system group *(depending the Linux distribution)*.
+On modern Linux distribution, Pipewire handles the sound stack on the system, making sure PulseAudio support is enabled within PipeWire and the service is started as a user and not as `root`. The user running the containers must be part of the `audio` system group *(depending the Linux distribution)*.
 
 The `pactl info` command should return information without any error or connection refused. Remember to check the permissions of `~/.config/pulse` and `/run/user/1000` directories as well, they should belong to the user running the stack, not `root`.
+
+### CPU instruction for TensorFlow
+
+In order to run TensorFlow, the CPU must support `AVX` *(Advanced Vector Extensions)* instruction set for x86 processor or `SIMD` *(Single Instruction, Multiple Data)* instruction set for ARM processor.
+
+To validate if the instruction is available, run the following command:
+
+```bash
+egrep "avx|simd" /proc/cpuinfo
+```
+
+If the command returns no output then your CPU doesn't fit the requirements for TensorFlow. *It does not mean that Open Voice OS can't run on your hardware, it simply means that Precise wake word engine will not run on it.*
 
 ## How to build these images
 
@@ -520,8 +533,8 @@ podman stats -a --no-trunc
 
 ## FAQ
 
-- [Killed if previous bus.pid exists](https://github.com/OpenVoiceOS/ovos-messagebus/issues/4)
 - [Invalid value for userns_mode param: keep-id](https://github.com/OpenVoiceOS/ovos-docker/issues/12)
+- [Strange behaviour with Docker Desktop on Linux](https://github.com/OpenVoiceOS/ovos-docker/issues/17)
 
 ## Support
 
