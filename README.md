@@ -34,6 +34,7 @@
   - [Open Voice OS CLI](#open-voice-os-cli)
   - [Open Voice OS GUI](#open-voice-os-gui)
   - [Security and HiveMind](#security-and-hivemind)
+    - [HiveMind to the rescue](#hivemind-to-the-rescue)
   - [Debug](#debug)
   - [FAQ](#faq)
   - [Support](#support)
@@ -238,7 +239,7 @@ Pre-build images are already available [here](https://hub.docker.com/u/smartgic)
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
 mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
 chown ${USER}:${USER} -R ~/ovos ~/hivemind
-cd ovos-docker/compose
+cd ~/ovos-docker/compose
 docker compose --project-name ovos up -d
   # Or:
 podman-compose --project-name ovos up -d
@@ -448,8 +449,11 @@ What it mean is that HiveMind allows external connections to the message bus by 
 A `docker-compose.hivemind.yml` file is available in order to deploy `ovos_hivemind_listener` and `ovos_hivemind_cli` containers.
 
 ```bash
+mkdir -p ~/hivemind/{config,share}
+chown ${USER}:${USER} -R ~/hivemind
+cd ~/ovos-docker/compose
 docker compose -f docker-compose.yml -f docker-compose.hivemind.yml up -d
-  Or:
+  # Or:
 podman-compose -f docker-compose.yml -f docker-compose.hivemind.yml up -d
 ```
 
@@ -457,7 +461,7 @@ Once the HiveMind containers are up and running, the HiveMind command line allow
 
 ```bash
 docker exec -it ovos_hivemind_cli hivemind-core --help
-  Or:
+  # Or:
 podman exec -it ovos_hivemind_cli hivemind-core --help
 ```
 
