@@ -20,7 +20,7 @@ RUN if [ "${ALPHA}" == "true" ]; then \
   else \
   pip3 install git+https://github.com/JarbasHiveMind/HiveMind-cli.git git+https://github.com/JarbasHiveMind/HiveMind-core.git; \
   fi \
-  && mkdir -p ${HOME}/.config/hivemind ${HOME}/.local/share/HiveMind \
+  && mkdir -p ${HOME}/.config/hivemind ${HOME}/.local/share/hivemind \
   && rm -rf ${HOME}/.cache
 
 ENV EDITOR=vim
