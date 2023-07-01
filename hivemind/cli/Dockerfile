@@ -26,3 +26,5 @@ RUN if [ "${ALPHA}" == "true" ]; then \
 ENV EDITOR=vim
 
 ENTRYPOINT ["sleep", "infinity"]
+
+WORKDIR /home/${USER}

@@ -25,3 +25,5 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     && rm -rf ${HOME}/.cache
 
 ENTRYPOINT ovos-messagebus
+
+WORKDIR /home/${USER}

@@ -26,3 +26,5 @@ RUN if [ "${ALPHA}" == "true" ]; then \
   && rm -rf ${HOME}/.cache /tmp/requirements.txt
 
 ENTRYPOINT ["hivemind-core", "listen"]
+
+WORKDIR /home/${USER}

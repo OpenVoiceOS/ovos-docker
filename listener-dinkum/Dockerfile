@@ -42,3 +42,5 @@ RUN apt-get update \
 USER $USER
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
+
+WORKDIR /home/${USER}

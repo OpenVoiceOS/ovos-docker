@@ -23,3 +23,5 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     && rm -rf ${HOME}/.cache
 
 ENTRYPOINT ovos-gui-service
+
+WORKDIR /home/${USER}

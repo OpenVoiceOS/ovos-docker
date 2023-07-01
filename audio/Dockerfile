@@ -43,3 +43,5 @@ RUN curl -sS https://forslund.github.io/mycroft-desktop-repo/mycroft-desktop.gpg
 USER $USER
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
+
+WORKDIR /home/${USER}

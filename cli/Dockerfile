@@ -36,3 +36,5 @@ USER $USER
 ENV EDITOR=vim
 
 ENTRYPOINT ["sleep", "infinity"]
+
+WORKDIR /home/${USER}

@@ -17,3 +17,5 @@ USER root
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
+
+WORKDIR /home/${USER}
