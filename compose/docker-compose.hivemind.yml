@@ -13,6 +13,8 @@ x-logging:
   options:
     mode: non-blocking
     max-buffer-size: 4m
+    max-size: "50m"
+    max-file: "5"
 
 services:
   ovos_hivemind_listener:

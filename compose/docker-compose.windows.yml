@@ -1,16 +1,20 @@
 ---
 version: "3.9"
 
-x-podman: &podman
+x-podman:
+  &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
 
-x-logging: &default-logging
+x-logging:
+  &default-logging
   driver: json-file
   options:
     mode: non-blocking
     max-buffer-size: 4m
+    max-size: "200m"
+    max-file: "1"
 
 volumes:
   ovos_models:

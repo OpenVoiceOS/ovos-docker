@@ -13,6 +13,8 @@ x-logging:
   options:
     mode: non-blocking
     max-buffer-size: 4m
+    max-size: "200m"
+    max-file: "1"
 
 services:
   ovos_gui_websocket:
