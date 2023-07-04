@@ -283,6 +283,16 @@ Some variables might need to be tuned to match your setup such as the timezone, 
 
 The `OVOS_USER` variable should be changed **only** if you build the Docker images with a different user than `ovos`.
 
+By default the services will write the logs into a log file under `.local` directory, these files are not rotated which could lead to disk space issue. The solution is to add these lines into `~/ovos/config/mycroft.conf`, this will tell the services to not create a log file but redirect the logs to the container stdout.
+
+```json
+{
+  "logs": {
+    "path": "stdout"
+  }
+}
+```
+
 ## How to update the current stack
 
 The easiest way to update a stack already deployed by `docker compose` or `podman-compose` is to use `docker compose` or `podman-compose`. :relaxed:
