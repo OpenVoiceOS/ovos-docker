@@ -19,6 +19,8 @@ RUN adduser --disabled-password $USER \
     && chown ${USER}:${USER} -R /home/${USER} /tmp/mycroft \
     && apk add --no-cache git python3 py3-pip py3-wheel py3-numpy swig fann-dev \
     && apk add --no-cache --virtual .build-deps python3-dev gcc g++ \
+    && python3 -m venv /home/${USER}/.venv \
+    && . /home/${USER}/.venv/bin/activate \
     && if [ "${ALPHA}" == "true" ]; then \
     # Install PyYAML before as a workaround to avoid AttributeError: cython_sources error.
     pip3 install PyYAML; \
@@ -26,7 +28,11 @@ RUN adduser --disabled-password $USER \
     else \
     pip3 install ovos-core[lgpl]; \
     fi \
+    && chown ${USER}:${USER} -R /home/${USER} \
     && apk del .build-deps \
-    && rm -rf ${HOME}/.cache
+    && rm -rf /home/${USER}/.cache
 
 USER $USER
+
+ENV PATH /home/${USER}/.venv/bin:$PATH
+ENV VIRTUAL_ENV /home/${USER}/.venv
