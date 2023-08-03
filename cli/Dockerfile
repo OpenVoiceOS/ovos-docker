@@ -24,7 +24,7 @@ RUN apt-get update \
     else \
     pip3 install ovos-skills-manager ovos-plugin-manager ovos-cli-client neon-mana-utils; \
     fi \
-    && mkdir -p /home/${USER}/.local/state/mycroft /var/log/mycroft \
+    && mkdir -p /home/${USER}/.local/state/mycroft /home/${USER}/stdout  /var/log/mycroft \
     && chown ${USER}:${USER} -R /home/${USER} /var/log/mycroft \
     && apt-get --purge remove python3-dev build-essential -y \
     && apt-get --purge autoremove -y \
