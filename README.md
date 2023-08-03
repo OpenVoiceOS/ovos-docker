@@ -237,7 +237,7 @@ Pre-build images are already available [here](https://hub.docker.com/u/smartgic)
 
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-docker.git
-mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
+mkdir -p ~/ovos/{config,local,share,tmp} ~/hivemind/{config,share}
 chown ${USER}:${USER} -R ~/ovos ~/hivemind
 cd ~/ovos-docker/compose
 docker compose --project-name ovos up -d
