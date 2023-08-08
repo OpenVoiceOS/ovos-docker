@@ -50,20 +50,20 @@ services:
   # Uncomment this service if you want to use the C++ implementation
   # of the message bus.
   ########################
-  # ovos_messagebus:
-  #   <<: *podman
-  #   container_name: ovos_messagebus
-  #   hostname: ovos_messagebus
-  #   restart: unless-stopped
-  #   image: docker.io/smartgic/ovos-bus-server:${VERSION}
-  #   logging: *default-logging
-  #   pull_policy: always
-  #   environment:
-  #     TZ: $TZ
-  #   network_mode: host
-  #   volumes:
-  #     - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
-  #     - ${TMP_FOLDER}:/tmp/mycroft
+  #ovos_messagebus:
+  #  <<: *podman
+  #  container_name: ovos_messagebus
+  #  hostname: ovos_messagebus
+  #  restart: unless-stopped
+  #  image: docker.io/smartgic/ovos-bus-server:${VERSION}
+  #  logging: *default-logging
+  #  pull_policy: always
+  #  environment:
+  #    TZ: $TZ
+  #  network_mode: host
+  #  volumes:
+  #    - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+  #    - ${TMP_FOLDER}:/tmp/mycroft
 
   ovos_phal:
     <<: *podman
