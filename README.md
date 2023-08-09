@@ -113,9 +113,8 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 
 ## Requirements
 
-For Mac OS users, please follow this [requirements](README_MACOS.md) before going further.
-
-For Windows users, please follow these [requirements](README_WINDOWS.md) before going further.
+- For Mac OS users, please follow this [requirements](README_MACOS.md) before going further.
+- For Windows users, please follow these [requirements](README_WINDOWS.md) before going further.
 
 ### Docker or Podman
 
@@ -265,6 +264,8 @@ docker compose --project-name ovos -f docker-compose.yml -f docker-compose.gui.y
 podman-compose --project-name ovos -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml -f docker-compose.raspberrypi.gui.yml --env-file .env-raspberrypi up -d
 ```
 
+### Mac OS
+
 For Mac OS users, the file to pass to `docker compose` or `podman-compose` is `docker-compose.macos.yml`; there is no specific environment variable file.
 
 ```bash
@@ -273,10 +274,14 @@ docker compose --project-name ovos -f docker-compose.macos.yml --env-file .env u
 podman-compose --project-name ovos -f docker-compose.macos.yml --env-file .env up -d
 ```
 
+### Windows
+
 For Windows users, the file to pass to `docker compose` is `docker-compose.windows.yml`; there is no specific environment variable file.
 
 ```bash
 docker compose --project-name ovos -f docker-compose.windows.yml --env-file .env up -d
+  # Or:
+podman-compose --project-name ovos -f docker-compose.windows.yml --env-file .env up -d
 ```
 
 Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`.
