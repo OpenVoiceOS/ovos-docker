@@ -23,6 +23,8 @@
     - [Image alternatives](#image-alternatives)
       - [Message bus](#message-bus)
   - [How to use these images](#how-to-use-these-images)
+    - [Mac OS](#mac-os)
+    - [Windows](#windows)
   - [How to update the current stack](#how-to-update-the-current-stack)
   - [Skills management](#skills-management)
     - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
