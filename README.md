@@ -86,7 +86,7 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 | ---          | ---                              |
 | `amd64`      | Such as AMD and Intel processors |
 | `aarch64`    | Such as Raspberry Pi 3/4 64-bit  |
-| `armlv7`     | *Not supported because of `onnxruntime*  |
+| `armlv7`     | *Not supported because of `onnxruntime`*  |
 
 *These are examples, many other boards use these CPU architectures.*
 
