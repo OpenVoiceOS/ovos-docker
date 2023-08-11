@@ -27,7 +27,7 @@
     - [Windows](#windows)
   - [How to update the current stack](#how-to-update-the-current-stack)
   - [Skills management](#skills-management)
-    - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
+    - [Skill running inside ovos-core container](#skill-running-inside-ovos_core-container)
     - [Skill running as standalone container](#skill-running-as-standalone-container)
   - [TTS (Text-to-Speech) and STT (Speech-to-Text)](#tts-text-to-speech-and-stt-speech-to-text)
     - [TTS](#tts)
@@ -86,6 +86,7 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 | ---          | ---                              |
 | `amd64`      | Such as AMD and Intel processors |
 | `aarch64`    | Such as Raspberry Pi 3/4 64-bit  |
+| `armlv7`     | *Not supported because of `onnxruntime*  |
 
 *These are examples, many other boards use these CPU architectures.*
 
@@ -318,7 +319,7 @@ If you want to change the tag to deploy, update the `.env` file with the new val
 
 There are two *(2)* different ways to install an Open Voice OS skill, each having pros and cons.
 
-### Skill running inside ovos-core container
+### Skill running inside ovos_core container
 
 The first way is to use the `skills.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_core` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
