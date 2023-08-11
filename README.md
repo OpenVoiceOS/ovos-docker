@@ -27,7 +27,7 @@
     - [Windows](#windows)
   - [How to update the current stack](#how-to-update-the-current-stack)
   - [Skills management](#skills-management)
-    - [Skill running inside ovos-core container](#skill-running-inside-ovos_core-container)
+    - [Skill running inside ovos_core container](#skill-running-inside-ovos_core-container)
     - [Skill running as standalone container](#skill-running-as-standalone-container)
   - [TTS (Text-to-Speech) and STT (Speech-to-Text)](#tts-text-to-speech-and-stt-speech-to-text)
     - [TTS](#tts)
