@@ -35,7 +35,7 @@
   - [PHAL plugins](#phal-plugins)
   - [Open Voice OS CLI](#open-voice-os-cli)
   - [Open Voice OS GUI](#open-voice-os-gui)
-  - [Security and HiveMind](#security-and-hivemind)
+  - [Security](#security)
     - [HiveMind to the rescue](#hivemind-to-the-rescue)
   - [Debug](#debug)
   - [FAQ](#faq)
@@ -441,9 +441,9 @@ This command is not permanent, when your operating system will reboot, you will 
 
 `xhost` is part of the `x11-xserver-utils` package on Debian based distributions.
 
-## Security and HiveMind
+## Security
 
-By default, the message bus is listening on `0.0.0.0` port `8181`, this could be a security issue as a device could connect to the message bus and send/read messages. To prevent potential security issues, it is recommended to use a firewall on port `8181`.
+By default, the message bus is listening on `0.0.0.0` port `8181` because containers are created using the `--network host` option, this could be a security issue as a device could connect to the message bus and send/read messages. To prevent potential security issues, it is recommended to use a firewall on port `8181`.
 
 `iptables` will be demonstrated as an example but if `firewalld` or `ufw` services are used, then make sure to be compliant with your distribution/operating system.
 
@@ -453,6 +453,8 @@ sudo iptables iptables -A INPUT -p tcp --dport 8181 -j DROP
 ```
 
 This will allow connections to port `8181` **only** from localhost **(internal)**.
+
+:warning: Keep in mind to firewall any other ports which should not be exposed outside of the host using the same IPTables method.
 
 ### HiveMind to the rescue
 
