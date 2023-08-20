@@ -377,7 +377,7 @@ The `ovos_listener` container comes with few STT plugins such as:
 - `ovos-stt-plugin-server` is a companion plugin that allows you to reach an external STT service
 - `ovos-stt-plugin-vosk` is an offline STT service
 
-If the existing STT plugins are not enough then you can install yours by following the same principle as for the STT plugins *(from above)* by adding a `stt.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+If the existing STT plugins are not enough then you can install yours by following the same principle as for the STT plugins *(from above)* by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
 ```ini
 ovos-stt-plugin-vosk==0.2.0a1 # Specific plugin version on PyPi
@@ -385,7 +385,7 @@ ovos-stt-plugin-server # Latest plugin version on PyPi
 git+https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium.git@fix/whatever # Specific branch of a plugin on GitHub
 ```
 
-The `ovos_listener` container must be restarted if a change occurs in the `stt.list` file.
+The `ovos_listener` container must be restarted if a change occurs in the `listener.list` file.
 
 ## PHAL plugins
 
