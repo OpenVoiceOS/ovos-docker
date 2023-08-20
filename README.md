@@ -360,7 +360,7 @@ The `ovos_audio` container comes with few TTS plugins such as:
 - `ovos-tts-plugin-mimic3-server` is the latest Mycroft AI Text-to-Speech engine
 - `ovos-tts-plugin-server` is a companion plugin that allows you to reach an external TTS service
 
-If the existing TTS plugins are not enough then you can install yours by following the same principle as for the skills by adding a `tts.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_audio` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+If the existing TTS plugins are not enough then you can install yours by following the same principle as for the skills by adding a `audio.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_audio` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
 ```ini
 ovos-tts-plugin-marytts==0.0.1a1 # Specific plugin version on PyPi
@@ -368,7 +368,7 @@ neon-tts-plugin-mozilla-remote # Latest plugin version on PyPi
 git+https://github.com/NeonGeckoCom/neon-tts-plugin-polly.git@fix/whatever # Specific branch of a plugin on GitHub
 ```
 
-The `ovos_audio` container must be restarted if a change occurs in the `tts.list` file.
+The `ovos_audio` container must be restarted if a change occurs in the `audio.list` file.
 
 ### STT
 
