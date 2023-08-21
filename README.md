@@ -290,7 +290,7 @@ docker compose --project-name ovos -f docker-compose.windows.yml --env-file .env
 podman-compose --project-name ovos -f docker-compose.windows.yml --env-file .env up -d
 ```
 
-Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` files before running `docker compose` or `podman-compose`.
+Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` file before running `docker compose` or `podman-compose`.
 
 The `OVOS_USER` variable should be changed **only** if you build the Docker images with a different user than `ovos`.
 
