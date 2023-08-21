@@ -3,3 +3,4 @@
 build.sh
 .cache
 *backend*
+compose/.env
