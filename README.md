@@ -242,6 +242,9 @@ git clone https://github.com/OpenVoiceOS/ovos-docker.git
 mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
 chown ${USER}:${USER} -R ~/ovos ~/hivemind
 cd ~/ovos-docker/compose
+cp .env.example .env # customise if needed
+  # Or:
+cp .env-raspberrypi .env # customise if needed
 docker compose --project-name ovos up -d
   # Or:
 podman-compose --project-name ovos up -d
