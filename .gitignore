@@ -2,4 +2,4 @@
 .vscode
 build.sh
 .cache
-compose/.env
+*backend*

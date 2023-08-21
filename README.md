@@ -23,9 +23,11 @@
     - [Image alternatives](#image-alternatives)
       - [Message bus](#message-bus)
   - [How to use these images](#how-to-use-these-images)
+    - [Mac OS](#mac-os)
+    - [Windows](#windows)
   - [How to update the current stack](#how-to-update-the-current-stack)
   - [Skills management](#skills-management)
-    - [Skill running inside ovos-core container](#skill-running-inside-ovos-core-container)
+    - [Skill running inside ovos_core container](#skill-running-inside-ovos_core-container)
     - [Skill running as standalone container](#skill-running-as-standalone-container)
   - [TTS (Text-to-Speech) and STT (Speech-to-Text)](#tts-text-to-speech-and-stt-speech-to-text)
     - [TTS](#tts)
@@ -33,7 +35,7 @@
   - [PHAL plugins](#phal-plugins)
   - [Open Voice OS CLI](#open-voice-os-cli)
   - [Open Voice OS GUI](#open-voice-os-gui)
-  - [Security and HiveMind](#security-and-hivemind)
+  - [Security](#security)
     - [HiveMind to the rescue](#hivemind-to-the-rescue)
   - [Debug](#debug)
   - [FAQ](#faq)
@@ -84,6 +86,7 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 | ---          | ---                              |
 | `amd64`      | Such as AMD and Intel processors |
 | `aarch64`    | Such as Raspberry Pi 3/4 64-bit  |
+| `armlv7`     | *Not supported because of `onnxruntime`*  |
 
 *These are examples, many other boards use these CPU architectures.*
 
@@ -113,9 +116,8 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 
 ## Requirements
 
-For Mac OS users, please follow this [requirements](README_MACOS.md) before going further.
-
-For Windows users, please follow these [requirements](README_WINDOWS.md) before going further.
+- For Mac OS users, please follow this [requirements](README_MACOS.md) before going further.
+- For Windows users, please follow these [requirements](README_WINDOWS.md) before going further.
 
 ### Docker or Podman
 
@@ -265,6 +267,8 @@ docker compose --project-name ovos -f docker-compose.yml -f docker-compose.gui.y
 podman-compose --project-name ovos -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml -f docker-compose.raspberrypi.gui.yml --env-file .env-raspberrypi up -d
 ```
 
+### Mac OS
+
 For Mac OS users, the file to pass to `docker compose` or `podman-compose` is `docker-compose.macos.yml`; there is no specific environment variable file.
 
 ```bash
@@ -273,10 +277,14 @@ docker compose --project-name ovos -f docker-compose.macos.yml --env-file .env u
 podman-compose --project-name ovos -f docker-compose.macos.yml --env-file .env up -d
 ```
 
+### Windows
+
 For Windows users, the file to pass to `docker compose` is `docker-compose.windows.yml`; there is no specific environment variable file.
 
 ```bash
 docker compose --project-name ovos -f docker-compose.windows.yml --env-file .env up -d
+  # Or:
+podman-compose --project-name ovos -f docker-compose.windows.yml --env-file .env up -d
 ```
 
 Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`.
@@ -311,7 +319,7 @@ If you want to change the tag to deploy, update the `.env` file with the new val
 
 There are two *(2)* different ways to install an Open Voice OS skill, each having pros and cons.
 
-### Skill running inside ovos-core container
+### Skill running inside ovos_core container
 
 The first way is to use the `skills.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_core` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
@@ -352,7 +360,7 @@ The `ovos_audio` container comes with few TTS plugins such as:
 - `ovos-tts-plugin-mimic3-server` is the latest Mycroft AI Text-to-Speech engine
 - `ovos-tts-plugin-server` is a companion plugin that allows you to reach an external TTS service
 
-If the existing TTS plugins are not enough then you can install yours by following the same principle as for the skills by adding a `tts.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_audio` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+If the existing TTS plugins are not enough then you can install yours by following the same principle as for the skills by adding a `audio.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_audio` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
 ```ini
 ovos-tts-plugin-marytts==0.0.1a1 # Specific plugin version on PyPi
@@ -360,7 +368,7 @@ neon-tts-plugin-mozilla-remote # Latest plugin version on PyPi
 git+https://github.com/NeonGeckoCom/neon-tts-plugin-polly.git@fix/whatever # Specific branch of a plugin on GitHub
 ```
 
-The `ovos_audio` container must be restarted if a change occurs in the `tts.list` file.
+The `ovos_audio` container must be restarted if a change occurs in the `audio.list` file.
 
 ### STT
 
@@ -369,7 +377,7 @@ The `ovos_listener` container comes with few STT plugins such as:
 - `ovos-stt-plugin-server` is a companion plugin that allows you to reach an external STT service
 - `ovos-stt-plugin-vosk` is an offline STT service
 
-If the existing STT plugins are not enough then you can install yours by following the same principle as for the STT plugins *(from above)* by adding a `stt.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+If the existing STT plugins are not enough then you can install yours by following the same principle as for the STT plugins *(from above)* by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file. When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
 
 ```ini
 ovos-stt-plugin-vosk==0.2.0a1 # Specific plugin version on PyPi
@@ -377,7 +385,7 @@ ovos-stt-plugin-server # Latest plugin version on PyPi
 git+https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium.git@fix/whatever # Specific branch of a plugin on GitHub
 ```
 
-The `ovos_listener` container must be restarted if a change occurs in the `stt.list` file.
+The `ovos_listener` container must be restarted if a change occurs in the `listener.list` file.
 
 ## PHAL plugins
 
@@ -433,9 +441,9 @@ This command is not permanent, when your operating system will reboot, you will 
 
 `xhost` is part of the `x11-xserver-utils` package on Debian based distributions.
 
-## Security and HiveMind
+## Security
 
-By default, the message bus is listening on `0.0.0.0` port `8181`, this could be a security issue as a device could connect to the message bus and send/read messages. To prevent potential security issues, it is recommended to use a firewall on port `8181`.
+By default, the message bus is listening on `0.0.0.0` port `8181` because containers are created using the `--network host` option, this could be a security issue as a device could connect to the message bus and send/read messages. To prevent potential security issues, it is recommended to use a firewall on port `8181`.
 
 `iptables` will be demonstrated as an example but if `firewalld` or `ufw` services are used, then make sure to be compliant with your distribution/operating system.
 
@@ -445,6 +453,8 @@ sudo iptables iptables -A INPUT -p tcp --dport 8181 -j DROP
 ```
 
 This will allow connections to port `8181` **only** from localhost **(internal)**.
+
+:warning: Keep in mind to firewall any other ports which should not be exposed outside of the host using the same IPTables method.
 
 ### HiveMind to the rescue
 
