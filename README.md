@@ -265,9 +265,9 @@ By default, `docker compose` or `podman-compose` will look for a `docker-compose
 When passing the `docker-compose.gui.yml` file to the compose command, the voice assistant will not be **headless** anymore which means that a GUI *(Graphical user Interface)* will be available. For more details about the GUI please go to [this section](#open-voice-os-gui).
 
 ```bash
-docker compose --project-name ovos -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml -f docker-compose.raspberrypi.gui.yml --env-file .env-raspberrypi up -d
+docker compose --project-name ovos -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml -f docker-compose.raspberrypi.gui.yml up -d
   # Or:
-podman-compose --project-name ovos -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml -f docker-compose.raspberrypi.gui.yml --env-file .env-raspberrypi up -d
+podman-compose --project-name ovos -f docker-compose.yml -f docker-compose.gui.yml -f docker-compose.raspberrypi.yml -f docker-compose.raspberrypi.gui.yml up -d
 ```
 
 ### Mac OS
@@ -290,7 +290,7 @@ docker compose --project-name ovos -f docker-compose.windows.yml --env-file .env
 podman-compose --project-name ovos -f docker-compose.windows.yml --env-file .env up -d
 ```
 
-Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` and `.env-raspberrypi` files before running `docker compose` or `podman-compose`.
+Some variables might need to be tuned to match your setup such as the timezone, the directories, *etc...*, have a look into the `.env` files before running `docker compose` or `podman-compose`.
 
 The `OVOS_USER` variable should be changed **only** if you build the Docker images with a different user than `ovos`.
 
@@ -509,9 +509,9 @@ Enable debug mode in `~/ovos/config/mycroft.conf` to get more verbosity from the
 To access all the container logs at the same time, run the following command *(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)*:
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env --env-file .env-raspberrypi logs -f --tail 200
+docker compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env logs -f --tail 200
   # Or:
-podman-compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env --env-file .env-raspberrypi logs -n -f --tail 200
+podman-compose -f docker-compose.yml -f docker-compose.raspberrypi.yml -f docker-compose.skills.yml --env-file .env logs -n -f --tail 200
 ```
 
 To access the logs of a specific container, run the following command:
