@@ -24,9 +24,9 @@ RUN adduser --disabled-password $USER \
     && if [ "${ALPHA}" == "true" ]; then \
     # Install PyYAML before as a workaround to avoid AttributeError: cython_sources error.
     pip3 install PyYAML; \
-    pip3 install ovos-core[lgpl] ovos-translate-plugin-server --pre; \
+    pip3 install ovos-core[lgpl] ovos-translate-server-plugin --pre; \
     else \
-    pip3 install ovos-core[lgpl] ovos-translate-plugin-server; \
+    pip3 install ovos-core[lgpl] ovos-translate-server-plugin; \
     fi \
     && chown ${USER}:${USER} -R /home/${USER} \
     && apk del .build-deps \
