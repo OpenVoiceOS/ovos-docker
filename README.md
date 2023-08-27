@@ -184,7 +184,7 @@ In order to run TensorFlow, the CPU must support `AVX` *(Advanced Vector Extensi
 To validate if the instruction is available, run the following command:
 
 ```bash
-egrep "avx|simd" /proc/cpuinfo
+grep -E "avx|simd" /proc/cpuinfo
 ```
 
 If the command returns no output then your CPU doesn't fit the requirements for TensorFlow. *It does not mean that Open Voice OS can't run on your hardware, it simply means that Precise wake word engine will not run on it.*
