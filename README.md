@@ -74,6 +74,7 @@ To allow data persistence, Docker or Podman volumes are required which will prev
 | `ovos_listener_records` | Wake word and utterance records                  |
 | `ovos_models`           | Models downloaded by `precise-lite`              |
 | `ovos_nltk`             | Punkt package required by NLTK                   |
+| `ovos_tts_cache`        | `.wav` and `.pho` files from TTS transcription   |
 | `ovos_vosk`             | Data downloaded by VOSK during the initial boot  |
 
 `ovos_listener_records` will allow you to retrieve recorded wake words which could help you to build or improve models. By default, the recording features are disabled, `"record_wake_words": true` and `"save_utterances": true` will have to be added to the `listener` section of `mycroft.conf` to enable these capabilities.

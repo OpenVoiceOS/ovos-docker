@@ -33,12 +33,12 @@ RUN curl -sS https://forslund.github.io/mycroft-desktop-repo/mycroft-desktop.gpg
   else \
   pip3 install -r /tmp/requirements.txt; \
   fi \
-  && mkdir -p /home/${USER}/.config/mycroft/apps \
+  && mkdir -p /home/${USER}/.config/mycroft/apps /home/${USER}/.cache/mycroft \
   && chown ${USER}:${USER} -R /home/${USER} \
   && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
   && apt-get clean \
-  && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+  && rm -rf ${HOME}/.cache/pip /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
 USER $USER
 

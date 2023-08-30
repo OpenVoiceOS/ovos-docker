@@ -26,6 +26,9 @@ volumes:
   ovos_listener_records:
     name: ovos_listener_records
     driver: local
+  ovos_tts_cache:
+    name: ovos_tts_cache
+    driver: local
   ovos_nltk:
     name: ovos_nltk
     driver: local
@@ -142,6 +145,7 @@ services:
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/bus:${XDG_RUNTIME_DIR}/bus:ro
       - /mnt/wslg/:/mnt/wslg/
