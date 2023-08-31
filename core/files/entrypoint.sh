@@ -26,7 +26,8 @@ for skill in $(ls -d -- */ 2> /dev/null); do
 done
 
 # Clear Python cache
-rm -rf "${HOME}"/.cache
+rm -rf ~/.cache/pip
+
 
 # Run ovos-core
 ovos-core

@@ -19,7 +19,8 @@ if [ -n "$file" ]; then
 fi
 
 # Clear Python cache
-rm -rf "${HOME}"/.cache
+rm -rf ~/.cache/pip
+
 
 # Run ovos-dinkum-listener
 ovos-dinkum-listener

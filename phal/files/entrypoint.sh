@@ -7,7 +7,8 @@ if test -f "$phal_list"; then
 fi
 
 # Clear Python cache
-rm -rf "${HOME}"/.cache
+rm -rf ~/.cache/pip
+
 
 # Run ovos-PHAL
 ovos_PHAL
