@@ -9,6 +9,12 @@ fi
 # Clear Python cache
 rm -rf ~/.cache/pip
 
+# Auto-detect which sound server is running (PipeWire or PulseAudio)
+if pactl info &> /dev/null; then
+    echo -e 'pcm.!default pulse\nctl.!default pulse' > ~/.asoundrc
+elif pw-link --links &> /dev/null; then
+    echo -e 'pcm.!default pipewire\nctl.!default pipewire' > ~/.asoundrc
+fi
 
 # Run ovos-PHAL
 ovos_PHAL
