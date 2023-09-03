@@ -169,3 +169,20 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       - ovos_core
+
+  ovos_skill_wolfie:
+    <<: *podman
+    container_name: ovos_skill_wolfie
+    hostname: ovos_skill_wolfie
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-wolfie:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      - ovos_core
