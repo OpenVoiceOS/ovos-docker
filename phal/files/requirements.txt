@@ -1,4 +1,5 @@
 ovos-PHAL
 ovos-PHAL-plugin-alsa
 ovos-PHAL-plugin-system
+ovos-PHAL-plugin-ipgeo
 ovos-plugin-manager
