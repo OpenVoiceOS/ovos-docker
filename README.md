@@ -563,6 +563,7 @@ podman stats -a --no-trunc
 
 - [Invalid value for userns_mode param: keep-id](https://github.com/OpenVoiceOS/ovos-docker/issues/12)
 - [Strange behaviour with Docker Desktop on Linux](https://github.com/OpenVoiceOS/ovos-docker/issues/17)
+- [I am unable to play the start_listening sound](https://github.com/OpenVoiceOS/ovos-docker#faq)
 
 ## Support
 
