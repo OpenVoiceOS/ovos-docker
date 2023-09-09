@@ -24,9 +24,9 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update \
     && apt-get install -y swig libfann-dev build-essential python3-dev \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-core[lgpl] ovos-translate-server-plugin --pre; \
+    pip3 install wheel ovos-core[lgpl] ovos-translate-server-plugin --pre; \
     else \
-    pip3 install ovos-core[lgpl] ovos-translate-server-plugin; \
+    pip3 install wheel ovos-core[lgpl] ovos-translate-server-plugin; \
     fi \
     && mkdir -p /home/${USER}/.local/share/mycroft/skills /home/${USER}/nltk_data \
     && chown ${USER}:${USER} -R /home/${USER} \
