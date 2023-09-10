@@ -1,6 +1,7 @@
 ovos-audio
 ovos-audio-plugin-simple
 ovos-classifiers
+ovos-plugin-vlc
 ovos-tts-plugin-mimic
 ovos-tts-plugin-mimic2
 ovos-tts-plugin-mimic3-server
