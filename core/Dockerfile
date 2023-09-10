@@ -17,6 +17,7 @@ ARG USER=ovos
 
 USER root
 
+COPY files/requirements.txt /tmp/requirements.txt
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 SHELL ["/bin/bash", "-c"]
@@ -24,16 +25,16 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update \
     && apt-get install -y swig libfann-dev build-essential python3-dev \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install wheel ovos-core[lgpl] ovos-translate-server-plugin --pre; \
+    pip3 install -r /tmp/requirements.txt --pre; \
     else \
-    pip3 install wheel ovos-core[lgpl] ovos-translate-server-plugin; \
+    pip3 install -r /tmp/requirements.txt; \
     fi \
     && mkdir -p /home/${USER}/.local/share/mycroft/skills /home/${USER}/nltk_data \
     && chown ${USER}:${USER} -R /home/${USER} \
     && apt-get --purge remove -y build-essential python3-dev \
     && apt-get --purge autoremove -y \
     && apt-get clean \
-    && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log}
+    && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
 USER $USER
 
