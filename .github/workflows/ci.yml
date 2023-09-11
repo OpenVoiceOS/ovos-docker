@@ -1,0 +1,25 @@
+---
+name: Build documentation
+on:
+  push:
+    branches:
+      - documentation
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+      - run: pip install git+https://${{ MKDOCS_TOKEN }}@github.com/squidfunk/mkdocs-material-insiders.git
+      - run: pip install pillow cairosvg mkdocs-video mkdocs-git-authors-plugin mkdocs-git-committers-plugin-2 mkdocs-git-revision-date-localized-plugin
+      - run: mkdocs gh-deploy --force
