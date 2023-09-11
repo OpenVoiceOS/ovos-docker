@@ -17,12 +17,12 @@ x-logging:
     max-file: "1"
 
 services:
-  ovos_hivemind_listener:
+  hivemind_listener:
     <<: *podman
-    container_name: ovos_hivemind_listener
-    hostname: ovos_hivemind_listener
+    container_name: hivemind_listener
+    hostname: hivemind_listener
     restart: unless-stopped
-    image: docker.io/smartgic/ovos-hivemind-listener:${VERSION}
+    image: docker.io/smartgic/hivemind-listener:${VERSION}
     logging: *default-logging
     pull_policy: always
     tty: true
@@ -33,12 +33,12 @@ services:
       - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:z
       - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
 
-  ovos_hivemind_cli:
+  hivemind_cli:
     <<: *podman
-    container_name: ovos_hivemind_cli
-    hostname: ovos_hivemind_cli
+    container_name: hivemind_cli
+    hostname: hivemind_cli
     restart: unless-stopped
-    image: docker.io/smartgic/ovos-hivemind-cli:${VERSION}
+    image: docker.io/smartgic/hivemind-cli:${VERSION}
     logging: *default-logging
     pull_policy: always
     tty: true
@@ -49,4 +49,4 @@ services:
       - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:z
       - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
     depends_on:
-      - ovos_hivemind_listener
+      - hivemind_listener
