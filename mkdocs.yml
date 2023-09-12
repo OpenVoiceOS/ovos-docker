@@ -1,5 +1,5 @@
 site_name: Open Voice OS Docker Documentation
-site_url: https://ovos-docker.github.io/
+site_url: https://openvoiceos.github.io/ovos-docker/
 site_author: Gaëtan Trellu
 site_description: >-
   Use Docker or Podman to deploy Open Voice OS components on x86 or ARM64.
