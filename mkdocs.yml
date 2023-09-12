@@ -1,0 +1,187 @@
+site_name: Open Voice OS Docker Documentation
+site_url: https://ovos-docker.github.io/
+site_author: Gaëtan Trellu
+site_description: >-
+  Use Docker or Podman to deploy Open Voice OS components on x86 or ARM64.
+
+repo_name: OpenVoiceOS/ovos-docker
+repo_url: https://github.com/OpenVoiceOS/ovos-docker
+edit_uri: edit/main/docs/
+
+copyright: |
+  2023 <a href="https://www.openvoiceos.org"  target="_blank" rel="noopener">Open Voice OS</a>
+
+theme:
+  name: material
+  custom_dir: material/.overrides
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.tooltips
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    - navigation.path
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+  language: en
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/favicon.png
+  logo: assets/logo.png
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - minify:
+      minify_html: true
+  - git-committers:
+      repository: OpenVoiceOS/ovos-docker
+      branch: documentation
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - privacy:
+  - mkdocs-video:
+      video_loop: true
+
+extra:
+  analytics:
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: >-
+            Thanks for your feedback!
+        - icon: material/emoticon-sad-outline
+          name: This page could be improved
+          data: 0
+          note: >-
+            Thanks for your feedback! Help us improve this page by
+            using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/openvoiceos
+    - icon: material/matrix
+      link: https://matrix.to/#/!XFpdtmgyCoPDxOMPpH:matrix.org?via=matrix.org
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/r/smartgic/ovos-core
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/ovos-core/
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/openvoiceos
+  consent:
+    title: Cookie consent
+    description: >-
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - neoteroi.cards
+  - neoteroi.timeline
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - About:
+      - "What is it?": about/what-is-it.md
+      - "Why use OVOS?": about/why-use-ovos.md
+      - Glossary:
+          - "Terms": about/glossary/terms.md
+          - "Components": about/glossary/components.md
+  - Getting started:
+      - Docker or Podman: getting-started/docker/index.md
+      - Prerequisites:
+          - Container engine: getting-started/docker/prerequisites/engine.md
+          - Sound system: getting-started/docker/prerequisites/sound.md
+          - CPU instructions: getting-started/docker/prerequisites/cpu.md
+      - Images and volumes: getting-started/docker/images.md
+      - Composition: getting-started/docker/composition.md
+      - Install Open Voice OS:
+          - Initial requirements: getting-started/docker/installation/requirements.md
+          - Initial configuration: getting-started/docker/installation/configuration.md
+          - Install core components: getting-started/docker/installation/basic.md
+          - Install OVOS skills: getting-started/docker/installation/skills.md
+          - Install graphical interface: getting-started/docker/installation/gui.md
+      - Security:
+          - System hardening: getting-started/docker/security/hardening.md
+          - HiveMind: getting-started/docker/security/hivemind.md
+      - OVOS command line: getting-started/docker/cli.md
+      - Plugins:
+          - Microphone: getting-started/docker/plugins/microphone.md
+          - PHAL: getting-started/docker/plugins/phal.md
+          - Speech-To-Text: getting-started/docker/plugins/stt.md
+          - Text-To-Speech: getting-started/docker/plugins/tts.md
+      - Update Open Voice OS: getting-started/docker/update.md
+      - Debugging: getting-started/docker/debug.md
