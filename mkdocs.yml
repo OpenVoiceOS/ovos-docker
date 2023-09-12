@@ -155,11 +155,11 @@ markdown_extensions:
 
 nav:
   - About:
-      - "What is it?": about/what-is-it.md
-      - "Why use OVOS?": about/why-use-ovos.md
+      - What is it?: about/what-is-it.md
+      - Why use OVOS?: about/why-use-ovos.md
       - Glossary:
-          - "Terms": about/glossary/terms.md
-          - "Components": about/glossary/components.md
+          - Terms: about/glossary/terms.md
+          - Components: about/glossary/components.md
   - Getting started:
       - Docker or Podman: getting-started/docker/index.md
       - Prerequisites:
