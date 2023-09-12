@@ -13,7 +13,6 @@ copyright: |
 
 theme:
   name: material
-  custom_dir: material/.overrides
   features:
     - announce.dismiss
     - content.action.edit
@@ -63,8 +62,6 @@ theme:
 plugins:
   - search:
       separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
-  - minify:
-      minify_html: true
   - git-committers:
       repository: OpenVoiceOS/ovos-docker
       branch: documentation
@@ -116,8 +113,6 @@ markdown_extensions:
   - def_list
   - footnotes
   - md_in_html
-  - neoteroi.cards
-  - neoteroi.timeline
   - toc:
       permalink: true
   - pymdownx.arithmatex:
