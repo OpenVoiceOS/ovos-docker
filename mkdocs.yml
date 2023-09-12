@@ -156,27 +156,28 @@ nav:
           - Terms: about/glossary/terms.md
           - Components: about/glossary/components.md
   - Getting started:
-      - Docker or Podman: getting-started/docker/index.md
-      - Prerequisites:
-          - Container engine: getting-started/docker/prerequisites/engine.md
-          - Sound system: getting-started/docker/prerequisites/sound.md
-          - CPU instructions: getting-started/docker/prerequisites/cpu.md
-      - Images and volumes: getting-started/docker/images.md
-      - Composition: getting-started/docker/composition.md
-      - Install Open Voice OS:
-          - Initial requirements: getting-started/docker/installation/requirements.md
-          - Initial configuration: getting-started/docker/installation/configuration.md
-          - Install core components: getting-started/docker/installation/basic.md
-          - Install OVOS skills: getting-started/docker/installation/skills.md
-          - Install graphical interface: getting-started/docker/installation/gui.md
-      - Security:
-          - System hardening: getting-started/docker/security/hardening.md
-          - HiveMind: getting-started/docker/security/hivemind.md
-      - OVOS command line: getting-started/docker/cli.md
-      - Plugins:
-          - Microphone: getting-started/docker/plugins/microphone.md
-          - PHAL: getting-started/docker/plugins/phal.md
-          - Speech-To-Text: getting-started/docker/plugins/stt.md
-          - Text-To-Speech: getting-started/docker/plugins/tts.md
-      - Update Open Voice OS: getting-started/docker/update.md
-      - Debugging: getting-started/docker/debug.md
+      - Run OVOS in containers:
+          - Docker or Podman: getting-started/docker/index.md
+          - Prerequisites:
+              - Container engine: getting-started/docker/prerequisites/engine.md
+              - Sound system: getting-started/docker/prerequisites/sound.md
+              - CPU instructions: getting-started/docker/prerequisites/cpu.md
+          - Images and volumes: getting-started/docker/images.md
+          - Composition: getting-started/docker/composition.md
+          - Install Open Voice OS:
+              - Initial requirements: getting-started/docker/installation/requirements.md
+              - Initial configuration: getting-started/docker/installation/configuration.md
+              - Install core components: getting-started/docker/installation/basic.md
+              - Install OVOS skills: getting-started/docker/installation/skills.md
+              - Install graphical interface: getting-started/docker/installation/gui.md
+          - Security:
+              - System hardening: getting-started/docker/security/hardening.md
+              - HiveMind: getting-started/docker/security/hivemind.md
+          - OVOS command line: getting-started/docker/cli.md
+          - Plugins:
+              - Microphone: getting-started/docker/plugins/microphone.md
+              - PHAL: getting-started/docker/plugins/phal.md
+              - Speech-To-Text: getting-started/docker/plugins/stt.md
+              - Text-To-Speech: getting-started/docker/plugins/tts.md
+          - Update Open Voice OS: getting-started/docker/update.md
+          - Debugging: getting-started/docker/debug.md
