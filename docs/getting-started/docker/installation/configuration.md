@@ -16,7 +16,7 @@ This configuration is very basic, it instructs the Open Voice OS instance to run
   "lang": "en-us",
   "listener": {
     "VAD": {
-      "module": "ovos-vad-plugin-silero",
+      "module": "ovos-vad-plugin-silero"
     }
   },
   "sounds": {
@@ -40,7 +40,7 @@ The solution is to add these lines into `~/ovos/config/mycroft.conf` *(create th
   "lang": "en-us",
   "listener": {
     "VAD": {
-      "module": "ovos-vad-plugin-silero",
+      "module": "ovos-vad-plugin-silero"
     }
   },
   "sounds": {
