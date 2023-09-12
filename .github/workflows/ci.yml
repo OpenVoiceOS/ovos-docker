@@ -1,12 +1,10 @@
 ---
 name: Build documentation
+
 on:
   push:
     branches:
       - documentation
-
-permissions:
-  contents: write
 
 jobs:
   deploy:
