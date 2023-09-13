@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1004,10 +1004,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#get-the-sources" class="md-nav__link">
+  <a href="#get-the-ovos-docker-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Get the sources
+        Get the ovos-docker sources
       
     </span>
   </a>
@@ -1546,10 +1546,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#get-the-sources" class="md-nav__link">
+  <a href="#get-the-ovos-docker-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Get the sources
+        Get the ovos-docker sources
       
     </span>
   </a>
@@ -1619,7 +1619,7 @@
         <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1671,22 +1671,24 @@
 
 
 <div><h1 id="final-steps-before-the-run">Final steps before the run<a class="headerlink" href="#final-steps-before-the-run" title="Permanent link">¶</a></h1>
-<p>Before going further, please make sure to read this <a href="../../composition/">section</a> as the following commands could defer depending your setup.</p>
-<h2 id="get-the-sources">Get the sources<a class="headerlink" href="#get-the-sources" title="Permanent link">¶</a></h2>
+<p>Before going further, please make sure to refer to this <a href="../../composition/">section</a> as the following commands could defer depending your setup.</p>
+<h2 id="get-the-ovos-docker-sources">Get the <code>ovos-docker</code> sources<a class="headerlink" href="#get-the-ovos-docker-sources" title="Permanent link">¶</a></h2>
+<p>The <code>~/hivemind</code> directory is only required if you plan to use <a href="../../../../about/glossary/terms/#hivemind">HiveMind</a>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">All</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/OpenVoiceOS/ovos-docker.git
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/OpenVoiceOS/ovos-docker.git<span class="w"> </span>-b<span class="w"> </span>dev
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ovos/<span class="o">{</span>config,share,tmp<span class="o">}</span><span class="w"> </span>~/hivemind/<span class="o">{</span>config,share<span class="o">}</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>chown<span class="w"> </span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="w"> </span>-R<span class="w"> </span>~/ovos<span class="w"> </span>~/hivemind
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">cd</span><span class="w"> </span>~/ovos-docker/compose
 </span></code></pre></div>
 <h2 id="set-the-environment-file">Set the environment file<a class="headerlink" href="#set-the-environment-file" title="Permanent link">¶</a></h2>
-<div class="admonition note">
+<p>The <code>composer</code> requires an environment file in order to deploy the services and volumes with the correct settings for your setup.</p>
+<div class="admonition info">
 <p class="admonition-title"><code>alpha</code> version by default</p>
-<p>As mentioned <a href="../../composition/#environment-files">here</a>, the current default <code>VERSION</code> <em>(tag)</em> is <code>alpha</code>.</p>
+<p>As mentioned <a href="../../composition/#environment-files">in this section</a>, the current default <code>VERSION</code> <em>(tag)</em> is <code>alpha</code>.</p>
 </div>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Raspberry Pi</label><label for="__tabbed_2_2">Linux</label><label for="__tabbed_2_3">Mac OS</label><label for="__tabbed_2_4">Windows WSL2</label></div>
 <div class="tabbed-content">
@@ -1707,7 +1709,8 @@
 </span></code></pre></div>
 </div>
 </div>
-</div></div>
+</div>
+<p>Examples are provided, please make sure to select the right one and to set the proper values.</p></div>
 
   
     
@@ -1723,7 +1726,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

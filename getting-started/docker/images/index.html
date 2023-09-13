@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1663,7 +1663,7 @@
         <a href="../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1702,9 +1702,9 @@
 <p class="admonition-title">Pre-build images</p>
 <p>Open Voice OS provides pre-build images available on <a href="https://hub.docker.com/u/smartgic">Docker Hub</a>. These images are referenced by default within the <code>docker-compose.*.yml</code> files.</p>
 </div>
-<p>Open Voice OS is a sofisticated piece of software which has several <a href="../../../about/glossary/components/">components</a>. These components have been split into containers to provide a better isolation and a microservice approach.</p>
+<p>Open Voice OS is a sofisticated piece of software which has several <a href="../../../about/glossary/components/">components</a>. These components have been split into containers to provide a better isolation and a <a href="https://en.wikipedia.org/wiki/Microservices">microservices</a> approach.</p>
 <h2 id="supported-cpu-architectures">Supported CPU architectures<a class="headerlink" href="#supported-cpu-architectures" title="Permanent link">¶</a></h2>
-<p>Container images could be build for different CPU architecture using the <a href="https://docs.docker.com/build/building/multi-platform/">multi-platform images</a> feature.</p>
+<p>Container images could be used for different CPU architectures using the <a href="https://docs.docker.com/build/building/multi-platform/">multi-platform images</a> feature.</p>
 <table>
 <thead>
 <tr>
@@ -1719,11 +1719,11 @@
 </tr>
 <tr>
 <td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42Z"></path></svg></span> <code>aarch64</code></td>
-<td>Such as Raspberry Pi 64-bit</td>
+<td>Such as Raspberry Pi 64-bit SoC</td>
 </tr>
 <tr>
 <td><span class="twemoji" style="color: red"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m2.59 6L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8Z"></path></svg></span> <code>armlv7</code></td>
-<td>Such as Raspberry Pi 32-bit (<em>not supported because of <code>onnxruntime</code><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></em>)</td>
+<td>Such as Raspberry Pi 32-bit SoC (<em>not supported because of <code>onnxruntime</code><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></em>)</td>
 </tr>
 </tbody>
 </table>
@@ -1774,17 +1774,17 @@
 <td><a href="../../../about/glossary/components/#ovos-gui">Read more about ovos-gui</a></td>
 </tr>
 <tr>
-<td><code>ovos_hivemind_listener</code></td>
+<td><code>hivemind_listener</code></td>
 <td><a href="../../../about/glossary/terms/#hivemind">Read more about hivemind-listener</a></td>
 </tr>
 <tr>
-<td><code>ovos_hivemind_cli</code></td>
+<td><code>hivemind_cli</code></td>
 <td><a href="../../../about/glossary/terms/#hivemind">Read more about hivemind-cli</a></td>
 </tr>
 </tbody>
 </table>
 <h2 id="tags">Tags<a class="headerlink" href="#tags" title="Permanent link">¶</a></h2>
-<p>Container image tags allows you to deploy a specific version of Open Voice OS, it could be an untested version based on nigthly build or a stable build.</p>
+<p>Container image tags allows you to deploy a specific version of Open Voice OS, it could be an untested version based on nigthly build or a stable version.</p>
 <table>
 <thead>
 <tr>
@@ -1813,7 +1813,7 @@
 </table>
 <div class="admonition warning">
 <p class="admonition-title">Stable release</p>
-<p>As Open Voice OS doesn't have a stable release for version <code>0.0.8</code> which has been designed to work with containers, there is no <code>stable</code> or <code>0.0.8</code> tags available.</p>
+<p>As Open Voice OS doesn't have a stable release for version <code>0.0.8</code> which has been designed to work with containers, there is no <code>stable</code> or <code>0.0.8</code> tags available yet.</p>
 </div>
 <h2 id="volumes">Volumes<a class="headerlink" href="#volumes" title="Permanent link">¶</a></h2>
 <p>To allow data persistence, Docker or Podman volumes are required, they will prevent downloading the requirements everytime the containers are re-created.</p>
@@ -1827,7 +1827,7 @@
 <tbody>
 <tr>
 <td><code>ovos_listener_records</code></td>
-<td><a href="../../../about/glossary/terms/#wake-word">Wake word</a> and <a href="../../../about/glossary/terms/#utterance">utterance</a> recorded samples</td>
+<td><a href="../../../about/glossary/terms/#wake-word">Wake words</a> and <a href="../../../about/glossary/terms/#utterance">utterances</a> recorded samples</td>
 </tr>
 <tr>
 <td><code>ovos_models</code></td>
@@ -1838,6 +1838,10 @@
 <td><a href="https://www.askpython.com/python-modules/nltk-punkt">Punkt</a> Python package required by <a href="https://www.nltk.org/index.html">NLTK</a></td>
 </tr>
 <tr>
+<td><code>ovos_tts_cache</code></td>
+<td><code>.wav</code> and <code>.pho</code> files acting as cache from TTS transcription</td>
+</tr>
+<tr>
 <td><code>ovos_vosk</code></td>
 <td>Models downloaded by <a href="https://alphacephei.com/vosk/">VOSK</a> during the initial boot</td>
 </tr>
@@ -1846,8 +1850,8 @@
 <p><code>ovos_listener_records</code> allows you to store samples of wake words and utterances which could help you to build or improve models.</p>
 <div class="admonition info">
 <p class="admonition-title">Enable samples recording</p>
-<p>By default, the recording features are disabled, <code>"record_wake_words": true</code> and <code>"save_utterances": true</code> will have to be added to the <code>listener</code> section of <code>mycroft.conf</code> to enable these capabilities.</p>
-<div class="language-json highlight"><span class="filename">mycroft.conf</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<p>By default the recording features are disabled, <code>"record_wake_words": true</code> and <code>"save_utterances": true</code> will have to be added to the <code>listener</code> section of <code>mycroft.conf</code> to enable these capabilities.</p>
+<div class="language-json highlight"><span class="filename">~/ovos/config/mycroft.conf</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">"listener"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">"record_wake_words"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">"save_utterances"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
@@ -1879,7 +1883,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

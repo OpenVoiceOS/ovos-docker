@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1531,7 +1531,7 @@
         <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1585,9 +1585,10 @@
 <div><h1 id="install-the-open-voice-os-gui">Install the Open Voice OS GUI<a class="headerlink" href="#install-the-open-voice-os-gui" title="Permanent link">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Not fully functional</p>
-<p>The GUI container still under heavy development mostly because of the skill's <a href="https://en.wikipedia.org/wiki/QML">QML</a> files are not been shared between <code>ovos_gui</code> container and <code>ovos_skill_*</code> containers.</p>
+<p>The GUI container still under heavy development mostly because of the skill's <a href="https://en.wikipedia.org/wiki/QML">QML</a> files which are not been shared between <code>ovos_gui</code> container and <code>ovos_skill_*</code> containers.</p>
+<p>The GUI is currently only available on Linux operating system, not on Mac OS or Windows.</p>
 </div>
-<p>In order to allow only the <code>ovos_gui</code> container to access to the <a href="https://en.wikipedia.org/wiki/X_Window_System">X server</a>, you will have to allow the container <em>(based on its hostname)</em> to connect to <code>X</code>.</p>
+<p>In order to allow only the <code>ovos_gui</code> container to access to the <a href="https://en.wikipedia.org/wiki/X_Window_System">X server</a>, you will have to allow the container <em>(based on its hostname)</em> to connect to the <code>X</code> session.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>xhost<span class="w"> </span>+local:ovos_gui
 </span></code></pre></div>
 <p>This command is not permanent, when your operating system will reboot you will have to run the command again.</p>
@@ -1596,17 +1597,22 @@
 <p class="admonition-title">Podman users <img alt="💪" class="twemoji" src="../../../../assets/external/cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4aa.svg" title=":muscle:"></p>
 <p>If you are running Podman instead of Docker, replace <code>docker compose</code> with <code>podmand-compose</code>.</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Raspberry Pi</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Raspberry Pi</label><label for="__tabbed_1_2">Linux</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--project-name<span class="w"> </span>ovos<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.gui.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.gui.yml<span class="w"> </span>up<span class="w"> </span>--detach
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--project-name<span class="w"> </span>ovos<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.gui.yml<span class="w"> </span>up<span class="w"> </span>--detach
 </span></code></pre></div>
 </div>
 </div>
 </div>
 <div class="admonition question">
 <p class="admonition-title">Hardware accelerated on Raspberry Pi 4 only</p>
-<p>Raspberry Pi 4 will leverage the GPU hardware acceleration which will provide a smooth experience. <strong>If not running on a Raspberry Pi 4 then the CPU will be used to render the GUI which will result in a big CPU consumption.</strong></p>
+<p>Raspberry Pi 4 will leverage the GPU hardware acceleration which will provide a smoother experience.</p>
+<p><strong>If not running on a Raspberry Pi 4 then the CPU will be used to render the GUI which will result in a big CPU consumption and a poor exprience.</strong></p>
 </div></div>
 
   
@@ -1623,7 +1629,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

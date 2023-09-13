@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1531,7 +1531,7 @@
         <a href="../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1568,9 +1568,9 @@
 <div><h1 id="update-open-voice-os">Update Open Voice OS<a class="headerlink" href="#update-open-voice-os" title="Permanent link">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Exact same command</p>
-<p>In order to update the deployed stack, you <em>must</em> use the exact same command that has been used during the initial stack deployment.</p>
+<p>In order to update the deployed stack <em>(services and volumes)</em>, you <em>must</em> use the exact same command that has been used during the initial stack deployment.</p>
 </div>
-<p>The easiest and quickest way to update an Open Voice OS stack already deployed by <code>docker compose</code> or <code>podman-compose</code> is; of course to use <code>docker compose</code> or <code>podman-compose</code>. <img alt="☺" class="twemoji" src="../../../assets/external/cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/263a.svg" title=":relaxed:"> <img alt="💪" class="twemoji" src="../../../assets/external/cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4aa.svg" title=":muscle:"></p>
+<p>The easiest and quickest way to update an Open Voice OS stack already deployed by <code>docker compose</code> or <code>podman-compose</code> is; of course to use <code>docker compose</code> or <code>podman-compose</code> as well. <img alt="☺" class="twemoji" src="../../../assets/external/cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/263a.svg" title=":relaxed:"> <img alt="💪" class="twemoji" src="../../../assets/external/cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4aa.svg" title=":muscle:"></p>
 <div class="admonition note">
 <p class="admonition-title">Podman users <img alt="💪" class="twemoji" src="../../../assets/external/cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4aa.svg" title=":muscle:"></p>
 <p>If you are running Podman instead of Docker, replace <code>docker compose</code> with <code>podmand-compose</code>.</p>
@@ -1595,7 +1595,7 @@
 </div>
 </div>
 </div>
-<p>Because the <code>pull_policy</code> option of each service is set to <code>always</code>, everytime that a new image is uploaded with the same tag then <code>docker compose</code> or <code>podman-compose</code> will pull-it and re-create the container based on this new image.</p>
+<p>Because the <code>pull_policy</code> option of each service is set to <code>always</code>, everytime that a new image is uploaded with the same tag <code>docker compose</code> or <code>podman-compose</code> will pull-it and re-create the container based on this new image.</p>
 <div class="admonition tip">
 <p class="admonition-title">Change the version</p>
 <p>If you want to change the image's tag to deploy, update the <a href="../composition/#environment-files">.env</a> file with the right one. The <code>alpha</code> <a href="../images/#tags">tag</a> images are rebuilt every nights with the latest commits from the <code>dev</code> branch.</p>
@@ -1615,7 +1615,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

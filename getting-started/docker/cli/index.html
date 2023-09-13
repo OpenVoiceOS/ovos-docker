@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1663,7 +1663,7 @@
         <a href="../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1698,13 +1698,18 @@
 
 
 <div><h1 id="open-voice-os-command-line">Open Voice OS command line<a class="headerlink" href="#open-voice-os-command-line" title="Permanent link">¶</a></h1>
-<p>The command line allows you to send a message directly but not only to the bus by using the <code>ovos-cli-client</code> command from the <code>ovo_cli</code> container.</p>
+<p>The command line allows you to send a message <em>(but not only)</em> directly to the message bus by using the <code>ovos-cli-client</code> command from the <code>ovo_cli</code> container.</p>
 <div class="admonition warning">
 <p class="admonition-title">Skill interactions</p>
-<p>The command line doesn't support any action related to skills as this setup is running inside containers. Please read the <a href="../installation/skills/">skill section</a> to manage skills.</p>
+<p>The command line doesn't support any action related to skills other than <code>:skills</code> as this setup is running inside containers. Please read the <a href="../installation/skills/">skill section</a> to manage skills.</p>
 </div>
 <p><div class="video-container"><iframe src="../../../assets/videos/ovos-cli.webm" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
 <h2 id="ovos-cli-client">ovos-cli-client<a class="headerlink" href="#ovos-cli-client" title="Permanent link">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title"><code>ovos-cli-client</code> is deprecated</p>
+<p>Please read <a href="https://github.com/OpenVoiceOS/ovos-cli-client/issues/14">https://github.com/OpenVoiceOS/ovos-cli-client/issues/14</a> for more information.</p>
+</div>
+<p>Interact directly with the <a href="https://en.wikipedia.org/wiki/Ncurses">ncurses</a> OVOS client interface.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Docker</label><label for="__tabbed_1_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1719,6 +1724,10 @@
 </div>
 <h2 id="ovos-config">ovos-config<a class="headerlink" href="#ovos-config" title="Permanent link">¶</a></h2>
 <p>To display or manage the current configuration, the <code>ovos-config</code> command could be used.</p>
+<div class="admonition failure">
+<p class="admonition-title"><code>read-write</code> access to the configuration</p>
+<p>The <code>ovos_cli</code> container is the only one having <code>read-write</code> access to the <code>mycroft.conf</code> configuration file.</p>
+</div>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Docker</label><label for="__tabbed_2_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1736,7 +1745,7 @@
 <p><code>vim</code> and <code>nano</code> editors are available within the <code>ovos-cli</code> image, <code>vim</code> has been set as default.</p>
 </div>
 <h2 id="ovos-speak">ovos-speak<a class="headerlink" href="#ovos-speak" title="Permanent link">¶</a></h2>
-<p>An easy way to make Open Voice OS speak is to run the <code>ovos-speak</code> command.</p>
+<p>An easy way to make Open Voice OS speaks is to run the <code>ovos-speak</code> command.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Docker</label><label for="__tabbed_3_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1778,7 +1787,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

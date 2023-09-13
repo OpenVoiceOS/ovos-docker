@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -834,10 +834,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#mac-os-and-windows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installation
+        Mac OS and Windows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Permissions
       
     </span>
   </a>
@@ -1574,10 +1585,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#mac-os-and-windows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installation
+        Mac OS and Windows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Permissions
       
     </span>
   </a>
@@ -1675,7 +1697,7 @@
         <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1692,7 +1714,7 @@
         <a href="../engine/" class="md-path__link">
           
   <span class="md-ellipsis">
-    Prerequisites
+    Requirements
   </span>
 
         </a>
@@ -1727,101 +1749,75 @@
 
 
 <div><h1 id="sound-system">Sound system<a class="headerlink" href="#sound-system" title="Permanent link">¶</a></h1>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
 <p><a href="https://en.wikipedia.org/wiki/PulseAudio">PulseAudio</a> is a requirement and has to be up and running on the host <em>(not inside the containers)</em> to expose a socket <em>(for communication)</em> and a cookie <em>(for authentication)</em> to allow the containers to have access to the microphone <em>(input device)</em> and speakers <em>(output device)</em>.</p>
 <p>On modern Linux distribution, <a href="https://en.wikipedia.org/wiki/PipeWire">PipeWire</a> now handles the sound stack on the system.</p>
-<p>By default PipeWire doesn't handle the backward compatibility with the PulseAudio API so make sure PulseAudio support is enabled within PipeWire.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Debian</label><label for="__tabbed_1_2">Fedora</label><label for="__tabbed_1_3">Arch</label><label for="__tabbed_1_4">Mac OS</label><label for="__tabbed_1_5">Windows WSL2</label></div>
+<div class="admonition info">
+<p class="admonition-title">Souns server auto-detection</p>
+<p><code>ovos-docker</code> supports both native PulseAudio and PipeWire, the containers will automatically detect which sound server is running on the operating system.</p>
+</div>
+<h2 id="mac-os-and-windows">Mac OS and Windows<a class="headerlink" href="#mac-os-and-windows" title="Permanent link">¶</a></h2>
+<p>If you are running an operating system other Linux such as Mac OS or Windows, then PulseAudio will have to be installed to act as a gateway between the containers and the OS.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Mac OS</label><label for="__tabbed_1_2">Windows WSL2</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>pipewire-pulse<span class="w"> </span>pulseaudio-utils
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>brew<span class="w"> </span>install<span class="w"> </span>pulseaudio
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>brew<span class="w"> </span>services<span class="w"> </span>stop<span class="w"> </span>pulseaudio
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s2">"s/#load-module module-native-protocol-tcp/load-module module-native-protocol-tcp/g"</span><span class="w"> </span><span class="k">$(</span>brew<span class="w"> </span>ls<span class="w"> </span>pulseaudio<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>default.pa$<span class="k">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>brew<span class="w"> </span>services<span class="w"> </span>start<span class="w"> </span>pulseaudio
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>pipewire-pulse<span class="w"> </span>pulseaudio-utils
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>pipewire-pulse<span class="w"> </span>pulseaudio-utils
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>brew<span class="w"> </span>install<span class="w"> </span>pulseaudio
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>pulseaudio
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>pulseaudio
 </span></code></pre></div>
 </div>
 </div>
 </div>
-<p>The <code>pipewire-pulse</code>service must be started as a simple user and not as <code>root</code> user.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Linux</label><label for="__tabbed_2_2">Mac OS</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>status<span class="w"> </span>pipewire-pulse
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>start<span class="w"> </span>pipewire-pulse
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>brew<span class="w"> </span>services<span class="w"> </span>stop<span class="w"> </span>pulseaudio
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s2">"s/#load-module module-native-protocol-tcp/load-module module-native-protocol-tcp/g"</span><span class="w"> </span><span class="k">$(</span>brew<span class="w"> </span>ls<span class="w"> </span>pulseaudio<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>default.pa$<span class="k">)</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>brew<span class="w"> </span>services<span class="w"> </span>start<span class="w"> </span>pulseaudio
-</span></code></pre></div>
-</div>
-</div>
-</div>
+<h2 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">¶</a></h2>
 <p>The user running the containers must be part of the <code>audio</code> system group <em>(depending the Linux distribution)</em>.</p>
 <div class="admonition warning">
 <p class="admonition-title">PulseAudio files permissions</p>
-<p>Check the permissions for <code>~/.config/pulse/</code> and <code>/run/user/1000/</code> directories, they should belong to the user running the stack <em>(where <code>1000</code> is your user ID)</em>, not to <code>root</code> user. <strong>If you are running on Mac OS, there is no <code>/run/user/1000/</code> directory.</strong></p>
+<p>Check the permissions for <code>~/.config/pulse/</code> and <code>/run/user/1000/</code> directories, they should belong to the user running the stack <em>(where <code>1000</code> is your user ID)</em>, not to <code>root</code> user.</p>
+<p><strong>If you are running on Mac OS, there is no <code>/run/user/1000/</code> directory.</strong></p>
 </div>
 <h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">¶</a></h2>
-<p><code>pactl</code> is a PulseAudio command shipped with the <code>pulseaudio-utils</code> package. This command provides information about the status of PulseAudio.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">All</label></div>
+<p><code>pactl</code> is a PulseAudio command shipped with the <code>pulseaudio-utils</code> package and <code>pw-cli</code> is a PipeWire command shipped with <code>pipewire-utils</code> or <code>pipewire-bin</code> depending your distribution.</p>
+<p>These commands provide information about the status of PulseAudio or PipeWire.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">PulseAudio</label><label for="__tabbed_2_2">PipeWire</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pactl<span class="w"> </span>info
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pactl<span class="w"> </span>info
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pw-cli<span class="w"> </span>info
 </span></code></pre></div>
 </div>
 </div>
-</div>
-<p>When PulseAudio is succesfully running, you should see a similar output.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Server String: /run/user/1000/pulse/native
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Library Protocol Version: 35
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Server Protocol Version: 35
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Is Local: yes
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Client Index: 216
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Tile Size: 65472
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>User Name: goldyfruit
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>Host Name: stronghold
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>Server Name: PulseAudio (on PipeWire 0.3.77)
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>Server Version: 15.0.0
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>Default Sample Specification: float32le 2ch 48000Hz
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>Default Channel Map: front-left,front-right
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>Default Sink: alsa_output.usb-Burr-Brown_from_TI_USB_Audio_DAC-00.iec958-stereo
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>Default Source: alsa_input.usb-Audient_EVO4-00.analog-surround-40
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>Cookie: 678e:9865
-</span></code></pre></div>
-<div class="admonition note">
-<p>If you are running PulseAudio via PipeWire, the <code>Server Name</code> will display <code>(on PipeWire X.X.X)</code>.</p>
 </div>
 <h3 id="list-microphones">List microphones<a class="headerlink" href="#list-microphones" title="Permanent link">¶</a></h3>
-<p>At least one of the sources <em>(microphones/audio input)</em> returned, should match the <code>Default Source</code> line from the <code>pactl info</code> command.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">All</label></div>
+<p>At least one of the sources <em>(microphones/audio input)</em> returned, should match the <code>Default Source</code> line from the <code>pactl info</code> command or the <code>Audio/Source</code> line from the <code>wpctl status</code> command.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">PulseAudio</label><label for="__tabbed_3_2">PipeWire</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pactl<span class="w"> </span>list<span class="w"> </span>sources<span class="w"> </span>short
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pactl<span class="w"> </span>list<span class="w"> </span>sources<span class="w"> </span>short
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>wpctl<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Audio/Source
 </span></code></pre></div>
 </div>
 </div>
 </div>
 <h3 id="list-speakers">List speakers<a class="headerlink" href="#list-speakers" title="Permanent link">¶</a></h3>
-<p>At least one of the sinks <em>(speakers/audio output)</em> returned, should match the <code>Default Sink</code> line from the <code>pactl info</code> command.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked id="__tabbed_5_1" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">All</label></div>
+<p>At least one of the sinks <em>(speakers/audio output)</em> returned, should match the <code>Default Sink</code> line from the <code>pactl info</code> command or the <code>Audio/Sink</code> line from the <code>wpctl status</code> command.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">PulseAudio</label><label for="__tabbed_4_2">PipeWire</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>pactl<span class="w"> </span>list<span class="w"> </span>sinks<span class="w"> </span>short
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pactl<span class="w"> </span>list<span class="w"> </span>sinks<span class="w"> </span>short
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>wpctl<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Audio/Sink
 </span></code></pre></div>
 </div>
 </div>
@@ -1841,7 +1837,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

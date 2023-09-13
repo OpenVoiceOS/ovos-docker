@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1675,7 +1675,7 @@
         <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1727,9 +1727,13 @@
 
 
 <div><h1 id="basic-ovos-hardening">Basic OVOS hardening<a class="headerlink" href="#basic-ovos-hardening" title="Permanent link">¶</a></h1>
-<p>In order to secure your Open Voice OS instance, few more step are <strong>required</strong> and few concepts must be understood.</p>
+<p>In order to secure your Open Voice OS instance, few more steps are <strong>required</strong> and few concepts must be understood.</p>
 <h2 id="apparmor">AppArmor<a class="headerlink" href="#apparmor" title="Permanent link">¶</a></h2>
 <p>AppArmor and SELinux are examples of <a href="https://en.wikipedia.org/wiki/Mandatory_access_control">Mandatory Access Control</a> <em>(MAC)</em> systems. These systems differ from other security controls which are generally called <a href="https://en.wikipedia.org/wiki/Discretionary_access_control">Discretionary Access Control</a> <em>(DAC)</em> systems in that, generally, the user can't change their operation.</p>
+<div class="admonition note">
+<p class="admonition-title">AppArmor packages</p>
+<p>AppArmor must be installed on your system before going further. Please refer to your Linux distribution documentation to install it.</p>
+</div>
 <h3 id="enable-apparmor">Enable AppArmor<a class="headerlink" href="#enable-apparmor" title="Permanent link">¶</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Raspberry Pi OS</label><label for="__tabbed_1_2">Debian &amp; Ubuntu</label></div>
 <div class="tabbed-content">
@@ -1743,7 +1747,7 @@
 </div>
 </div>
 </div>
-<p>System must be rebooted to instruct the kernel to load AppArmor.</p>
+<p>System must be rebooted to instruct the kernel to load AppArmor during the boot sequence. Once rebooted, check the AppArmor status using the <code>aa-status</code> command.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Raspberry Pi OS</label><label for="__tabbed_2_2">Debian &amp; Ubuntu</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1758,14 +1762,14 @@
 </div>
 <h3 id="apparmor-docker-profile">AppArmor Docker profile<a class="headerlink" href="#apparmor-docker-profile" title="Permanent link">¶</a></h3>
 <div class="admonition warning">
-<p class="admonition-title">AppArmor and Podman support</p>
-<p>AppArmor support for Podman is not yet fully functional<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
+<p class="admonition-title">AppArmor and Podman support<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>AppArmor support for Podman is not yet fully functional.</p>
 </div>
 <p>Docker applies the <code>docker-default</code> AppArmor profile to new containers. In Docker 1.13 and later this profile is created in <code>tmpfs</code> and then loaded into the kernel.</p>
-<p>The container engine should now be aware of <code>apparmor</code> as available security option.</p>
+<p>The container engine should now be aware of <code>apparmor</code> as an available security option.</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>system<span class="w"> </span>info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>apparmor
 </span></code></pre></div>
-<p>All the containers except <code>ovos_phal_admin</code> should now confined with the <code>docker-default</code> AppArmor profile</p>
+<p>All the containers except <code>ovos_phal_admin</code> should now be confined with the <code>docker-default</code> AppArmor profile.</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>container<span class="w"> </span>list<span class="w"> </span>--quiet<span class="w"> </span>--all<span class="w"> </span>--filter<span class="w"> </span><span class="s2">"name=ovos"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>docker<span class="w"> </span>inspect<span class="w"> </span>--format<span class="w"> </span><span class="s2">"{{ .Name }}: AppArmorProfile={{ .AppArmorProfile }}"</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>/ovos_skill_volume:<span class="w"> </span><span class="nv">AppArmorProfile</span><span class="o">=</span>docker-default
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>/ovos_skill_wikipedia:<span class="w"> </span><span class="nv">AppArmorProfile</span><span class="o">=</span>docker-default
@@ -1785,16 +1789,16 @@
 </span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>/ovos_cli:<span class="w"> </span><span class="nv">AppArmorProfile</span><span class="o">=</span>docker-default
 </span></code></pre></div>
 <div class="admonition note">
-<p class="admonition-title"><code>ovos_phal_admin</code> is not confined</p>
+<p class="admonition-title"><code>ovos_phal_admin</code> container is not confined</p>
 <p>The <code>ovos_phal_admin</code> container is not confined as it runs as a <code>privileged</code> container.</p>
 </div>
 <h2 id="message-bus">Message bus<a class="headerlink" href="#message-bus" title="Permanent link">¶</a></h2>
-<p>By default, the message bus is listening on <code>0.0.0.0</code> port <code>8181</code> because containers are created using the <code>--network host</code> option. This could be a security issue as an external device could connect to the message bus and send and/or read messages.</p>
+<p>By default, the message bus is listening on address <code>0.0.0.0</code> and port <code>8181</code> because the <code>ovos_messagebus</code> is created using the <code>--network host</code> option. This could be a security issue as an external device could connect to the message bus and send and/or read messages.</p>
 <div class="admonition info">
 <p class="admonition-title">Why using <code>--network host</code>?</p>
-<p>Some Open Voice OS skills such as <a href="https://www.home-assistant.io/">Home Assistant</a>or  <a href="https://www.sonos.com/">Sonos</a> require access to your private network in order to communicate with your <a href="https://en.wikipedia.org/wiki/Internet_of_things">IoT</a>.</p>
+<p>Some Open Voice OS skills such as <a href="https://www.home-assistant.io/">Home Assistant</a> or <a href="https://www.sonos.com/">Sonos</a> require access to your private network in order to communicate with your <a href="https://en.wikipedia.org/wiki/Internet_of_things">IoT</a> devices.</p>
 </div>
-<p>To prevent potential security issues, it is recommended to use a firewall on port <code>8181</code>.</p>
+<p>To prevent potential security issues, it is recommended to use a firewall the port <code>8181</code>.</p>
 <p><code>iptables</code> will be demonstrated as an example but if <code>firewalld</code> or <code>ufw</code> services are used, then make sure to be compliant with your distribution.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Linux</label></div>
 <div class="tabbed-content">
@@ -1810,12 +1814,12 @@
 <p class="admonition-title">Keep your ports closed</p>
 <p>Keep in mind to firewall any other ports which should not be exposed outside of the host by using the same <a href="https://en.wikipedia.org/wiki/Iptables">IPTables</a> method.</p>
 </div>
-<p>If you really need to connect an external application to the message bus, we recommend to use <a href="../../../../about/glossary/terms/#hivemind">HiveMind</a>.</p>
+<p>If you really need to connect an external application to the message bus, we recommend to use <a href="../../../../about/glossary/terms/#hivemind">HiveMind</a> to ensure a proper security exposure.</p>
 <div class="footnote">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://github.com/containers/podman/pull/19303">Enable rootless AppArmor</a> <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+<p><a href="https://github.com/containers/podman/pull/19303">Enable rootless AppArmor for Podman</a> <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
 </li>
 </ol>
 </div></div>
@@ -1834,7 +1838,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

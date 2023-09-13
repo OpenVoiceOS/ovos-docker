@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1597,7 +1597,7 @@
         <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1649,20 +1649,24 @@
 
 
 <div><h1 id="microphone-plugins">Microphone plugins<a class="headerlink" href="#microphone-plugins" title="Permanent link">¶</a></h1>
-<p>A microhpone plugin allows you to use a specific sound protocol in order to get voice samples from your Microphone. Depending the operating you are running on, you will have to choose the correct plugin.</p>
+<p>A microhpone plugin allows you to use a specific sound protocol in order to get voice samples from your microphone. Depending the operating system you are running on, you will have to choose the correct plugin.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The microhpone plugins are handled by the <code>ovos_listener</code> container.</p>
 </div>
 <p>The <code>ovos_listener</code> container comes with few pre-installed microphone plugins such as:</p>
 <ul>
-<li><code>ovos-microphone-plugin-alsa</code> is using <a href="https://larsimmisch.github.io/pyalsaaudio/">pyalsaaudio</a> Python library</li>
+<li><code>ovos-microphone-plugin-alsa</code> is using <a href="https://larsimmisch.github.io/pyalsaaudio/">pyalsaaudio</a> Python library <em>(default)</em></li>
 <li><code>ovos-microphone-plugin-sounddevice</code> is using <a href="https://python-sounddevice.readthedocs.io/">sounddevice</a> Python library</li>
 </ul>
-<p>If the existing microphone plugins are not enough then you can install yours by following the same principle as for the <a href="../tts/">TTS plugins</a> by adding a <code>listener.list</code> file within the <code>~/ovos/config/</code> directory, this file acts as a Python <code>requirements.txt</code> file.</p>
-<p>When the <code>ovos_listener</code> container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the <code>pip install</code> method which requires a <code>setup.py</code> file.</p>
+<p>If the existing microphone plugins are not enough then you can install yours by following the same principle as for the <a href="../stt/">STT plugins</a> by adding a <code>listener.list</code> file within the <code>~/ovos/config/</code> directory, this file acts as a Python <code>requirements.txt</code> file.</p>
+<div class="admonition warning">
+<p class="admonition-title">Plugins requirements</p>
+<p>These plugins have to be compatible with the <code>pip install</code> method which requires a <code>setup.py</code> file.</p>
+</div>
+<p>When the <code>ovos_listener</code> container starts, it will look for this file and install the plugins defined in there.</p>
 <div class="language-ini highlight"><span class="filename">~/ovos/config/listener.list</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">ovos-microphone-plugin-pyaudio</span><span class="o">=</span><span class="s">=0.2.0a1</span><span class="w"> </span><span class="c1"># Specific plugin version on PyPi</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">ovos-microphone-plugin-arecord  # Latest plugin version on PyPi</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">ovos-microphone-plugin-arecord # Latest plugin version on PyPi</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">git+https</span><span class="o">:</span><span class="s">//github.com/OpenVoiceOS/ovos-microphone-plugin-socket.git@fix/whatever</span><span class="w"> </span><span class="c1"># Specific branch of a plugin on GitHub</span>
 </span></code></pre></div>
 <p>The <code>ovos_listener</code> container must be restarted if a change occurs in the <code>listener.list</code> file.</p>
@@ -1717,7 +1721,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

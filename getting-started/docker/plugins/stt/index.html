@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1531,7 +1531,7 @@
         <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1583,7 +1583,7 @@
 
 
 <div><h1 id="speech-to-text-plugins">Speech-To-Text plugins<a class="headerlink" href="#speech-to-text-plugins" title="Permanent link">¶</a></h1>
-<p>The <a href="../../../../about/glossary/terms/#speech-to-text-stt">Speech-To-Text</a> plugins allow you to connect Open Voice OS with a STT server, it could be <a href="https://github.com/guillaumekln/faster-whisper">FasterWhisper</a>, <a href="https://alphacephei.com/vosk/">VOSK</a>, <a href="https://translate.google.com/">Google Translate</a>, <a href="https://deepgram.com/">Deepgram</a>, etc... Each of these STT providers will have different languages support, precision and performances.</p>
+<p>The <a href="../../../../about/glossary/terms/#speech-to-text-stt">Speech-To-Text</a> plugins allow you to connect Open Voice OS with different STT servers, it could be <a href="https://github.com/guillaumekln/faster-whisper">FasterWhisper</a>, <a href="https://alphacephei.com/vosk/">VOSK</a>, <a href="https://translate.google.com/">Google Translate</a>, <a href="https://deepgram.com/">Deepgram</a>, etc... Each of these STT providers will have different languages support, precision and performances.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The Speech-To-Text plugins are handled by the <code>ovos_listener</code> container.</p>
@@ -1593,8 +1593,12 @@
 <li><code>ovos-stt-plugin-server</code> allows you to reach an external STT service</li>
 <li><code>ovos-stt-plugin-vosk</code> is an offline STT service</li>
 </ul>
-<p>If the existing STT plugins are not enough then you can install yours by following the same principle as for the <a href="../tts/">TTS plugins</a> by adding a <code>listener.list</code> file within the <code>~/ovos/config/</code> directory, this file acts as a Python <code>requirements.txt</code> file.</p>
-<p>When the <code>ovos_listener</code> container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the <code>pip install</code> method which requires a <code>setup.py</code> file.</p>
+<p>If the existing STT plugins are not enough then you can install yours by following the same principle as for the <a href="../microphone/">microphone plugins</a> by adding a <code>listener.list</code> file within the <code>~/ovos/config/</code> directory, this file acts as a Python <code>requirements.txt</code> file.</p>
+<div class="admonition warning">
+<p class="admonition-title">Plugins requirements</p>
+<p>These plugins have to be compatible with the <code>pip install</code> method which requires a <code>setup.py</code> file.</p>
+</div>
+<p>When the <code>ovos_listener</code> container starts, it will look for this file and install the plugins defined in there.</p>
 <div class="language-ini highlight"><span class="filename">~/ovos/config/listener.list</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">ovos-stt-plugin-vosk</span><span class="o">=</span><span class="s">=0.2.0a1</span><span class="w"> </span><span class="c1"># Specific plugin version on PyPi</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">ovos-stt-plugin-server # Latest plugin version on PyPi</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">git+https</span><span class="o">:</span><span class="s">//github.com/OpenVoiceOS/ovos-stt-plugin-chromium.git@fix/whatever</span><span class="w"> </span><span class="c1"># Specific branch of a plugin on GitHub</span>
@@ -1627,7 +1631,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

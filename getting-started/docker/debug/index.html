@@ -659,7 +659,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -680,7 +680,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -720,7 +720,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -736,7 +736,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1749,7 +1749,7 @@
         <a href="../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1792,18 +1792,15 @@
 </div>
 <div class="language-json highlight"><span class="filename">~/ovos/config/mycroft.conf</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"debug"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"log_level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEBUG"</span><span class="p">,</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">"logs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stdout"</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"log_level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEBUG"</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">}</span>
 </span></code></pre></div>
-<h2 id="all-containers-logs">All containers logs<a class="headerlink" href="#all-containers-logs" title="Permanent link">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The commands below are not don't have to be followed in the same order as they are presented!</p>
+<p>The commands below don't have to be executed in the same order as they are presented, free free to run them in the order you want!</p>
 </div>
-<p>To access all the container logs at the same time, run the following command <em>(make sure it matches the <code>docker compose</code> or <code>podman-compose</code> command you run to deploy the stack)</em>:</p>
+<h2 id="all-containers-logs">All containers logs<a class="headerlink" href="#all-containers-logs" title="Permanent link">¶</a></h2>
+<p>Access all the container logs at the same time, run the following command <em>(make sure it matches the <code>docker compose</code> or <code>podman-compose</code> command you run to deploy the stack)</em>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Docker</label><label for="__tabbed_1_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1817,7 +1814,7 @@
 </div>
 </div>
 <h2 id="specific-contaienr-logs">Specific contaienr logs<a class="headerlink" href="#specific-contaienr-logs" title="Permanent link">¶</a></h2>
-<p>To access the logs of a specific container, run the following command:</p>
+<p>Access the logs of a specific container.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Docker</label><label for="__tabbed_2_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1831,7 +1828,7 @@
 </div>
 </div>
 <h2 id="run-command-in-a-container">Run command in a container<a class="headerlink" href="#run-command-in-a-container" title="Permanent link">¶</a></h2>
-<p>To execute a command inside a container without going into it, run the following command:</p>
+<p>Execute a command inside a container without going into it.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Docker</label><label for="__tabbed_3_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1845,7 +1842,7 @@
 </div>
 </div>
 <h2 id="connect-inside-a-container">Connect inside a container<a class="headerlink" href="#connect-inside-a-container" title="Permanent link">¶</a></h2>
-<p>To go inside a container and run multiple commands, run the following command <em>(where <code>sh</code> is the available shell in there)</em>:</p>
+<p>Go inside a container and run multiple commands <em>(where <code>sh</code> is the available shell in there)</em>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Docker</label><label for="__tabbed_4_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1862,7 +1859,7 @@
 <p>Make sure the <code>mycroft.conf</code> configuration file is <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> valid by using the <code>jq</code> command.</p>
 <div class="admonition warning">
 <p class="admonition-title"><code>jq</code> command</p>
-<p>In order to use <code>jq</code> command, it should be installed on your system.</p>
+<p>In order to use the <code>jq</code> command, the package should be installed on your operating system.</p>
 </div>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>cat<span class="w"> </span>~/ovos/config/mycroft.conf<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 </span></code></pre></div>
@@ -1870,7 +1867,7 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>parse error: Expected another key-value pair at line 81, column 3
 </span></code></pre></div>
 <h2 id="dockerpodman-consumption">Docker/Podman consumption<a class="headerlink" href="#dockerpodman-consumption" title="Permanent link">¶</a></h2>
-<p>To get the CPU, memory and <a href="https://en.wikipedia.org/wiki/Input/output">I/O</a> consumption per container, run the following command:</p>
+<p>Get the CPU, memory and <a href="https://en.wikipedia.org/wiki/Input/output">I/O</a> consumption per container.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">Docker</label><label for="__tabbed_5_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1884,7 +1881,7 @@
 </div>
 </div>
 <h2 id="dockerpodman-volume-usage">Docker/Podman volume usage<a class="headerlink" href="#dockerpodman-volume-usage" title="Permanent link">¶</a></h2>
-<p>To get the disk usage per volumes, run the following command:</p>
+<p>Get the disk usage per volumes.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked id="__tabbed_6_1" name="__tabbed_6" type="radio"><input id="__tabbed_6_2" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">Docker</label><label for="__tabbed_6_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1912,7 +1909,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     

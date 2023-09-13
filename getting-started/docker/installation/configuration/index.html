@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -1619,7 +1619,7 @@
         <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1671,10 +1671,10 @@
 
 
 <div><h1 id="open-voice-os-configuration">Open Voice OS configuration<a class="headerlink" href="#open-voice-os-configuration" title="Permanent link">¶</a></h1>
-<p><code>~/ovos/config/mycroft.conf</code> configuration file is mounted into each containers.</p>
+<p><code>~/ovos/config/mycroft.conf</code> configuration file is mounted into each containers as a <code>read-only</code> volume.</p>
 <div class="admonition tip">
-<p class="admonition-title">Configuration first!</p>
-<p>Before deploying the containers, it is recommended to set the OVOS configuration to make sure the containers initial start has the correct settings such as the <code>lang</code> for example.</p>
+<p class="admonition-title">First I configure then I deploy</p>
+<p>Before deploying the services and volumes, it is recommended to set the OVOS's configuration to make sure the services initial start has the correct settings such as the <code>lang</code> for example.</p>
 </div>
 <h2 id="initial-configuration">Initial configuration<a class="headerlink" href="#initial-configuration" title="Permanent link">¶</a></h2>
 <p>This configuration is very basic, it instructs the Open Voice OS instance to run in <code>English</code> as main language.</p>
@@ -1692,8 +1692,8 @@
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">}</span>
 </span></code></pre></div>
 <h2 id="configure-the-logging">Configure the logging<a class="headerlink" href="#configure-the-logging" title="Permanent link">¶</a></h2>
-<p>By default the services will write their logs into a file under <code>~/.local</code> directory, these files are not rotated or compresses which could lead to a disk space issue.</p>
-<p>The solution is to add these lines into <code>~/ovos/config/mycroft.conf</code> <em>(create the file if it doesn't exist)</em>, this will tell the services to redirect their logs to the container <code>stdout</code>.</p>
+<p>By default, the Open Voie OS <a href="../../../../about/glossary/components/">services</a> will write their logs into a file under <code>~/.local</code> directory, these files are not rotated or compressed which could lead to a disk space issue.</p>
+<p>The solution is to add these lines into the <code>~/ovos/config/mycroft.conf</code> file <em>(create the file if it does not exist)</em>, this will tell the services to redirect their logs to the container <code>stdout</code>.</p>
 <div class="language-json highlight"><span class="filename">~/ovos/config/mycroft.conf</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"logs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stdout"</span>
@@ -1709,7 +1709,11 @@
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nt">"start_listening"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/home/ovos/.venv/lib/python3.11/site-packages/ovos_dinkum_listener/res/snd/start_listening.wav"</span>
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="p">}</span>
-</span></code></pre></div></div>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Services already deployed</p>
+<p>If the services have been already deployed and the <code>~/ovos/config/mycroft.conf</code> has changed, then you will have to restart the containers impacted by the change(s).</p>
+</div></div>
 
   
     
@@ -1725,7 +1729,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     
@@ -1745,14 +1749,14 @@
         <span>GitHub</span>
         <nav>
           
-            <a href="https://github.com/Ramblurr" class="md-author" title="@Ramblurr">
-              
-              <img src="../../../../assets/external/avatars.githubusercontent.com/u/14830.5aea0b69.png" alt="Ramblurr">
-            </a>
-          
             <a href="https://github.com/goldyfruit" class="md-author" title="@goldyfruit">
               
               <img src="../../../../assets/external/avatars.githubusercontent.com/u/614115.5aea0b69.jpg" alt="goldyfruit">
+            </a>
+          
+            <a href="https://github.com/Ramblurr" class="md-author" title="@Ramblurr">
+              
+              <img src="../../../../assets/external/avatars.githubusercontent.com/u/14830.5aea0b69.png" alt="Ramblurr">
             </a>
           
           

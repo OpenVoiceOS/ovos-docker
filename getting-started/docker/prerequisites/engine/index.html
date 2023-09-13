@@ -661,7 +661,7 @@
   <span class="md-ellipsis">
     
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
     
@@ -682,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Run OVOS in containers
+    Run OVOS within containers
   
 
           </label>
@@ -722,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Prerequisites
+    Requirements
   
 
     
@@ -738,7 +738,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Prerequisites
+    Requirements
   
 
           </label>
@@ -815,6 +815,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-be-root-be-a-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't be root, be a user
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1554,6 +1582,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-be-root-be-a-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't be root, be a user
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1619,7 +1675,7 @@
         <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Run OVOS in containers
+    Run OVOS within containers
   </span>
 
         </a>
@@ -1636,7 +1692,7 @@
         <a href="./" class="md-path__link">
           
   <span class="md-ellipsis">
-    Prerequisites
+    Requirements
   </span>
 
         </a>
@@ -1672,17 +1728,21 @@
 
 <div><h1 id="container-engine">Container engine<a class="headerlink" href="#container-engine" title="Permanent link">¶</a></h1>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
-<p>As we are leveraging containers, a container engine such as Docker or Podman is required <em>(only one of them should be installed)</em>, as well as their <code>composer</code>. If you are not familiar with what a <code>composer</code> is then please read <a href="../../">this section</a> first.</p>
+<p>As we are leveraging containers, a container engine such as Docker or Podman is required <em>(only one of them should be installed)</em>, as well as their <code>composer</code>.</p>
+<p><em>If you are not familiar with what a container engine or a <code>composer</code> are then please refer to <a href="../../">this section</a> first as these fundamentals must be understood.</em></p>
+<h3 id="versions">Versions<a class="headerlink" href="#versions" title="Permanent link">¶</a></h3>
 <div class="admonition danger">
 <p class="admonition-title"><code>docker-compose</code> versus <code>docker compose</code></p>
-<p>As <a href="https://docs.docker.com/compose/">mentioned by Docker</a>, from July 2023 Compsoe V1 (<code>docker-compose</code>) will not received updates anymore which makes it deprecated and replaced by Compose V2 (<code>docker compose</code>) directly embedded into the <code>docker</code> command line.</p>
+<p>As <a href="https://docs.docker.com/compose/">mentioned by Docker</a>, from July 2023 Compsoe V1 <em>(<code>docker-compose</code>)</em> will not received updates anymore which makes it deprecated and replaced by Compose V2 <em>(<code>docker compose</code>)</em> directly embedded into the <code>docker</code> command line.</p>
 </div>
-<p>Either you choose to install Docker or Podman and their <code>composer</code> on Linux, Mac OS or Windows, please refer to the official documentation<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
+<p>Either you choose to install <a href="https://www.docker.com/">Docker</a> or <a href="https://podman.io/">Podman</a> and their <code>composer</code> on <a href="https://en.wikipedia.org/wiki/Linux">Linux</a>, <a href="https://en.wikipedia.org/wiki/Mac_operating_systems">Mac OS</a> or <a href="https://en.wikipedia.org/wiki/Microsoft_Windows">Windows</a>, please refer to the official documentation<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Minimum required versions</p>
-<p>In order to get the latest features supported by <a href="https://github.com/OpenVoiceOS/ovos-docker/">ovos-docker</a>, please make sure to install a recent version of Docker or Podman for your operating system.</p>
+<p>In order to get the latest features supported by <a href="https://github.com/OpenVoiceOS/ovos-docker/">ovos-docker</a>, please make sure to install a recent version of Docker <em>(<code>&gt;= 24.x.x</code>)</em> or Podman <em>(<code>&gt;= 4.x.x</code>)</em> for your operating system.</p>
 </div>
-<p>You should not run <code>docker</code> command as <code>root</code> user or using <code>sudo</code> command, if so then you will get some error message such as <code>Permission denied</code> and some containers could restart in a loop. To allow a simple user to execute the <code>docker</code> command, make sure to add the user to the <code>docker</code> group.</p>
+<h3 id="dont-be-root-be-a-user">Don't be <code>root</code>, be a user<a class="headerlink" href="#dont-be-root-be-a-user" title="Permanent link">¶</a></h3>
+<p>You should not run <code>docker</code> command as <code>root</code> user or using the <code>sudo</code> command, if so then you will get some error messages such as <code>Permission denied</code> and some containers could restart in a loop.</p>
+<p>To allow a simple user to execute the <code>docker</code> command, make sure to add the user to the <code>docker</code> group.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Linux</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1691,18 +1751,29 @@
 </div>
 </div>
 </div>
-<p>Once added to the <code>docker</code> group you will have to logout from the current session <em>(graphical or SSH)</em>.</p>
-<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">¶</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Docker</label><label for="__tabbed_2_2">Podman</label></div>
+<p>Once added to the <code>docker</code> group you will have to logout from the current session <em>(graphical or <a href="https://en.wikipedia.org/wiki/Secure_Shell">SSH</a>)</em> in order to get the group added to your user once you reconnect.</p>
+<p>Once reconnected, run the following command to ensure the <code>docker</code> has been appened to your <code>$USER</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Linux</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>system<span class="w"> </span>info
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>container<span class="w"> </span>list
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>id
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">uid</span><span class="o">=</span><span class="m">1000</span><span class="o">(</span>foobar<span class="o">)</span><span class="w"> </span><span class="nv">gid</span><span class="o">=</span><span class="m">1000</span><span class="o">(</span>foobar<span class="o">)</span><span class="w"> </span><span class="nv">groups</span><span class="o">=</span><span class="m">1000</span><span class="o">(</span>foobar<span class="o">)</span>,973<span class="o">(</span>docker<span class="o">)</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><em>The <code>GID</code> could differ compare to your setup.</em></p>
+<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">¶</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Docker</label><label for="__tabbed_3_2">Podman</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>system<span class="w"> </span>info
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>docker<span class="w"> </span>container<span class="w"> </span>list
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>podman<span class="w"> </span>system<span class="w"> </span>info
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>podman<span class="w"> </span>container<span class="w"> </span>list
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>podman<span class="w"> </span>system<span class="w"> </span>info
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>podman<span class="w"> </span>container<span class="w"> </span>list
 </span></code></pre></div>
 </div>
 </div>
@@ -1730,7 +1801,7 @@
         <span class="md-icon" title="Last update">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
         </span>
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 12, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       </span>
     
     
