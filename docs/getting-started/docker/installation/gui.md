@@ -2,9 +2,11 @@
 
 !!! warning "Not fully functional"
 
-    The GUI container still under heavy development mostly because of the skill's [QML](https://en.wikipedia.org/wiki/QML) files are not been shared between `ovos_gui` container and `ovos_skill_*` containers.
+    The GUI container still under heavy development mostly because of the skill's [QML](https://en.wikipedia.org/wiki/QML) files which are not been shared between `ovos_gui` container and `ovos_skill_*` containers.
 
-In order to allow only the `ovos_gui` container to access to the [X server](https://en.wikipedia.org/wiki/X_Window_System), you will have to allow the container *(based on its hostname)* to connect to `X`.
+    The GUI is currently only available on Linux operating system, not on Mac OS or Windows.
+
+In order to allow only the `ovos_gui` container to access to the [X server](https://en.wikipedia.org/wiki/X_Window_System), you will have to allow the container *(based on its hostname)* to connect to the `X` session.
 
 ```bash
 xhost +local:ovos_gui
@@ -24,6 +26,14 @@ The `xhost` command is part of the `x11-xserver-utils` package on Debian based d
     docker compose --project-name ovos --file docker-compose.yml --file docker-compose.raspberrypi.yml --file docker-compose.skills.yml --file docker-compose.gui.yml --file docker-compose.raspberrypi.gui.yml up --detach
     ```
 
+=== "Linux"
+
+    ```shell
+    docker compose --project-name ovos --file docker-compose.yml --file docker-compose.skills.yml --file docker-compose.gui.yml up --detach
+    ```
+
 !!! question "Hardware accelerated on Raspberry Pi 4 only"
 
-    Raspberry Pi 4 will leverage the GPU hardware acceleration which will provide a smooth experience. **If not running on a Raspberry Pi 4 then the CPU will be used to render the GUI which will result in a big CPU consumption.**
+    Raspberry Pi 4 will leverage the GPU hardware acceleration which will provide a smoother experience.
+
+    **If not running on a Raspberry Pi 4 then the CPU will be used to render the GUI which will result in a big CPU consumption and a poor exprience.**

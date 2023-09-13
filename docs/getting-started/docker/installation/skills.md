@@ -1,10 +1,10 @@
 # Howto install skills?
 
-Two different methods are supported to install a skill with Open Voice OS, each of them having pros :material-thumb-up-outline:{ style="color: green" } and cons :material-thumb-down-outline:{ style="color: red" }.
+Two different methods are supported by `ovos-docker` to install Open Voice OS's skills, each of them having pros :material-thumb-up-outline:{ style="color: green" } and cons :material-thumb-down-outline:{ style="color: red" }.
 
-## In `ovos_core` container
+## As part of `ovos_core` container
 
-The first method is to use a `skills.list` file within `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
+The first method is to use a `skills.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
 
 When `ovos_core` container starts, it will look for a `skills.list` file and install the skills defined in there.
 
@@ -18,19 +18,19 @@ ovos-skill-volume==0.0.1 # Specific skill version on PyPi
 git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git@fix/whatever # Specific skill's branch on GitHub
 ```
 
-If the `ovos_core` container is wiped for any reason like an update, the skill(s) will be automatically reinstalled.
+If the `ovos_core` container is wiped for any reasons *(like an update)*, the skill(s) will be automatically reprovisioned.
 
 !!! tip "Not only for skills"
 
-    `skills.list` file could be used as well to install extra Python librairies, *e.g.*, `SoCo`, `RPi.GPIO`.
+    `skills.list` file could be used as well to install extra Python librairies, *e.g.*, `SoCo`, `RPi.GPIO`. Just make sure to avoid empty lines.
 
-The main advantage of this method is the simplicity, **but** the downside will be more Python dependencies *(libraries)* within the `ovos_core` container, potential conflicts across them and a slower start of the container.
+The main advantage of this method is the simplicity **but** the downside will be more Python dependencies *(libraries)* within the `ovos_core` container, potential conflicts across them, a lack of isolation and a slower start of the container.
 
 ## As standalone container *(recommended)*
 
 The second method is to leverage the [ovos-workshop](../../../about/glossary/components.md#ovos-workshop) component by running a skill as standalone, it means the skill will not be part of `ovos_core` container but it will be running inside its own container.
 
-The main advantage is that each skill are isolated which provide more flexibility about Python dependencies *(libraries)*, packages, easy to update and more security **but** the downside will be that more system resources will be consumed and a container image has to be built.
+The main advantage is that each skill are isolated which provide more flexibility about Python dependencies *(libraries)*, packages. It is easier to update and more secure **but** the downside will be that more system resources will be consumed and a container image has to be built for each skill.
 
 !!! note "Podman users :muscle:"
 
@@ -71,13 +71,13 @@ Depending your Internet speed, your Wi-Fi or Ethernet connection speed and your 
 
 !!! danger "Resources overhead"
 
-    To reduce the potential ressources overhead due to the image downloads and extracts, the `--parallel x` option could be added in order to process the images by batch of `x` *(where `x` is an integer)*.
+    To reduce the potential ressources overhead due to the image downloads and extractions, the `--parallel x` option could be added to the command in order to process the images by batch of `x` *(where `x` is an integer)*.
 
-If the `ovos_core` container is restarted or even deleted, the skill containers will automatically register again to it on up and running.
+If the `ovos_core` container is restarted or even deleted, the skill containers will automatically register again to it.
 
 ## Containers status
 
-At this point of the installation, here are the containers that should be running.
+At this point of the installation, here are the containers that should be up and running.
 
 === "Docker"
 
@@ -106,7 +106,7 @@ At this point of the installation, here are the containers that should be runnin
 
     ```shell
     podman container list --all --filter 'name=ovos'
-    CONTAINER ID   IMAGE                                        COMMAND                  CREATED      STATUS                PORTS     NAMESCONTAINER ID   IMAGE                                        COMMAND                  CREATED        STATUS                 PORTS     NAMES
+    CONTAINER ID   IMAGE                                        COMMAND                  CREATED        STATUS                 PORTS     NAMES
     1446b87d7a32   smartgic/ovos-skill-volume:alpha             "ovos-skill-launcher…"   18 hours ago   Up 8 hours                       ovos_skill_volume
     7ad46a871661   smartgic/ovos-skill-wikipedia:alpha          "ovos-skill-launcher…"   18 hours ago   Up 8 hours                       ovos_skill_wikipedia
     b43b8cf31a43   smartgic/ovos-skill-fallback-unknown:alpha   "ovos-skill-launcher…"   18 hours ago   Up 8 hours                       ovos_skill_fallback_unknown

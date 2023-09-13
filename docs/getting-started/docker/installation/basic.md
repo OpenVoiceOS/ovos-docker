@@ -1,6 +1,8 @@
 # Install Open Voice OS
 
-This section covers the installation of the [core components](../../../about/glossary/components.md) only. Keep following the documentation if you want to install some [skills](./skills.md), [HiveMind](../security/hivemind.md) or even the [GUI](./gui.md).
+This section covers the installation of the [core components](../../../about/glossary/components.md) only.
+
+Keep following the documentation if you want to install some pre-selected [skills](./skills.md), [HiveMind](../security/hivemind.md) or even the [GUI](./gui.md).
 
 ## Deploy the stack
 
@@ -43,11 +45,11 @@ Depending your Internet speed, your Wi-Fi or Ethernet connection speed and your 
 
 !!! danger "Resources overhead"
 
-    To reduce the potential ressources overhead due to the image downloads and extracts, the `--parallel x` option could be added in order to process the images by batch of `x` *(where `x` is an integer)*.
+    To reduce the potential ressources overhead due to the image downloads and extractions, the `--parallel x` option could be added to the command in order to process the images by batch of `x` *(where `x` is an integer)*.
 
 ## Containers status
 
-At this point of the installation, here are the containers that should be running.
+At this point of the installation, here are the containers that should be up and running.
 
 === "Docker"
 

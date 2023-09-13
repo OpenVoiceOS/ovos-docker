@@ -156,9 +156,9 @@ nav:
           - Terms: about/glossary/terms.md
           - Components: about/glossary/components.md
   - Getting started:
-      - Run OVOS in containers:
+      - Run OVOS within containers:
           - Docker or Podman: getting-started/docker/index.md
-          - Prerequisites:
+          - Requirements:
               - Container engine: getting-started/docker/prerequisites/engine.md
               - Sound system: getting-started/docker/prerequisites/sound.md
               - CPU instructions: getting-started/docker/prerequisites/cpu.md

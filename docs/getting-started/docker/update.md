@@ -2,9 +2,9 @@
 
 !!! warning "Exact same command"
 
-    In order to update the deployed stack, you *must* use the exact same command that has been used during the initial stack deployment.
+    In order to update the deployed stack *(services and volumes)*, you *must* use the exact same command that has been used during the initial stack deployment.
 
-The easiest and quickest way to update an Open Voice OS stack already deployed by `docker compose` or `podman-compose` is; of course to use `docker compose` or `podman-compose`. :relaxed: :muscle:
+The easiest and quickest way to update an Open Voice OS stack already deployed by `docker compose` or `podman-compose` is; of course to use `docker compose` or `podman-compose` as well. :relaxed: :muscle:
 
 !!! note "Podman users :muscle:"
 
@@ -34,7 +34,7 @@ The easiest and quickest way to update an Open Voice OS stack already deployed b
     docker compose --project-name ovos --file docker-compose.windows.yml --file docker-compose.skills.yml  up --detach
     ```
 
-Because the `pull_policy` option of each service is set to `always`, everytime that a new image is uploaded with the same tag then `docker compose` or `podman-compose` will pull-it and re-create the container based on this new image.
+Because the `pull_policy` option of each service is set to `always`, everytime that a new image is uploaded with the same tag `docker compose` or `podman-compose` will pull-it and re-create the container based on this new image.
 
 !!! tip "Change the version"
 

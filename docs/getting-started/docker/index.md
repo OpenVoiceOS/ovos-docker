@@ -1,10 +1,10 @@
 # Docker or Podman
 
-Before going further, here are quick definitions of what a container is and what a `composer` is, this is important and must be understood before starting.
+Before going further, here are quick and simple definitions of what a container is and what a `composer` is, these definitions are important and must be well understood before starting.
 
-!!! note "Note"
+!!! info "Two engines, same definition"
 
-    Both of the definitions below are valid for either Docker or Podman. :thumbsup:
+    Both of the definitions described below are valid for either [Docker](https://www.docker.com/) or [Podman](https://podman.io/). :thumbsup:
 
 ## Container definition
 

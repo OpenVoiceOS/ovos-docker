@@ -1,6 +1,6 @@
 # Microphone plugins
 
-A microhpone plugin allows you to use a specific sound protocol in order to get voice samples from your Microphone. Depending the operating you are running on, you will have to choose the correct plugin.
+A microhpone plugin allows you to use a specific sound protocol in order to get voice samples from your microphone. Depending the operating system you are running on, you will have to choose the correct plugin.
 
 !!! note
 
@@ -8,16 +8,20 @@ A microhpone plugin allows you to use a specific sound protocol in order to get 
 
 The `ovos_listener` container comes with few pre-installed microphone plugins such as:
 
-- `ovos-microphone-plugin-alsa` is using [pyalsaaudio](https://larsimmisch.github.io/pyalsaaudio/) Python library
+- `ovos-microphone-plugin-alsa` is using [pyalsaaudio](https://larsimmisch.github.io/pyalsaaudio/) Python library *(default)*
 - `ovos-microphone-plugin-sounddevice` is using [sounddevice](https://python-sounddevice.readthedocs.io/) Python library
 
-If the existing microphone plugins are not enough then you can install yours by following the same principle as for the [TTS plugins](./tts.md) by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
+If the existing microphone plugins are not enough then you can install yours by following the same principle as for the [STT plugins](./stt.md) by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
 
-When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+!!! warning "Plugins requirements"
+
+    These plugins have to be compatible with the `pip install` method which requires a `setup.py` file.
+
+When the `ovos_listener` container starts, it will look for this file and install the plugins defined in there.
 
 ```ini title="~/ovos/config/listener.list"
 ovos-microphone-plugin-pyaudio==0.2.0a1 # Specific plugin version on PyPi
-ovos-microphone-plugin-arecord  # Latest plugin version on PyPi
+ovos-microphone-plugin-arecord # Latest plugin version on PyPi
 git+https://github.com/OpenVoiceOS/ovos-microphone-plugin-socket.git@fix/whatever # Specific branch of a plugin on GitHub
 ```
 

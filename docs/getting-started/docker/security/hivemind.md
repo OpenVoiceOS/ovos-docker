@@ -8,13 +8,13 @@
 
 *<div align="right">[Official documentation](https://jarbashivemind.github.io/HiveMind-community-docs/)</div>*
 
-What it means, is that HiveMind allows external connections to the message bus by using a secured protocol.
+What it means, is that [HiveMind](../../../about/glossary/terms.md#hivemind) allows external connections to the message bus by using a secured protocol.
 
-!!! tip "Check the requirements"
+!!! tip "Fulfill the requirements first"
 
-    Before going further, please make sure that all the [requirements](../installation/requirements.md) are fullfilled.
+    Before going further, please make sure that all the [requirements](../installation/requirements.md) are fulfilled.
 
-A [composition](../composition.md) file is available in order to deploy `ovos_hivemind_listener` and `ovos_hivemind_cli` containers.
+A [composition](../composition.md) file is available in order to deploy `hivemind_listener` and `hivemind_cli` services.
 
 !!! note "Podman users :muscle:"
 
@@ -44,37 +44,37 @@ A [composition](../composition.md) file is available in order to deploy `ovos_hi
     docker compose --project-name ovos --file docker-compose.windows.yml --file docker-compose.skills.yml --file docker-compose.hivemind.yml up --detach
     ```
 
-For more information about how to authenticate with the HiveMind listener, please read the [HiveMind-core readme](https://github.com/JarbasHiveMind/HiveMind-core).
+For more information about how to authenticate with the HiveMind listener, please read the [HiveMind-core repository documentation](https://github.com/JarbasHiveMind/HiveMind-core).
 
-Once the HiveMind containers are up and running, the HiveMind command line allows you to add client, list client, delete client, etc...
+Once the HiveMind containers are up and running, the HiveMind command line allows you to add client, to list them, to delete them, etc...
 
 === "Docker"
 
     ```shell
-    docker exec --interactive --tty ovos_hivemind_cli hivemind-core --help
+    docker exec --interactive --tty hivemind_cli hivemind-core --help
     ```
 
 === "Podman"
 
     ```shell
-    podman exec --interactive --tty ovos_hivemind_cli hivemind-core --help
+    podman exec --interactive --tty hivemind_cli hivemind-core --help
     ```
 
-!!! warning "Open port `5678`"
+!!! warning "Port `5678` must be open"
 
-    In order to to reach the HiveMind listener, the port `5678` has to be open on the host. Please make sure your firewall allows the connection to this port.
+    In order to to reach the HiveMind listener, the port `5678` has to be open on the host. Please make sure your firewall allows the connection to this port or the clients will not be able to connect to it.
 
 ## Containers status
 
-At this point of the installation, here are the containers that should be running.
+At this point of the installation, here are the containers that should be up and running.
 
 === "Docker"
 
     ```shell
     docker container list --all --filter 'name=ovos'
     CONTAINER ID   IMAGE                                        COMMAND                  CREATED          STATUS                 PORTS     NAMES
-    4e2d45799de8   smartgic/ovos-hivemind-cli:alpha             "sleep infinity"         16 minutes ago   Up 16 minutes                    ovos_hivemind_cli
-    612a9ea32405   smartgic/ovos-hivemind-listener:alpha        "hivemind-core listen"   16 minutes ago   Up 16 minutes                    ovos_hivemind_listener
+    4e2d45799de8   smartgic/hivemind-cli:alpha                  "sleep infinity"         16 minutes ago   Up 16 minutes                    hivemind_cli
+    612a9ea32405   smartgic/hivemind-listener:alpha             "hivemind-core listen"   16 minutes ago   Up 16 minutes                    hivemind_listener
     1446b87d7a32   smartgic/ovos-skill-volume:alpha             "ovos-skill-launcher…"   19 hours ago     Up 8 hours                       ovos_skill_volume
     7ad46a871661   smartgic/ovos-skill-wikipedia:alpha          "ovos-skill-launcher…"   19 hours ago     Up 8 hours                       ovos_skill_wikipedia
     b43b8cf31a43   smartgic/ovos-skill-fallback-unknown:alpha   "ovos-skill-launcher…"   19 hours ago     Up 8 hours                       ovos_skill_fallback_unknown
@@ -98,8 +98,8 @@ At this point of the installation, here are the containers that should be runnin
     ```shell
     podman container list --all --filter 'name=ovos'
     CONTAINER ID   IMAGE                                        COMMAND                  CREATED          STATUS                 PORTS     NAMES
-    4e2d45799de8   smartgic/ovos-hivemind-cli:alpha             "sleep infinity"         16 minutes ago   Up 16 minutes                    ovos_hivemind_cli
-    612a9ea32405   smartgic/ovos-hivemind-listener:alpha        "hivemind-core listen"   16 minutes ago   Up 16 minutes                    ovos_hivemind_listener
+    4e2d45799de8   smartgic/hivemind-cli:alpha                  "sleep infinity"         16 minutes ago   Up 16 minutes                    hivemind_cli
+    612a9ea32405   smartgic/hivemind-listener:alpha             "hivemind-core listen"   16 minutes ago   Up 16 minutes                    hivemind_listener
     1446b87d7a32   smartgic/ovos-skill-volume:alpha             "ovos-skill-launcher…"   19 hours ago     Up 8 hours                       ovos_skill_volume
     7ad46a871661   smartgic/ovos-skill-wikipedia:alpha          "ovos-skill-launcher…"   19 hours ago     Up 8 hours                       ovos_skill_wikipedia
     b43b8cf31a43   smartgic/ovos-skill-fallback-unknown:alpha   "ovos-skill-launcher…"   19 hours ago     Up 8 hours                       ovos_skill_fallback_unknown

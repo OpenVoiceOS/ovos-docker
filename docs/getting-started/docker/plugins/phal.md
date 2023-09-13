@@ -8,16 +8,22 @@ The [Plugin based Hardware Abstraction Layer](../../../about/glossary/components
 
 !!! danger "`ovos_phal_admin` is a privileged container"
 
-    The `ovos_phal_admin` intents is to run plugins that require higher accesses to some devices, files or services. Plugins installed in this containers have to be enabled into `~/ovos/config/mycroft.conf` in order to get loaded.
+    The `ovos_phal_admin` purpose is to run plugins that require accesses to some devices, files or services.
+
+    Plugins installed in this container have to be enabled into `~/ovos/config/mycroft.conf` in order to get loaded, this acts as an extra layer of security.
 
 The `ovos_phal` container comes with few pre-installed PHAL plugins such as:
 
 - `ovos-PHAL-plugin-alsa` controls system volume with [ALSA](https://en.wikipedia.org/wiki/Advanced_Linux_Sound_Architecture)
 - `ovos-PHAL-plugin-system` handles bus events to interact with the operating system
 
-If the existing PHAL plugins are not enough then you can install yours by following the same principle as for the [STT plugins](./stt.md) by adding a `phal.list` or `phal_admin.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
+If the existing PHAL plugins are not enough then you can install yours by following the same principle as for the [STT plugins](./stt.md) by adding a `phal.list` or `phal_admin.list` files within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
 
-When the `ovos_phal` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+!!! warning "Plugins requirements"
+
+    These plugins have to be compatible with the `pip install` method which requires a `setup.py` file.
+
+When the `ovos_phal` or `ovos_phal_admin` containers start, they will look for these files and install the skpluginsills defined in there.
 
 ```ini title="~/ovos/config/phal.list or ~/ovos/config/phal_admin.list"
 ovos-phal-plugin-ipgeo==0.0.1 # Specific plugin version on PyPi

@@ -1,10 +1,14 @@
 # Basic OVOS hardening
 
-In order to secure your Open Voice OS instance, few more step are **required** and few concepts must be understood.
+In order to secure your Open Voice OS instance, few more steps are **required** and few concepts must be understood.
 
 ## AppArmor
 
 AppArmor and SELinux are examples of [Mandatory Access Control](https://en.wikipedia.org/wiki/Mandatory_access_control) *(MAC)* systems. These systems differ from other security controls which are generally called [Discretionary Access Control](https://en.wikipedia.org/wiki/Discretionary_access_control) *(DAC)* systems in that, generally, the user can't change their operation.
+
+!!! note "AppArmor packages"
+
+    AppArmor must be installed on your system before going further. Please refer to your Linux distribution documentation to install it.
 
 ### Enable AppArmor
 
@@ -20,7 +24,7 @@ AppArmor and SELinux are examples of [Mandatory Access Control](https://en.wikip
     apparmor=1 security=apparmor
     ```
 
-System must be rebooted to instruct the kernel to load AppArmor.
+System must be rebooted to instruct the kernel to load AppArmor during the boot sequence. Once rebooted, check the AppArmor status using the `aa-status` command.
 
 === "Raspberry Pi OS"
 
@@ -37,19 +41,19 @@ System must be rebooted to instruct the kernel to load AppArmor.
 
 ### AppArmor Docker profile
 
-!!! warning "AppArmor and Podman support"
+!!! warning "AppArmor and Podman support[^1]"
 
-    AppArmor support for Podman is not yet fully functional[^1].
+    AppArmor support for Podman is not yet fully functional.
 
 Docker applies the `docker-default` AppArmor profile to new containers. In Docker 1.13 and later this profile is created in `tmpfs` and then loaded into the kernel.
 
-The container engine should now be aware of `apparmor` as available security option.
+The container engine should now be aware of `apparmor` as an available security option.
 
 ```shell
 docker system info | grep -i apparmor
 ```
 
-All the containers except `ovos_phal_admin` should now confined with the `docker-default` AppArmor profile
+All the containers except `ovos_phal_admin` should now be confined with the `docker-default` AppArmor profile.
 
 ```shell
 docker container list --quiet --all --filter "name=ovos" | xargs docker inspect --format "{{ .Name }}: AppArmorProfile={{ .AppArmorProfile }}"
@@ -71,19 +75,19 @@ docker container list --quiet --all --filter "name=ovos" | xargs docker inspect 
 /ovos_cli: AppArmorProfile=docker-default
 ```
 
-!!! note "`ovos_phal_admin` is not confined"
+!!! note "`ovos_phal_admin` container is not confined"
 
     The `ovos_phal_admin` container is not confined as it runs as a `privileged` container.
 
 ## Message bus
 
-By default, the message bus is listening on `0.0.0.0` port `8181` because containers are created using the `--network host` option. This could be a security issue as an external device could connect to the message bus and send and/or read messages.
+By default, the message bus is listening on address `0.0.0.0` and port `8181` because the `ovos_messagebus` is created using the `--network host` option. This could be a security issue as an external device could connect to the message bus and send and/or read messages.
 
 !!! info "Why using `--network host`?"
 
-    Some Open Voice OS skills such as [Home Assistant](https://www.home-assistant.io/)or  [Sonos](https://www.sonos.com/) require access to your private network in order to communicate with your [IoT](https://en.wikipedia.org/wiki/Internet_of_things).
+    Some Open Voice OS skills such as [Home Assistant](https://www.home-assistant.io/) or [Sonos](https://www.sonos.com/) require access to your private network in order to communicate with your [IoT](https://en.wikipedia.org/wiki/Internet_of_things) devices.
 
-To prevent potential security issues, it is recommended to use a firewall on port `8181`.
+To prevent potential security issues, it is recommended to use a firewall the port `8181`.
 
 `iptables` will be demonstrated as an example but if `firewalld` or `ufw` services are used, then make sure to be compliant with your distribution.
 
@@ -100,7 +104,6 @@ This will allow connections to port `8181` **only** from localhost *(internal)*.
 
     Keep in mind to firewall any other ports which should not be exposed outside of the host by using the same [IPTables](https://en.wikipedia.org/wiki/Iptables) method.
 
-If you really need to connect an external application to the message bus, we recommend to use [HiveMind](../../../about/glossary/terms.md#hivemind).
+If you really need to connect an external application to the message bus, we recommend to use [HiveMind](../../../about/glossary/terms.md#hivemind) to ensure a proper security exposure.
 
-[^1]:
-    [Enable rootless AppArmor](https://github.com/containers/podman/pull/19303)
+[^1]: [Enable rootless AppArmor for Podman](https://github.com/containers/podman/pull/19303)

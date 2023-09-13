@@ -11,19 +11,16 @@ First thing's first, enable the Open Voice OS's debug mode in `~/ovos/config/myc
 ```json title="~/ovos/config/mycroft.conf"
 {
   "debug": true,
-  "log_level": "DEBUG",
-  "logs": {
-    "path": "stdout"
-  }
+  "log_level": "DEBUG"
 }
 ```
 
+!!! note
+    The commands below don't have to be executed in the same order as they are presented, free free to run them in the order you want!
+
 ## All containers logs
 
-!!! note
-    The commands below are not don't have to be followed in the same order as they are presented!
-
-To access all the container logs at the same time, run the following command *(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)*:
+Access all the container logs at the same time, run the following command *(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)*.
 
 === "Docker"
 
@@ -39,7 +36,7 @@ To access all the container logs at the same time, run the following command *(m
 
 ## Specific contaienr logs
 
-To access the logs of a specific container, run the following command:
+Access the logs of a specific container.
 
 === "Docker"
 
@@ -55,7 +52,7 @@ To access the logs of a specific container, run the following command:
 
 ## Run command in a container
 
-To execute a command inside a container without going into it, run the following command:
+Execute a command inside a container without going into it.
 
 === "Docker"
 
@@ -71,7 +68,7 @@ To execute a command inside a container without going into it, run the following
 
 ## Connect inside a container
 
-To go inside a container and run multiple commands, run the following command *(where `sh` is the available shell in there)*:
+Go inside a container and run multiple commands *(where `sh` is the available shell in there)*.
 
 === "Docker"
 
@@ -91,7 +88,7 @@ Make sure the `mycroft.conf` configuration file is [JSON](https://en.wikipedia.o
 
 !!! warning "`jq` command"
 
-    In order to use `jq` command, it should be installed on your system.
+    In order to use the `jq` command, the package should be installed on your operating system.
 
 ```shell
 cat ~/ovos/config/mycroft.conf | jq
@@ -105,7 +102,7 @@ parse error: Expected another key-value pair at line 81, column 3
 
 ## Docker/Podman consumption
 
-To get the CPU, memory and [I/O](https://en.wikipedia.org/wiki/Input/output) consumption per container, run the following command:
+Get the CPU, memory and [I/O](https://en.wikipedia.org/wiki/Input/output) consumption per container.
 
 === "Docker"
 
@@ -121,7 +118,7 @@ To get the CPU, memory and [I/O](https://en.wikipedia.org/wiki/Input/output) con
 
 ## Docker/Podman volume usage
 
-To get the disk usage per volumes, run the following command:
+Get the disk usage per volumes.
 
 === "Docker"
 

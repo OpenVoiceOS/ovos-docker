@@ -1,6 +1,6 @@
 # Getting started
 
-Want to give Open Voice OS a try? Open Voice OS is open source software that runs where you want it to, whether it’s on your [own hardware](./about/why-use-ovos.md#multi-device-compatibility) or one of the dedicated [Mark 1](https://mycroft.ai/product/mycroft-mark-1/) or [Mark II](https://mycroft.ai/product/mark-ii/).
+Want to give Open Voice OS a try? Open Voice OS is an open source software that runs where you want it to, whether it’s on your [own hardware](./about/why-use-ovos.md#multi-device-compatibility) or one of the dedicated [Mark 1](https://mycroft.ai/product/mycroft-mark-1/) or [Mark II](https://mycroft.ai/product/mark-ii/).
 
 <div class="grid cards" markdown>
 

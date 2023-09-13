@@ -1,6 +1,6 @@
 # CPU instructions
 
-In order to run [TensorFlow](https://en.wikipedia.org/wiki/TensorFlow), the CPU must support `AVX` *(Advanced Vector Extensions)* instruction set for x86 processors or `SIMD` *(Single Instruction, Multiple Data)* instruction set for ARM processors.
+In order to run [TensorFlow](https://en.wikipedia.org/wiki/TensorFlow) used by few Open Voice OS components, the [CPU](https://en.wikipedia.org/wiki/Central_processing_unit) must support `AVX` *(Advanced Vector Extensions)* instruction set for x86 processors or `SIMD` *(Single Instruction, Multiple Data)* instruction set for ARM processors.
 
 === "Linux"
 
@@ -14,7 +14,7 @@ In order to run [TensorFlow](https://en.wikipedia.org/wiki/TensorFlow), the CPU 
     sysctl -a | grep -E -i --color "avx|simd"
     ```
 
-If the command returns no output then your CPU doesn't fit the requirements for TensorFlow.
+If the command does not return an output then your CPU doesn't meet the requirements for TensorFlow.
 
 !!! example "AVX or SIMD instruction set missing"
 

@@ -1,6 +1,6 @@
 # Speech-To-Text plugins
 
-The [Speech-To-Text](../../../about/glossary/terms.md#speech-to-text-stt) plugins allow you to connect Open Voice OS with a STT server, it could be [FasterWhisper](https://github.com/guillaumekln/faster-whisper), [VOSK](https://alphacephei.com/vosk/), [Google Translate](https://translate.google.com/), [Deepgram](https://deepgram.com/), etc... Each of these STT providers will have different languages support, precision and performances.
+The [Speech-To-Text](../../../about/glossary/terms.md#speech-to-text-stt) plugins allow you to connect Open Voice OS with different STT servers, it could be [FasterWhisper](https://github.com/guillaumekln/faster-whisper), [VOSK](https://alphacephei.com/vosk/), [Google Translate](https://translate.google.com/), [Deepgram](https://deepgram.com/), etc... Each of these STT providers will have different languages support, precision and performances.
 
 !!! note
 
@@ -11,9 +11,13 @@ The `ovos_listener` container comes with few pre-installed STT plugins such as:
 - `ovos-stt-plugin-server` allows you to reach an external STT service
 - `ovos-stt-plugin-vosk` is an offline STT service
 
-If the existing STT plugins are not enough then you can install yours by following the same principle as for the [TTS plugins](./tts.md) by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
+If the existing STT plugins are not enough then you can install yours by following the same principle as for the [microphone plugins](./microphone.md) by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
 
-When the `ovos_listener` container starts, it will look for this file and install the skills defined in there. These skills have to be compatible with the `pip install` method which requires a `setup.py` file.
+!!! warning "Plugins requirements"
+
+    These plugins have to be compatible with the `pip install` method which requires a `setup.py` file.
+
+When the `ovos_listener` container starts, it will look for this file and install the plugins defined in there.
 
 ```ini title="~/ovos/config/listener.list"
 ovos-stt-plugin-vosk==0.2.0a1 # Specific plugin version on PyPi

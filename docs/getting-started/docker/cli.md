@@ -1,14 +1,20 @@
 # Open Voice OS command line
 
-The command line allows you to send a message directly but not only to the bus by using the `ovos-cli-client` command from the `ovo_cli` container.
+The command line allows you to send a message *(but not only)* directly to the message bus by using the `ovos-cli-client` command from the `ovo_cli` container.
 
 !!! warning "Skill interactions"
 
-    The command line doesn't support any action related to skills as this setup is running inside containers. Please read the [skill section](./installation/skills.md) to manage skills.
+    The command line doesn't support any action related to skills other than `:skills` as this setup is running inside containers. Please read the [skill section](./installation/skills.md) to manage skills.
 
 ![type:video](../../assets/videos/ovos-cli.webm)
 
 ## ovos-cli-client
+
+!!! warning "`ovos-cli-client` is deprecated"
+
+    Please read https://github.com/OpenVoiceOS/ovos-cli-client/issues/14 for more information.
+
+Interact directly with the [ncurses](https://en.wikipedia.org/wiki/Ncurses) OVOS client interface.
 
 === "Docker"
 
@@ -25,6 +31,10 @@ The command line allows you to send a message directly but not only to the bus b
 ## ovos-config
 
 To display or manage the current configuration, the `ovos-config` command could be used.
+
+!!! failure "`read-write` access to the configuration"
+
+    The `ovos_cli` container is the only one having `read-write` access to the `mycroft.conf` configuration file.
 
 === "Docker"
 
@@ -44,7 +54,7 @@ To display or manage the current configuration, the `ovos-config` command could 
 
 ## ovos-speak
 
-An easy way to make Open Voice OS speak is to run the `ovos-speak` command.
+An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
 
 === "Docker"
 
