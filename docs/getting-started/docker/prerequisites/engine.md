@@ -10,7 +10,7 @@ As we are leveraging containers, a container engine such as Docker or Podman is 
 
 !!! danger "`docker-compose` versus `docker compose`"
 
-    As [mentioned by Docker](https://docs.docker.com/compose/), from July 2023 Compsoe V1 *(`docker-compose`)* will not received updates anymore which makes it deprecated and replaced by Compose V2 *(`docker compose`)* directly embedded into the `docker` command line.
+    As [mentioned by Docker](https://docs.docker.com/compose/), from July 2023 Compose V1 *(`docker-compose`)* will not received updates anymore which makes it deprecated and replaced by Compose V2 *(`docker compose`)* directly embedded into the `docker` command line.
 
 Either you choose to install [Docker](https://www.docker.com/) or [Podman](https://podman.io/) and their `composer` on [Linux](https://en.wikipedia.org/wiki/Linux), [Mac OS](https://en.wikipedia.org/wiki/Mac_operating_systems) or [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows), please refer to the official documentation[^1].
 
