@@ -14,7 +14,7 @@ Container images could be used for different CPU architectures using the [multi-
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | :material-check-circle-outline:{ style="color: green"} `amd64`   | Such as AMD and Intel processors                                               |
 | :material-check-circle-outline:{ style="color: green"} `aarch64` | Such as Raspberry Pi 64-bit SoC                                                |
-| :material-close-circle-outline:{ style="color: red" } `armlv7`   | Such as Raspberry Pi 32-bit SoC (*not supported because of `onnxruntime`[^1]*) |
+| :material-close-circle-outline:{ style="color: red" } `armv7l`   | Such as Raspberry Pi 32-bit SoC (*not supported because of `onnxruntime`[^1]*) |
 
 ## Containers
 
