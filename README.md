@@ -18,6 +18,5 @@ Please follow the dedicated [documentation](https://openvoiceos.github.io/ovos-d
 ## Support
 
 - [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
-- [Open Voice OS documentation](https://openvoiceos.github.io/community-docs/)
 - [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
 - [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)
