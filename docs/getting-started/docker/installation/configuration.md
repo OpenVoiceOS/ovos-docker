@@ -27,7 +27,7 @@ This configuration is very basic, it instructs the Open Voice OS instance to run
 
 ## Configure the logging
 
-By default, the Open Voie OS [services](../../../about/glossary/components.md) will write their logs into a file under `~/.local` directory, these files are not rotated or compressed which could lead to a disk space issue.
+By default, the Open Voice OS [services](../../../about/glossary/components.md) will write their logs into a file under `~/.local` directory, these files are not rotated or compressed which could lead to a disk space issue.
 
 The solution is to add these lines into the `~/ovos/config/mycroft.conf` file *(create the file if it does not exist)*, this will tell the services to redirect their logs to the container `stdout`.
 
