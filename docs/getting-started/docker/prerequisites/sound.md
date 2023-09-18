@@ -33,7 +33,7 @@ The user running the containers must be part of the `audio` system group *(depen
 
 !!! warning "PulseAudio files permissions"
 
-    Check the permissions for `~/.config/pulse/` and `/run/user/1000/` directories, they should belong to the user running the stack *(where `1000` is your user ID)*, not to `root` user.
+    Check the permissions for `~/.config/pulse/` and `/run/user/1000/pulse` directories, they should belong to the user running the stack *(where `1000` is your user ID)*, not to `root` user.
 
     **If you are running on Mac OS, there is no `/run/user/1000/` directory.**
 
