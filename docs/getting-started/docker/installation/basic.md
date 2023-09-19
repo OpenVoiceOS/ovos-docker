@@ -2,7 +2,9 @@
 
 This section covers the installation of the [core components](../../../about/glossary/components.md) only.
 
-Keep following the documentation if you want to install some pre-selected [skills](./skills.md), [HiveMind](../security/hivemind.md) or even the [GUI](./gui.md).
+!!! warning "Only core components"
+
+    Keep following the documentation if you want to install some pre-selected [skills](./skills.md), [HiveMind](../security/hivemind.md) or even the [GUI](./gui.md).
 
 ## Deploy the stack
 
