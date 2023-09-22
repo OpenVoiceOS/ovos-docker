@@ -1,3 +1,4 @@
+onnxruntime!=1.16 #BUG: https://github.com/microsoft/onnxruntime/issues/17631
 ovos-audio
 ovos-audio-plugin-simple
 ovos-classifiers
@@ -7,4 +8,3 @@ ovos-tts-plugin-mimic2
 ovos-tts-plugin-mimic3-server
 ovos-tts-plugin-server
 ovos-workshop
-onnxruntime
