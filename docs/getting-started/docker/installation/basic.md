@@ -8,7 +8,7 @@ This section covers the installation of the [core components](../../../about/glo
 
 ## Deploy the stack
 
-Before running the `docker compose` or `podman-compose` commands, please make to read this [section](../prerequisites/engine.md) first.
+Before running the `docker compose` or `podman-compose` commands, please read this [section](../prerequisites/engine.md) first.
 
 
 !!! note "Podman users :muscle:"
