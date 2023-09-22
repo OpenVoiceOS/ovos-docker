@@ -44,7 +44,7 @@ The solution is to add these lines into the `~/ovos/config/mycroft.conf` file *(
     }
   },
   "sounds": {
-    "start_listening": "/home/ovos/.venv/lib/python3.11/site-packages/ovos_dinkum_listener/res/snd/start_listening.wav"
+    "start_listening": "/home/ovos/.venv/lib/python3.11/site-packages/ovos_audio/res/snd/start_listening.wav"
   }
 }
 ```
