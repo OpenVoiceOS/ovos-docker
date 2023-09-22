@@ -6,7 +6,7 @@ This section covers the installation of the [core components](../../../about/glo
 
     Keep following the documentation if you want to install some pre-selected [skills](./skills.md), [HiveMind](../security/hivemind.md) or even the [GUI](./gui.md).
 
-Before running the `docker compose` commands, please make to read this [section](../prerequisites/engine/) first.
+Before running the `docker compose` commands, please make to read this [section](../prerequisites/engine.md) first.
 
 ## Deploy the stack
 
