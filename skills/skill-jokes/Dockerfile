@@ -21,4 +21,4 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     fi \
     && rm -rf ${HOME}/.cache
 
-ENTRYPOINT ["ovos-skill-launcher", "skill-icanhazdadjokes.openvoiceos"]
+ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-icanhazdadjokes.openvoiceos"]
