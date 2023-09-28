@@ -35,8 +35,8 @@ RUN apt-get update \
     && make -j $(nproc) \
     && make install \
     && useradd --no-log-init $USER -m -c "OpenVoiceOS user" \
-    && mkdir -p /home/${USER}/.local/share/OpenVoiceOS/OvosShell \
-    && chown ${USER}:${USER} -R /home/${USER}/.local/share/OpenVoiceOS \
+    && mkdir -p /home/${USER}/.local/share/OpenVoiceOS/OvosShell /home/${USER}/.cache/gui_files \
+    && chown ${USER}:${USER} -R /home/${USER} \
     && groupdel kvm \
     && groupdel render \
     && apt-get --purge remove -y git-core g++ cmake extra-cmake-modules gettext pkg-config pkg-kde-tools \
