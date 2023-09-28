@@ -6,6 +6,38 @@
 
     The GUI is currently only available on Linux operating system, not on Mac OS or Windows.
 
+## Configuration
+
+The `ovos-gui-messagebus` component must be configured in order to receive the QML files from the skill containers. Because of these file transfers, the `ovos-message-bus` component must be configured to allow bigger payload.
+
+```json title="~/ovos/config/mycroft.conf"
+{
+  "logs": {
+    "path": "stdout"
+  },
+  "play_wav_cmdline": "aplay %1",
+  "lang": "en-us",
+  "listener": {
+    "VAD": {
+      "module": "ovos-vad-plugin-silero"
+    }
+  },
+  "gui": {
+    "extension": "generic",
+    "generic": {
+        "homescreen_supported": false
+    },
+    "gui_file_server": true,
+    "gui_file_host_path": "/home/ovos/.cache/gui_files"
+  },
+  "websocket": {
+    "max_msg_size": 100
+  }
+}
+```
+
+## GUI services deployment
+
 In order to allow only the `ovos_gui` container to access to the [X server](https://en.wikipedia.org/wiki/X_Window_System), you will have to allow the container *(based on its hostname)* to connect to the `X` session.
 
 ```bash
