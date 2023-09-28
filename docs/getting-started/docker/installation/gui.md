@@ -27,7 +27,6 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
     "generic": {
         "homescreen_supported": false
     },
-    "gui_file_server": true,
     "gui_file_host_path": "/home/ovos/.cache/gui_files"
   },
   "websocket": {
