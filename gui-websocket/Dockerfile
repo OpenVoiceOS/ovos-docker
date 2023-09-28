@@ -16,9 +16,9 @@ ARG ALPHA=false
 ARG USER=ovos
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip install ovos-plugin-manager[offline] ovos-gui ovos-gui-plugin-shell-companion ovos_backend_client --pre; \
+    pip install ovos-plugin-manager[offline] ovos-gui ovos-gui-plugin-shell-companion ovos-backend-client --pre; \
     else \
-    pip install ovos-plugin-manager[offline] ovos-gui ovos-gui-plugin-shell-companion ovos_backend_client; \
+    pip install ovos-plugin-manager[offline] ovos-gui ovos-gui-plugin-shell-companion ovos-backend-client; \
     fi \
     && mkdir ${HOME}/.cache/ovos_gui_file_server \
     && rm -rf ${HOME}/.cache/pip
