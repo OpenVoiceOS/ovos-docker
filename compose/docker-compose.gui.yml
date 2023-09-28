@@ -130,3 +130,20 @@ services:
   #     - ovos_messagebus
   #     - ovos_gui_websocket
   #     - ovos_phal
+
+  ovos_skill_homescreen:
+    <<: *podman
+    container_name: ovos_skill_homescreen
+    hostname: ovos_skill_homescreen
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-homescreen:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      - ovos_core
