@@ -1,14 +1,12 @@
 ---
 version: "3.9"
 
-x-podman:
-  &podman
+x-podman: &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
 
-x-logging:
-  &default-logging
+x-logging: &default-logging
   driver: json-file
   options:
     mode: non-blocking
@@ -39,7 +37,7 @@ services:
     container_name: ovos_gui
     hostname: ovos_gui
     restart: unless-stopped
-    image: docker.io/smartgic/ovos-gui:${VERSION}
+    image: docker.io/smartgic/ovos-gui-shell:${VERSION}
     logging: *default-logging
     pull_policy: always
     environment:
