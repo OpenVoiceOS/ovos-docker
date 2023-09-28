@@ -77,8 +77,8 @@ services:
       - ovos_phal
 
   ########################
-  # Uncomment this service if you want to use the C++ implementation
-  # of the message bus.
+  # Uncomment this service if you want to use the origial GUI
+  # without the Open Voice OS Shell layer
   ########################
   # ovos_gui:
   #   <<: *podman
