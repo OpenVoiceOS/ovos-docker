@@ -1,0 +1,50 @@
+FROM debian:bookworm-backports
+
+ARG BUILD_DATE=unknown
+ARG VERSION=unknown
+
+LABEL org.opencontainers.image.title="Open Voice OS OCI Mycroft original GUI image"
+LABEL org.opencontainers.image.description="Mycroft original GUI"
+LABEL org.opencontainers.image.version=${VERSION}
+LABEL org.opencontainers.image.created=${BUILD_DATE}
+LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
+LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
+LABEL org.opencontainers.image.vendor="Open Voice OS"
+
+ARG BRANCH_OVOS=master
+ARG BRANCH_MYCROFT=dev
+ARG USER=ovos
+
+ENV TERM linux
+ENV DEBIAN_FRONTEND noninteractive
+ENV MYCROFT_DIR_GUI /opt/mycroft-gui
+ENV LOTTIE_DIR /opt/lottie
+
+RUN apt-get update \
+    && apt-get install -y git-core g++ cmake extra-cmake-modules gettext pkg-config pkg-kde-tools qtbase5-dev qtdeclarative5-dev libkf5kio-dev libqt5websockets5-dev libkf5i18n-dev libkf5notifications-dev libkf5plasma-dev libqt5webview5-dev qtmultimedia5-dev  kirigami2-dev libqt5websockets5 libqt5webview5 libkf5configcore5 qml-module-qtwebengine qml-module-qtmultimedia qml-module-qtquick-shapes libqt5multimedia5 libkf5dbusaddons-dev \
+    && git clone https://github.com/OpenVoiceOS/mycroft-gui-qt5.git $MYCROFT_DIR_GUI -b $BRANCH_MYCROFT \
+    && mkdir -p ${MYCROFT_DIR_GUI}/build-testing \
+    && cd ${MYCROFT_DIR_GUI}/build-testing \
+    && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_LIBDIR=lib -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+    && make -j $(nproc) \
+    && make install \
+    && git clone https://github.com/kbroulik/lottie-qml.git $LOTTIE_DIR \
+    && mkdir -p ${LOTTIE_DIR}/build-testing \
+    && cd ${LOTTIE_DIR}/build-testing \
+    && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_LIBDIR=lib -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+    && make -j $(nproc) \
+    && make install \
+    && useradd --no-log-init $USER -m -c "OpenVoiceOS user" \
+    && mkdir -p /home/${USER}/.local/share/OpenVoiceOS/OvosShell \
+    && chown ${USER}:${USER} -R /home/${USER}/.local/share/OpenVoiceOS \
+    && groupdel kvm \
+    && groupdel render \
+    && apt-get --purge remove -y git-core g++ cmake extra-cmake-modules gettext pkg-config pkg-kde-tools \
+    && apt-get --purge autoremove -y \
+    && apt-get clean \
+    && rm -rf $MYCROFT_DIR_GUI $LOTTIE_DIR
+
+USER ovos
+
+ENTRYPOINT ovos-gui-app
+
