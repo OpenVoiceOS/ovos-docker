@@ -23,9 +23,10 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
     }
   },
   "gui": {
-    "extension": "generic",
+    "extension": "ovos-gui-plugin-shell-companion",
+    "idle_display_skill": "skill-ovos-homescreen.openvoiceos",
     "generic": {
-        "homescreen_supported": false
+      "homescreen_supported": true
     },
     "gui_file_host_path": "/home/ovos/.cache/gui_files"
   },
