@@ -34,6 +34,7 @@ RUN apt-get update \
 USER $USER
 
 ENV EDITOR=vim
+ENV TERM=linux
 
 ENTRYPOINT ["sleep", "infinity"]
 
