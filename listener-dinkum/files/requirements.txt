@@ -1,5 +1,6 @@
 onnxruntime
 ovos-dinkum-listener
+ovos-microphone-plugin-alsa
 ovos-microphone-plugin-sounddevice
 ovos-stt-plugin-server
 ovos-stt-plugin-vosk
