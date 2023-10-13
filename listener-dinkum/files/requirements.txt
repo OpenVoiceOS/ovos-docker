@@ -1,4 +1,4 @@
-onnxruntime!=1.16 #BUG: https://github.com/microsoft/onnxruntime/issues/17631
+onnxruntime
 ovos-dinkum-listener
 ovos-microphone-plugin-sounddevice
 ovos-stt-plugin-server
