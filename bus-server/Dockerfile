@@ -40,4 +40,6 @@ RUN apt-get update \
 
 USER $USER
 
+ENV IS_OVOS_CONTAINER "true"
+
 ENTRYPOINT ovos-bus-server

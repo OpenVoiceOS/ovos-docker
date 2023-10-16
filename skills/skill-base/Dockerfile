@@ -34,5 +34,6 @@ RUN adduser --disabled-password $USER \
 
 USER $USER
 
+ENV IS_OVOS_CONTAINER "true"
 ENV PATH /home/${USER}/.venv/bin:$PATH
 ENV VIRTUAL_ENV /home/${USER}/.venv
