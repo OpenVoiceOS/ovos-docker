@@ -1,3 +1,4 @@
+ovos-bidirectional-translation-plugin
 ovos-core[lgpl]
 ovos-translate-server-plugin
 git+https://github.com/OpenVoiceOS/ovos-utterance-corrections-plugin.git
