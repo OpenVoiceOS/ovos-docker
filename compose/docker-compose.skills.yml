@@ -207,7 +207,7 @@ services:
     container_name: ovos_skill_easter_eggs
     hostname: ovos_skill_easter_eggs
     restart: unless-stopped
-    image: docker.io/smartgic/vos-skill-easter-eggs:${VERSION}
+    image: docker.io/smartgic/ovos-skill-easter-eggs:${VERSION}
     logging: *default-logging
     pull_policy: always
     environment:
