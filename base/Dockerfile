@@ -14,7 +14,6 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG USER=ovos
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV IS_OVOS_CONTAINER "true"
 
 SHELL ["/bin/bash", "-c"]
 
@@ -33,5 +32,6 @@ RUN apt-get update \
 
 USER $USER
 
+ENV IS_OVOS_CONTAINER "true"
 ENV PATH /home/${USER}/.venv/bin:$PATH
 ENV VIRTUAL_ENV /home/${USER}/.venv
