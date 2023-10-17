@@ -13,7 +13,6 @@ LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docke
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
 ARG ALPHA=false
-ARG USER=ovos
 
 RUN if [ "${ALPHA}" == "true" ]; then \
     # ovos-audio is required because of https://github.com/OpenVoiceOS/skill-ovos-date-time/issues/22
