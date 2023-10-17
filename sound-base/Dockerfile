@@ -30,3 +30,5 @@ RUN apt-get update \
     && usermod -a -G audio $USER
 
 USER $USER
+
+ENV IS_OVOS_CONTAINER "true"
