@@ -21,7 +21,7 @@ USER root
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-    && apt-get install -o Dpkg::Options::="--force-confold" -y gpg alsa-utils libasound2-plugins flac libportaudio2 pulseaudio-utils pipewire pipewire-alsa mpg123 music123 sox swig \
+    && apt-get install -o Dpkg::Options::="--force-confold" -y gpg alsa-utils libasound2-plugins flac libportaudio2 pulseaudio-utils pipewire pipewire-alsa mpg123 music123 sox swig libsox-fmt-all \
     && apt-get --purge autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt /var/log/{apt,dpkg.log} \
