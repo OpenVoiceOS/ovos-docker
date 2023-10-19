@@ -13,7 +13,7 @@ RUN cmake . \
 
 FROM debian:bookworm-slim
 
-HEALTHCHECK --interval=30s --timeout=3s --retries=2 --start-period=30s \
+HEALTHCHECK --interval=10s --timeout=5s --retries=10 --start-period=10s \
     CMD curl --header "Connection: Upgrade" --header "Upgrade: Websocket" http://127.0.0.1:8181/core || kill 1
 
 ARG BUILD_DATE=unknown
