@@ -1,14 +1,12 @@
 ---
 version: "3.9"
 
-x-podman:
-  &podman
+x-podman: &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
 
-x-logging:
-  &default-logging
+x-logging: &default-logging
   driver: json-file
   options:
     mode: non-blocking
@@ -85,7 +83,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_messagebus
+      ovos_messagebus:
+        condition: service_healthy
 
   ovos_phal_admin:
     <<: *podman
@@ -104,7 +103,8 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
       - /dev:/dev:ro
     depends_on:
-      - ovos_messagebus
+      ovos_messagebus:
+        condition: service_healthy
 
   ovos_listener:
     <<: *podman
@@ -127,8 +127,10 @@ services:
       - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_messagebus
-      - ovos_phal
+      ovos_messagebus:
+        condition: service_healthy
+      ovos_phal:
+        condition: service_healthy
 
   ovos_audio:
     <<: *podman
@@ -149,8 +151,10 @@ services:
       - ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_messagebus
-      - ovos_phal
+      ovos_messagebus:
+        condition: service_healthy
+      ovos_phal:
+        condition: service_healthy
 
   ovos_core:
     <<: *podman
@@ -172,8 +176,10 @@ services:
       - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_messagebus
-      - ovos_phal
+      ovos_messagebus:
+        condition: service_healthy
+      ovos_phal:
+        condition: service_healthy
 
   ovos_cli:
     <<: *podman
@@ -189,3 +195,6 @@ services:
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_messagebus:
+        condition: service_healthy

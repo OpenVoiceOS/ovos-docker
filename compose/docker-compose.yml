@@ -1,14 +1,12 @@
 ---
 version: "3.9"
 
-x-podman:
-  &podman
+x-podman: &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
 
-x-logging:
-  &default-logging
+x-logging: &default-logging
   driver: json-file
   options:
     mode: non-blocking
@@ -91,7 +89,8 @@ services:
       - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
-      - ovos_messagebus
+      ovos_messagebus:
+        condition: service_healthy
 
   ovos_phal_admin:
     <<: *podman
@@ -111,7 +110,8 @@ services:
       - /sys:/sys:ro
       - /dev:/dev:ro
     depends_on:
-      - ovos_messagebus
+      ovos_messagebus:
+        condition: service_healthy
 
   ovos_listener:
     <<: *podman
@@ -139,8 +139,10 @@ services:
       - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
-      - ovos_messagebus
-      - ovos_phal
+      ovos_messagebus:
+        condition: service_healthy
+      ovos_phal:
+        condition: service_healthy
 
   ovos_audio:
     <<: *podman
@@ -168,8 +170,10 @@ services:
       - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
-      - ovos_messagebus
-      - ovos_phal
+      ovos_messagebus:
+        condition: service_healthy
+      ovos_phal:
+        condition: service_healthy
 
   ovos_core:
     <<: *podman
@@ -196,8 +200,10 @@ services:
       - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
-      - ovos_messagebus
-      - ovos_phal
+      ovos_messagebus:
+        condition: service_healthy
+      ovos_phal:
+        condition: service_healthy
 
   ovos_cli:
     <<: *podman
@@ -213,3 +219,6 @@ services:
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_messagebus:
+        condition: service_healthy

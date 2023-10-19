@@ -1,6 +1,9 @@
 ARG TAG=alpha
 FROM smartgic/ovos-sound-base:${TAG}
 
+HEALTHCHECK --interval=10s --timeout=5s --retries=5 --start-period=10s \
+  CMD ovos-hc -s voice || exit 1
+
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
 

@@ -13,6 +13,8 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 
 ARG USER=ovos
 
+COPY --chmod=0755 files/ovos-hc.py /usr/local/bin/ovos-hc
+
 ENV DEBIAN_FRONTEND noninteractive
 
 SHELL ["/bin/bash", "-c"]

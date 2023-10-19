@@ -36,7 +36,8 @@ services:
       - ovos_gui_files:/home/${OVOS_USER}/.cache/ovos_gui_file_server
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_messagebus
+      ovos_messagebus:
+        condition: service_healthy
 
   ovos_gui:
     <<: *podman
@@ -79,9 +80,12 @@ services:
       - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
       - ovos_gui_files:/home/${OVOS_USER}/.cache/gui_files
     depends_on:
-      - ovos_messagebus
-      - ovos_gui_websocket
-      - ovos_phal
+      ovos_messagebus:
+        condition: service_healthy
+      ovos_gui_websocket:
+        condition: service_healthy
+      ovos_phal:
+        condition: service_healthy
 
   ########################
   # Uncomment this service if you want to use the origial GUI
@@ -126,10 +130,13 @@ services:
   #     - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
   #     - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
   #     - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
-  #   depends_on:
-  #     - ovos_messagebus
-  #     - ovos_gui_websocket
-  #     - ovos_phal
+  # depends_on:
+  #   ovos_messagebus:
+  #     condition: service_healthy
+  #   ovos_gui_websocket:
+  #     condition: service_healthy
+  #   ovos_phal:
+  #     condition: service_healthy
 
   ovos_skill_homescreen:
     <<: *podman
@@ -146,4 +153,5 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy

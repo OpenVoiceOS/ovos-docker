@@ -1,14 +1,12 @@
 ---
 version: "3.9"
 
-x-podman:
-  &podman
+x-podman: &podman
   userns_mode: keep-id
   security_opt:
     - "label=disable"
 
-x-logging:
-  &default-logging
+x-logging: &default-logging
   driver: json-file
   options:
     mode: non-blocking
@@ -32,6 +30,9 @@ services:
     volumes:
       - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:z
       - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
+    depends_on:
+      ovos_core:
+        condition: service_healthy
 
   hivemind_cli:
     <<: *podman
@@ -49,4 +50,5 @@ services:
       - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:z
       - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
     depends_on:
-      - hivemind_listener
+      hivemind_listener:
+        condition: service_healthy

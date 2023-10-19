@@ -30,7 +30,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_weather:
     <<: *podman
@@ -47,7 +48,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_volume:
     <<: *podman
@@ -64,7 +66,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_date_time:
     <<: *podman
@@ -81,7 +84,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_stop:
     <<: *podman
@@ -98,7 +102,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_personal:
     <<: *podman
@@ -115,7 +120,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_fallback_unknown:
     <<: *podman
@@ -132,7 +138,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_hello_world:
     <<: *podman
@@ -149,7 +156,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_alerts:
     <<: *podman
@@ -166,7 +174,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_wolfie:
     <<: *podman
@@ -183,7 +192,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_jokes:
     <<: *podman
@@ -200,7 +210,8 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
 
   ovos_skill_easter_eggs:
     <<: *podman
@@ -217,4 +228,5 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
-      - ovos_core
+      ovos_core:
+        condition: service_healthy
