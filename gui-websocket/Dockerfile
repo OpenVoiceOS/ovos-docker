@@ -1,7 +1,7 @@
 ARG TAG=alpha
 FROM smartgic/ovos-base:${TAG}
 
-HEALTHCHECK --interval=10s --timeout=5s --retries=10 --start-period=10s \
+HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
     CMD curl --header "Connection: Upgrade" --header "Upgrade: Websocket" http://127.0.0.1:18181/core || kill 1
 
 ARG BUILD_DATE=unknown
