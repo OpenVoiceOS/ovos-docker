@@ -2,6 +2,10 @@
 
 Two different methods are supported by `ovos-docker` to install Open Voice OS's skills, each of them having pros :material-thumb-up-outline:{ style="color: green" } and cons :material-thumb-down-outline:{ style="color: red" }.
 
+!!! danger "Slow hardware"
+
+    When running Open Voice OS on slow hardware such as Raspberry Pi 3B+, it is recommended to install skills using the *"As part of `ovos_core` container"* method in order to reduce the memory consumption.
+
 ## As part of `ovos_core` container
 
 The first method is to use a `skills.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
