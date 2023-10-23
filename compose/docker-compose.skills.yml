@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-wikipedia:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -40,7 +40,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-weather:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -58,7 +58,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-volume:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -76,7 +76,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-date-time:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -94,7 +94,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-stop:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -112,7 +112,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-personal:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -130,7 +130,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-fallback-unknown:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -148,7 +148,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-hello-world:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -166,7 +166,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-alerts:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -184,7 +184,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-wolfie:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -202,7 +202,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-jokes:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -220,7 +220,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-easter-eggs:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host

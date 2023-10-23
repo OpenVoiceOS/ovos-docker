@@ -39,7 +39,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-messagebus:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -58,7 +58,7 @@ services:
   #  restart: unless-stopped
   #  image: docker.io/smartgic/ovos-bus-server:${VERSION}
   #  logging: *default-logging
-  #  pull_policy: always
+  #  pull_policy: $PULL_POLICY
   #  environment:
   #    TZ: $TZ
   #  network_mode: host
@@ -73,7 +73,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-phal:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
@@ -99,7 +99,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-phal-admin:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -120,7 +120,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-listener-dinkum:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
@@ -151,7 +151,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-audio:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
@@ -182,7 +182,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-core:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
@@ -212,7 +212,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-cli:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host

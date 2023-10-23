@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-gui-websocket:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host
@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-gui-shell:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
       DISPLAY: :0
@@ -98,7 +98,7 @@ services:
   #   restart: unless-stopped
   #   image: docker.io/smartgic/ovos-gui-original:${VERSION}
   #   logging: *default-logging
-  #   pull_policy: always
+  #   pull_policy: $PULL_POLICY
   #   environment:
   #     DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
   #     DISPLAY: :0
@@ -145,7 +145,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-homescreen:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     environment:
       TZ: $TZ
     network_mode: host

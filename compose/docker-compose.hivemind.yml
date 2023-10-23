@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/hivemind-listener:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     tty: true
     environment:
       TZ: $TZ
@@ -41,7 +41,7 @@ services:
     restart: unless-stopped
     image: docker.io/smartgic/hivemind-cli:${VERSION}
     logging: *default-logging
-    pull_policy: always
+    pull_policy: $PULL_POLICY
     tty: true
     environment:
       TZ: $TZ
