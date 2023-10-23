@@ -4,7 +4,7 @@ Two different methods are supported by `ovos-docker` to install Open Voice OS's 
 
 !!! danger "Slow hardware"
 
-    When running Open Voice OS on slow hardware such as Raspberry Pi 3B+, it is recommended to install skills using the *"As part of `ovos_core` container"* method in order to reduce the memory consumption.
+    When running Open Voice OS on slow hardware such as Raspberry Pi 3B+, it is recommended to install skills using the "[As part of `ovos_core` container](#as-part-of-ovos_core-container)" method in order to reduce the memory consumption.
 
 ## As part of `ovos_core` container
 
