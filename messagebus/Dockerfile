@@ -22,8 +22,8 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     else \
     pip3 install ovos-messagebus; \
     fi \
-    && rm -rf ${HOME}/.cache
+    && rm -rf "${HOME}"/.cache
 
 ENTRYPOINT ovos-messagebus
 
-WORKDIR /home/${USER}
+WORKDIR /home/"${USER}"
