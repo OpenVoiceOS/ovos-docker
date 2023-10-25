@@ -4,3 +4,6 @@ build.sh
 .cache
 *backend*
 compose/.env
+package.json
+package-lock.json
+node_modules
