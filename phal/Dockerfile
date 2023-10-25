@@ -26,7 +26,7 @@ COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-    && apt-get install -y libasound2-dev procps ddcutil build-essential python3-dev \
+    && apt-get install -y --no-install-recommends libasound2-dev procps ddcutil build-essential python3-dev \
     && if [ "${ALPHA}" == "true" ]; then \
     pip3 install -r /tmp/requirements.txt --pre; \
     else \

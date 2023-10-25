@@ -18,7 +18,7 @@ ARG USER=ovos
 USER root
 
 RUN apt-get update \
-    && apt-get install vim nano python3-dev build-essential -y \
+    && apt-get install -y --no-install-recommends vim nano python3-dev build-essential \
     && if [ "${ALPHA}" == "true" ]; then \
     pip3 install ovos-config PyYAML==6.0 ovos-skills-manager ovos-plugin-manager git+https://github.com/OpenVoiceOS/ovos-cli-client.git neon-mana-utils --pre; \
     else \

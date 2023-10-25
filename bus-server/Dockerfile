@@ -3,7 +3,7 @@ FROM debian:bookworm-slim AS build
 ARG BRANCH=master
 
 RUN apt-get update \
-    && apt-get install -y git cmake gcc g++ build-essential \
+    && apt-get install -y --no-install-recommends git cmake gcc g++ build-essential \
     && git clone https://github.com/OpenVoiceOS/ovos-bus-server.git -b $BRANCH /usr/src/ovos-bus-server
 
 WORKDIR /usr/src/ovos-bus-server/server
@@ -32,7 +32,7 @@ ARG USER=ovos
 COPY --from=build /usr/src/ovos-bus-server/server/ovos-bus-server /usr/local/bin/
 
 RUN apt-get update \
-    && apt-get install -y curl \
+    && apt-get install -y --no-install-recommends curl \
     && useradd --no-log-init $USER -m -c "Open Voice OS user" \
     && apt-get --purge autoremove -y \
     && apt-get clean \
