@@ -1,22 +1,22 @@
 # Open Voice OS running on Mac OS with Docker
 
-- [Open Voice OS running on Mac OS with Docker](#open-voice-os-running-on-mac-os-with-docker)
-  - [Limitations](#limitations)
-  - [Requirements](#requirements)
-    - [Brew](#brew)
-    - [Docker](#docker)
-    - [PulseAudio](#pulseaudio)
-  - [How to use these images](#how-to-use-these-images)
-  - [Thanks](#thanks)
-  - [Support](#support)
+* [Open Voice OS running on Mac OS with Docker](#open-voice-os-running-on-mac-os-with-docker)
+  * [Limitations](#limitations)
+  * [Requirements](#requirements)
+    * [Brew](#brew)
+    * [Docker](#docker)
+    * [PulseAudio](#pulseaudio)
+  * [How to use these images](#how-to-use-these-images)
+  * [Thanks](#thanks)
+  * [Support](#support)
 
 ## Limitations
 
 Because Open Voice OS was designed to run on Linux operating system, some limitations exist on Mac OS.
 
-- Open Voice OS GUI is not available
-- DBus is not yet supported which prevent the use of MPRIS via the `ovos_audio` container
-- Some plugins with PHAL will/could be limited to what Mac OS supports
+* Open Voice OS GUI is not available
+* DBus is not yet supported which prevent the use of MPRIS via the `ovos_audio` container
+* Some plugins with PHAL will/could be limited to what Mac OS supports
 
 ## Requirements
 
@@ -102,8 +102,8 @@ Time per period = 3.278807
 
 In case of issues, you could have a look to the PulseAudio log file.
 
-- Apple Silicon based: `cat /opt/homebrew/var/log/pulseaudio.log`
-- Intel based: `cat /usr/local/var/log/pulseaudio.log`
+* Apple Silicon based: `cat /opt/homebrew/var/log/pulseaudio.log`
+* Intel based: `cat /usr/local/var/log/pulseaudio.log`
 
 Check for lines starting with `E:`, like:
 
@@ -122,7 +122,7 @@ Thanks to [@mikejgray](https://github.com/mikejgray/) and [@rushic24](https://gi
 
 ## Support
 
-- [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
-- [Open Voice OS documentation](https://openvoiceos.github.io/community-docs/)
-- [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
-- [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)
+* [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
+* [Open Voice OS documentation](https://openvoiceos.github.io/community-docs/)
+* [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
+* [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)
