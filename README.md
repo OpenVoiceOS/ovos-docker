@@ -6,6 +6,7 @@
 [![Python version](https://img.shields.io/badge/Python-3.11-orange)](https://python.org)
 [![Chat](https://img.shields.io/matrix/openvoiceos:matrix.org)](https://matrix.to/#/#OpenVoiceOS:matrix.org)
 [![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-core)](https://hub.docker.com/r/smartgic/ovos-core)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ebeee74fb69f43b0b255416208f884de)](https://app.codacy.com/gh/OpenVoiceOS/ovos-docker/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 [![Open Voice OS logo](https://openvoiceos.org/wp-content/uploads/2021/04/ovos-egg.png)](https://openvoiceos.org/)
 
