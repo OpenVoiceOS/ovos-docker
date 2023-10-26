@@ -19,6 +19,6 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     else \
     pip3 install ovos-skill-personal; \
     fi \
-    && rm -rf ${HOME}/.cache
+    && rm -rf "${HOME}/.cache"
 
 ENTRYPOINT ["ovos-skill-launcher", "ovos-skill-personal.OpenVoiceOS"]

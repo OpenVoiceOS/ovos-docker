@@ -15,10 +15,10 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install git+https://github.com/JarbasSkills/skill-icanhazdadjokes.git --pre; \
+    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-icanhazdadjokes.git --pre; \
     else \
     pip3 install ovos-skill-jokes; \
     fi \
-    && rm -rf ${HOME}/.cache
+    && rm -rf "${HOME}/.cache"
 
 ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-icanhazdadjokes.openvoiceos"]

@@ -20,6 +20,6 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     else \
     pip3 install neon-skill-alerts; \
     fi \
-    && rm -rf ${HOME}/.cache
+    && rm -rf "${HOME}/.cache"
 
 ENTRYPOINT ["ovos-skill-launcher", "skill-alerts.neongeckocom"]
