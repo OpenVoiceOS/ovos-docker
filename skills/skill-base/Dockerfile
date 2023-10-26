@@ -29,7 +29,6 @@ RUN adduser --disabled-password $USER \
     pip3 install ovos-core[lgpl] ovos-translate-server-plugin; \
     fi \
     && chown ${USER}:${USER} -R /home/${USER} \
-    && apk del .build-deps \
     && rm -rf /home/${USER}/.cache
 
 USER $USER
