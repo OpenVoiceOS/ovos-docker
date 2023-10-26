@@ -35,7 +35,7 @@ RUN apt-get update \
     && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_LIBDIR=lib -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
     && make -j $(nproc) \
     && make install \
-    && useradd --no-log-init $USER -m -c "OpenVoiceOS user" \
+    && useradd --no-log-init "$USER" -m -c "OpenVoiceOS user" \
     && mkdir -p /home/"${USER}"/.local/share/OpenVoiceOS/OvosShell /home/"${USER}"/.cache/gui_files \
     && chown "${USER}":"${USER}" -R /home/"${USER}" \
     && apt-get --purge remove -y git-core build-essential cmake gettext pkg-config pkg-kde-tools \
