@@ -23,9 +23,9 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     else \
     pip install ovos-plugin-manager[offline] ovos-gui ovos-gui-plugin-shell-companion ovos-backend-client; \
     fi \
-    && mkdir ${HOME}/.cache/ovos_gui_file_server \
-    && rm -rf ${HOME}/.cache/pip
+    && mkdir "${HOME}/.cache/ovos_gui_file_server" \
+    && rm -rf "${HOME}/.cache/pip"
 
 ENTRYPOINT ovos-gui-service
 
-WORKDIR /home/${USER}
+WORKDIR "/home/${USER}"
