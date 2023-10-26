@@ -28,4 +28,4 @@ RUN if [ "${ALPHA}" == "true" ]; then \
 
 ENTRYPOINT ovos-gui-service
 
-WORKDIR "/home/${USER}"
+WORKDIR /home/"${USER}"
