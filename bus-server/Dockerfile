@@ -3,7 +3,7 @@ FROM debian:bookworm-slim AS build
 ARG BRANCH=master
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git cmake gcc g++ build-essential \
+    && apt-get install -y --no-install-recommends git cmake gcc g++ build-essential ca-certificates \
     && git clone https://github.com/OpenVoiceOS/ovos-bus-server.git -b $BRANCH /usr/src/ovos-bus-server
 
 WORKDIR /usr/src/ovos-bus-server/server
