@@ -4,7 +4,7 @@
 
 On modern Linux distribution, [PipeWire](https://en.wikipedia.org/wiki/PipeWire) now handles the sound stack on the system.
 
-!!! info "Souns server auto-detection"
+!!! info "Sound server auto-detection"
 
     `ovos-docker` supports both native PulseAudio and PipeWire, the containers will automatically detect which sound server is running on the operating system.
 
