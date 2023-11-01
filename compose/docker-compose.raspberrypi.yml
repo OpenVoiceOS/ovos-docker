@@ -2,19 +2,37 @@
 version: "3.9"
 
 services:
+  ovos_messagebus:
+    healthcheck:
+      disable: true
+
   ovos_phal:
+    healthcheck:
+      disable: true
     devices:
       - /dev/gpiomem
     group_add:
       - "$GPIO_GID"
 
   ovos_phal_admin:
+    healthcheck:
+      disable: true
     devices:
       - /dev/gpiomem
     group_add:
       - "$GPIO_GID"
 
+  ovos_listener:
+    healthcheck:
+      disable: true
+
+  ovos_audio:
+    healthcheck:
+      disable: true
+
   ovos_core:
+    healthcheck:
+      disable: true
     devices:
       - /dev/gpiomem
     group_add:
