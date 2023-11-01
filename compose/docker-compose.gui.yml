@@ -37,7 +37,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
 
   ovos_gui:
     <<: *podman
@@ -81,11 +81,11 @@ services:
       - ovos_gui_files:/home/${OVOS_USER}/.cache/gui_files
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
       ovos_gui_websocket:
-        condition: service_healthy
+        condition: service_started
       ovos_phal:
-        condition: service_healthy
+        condition: service_started
 
   ########################
   # Uncomment this service if you want to use the origial GUI
@@ -132,11 +132,11 @@ services:
   #     - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
   # depends_on:
   #   ovos_messagebus:
-  #     condition: service_healthy
+  #     condition: service_started
   #   ovos_gui_websocket:
-  #     condition: service_healthy
+  #     condition: service_started
   #   ovos_phal:
-  #     condition: service_healthy
+  #     condition: service_started
 
   ovos_skill_homescreen:
     <<: *podman
@@ -154,4 +154,4 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started

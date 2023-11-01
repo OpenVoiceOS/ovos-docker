@@ -31,7 +31,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_weather:
     <<: *podman
@@ -49,7 +49,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_volume:
     <<: *podman
@@ -67,7 +67,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_date_time:
     <<: *podman
@@ -85,7 +85,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_stop:
     <<: *podman
@@ -103,7 +103,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_personal:
     <<: *podman
@@ -121,7 +121,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_fallback_unknown:
     <<: *podman
@@ -139,7 +139,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_hello_world:
     <<: *podman
@@ -157,7 +157,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_alerts:
     <<: *podman
@@ -175,7 +175,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_wolfie:
     <<: *podman
@@ -193,7 +193,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_jokes:
     <<: *podman
@@ -211,7 +211,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   ovos_skill_easter_eggs:
     <<: *podman
@@ -229,4 +229,4 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started

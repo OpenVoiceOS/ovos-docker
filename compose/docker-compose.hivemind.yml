@@ -32,7 +32,7 @@ services:
       - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
 
   hivemind_cli:
     <<: *podman
@@ -51,4 +51,4 @@ services:
       - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
     depends_on:
       hivemind_listener:
-        condition: service_healthy
+        condition: service_started

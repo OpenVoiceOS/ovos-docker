@@ -90,7 +90,7 @@ services:
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
 
   ovos_phal_admin:
     <<: *podman
@@ -111,7 +111,7 @@ services:
       - /dev:/dev:ro
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
 
   ovos_listener:
     <<: *podman
@@ -140,9 +140,9 @@ services:
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
       ovos_phal:
-        condition: service_healthy
+        condition: service_started
 
   ovos_audio:
     <<: *podman
@@ -171,9 +171,9 @@ services:
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
       ovos_phal:
-        condition: service_healthy
+        condition: service_started
 
   ovos_core:
     <<: *podman
@@ -201,9 +201,9 @@ services:
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
       ovos_phal:
-        condition: service_healthy
+        condition: service_started
 
   ovos_cli:
     <<: *podman
@@ -221,4 +221,4 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
