@@ -28,8 +28,8 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:z
-      - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
+      - ${HIVEMIND_CONFIG_FOLDER}:/home/${HIVEMIND_USER}/.config/hivemind:z
+      - ${HIVEMIND_SHARE_FOLDER}:/home/${HIVEMIND_USER}/.local/share/hivemind:z
     depends_on:
       ovos_core:
         condition: service_started
@@ -47,8 +47,8 @@ services:
       TZ: $TZ
     network_mode: host
     volumes:
-      - ${HIVEMIND_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/hivemind:z
-      - ${HIVEMIND_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/hivemind:z
+      - ${HIVEMIND_CONFIG_FOLDER}:/home/${HIVEMIND_USER}/.config/hivemind:z
+      - ${HIVEMIND_SHARE_FOLDER}:/home/${HIVEMIND_USER}/.local/share/hivemind:z
     depends_on:
       hivemind_listener:
         condition: service_started
