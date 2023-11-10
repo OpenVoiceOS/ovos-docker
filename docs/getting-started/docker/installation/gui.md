@@ -1,8 +1,6 @@
 # Install the Open Voice OS GUI
 
-!!! warning "Not fully functional"
-
-    The GUI container still under heavy development mostly because of the skill's [QML](https://en.wikipedia.org/wiki/QML) files which are not been shared between `ovos_gui` container and `ovos_skill_*` containers.
+!!! warning "Linux only"
 
     The GUI is currently only available on Linux operating system, not on Mac OS or Windows.
 
