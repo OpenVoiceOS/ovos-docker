@@ -39,6 +39,7 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
 In order to allow only the `ovos_gui` container to access to the [X server](https://en.wikipedia.org/wiki/X_Window_System), you will have to allow the container *(based on its hostname)* to connect to the `X` session.
 
 ```bash
+export DISPLAY=":0"
 xhost +local:ovos_gui
 ```
 
