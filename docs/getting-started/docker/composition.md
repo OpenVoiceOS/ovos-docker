@@ -33,6 +33,7 @@ Some variables might need to be tuned to match your setup such as the `TZ`, `XDG
 | `GPIO_GID`               | `997`               | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                                                                           | `gpio` group ID on Raspberry Pi   |
 | `HIVEMIND_CONFIG_FOLDER` | `~/hivemind/config` | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | HiveMind configuration directory  |
 | `HIVEMIND_SHARE_FOLDER`  | `~/hivemind/share`  | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | HiveMind shared directory         |
+| `HIVEMIND_USER`          | `hivemind`          | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | User running in the container     |
 | `OVOS_CONFIG_FOLDER`     | `~/ovos/config`     | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS configureation directory     |
 | `OVOS_SHARE_FOLDER`      | `~/ovos/share`      | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS shared directory             |
 | `OVOS_USER`              | `ovos`              | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | User running in the container     |
@@ -43,9 +44,9 @@ Some variables might need to be tuned to match your setup such as the `TZ`, `XDG
 | `VERSION`                | `alpha`             | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Container image tag to pull       |
 | `XDG_RUNTIME_DIR`        | `/run/user/1000`    | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" }                                                  | Path to XDG runtime directory     |
 
-!!! bug "Do not change `OVOS_USER`"
+!!! bug "Do not change `OVOS_USER` or `HIVEMIND_USER`"
 
-    The `OVOS_USER` variable should not be changed except if you build your own container images which a different one.
+    The `OVOS_USER` and `HIVEMIND_USER` variables should not be changed except if you build your own container images which a different one.
 
 ### How to get the GID?
 
