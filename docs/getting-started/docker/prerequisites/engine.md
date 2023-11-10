@@ -18,7 +18,7 @@ Either you choose to install [Docker](https://www.docker.com/) or [Podman](https
 
 !!! warning "Minimum required versions"
 
-    In order to get the latest features supported by [ovos-docker](https://github.com/OpenVoiceOS/ovos-docker/), please make sure to install a recent version of Docker *(`>= 24.x.x`)* or Podman *(`>= 4.x.x`)* for your operating system.
+    In order to get the latest features supported by [ovos-docker](https://github.com/OpenVoiceOS/ovos-docker/), please make sure to install a recent version of Docker *(`>= 24.x.x`)* or Podman *(`>= 4.3.x`)* for your operating system.
 
 ### Don't be `root`, be a user
 
