@@ -67,6 +67,7 @@ services:
       XDG_RUNTIME_DIR: $XDG_RUNTIME_DIR
     network_mode: host
     devices:
+      - /dev/input
       - /dev/dri
       - /dev/snd
     volumes:
@@ -119,6 +120,7 @@ services:
   #     XDG_RUNTIME_DIR: $XDG_RUNTIME_DIR
   #   network_mode: host
   #   devices:
+  #     - /dev/input
   #     - /dev/dri
   #     - /dev/snd
   #   volumes:
