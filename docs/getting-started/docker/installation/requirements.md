@@ -15,6 +15,16 @@ The `~/hivemind` directory is only required if you plan to use [HiveMind](../../
   cd ~/ovos-docker/compose
   ```
 
+## Enable user manager
+
+Because some containers require `/run/user/1000` to be mounted, [systemd](https://en.wikipedia.org/wiki/Systemd) should be instruct to log the user during the boot process and mak`/run/user/1000` directory available before the containers start.
+
+=== "Linux"
+
+    ```shell
+    sudo loginctl enable-linger $USER
+    ```
+
 ## Set the environment file
 
 The `composer` requires an environment file in order to deploy the services and volumes with the correct settings for your setup.
