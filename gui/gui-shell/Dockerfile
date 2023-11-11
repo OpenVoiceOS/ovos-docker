@@ -50,6 +50,8 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf $OVOS_DIR_SHELL $MYCROFT_DIR_GUI $LOTTIE_DIR
 
-USER ovos
+USER "$USER"
 
 ENTRYPOINT ovos-shell
+
+WORKDIR /home/${USER}

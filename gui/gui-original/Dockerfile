@@ -47,3 +47,4 @@ USER "$USER"
 
 ENTRYPOINT ovos-gui-app
 
+WORKDIR /home/${USER}
