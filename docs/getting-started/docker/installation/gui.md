@@ -51,7 +51,7 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
 
 !!! tip
 
-  You can skip this section is your are using EGLFS.
+    You can skip this section is your are using EGLFS.
 
 In order to allow only the `ovos_gui` container to access to the X or Wayland display server, you will have to allow the container *(based on its hostname)* to connect to the display session.
 
