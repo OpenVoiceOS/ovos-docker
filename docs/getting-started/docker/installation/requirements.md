@@ -9,7 +9,7 @@ The `~/hivemind` directory is only required if you plan to use [HiveMind](../../
 === "All"
 
   ```shell
-  git clone https://github.com/OpenVoiceOS/ovos-docker.git -b dev
+  git clone https://github.com/OpenVoiceOS/ovos-docker.git
   mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
   chown ${USER}:${USER} -R ~/ovos ~/hivemind
   cd ~/ovos-docker/compose
@@ -33,11 +33,37 @@ Because some containers require `/run/user/1000` to be mounted, [systemd](https:
 
 ## Set the environment file
 
+!!! danger "`.env` file is a strong requirement"
+
+    Please make sure to read and understand this section as if you don't the deployment migth fail.
+
+
 The `composer` requires an environment file in order to deploy the services and volumes with the correct settings for your setup.
 
 !!! info "`alpha` version by default"
 
     As mentioned [in this section](../composition.md#environment-files), the current default `VERSION` *(tag)* is `alpha`.
+
+The example files start with a `.` *(dot)* which means they are hidden, use the `ls -a` command to list all the files included the hidden ones.
+
+Below is an example of `.env` for Linux *(not Raspberry Pi)*, please read [this section](../composition.md#environment-files) for more details about what these variables do.
+
+```ini title=".env"
+DISPLAY=:0
+HIVEMIND_CONFIG_FOLDER=~/hivemind/config
+HIVEMIND_SHARE_FOLDER=~/hivemind/share
+HIVEMIND_USER=hivemind
+INPUT_GID=102
+OVOS_CONFIG_FOLDER=~/ovos/config
+OVOS_SHARE_FOLDER=~/ovos/share
+OVOS_USER=ovos
+PULL_POLICY=always
+TMP_FOLDER=~/ovos/tmp
+TZ=America/Montreal
+VERSION=alpha
+VIDEO_GID=44
+XDG_RUNTIME_DIR=/run/user/1000
+```
 
 === "Raspberry Pi"
 
