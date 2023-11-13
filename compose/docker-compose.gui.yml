@@ -49,6 +49,7 @@ services:
     pull_policy: $PULL_POLICY
     environment:
       DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
+      DISPLAY: $DISPLAY
       PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
       QML2_IMPORT_PATH: /usr/lib/qml
