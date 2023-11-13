@@ -1761,8 +1761,8 @@
 <h2 id="xhost-and-display-servers">xhost and display servers<a class="headerlink" href="#xhost-and-display-servers" title="Permanent link">¶</a></h2>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-</div>
 <p>You can skip this section is your are using EGLFS.</p>
+</div>
 <p>In order to allow only the <code>ovos_gui</code> container to access to the X or Wayland display server, you will have to allow the container <em>(based on its hostname)</em> to connect to the display session.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="s2">":0"</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>xhost<span class="w"> </span>+local:ovos_gui
