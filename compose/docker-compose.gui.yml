@@ -70,6 +70,7 @@ services:
       - /dev/dri
       - /dev/snd
     group_add:
+      - $INPUT_GID
       - $VIDEO_GID
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
