@@ -165,11 +165,11 @@ nav:
           - Images and volumes: getting-started/docker/images.md
           - Composition: getting-started/docker/composition.md
           - Install Open Voice OS:
-              - Initial requirements: getting-started/docker/installation/requirements.md
-              - Initial configuration: getting-started/docker/installation/configuration.md
-              - Install core components: getting-started/docker/installation/basic.md
-              - Install OVOS skills: getting-started/docker/installation/skills.md
-              - Install graphical interface: getting-started/docker/installation/gui.md
+              - Requirements: getting-started/docker/installation/requirements.md
+              - Configuration: getting-started/docker/installation/configuration.md
+              - Core components: getting-started/docker/installation/basic.md
+              - Skills: getting-started/docker/installation/skills.md
+              - GUI: getting-started/docker/installation/gui.md
           - Security:
               - System hardening: getting-started/docker/security/hardening.md
               - HiveMind: getting-started/docker/security/hivemind.md
