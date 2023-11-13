@@ -60,7 +60,7 @@ export DISPLAY=":0"
 xhost +local:ovos_gui
 ```
 
-This command is not permanent, when your operating system will reboot you will have to run the command again. To make it permanent Systemd should be leveraged as a user service.
+This command is not permanent, when your operating system will reboot you will have to run the command again. To make it permanent systemd should be leveraged as a user service.
 
 === "Raspberry Pi"
 
@@ -93,7 +93,7 @@ RestartSec=5s
 WantedBy=default.target
 ```
 
-Enable and start the new `xhost.service` Systemd service
+Enable and start the new `xhost.service` systemd service.
 
 === "Raspberry Pi"
 
