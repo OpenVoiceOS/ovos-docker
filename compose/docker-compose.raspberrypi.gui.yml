@@ -7,3 +7,4 @@ services:
       - /dev/vchiq
     group_add:
       - $RENDER_GID
+      - $VIDEO_GID
