@@ -36,17 +36,6 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
 
 ## GUI services deployment
 
-In order to allow only the `ovos_gui` container to access to the [X server](https://en.wikipedia.org/wiki/X_Window_System), you will have to allow the container *(based on its hostname)* to connect to the `X` session.
-
-```bash
-export DISPLAY=":0"
-xhost +local:ovos_gui
-```
-
-This command is not permanent, when your operating system will reboot you will have to run the command again.
-
-The `xhost` command is part of the `x11-xserver-utils` package on Debian based distributions such as Raspberry Pi OS.
-
 !!! note "Podman users :muscle:"
 
     If you are running Podman instead of Docker, replace `docker compose` with `podmand-compose`.

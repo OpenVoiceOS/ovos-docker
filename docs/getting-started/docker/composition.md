@@ -42,6 +42,7 @@ Some variables might need to be tuned to match your setup such as the `TZ`, `XDG
 | `TMP_FOLDER`             | `~/ovos/tmp`        | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS temporary directory          |
 | `TZ`                     | `America/Montreal`  | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Timezone to set in the container  |
 | `VERSION`                | `alpha`             | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Container image tag to pull       |
+| `VIDEO_GID`              | `44`                | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                           | `video` group ID                  |
 | `XDG_RUNTIME_DIR`        | `/run/user/1000`    | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" }                                                  | Path to XDG runtime directory     |
 
 !!! bug "Do not change `OVOS_USER` or `HIVEMIND_USER`"
@@ -57,6 +58,13 @@ The `getent` command could be used in order to get the `GID` of `gpio` and `rend
     ```shell
     getent group gpio
     getent group render
+    getent group video    
+    ```
+
+=== "Linux"
+
+    ```shell
+    getent group video
     ```
 
 ### How to get the UID?
