@@ -19,6 +19,12 @@ The `~/hivemind` directory is only required if you plan to use [HiveMind](../../
 
 Because some containers require `/run/user/1000` to be mounted, [systemd](https://en.wikipedia.org/wiki/Systemd) should be instruct to log the user during the boot process and mak`/run/user/1000` directory available before the containers start.
 
+=== "Raspberry Pi"
+
+    ```shell
+    sudo loginctl enable-linger $USER
+    ```
+
 === "Linux"
 
     ```shell
