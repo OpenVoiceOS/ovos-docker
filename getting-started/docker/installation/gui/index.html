@@ -1139,6 +1139,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#xhost-and-display-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xhost and display servers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#gui-services-deployment" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1581,6 +1592,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#xhost-and-display-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xhost and display servers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#gui-services-deployment" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1699,6 +1721,17 @@
 <p class="admonition-title">Linux only</p>
 <p>The GUI is currently only available on Linux operating system, not on Mac OS or Windows.</p>
 </div>
+<p>The Open Voice OS GUI supports two types of system execution:</p>
+<ul>
+<li>Using <a href="https://en.wikipedia.org/wiki/X_Window_System">X</a> or <a href="https://en.wikipedia.org/wiki/Wayland_(protocol)">Wayland</a> display servers</li>
+<li>Using <a href="https://doc.qt.io/qt-6/embedded-linux.html#eglfs">EGLFS</a> which doesn't require any display server which is perfect for headless installation</li>
+</ul>
+<p>When using EGLFS, the <code>DISPLAY</code> variable from the <code>.env</code> <a href="../../composition/#environment-files">composition environment file</a> must be removed or commented as if present the X or Wayland display servers will be tried first and result in an <code>ovos_gui</code> container in error.</p>
+<div class="admonition question">
+<p class="admonition-title">Hardware accelerated on Raspberry Pi 4 and 5 only</p>
+<p>Raspberry Pi 4 and 5 will leverage the GPU hardware acceleration which will provide a smoother experience.</p>
+<p><strong>If not running on a Raspberry Pi 4 or 5 then the CPU might be used to render the GUI which will result in a high CPU consumption and a poor exprience.</strong></p>
+</div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
 <p>The <code>ovos-gui-messagebus</code> component must be configured in order to receive the QML files from the skill containers. Because of these file transfers, the <code>ovos-message-bus</code> component must be configured to allow bigger payload.</p>
 <div class="language-json highlight"><span class="filename">~/ovos/config/mycroft.conf</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
@@ -1725,27 +1758,76 @@
 </span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="p">}</span>
 </span></code></pre></div>
+<h2 id="xhost-and-display-servers">xhost and display servers<a class="headerlink" href="#xhost-and-display-servers" title="Permanent link">¶</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+</div>
+<p>You can skip this section is your are using EGLFS.</p>
+<p>In order to allow only the <code>ovos_gui</code> container to access to the X or Wayland display server, you will have to allow the container <em>(based on its hostname)</em> to connect to the display session.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="s2">":0"</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>xhost<span class="w"> </span>+local:ovos_gui
+</span></code></pre></div>
+<p>This command is not permanent, when your operating system will reboot you will have to run the command again. To make it permanent Systemd should be leveraged as a user service.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Raspberry Pi</label><label for="__tabbed_1_2">Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/systemd/user
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/systemd/user
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p>Create the <code>xhost.service</code> unit file into the <code>~/.config/systemd/user</code> directory.</p>
+<div class="language-ini highlight"><span class="filename">~/.config/systemd/user/xhost.service</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[Unit]</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Allow ovos_gui container to use X from user session</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">[Service]</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="na">Environment</span><span class="o">=</span><span class="s">"DISPLAY=:0"</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/xhost +local:ovos_gui</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="na">ExecStop</span><span class="o">=</span><span class="s">/usr/bin/xhost -local:ovos_gui</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="na">RemainAfterExit</span><span class="o">=</span><span class="s">yes</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="na">RestartSec</span><span class="o">=</span><span class="s">5s</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="k">[Install]</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">default.target</span>
+</span></code></pre></div>
+<p>Enable and start the new <code>xhost.service</code> Systemd service</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Raspberry Pi</label><label for="__tabbed_2_2">Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>xhost.service
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>start<span class="w"> </span>xhost.service
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>xhost.service
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>start<span class="w"> </span>xhost.service
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p>The <code>xhost</code> command is part of the <code>x11-xserver-utils</code> package on Debian based distributions such as Raspberry Pi OS.</p>
 <h2 id="gui-services-deployment">GUI services deployment<a class="headerlink" href="#gui-services-deployment" title="Permanent link">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Podman users <img alt="💪" class="twemoji" src="../../../../assets/external/cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4aa.svg" title=":muscle:"></p>
 <p>If you are running Podman instead of Docker, replace <code>docker compose</code> with <code>podmand-compose</code>.</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Raspberry Pi</label><label for="__tabbed_1_2">Linux</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Raspberry Pi</label><label for="__tabbed_3_2">Linux</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--project-name<span class="w"> </span>ovos<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.gui.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.gui.yml<span class="w"> </span>up<span class="w"> </span>--detach
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--project-name<span class="w"> </span>ovos<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.gui.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.gui.yml<span class="w"> </span>up<span class="w"> </span>--detach
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--project-name<span class="w"> </span>ovos<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.gui.yml<span class="w"> </span>up<span class="w"> </span>--detach
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--project-name<span class="w"> </span>ovos<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.gui.yml<span class="w"> </span>up<span class="w"> </span>--detach
 </span></code></pre></div>
 </div>
 </div>
-</div>
-<div class="admonition question">
-<p class="admonition-title">Hardware accelerated on Raspberry Pi 4 only</p>
-<p>Raspberry Pi 4 will leverage the GPU hardware acceleration which will provide a smoother experience.</p>
-<p><strong>If not running on a Raspberry Pi 4 then the CPU will be used to render the GUI which will result in a big CPU consumption and a poor exprience.</strong></p>
 </div></div>
 
 
