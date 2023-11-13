@@ -30,10 +30,12 @@ Some variables might need to be tuned to match your setup such as the `TZ`, `XDG
 
 | Variable                 | Default | Platforms                                                                                                                                                                                                                           | Description |
 | ------------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `DISPLAY`                | `:0`                | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                           | Display used by X or Wayland      |
 | `GPIO_GID`               | `997`               | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                                                                           | `gpio` group ID on Raspberry Pi   |
 | `HIVEMIND_CONFIG_FOLDER` | `~/hivemind/config` | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | HiveMind configuration directory  |
 | `HIVEMIND_SHARE_FOLDER`  | `~/hivemind/share`  | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | HiveMind shared directory         |
 | `HIVEMIND_USER`          | `hivemind`          | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | User running in the container     |
+| `INPUT_GID`              | `102`               | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                           | `input` group ID                  |
 | `OVOS_CONFIG_FOLDER`     | `~/ovos/config`     | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS configureation directory     |
 | `OVOS_SHARE_FOLDER`      | `~/ovos/share`      | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS shared directory             |
 | `OVOS_USER`              | `ovos`              | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | User running in the container     |
@@ -58,13 +60,15 @@ The `getent` command could be used in order to get the `GID` of `gpio` and `rend
     ```shell
     getent group gpio
     getent group render
-    getent group video    
+    getent group video
+    getent group input
     ```
 
 === "Linux"
 
     ```shell
     getent group video
+    getent group input
     ```
 
 ### How to get the UID?
