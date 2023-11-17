@@ -72,6 +72,7 @@ services:
       - /dev/snd
     group_add:
       - $INPUT_GID
+      - $RENDER_GID      
       - $VIDEO_GID
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
@@ -127,7 +128,9 @@ services:
   #     - /dev/dri
   #     - /dev/snd
   #   group_add:
-  #     - $VIDEO_GID
+      # - $INPUT_GID
+      # - $RENDER_GID      
+      # - $VIDEO_GID
   #   volumes:
   #     - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
   #     - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
