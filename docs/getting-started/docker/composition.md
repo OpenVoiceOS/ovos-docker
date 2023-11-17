@@ -24,7 +24,7 @@ A Docker or Podman environment file contains lines about environment variables t
 | Environment file   | Platforms                                                                                                                                                 | Description                                    |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `.env`             | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Set of variables used by the composition files |
-| `.env-raspberrypi` | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                             | Add `GPIO_GID` and `RENDER_GID` variables      |
+| `.env-raspberrypi` | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                             | Add `GPIO_GID` variable                        |
 
 Some variables might need to be tuned to match your setup such as the `TZ`, `XDG_RUNTIME_DIR`, etc...
 
@@ -40,7 +40,7 @@ Some variables might need to be tuned to match your setup such as the `TZ`, `XDG
 | `OVOS_SHARE_FOLDER`      | `~/ovos/share`      | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS shared directory             |
 | `OVOS_USER`              | `ovos`              | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | User running in the container     |
 | `PULL_POLICY`            | `always`            | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Policy to pull Docker images      |
-| `RENDER_GID`             | `106`               | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                                                                           | `render` group ID on Raspberry Pi |
+| `RENDER_GID`             | `106`               | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                           | `render` group ID                 |
 | `TMP_FOLDER`             | `~/ovos/tmp`        | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS temporary directory          |
 | `TZ`                     | `America/Montreal`  | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Timezone to set in the container  |
 | `VERSION`                | `alpha`             | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Container image tag to pull       |
@@ -53,7 +53,7 @@ Some variables might need to be tuned to match your setup such as the `TZ`, `XDG
 
 ### How to get the GID?
 
-The `getent` command could be used in order to get the `GID` of `gpio` and `render` groups on Raspberry Pi OS.
+The `getent` command could be used in order to get the `GID` of `gpio` and `render` groups.
 
 === "Raspberry Pi"
 
@@ -67,6 +67,7 @@ The `getent` command could be used in order to get the `GID` of `gpio` and `rend
 === "Linux"
 
     ```shell
+    getent group render    
     getent group video
     getent group input
     ```
