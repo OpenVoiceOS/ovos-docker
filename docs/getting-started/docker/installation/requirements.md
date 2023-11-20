@@ -9,7 +9,7 @@ The `~/hivemind` directory is only required if you plan to use [HiveMind](../../
 === "All"
 
   ```shell
-  git clone https://github.com/OpenVoiceOS/ovos-docker.git
+  git clone https://github.com/OpenVoiceOS/ovos-docker.git ~/ovos-docker
   mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
   chown ${USER}:${USER} -R ~/ovos ~/hivemind
   cd ~/ovos-docker/compose
@@ -17,7 +17,7 @@ The `~/hivemind` directory is only required if you plan to use [HiveMind](../../
 
 ## Enable user manager
 
-Because some containers require `/run/user/1000` to be mounted, [systemd](https://en.wikipedia.org/wiki/Systemd) should be instruct to log the user during the boot process and mak`/run/user/1000` directory available before the containers start.
+Because some containers require `/run/user/1000` to be mounted, [systemd](https://en.wikipedia.org/wiki/Systemd) should be instructed to log the user during the boot process and make `/run/user/1000` directory available before the containers start.
 
 === "Raspberry Pi"
 
@@ -35,7 +35,7 @@ Because some containers require `/run/user/1000` to be mounted, [systemd](https:
 
 !!! danger "`.env` file is a strong requirement"
 
-    Please make sure to read and understand this section as if you don't the deployment migth fail.
+    Please make sure to read and understand this section as if you don't then the deployment migth fail.
 
 
 The `composer` requires an environment file in order to deploy the services and volumes with the correct settings for your setup.

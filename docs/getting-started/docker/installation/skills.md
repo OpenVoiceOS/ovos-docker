@@ -34,7 +34,7 @@ The main advantage of this method is the simplicity **but** the downside will be
 
 The second method is to leverage the [ovos-workshop](../../../about/glossary/components.md#ovos-workshop) component by running a skill as standalone, it means the skill will not be part of `ovos_core` container but it will be running inside its own container.
 
-The main advantage is that each skill are isolated which provide more flexibility about Python dependencies *(libraries)*, packages. It is easier to update and more secure **but** the downside will be that more system resources will be consumed and a container image has to be built for each skill.
+The main advantage is that each skill is isolated which provide more flexibility about Python dependencies *(libraries)*, packages. It is easier to update and more secure **but** the downside will be that more system resources will be consumed and a container image has to be built for each skill.
 
 !!! note "Podman users :muscle:"
 
