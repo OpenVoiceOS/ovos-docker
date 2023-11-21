@@ -75,7 +75,7 @@ services:
     logging: *default-logging
     pull_policy: $PULL_POLICY
     environment:
-      PULSE_SERVER: ${PULSE_SERVER}
+      PULSE_SERVER: /mnt/wslg/PulseServer
       TZ: $TZ
     network_mode: host
     volumes:
@@ -116,7 +116,7 @@ services:
     logging: *default-logging
     pull_policy: $PULL_POLICY
     environment:
-      PULSE_SERVER: ${PULSE_SERVER}
+      PULSE_SERVER: /mnt/wslg/PulseServer
       TZ: $TZ
     network_mode: host
     volumes:
@@ -142,7 +142,7 @@ services:
     pull_policy: $PULL_POLICY
     environment:
       DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
-      PULSE_SERVER: ${PULSE_SERVER}
+      PULSE_SERVER: /mnt/wslg/PulseServer
       TZ: $TZ
     network_mode: host
     volumes:
@@ -166,7 +166,7 @@ services:
     logging: *default-logging
     pull_policy: $PULL_POLICY
     environment:
-      PULSE_SERVER: ${PULSE_SERVER}
+      PULSE_SERVER: /mnt/wslg/PulseServer
       TZ: $TZ
     network_mode: host
     volumes:
