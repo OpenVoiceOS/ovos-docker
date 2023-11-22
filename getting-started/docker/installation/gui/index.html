@@ -1718,8 +1718,8 @@
 
 <div><h1 id="install-the-open-voice-os-gui">Install the Open Voice OS GUI<a class="headerlink" href="#install-the-open-voice-os-gui" title="Permanent link">¶</a></h1>
 <div class="admonition warning">
-<p class="admonition-title">Linux only</p>
-<p>The GUI is currently only available on Linux operating system, not on Mac OS or Windows.</p>
+<p class="admonition-title">For Linux eyes only</p>
+<p>The GUI is currently available only on Linux operating system, not on Mac OS or Windows.</p>
 </div>
 <p>The Open Voice OS GUI supports two types of system execution:</p>
 <ul>
@@ -1728,9 +1728,9 @@
 </ul>
 <p>When using EGLFS, the <code>DISPLAY</code> variable from the <code>.env</code> <a href="../../composition/#environment-files">composition environment file</a> must be removed or commented as if present the X or Wayland display servers will be tried first and result in an <code>ovos_gui</code> container in error.</p>
 <div class="admonition question">
-<p class="admonition-title">Hardware accelerated on Raspberry Pi 4 and 5 only</p>
+<p class="admonition-title">Hardware accelerated on Raspberry Pi 4 and 5</p>
 <p>Raspberry Pi 4 and 5 will leverage the GPU hardware acceleration which will provide a smoother experience.</p>
-<p><strong>If not running on a Raspberry Pi 4 or 5 then the CPU might be used to render the GUI which will result in a high CPU consumption and a poor exprience.</strong></p>
+<p><strong>If not running on a Raspberry Pi 4 or 5 then the CPU might be used to render the GUI which will result in a high CPU consumption and a poor user exprience.</strong></p>
 </div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
 <p>The <code>ovos-gui-messagebus</code> component must be configured in order to receive the QML files from the skill containers. Because of these file transfers, the <code>ovos-message-bus</code> component must be configured to allow bigger payload.</p>
@@ -1851,7 +1851,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 13, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 22, 2023</span>
   </span>
 
     
