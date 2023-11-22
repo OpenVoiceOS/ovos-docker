@@ -6,6 +6,10 @@
 
 Open Voice OS is a sofisticated piece of software which has several [components](../../about/glossary/components.md). These components have been split into containers to provide a better isolation and a [microservices](https://en.wikipedia.org/wiki/Microservices) approach.
 
+!!! info "GUI images size"
+
+    The GUI container images are larger than the other images as they need many QT libraries and [GStreamer](https://en.wikipedia.org/wiki/GStreamer) plugins in order to provide all the features supported by the voice assistant.
+
 ## Supported CPU architectures
 
 Container images could be used for different CPU architectures using the [multi-platform images](https://docs.docker.com/build/building/multi-platform/) feature.

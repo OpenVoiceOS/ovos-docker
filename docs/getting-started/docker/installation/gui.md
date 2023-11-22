@@ -1,8 +1,8 @@
 # Install the Open Voice OS GUI
 
-!!! warning "Linux only"
+!!! warning "For Linux eyes only"
 
-    The GUI is currently only available on Linux operating system, not on Mac OS or Windows.
+    The GUI is currently available only on Linux operating system, not on Mac OS or Windows.
 
 The Open Voice OS GUI supports two types of system execution:
 
@@ -11,11 +11,11 @@ The Open Voice OS GUI supports two types of system execution:
 
 When using EGLFS, the `DISPLAY` variable from the `.env` [composition environment file](../composition.md#environment-files) must be removed or commented as if present the X or Wayland display servers will be tried first and result in an `ovos_gui` container in error.
 
-!!! question "Hardware accelerated on Raspberry Pi 4 and 5 only"
+!!! question "Hardware accelerated on Raspberry Pi 4 and 5"
 
     Raspberry Pi 4 and 5 will leverage the GPU hardware acceleration which will provide a smoother experience.
 
-    **If not running on a Raspberry Pi 4 or 5 then the CPU might be used to render the GUI which will result in a high CPU consumption and a poor exprience.**
+    **If not running on a Raspberry Pi 4 or 5 then the CPU might be used to render the GUI which will result in a high CPU consumption and a poor user exprience.**
 
 ## Configuration
 
