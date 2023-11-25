@@ -4,5 +4,6 @@ ovos-PHAL-plugin-system
 ovos-PHAL-plugin-ipgeo
 ovos-plugin-manager
 RPi.GPIO
+smbus2
 spidev
 wheel
