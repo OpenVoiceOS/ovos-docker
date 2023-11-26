@@ -16,7 +16,7 @@ cd $skills_directory || exit
 # Loop over each skills into the skills directory and install
 # Python requirements if a requirements.txt file exists.
 # shellcheck disable=SC2045
-for skill in $(ls -d -- */ 2> /dev/null); do
+for skill in $(ls -d -- */ 2>/dev/null); do
     cd "$skill" || exit
     if test -f requirements.txt; then
         pip3 install -r requirements.txt
@@ -29,10 +29,15 @@ done
 rm -rf ~/.cache/pip
 
 # Auto-detect which sound server is running (PipeWire or PulseAudio)
-if pactl info &> /dev/null; then
-    echo -e 'pcm.!default pulse\nctl.!default pulse' > ~/.asoundrc
-elif pw-link --links &> /dev/null; then
-    echo -e 'pcm.!default pipewire\nctl.!default pipewire' > ~/.asoundrc
+asoundrc_file=~/.asoundrc
+if test -f ~/.config/mycroft/asoundrc; then
+    cp -rfp ~/.config/mycroft/asoundrc "$asoundrc_file"
+else
+    if pactl info &>/dev/null; then
+        echo -e 'pcm.!default pulse\nctl.!default pulse' >"$asoundrc_file"
+    elif pw-link --links &>/dev/null; then
+        echo -e 'pcm.!default pipewire\nctl.!default pipewire' >"$asoundrc_file"
+    fi
 fi
 
 # Run ovos-core

@@ -22,10 +22,15 @@ fi
 rm -rf ~/.cache/pip
 
 # Auto-detect which sound server is running (PipeWire or PulseAudio)
-if pactl info &> /dev/null; then
-    echo -e 'pcm.!default pulse\nctl.!default pulse' > ~/.asoundrc
-elif pw-link --links &> /dev/null; then
-    echo -e 'pcm.!default pipewire\nctl.!default pipewire' > ~/.asoundrc
+asoundrc_file=~/.asoundrc
+if test -f ~/.config/mycroft/asoundrc; then
+    cp -rfp ~/.config/mycroft/asoundrc "$asoundrc_file"
+else
+    if pactl info &>/dev/null; then
+        echo -e 'pcm.!default pulse\nctl.!default pulse' >"$asoundrc_file"
+    elif pw-link --links &>/dev/null; then
+        echo -e 'pcm.!default pipewire\nctl.!default pipewire' >"$asoundrc_file"
+    fi
 fi
 
 # Run ovos-audio

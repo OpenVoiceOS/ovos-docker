@@ -11,4 +11,3 @@ rm -rf "${HOME}"/.cache
 
 # Run ovos_PHAL_admin
 ovos_PHAL_admin
-
