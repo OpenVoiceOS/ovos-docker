@@ -21,10 +21,10 @@ Composition files provide an easy way to provision the stack *(services and volu
 
 A Docker or Podman environment file contains lines about environment variables that are usable by the Docker or Podman command line. It is a convenient way to pass many environment variables to a single command.
 
-| Environment file   | Platforms                                                                                                                                                 | Description                                    |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `.env`             | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Set of variables used by the composition files |
-| `.env-raspberrypi` | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                             | Add `GPIO_GID` variable                        |
+| Environment file   | Platforms                                                                                                                                                 | Description                                       |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `.env`             | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Set of variables used by the composition files    |
+| `.env-raspberrypi` | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                             | Add `GPIO_GID`, `I2C_GID` and `SPI_GID` variables |
 
 Some variables might need to be tuned to match your setup such as the `TZ`, `XDG_RUNTIME_DIR`, etc...
 
@@ -35,12 +35,14 @@ Some variables might need to be tuned to match your setup such as the `TZ`, `XDG
 | `HIVEMIND_CONFIG_FOLDER` | `~/hivemind/config` | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | HiveMind configuration directory  |
 | `HIVEMIND_SHARE_FOLDER`  | `~/hivemind/share`  | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | HiveMind shared directory         |
 | `HIVEMIND_USER`          | `hivemind`          | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | User running in the container     |
+| `I2C_GID`                | `994`               | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                                                                           | `i2c` group ID on Raspberry Pi    |
 | `INPUT_GID`              | `102`               | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                           | `input` group ID                  |
 | `OVOS_CONFIG_FOLDER`     | `~/ovos/config`     | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS configureation directory     |
 | `OVOS_SHARE_FOLDER`      | `~/ovos/share`      | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS shared directory             |
 | `OVOS_USER`              | `ovos`              | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | User running in the container     |
 | `PULL_POLICY`            | `always`            | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Policy to pull Docker images      |
 | `RENDER_GID`             | `106`               | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                           | `render` group ID                 |
+| `SPI_GID`                | `995`               | :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" }                                                                                                                                                           | `spi` group ID on Raspberry Pi    |
 | `TMP_FOLDER`             | `~/ovos/tmp`        | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | OVOS temporary directory          |
 | `TZ`                     | `America/Montreal`  | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Timezone to set in the container  |
 | `VERSION`                | `alpha`             | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } | Container image tag to pull       |
@@ -62,12 +64,14 @@ The `getent` command could be used in order to get the `GID` of `gpio` and `rend
     getent group render
     getent group video
     getent group input
+    getent group i2c
+    getent group spi
     ```
 
 === "Linux"
 
     ```shell
-    getent group render    
+    getent group render
     getent group video
     getent group input
     ```
