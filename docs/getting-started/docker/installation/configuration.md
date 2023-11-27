@@ -46,3 +46,51 @@ The solution is to add these lines into the `~/ovos/config/mycroft.conf` file *(
 !!! note "Services already deployed"
 
     If the services have been already deployed and the `~/ovos/config/mycroft.conf` has changed, then you will have to restart the containers impacted by the change(s).
+
+## Custom `.asoundrc` for ALSA
+
+Sometime a custom `.asoundrc` file migth be required, a common example is when a voice [HAT](https://www.raspberrypi.com/news/introducing-raspberry-pi-hats/) *(Hardware Attached on Top)* such as [Google AIY Voice Hat](https://aiyprojects.withgoogle.com/voice-v1/) is connected to a Raspberry Pi, a custom `.asoundrc` might be required to make it works with ALSA.
+
+In order to pass this custom `.asoundrc` file to the containers, the file must be created within the `~/ovos/config/` directory and named `asoundrc` *(with no `.`)*.
+
+!!! info "Only for the containers using sound"
+
+    The custom `.asoundrc` file will be passed only to the containers who leverage the audio stack; `ovos_listener`, `ovos_phal`, `ovos_audio`, `ovos_core`.
+
+```title="~/ovos/config/asoundrc"
+# Configuration for Google AIY Voice Hat V1
+options snd_rpi_googlemihat_soundcard index=0
+
+pcm.softvol {
+    type softvol
+    slave.pcm dmix
+    control {
+        name Master
+        card 0
+    }
+}
+
+pcm.micboost {
+    type route
+    slave.pcm dsnoop
+    ttable {
+        0.0 30.0
+        1.1 30.0
+    }
+}
+
+pcm.!default {
+    type asym
+    playback.pcm "plug:softvol"
+    capture.pcm "plug:micboost"
+}
+
+ctl.!default {
+    type hw
+    card 0
+}
+```
+
+!!! note "Services already deployed"
+
+    If the services have been already deployed and the `~/ovos/config/asoundrc` has changed, then you will have to restart the containers impacted by the change(s).
