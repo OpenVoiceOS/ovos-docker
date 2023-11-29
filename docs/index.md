@@ -1,6 +1,6 @@
 # Welcome!
 
-OVOS Docker is one of the fastest ways to get started with OVOS.
+`ovos-docker` is one of the fastest ways to get started with Open Voice OS.
 
 ## Quickstart
 
