@@ -155,6 +155,7 @@ nav:
       - Glossary:
           - Terms: about/glossary/terms.md
           - Components: about/glossary/components.md
+  - Quickstart: quickstart.md
   - Getting started:
       - Run OVOS within containers:
           - Docker or Podman: getting-started/docker/index.md
