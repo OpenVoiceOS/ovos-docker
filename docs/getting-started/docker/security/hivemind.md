@@ -71,7 +71,7 @@ At this point of the installation, here are the containers that should be up and
 === "Docker"
 
     ```shell
-    docker container list --all --filter 'name=ovos'
+    docker container list --all --filter 'name=ovos' --filter 'name=hivemind'
     CONTAINER ID   IMAGE                                        COMMAND                  CREATED          STATUS                 PORTS     NAMES
     4e2d45799de8   smartgic/hivemind-cli:alpha                  "sleep infinity"         16 minutes ago   Up 16 minutes                    hivemind_cli
     612a9ea32405   smartgic/hivemind-listener:alpha             "hivemind-core listen"   16 minutes ago   Up 16 minutes                    hivemind_listener
