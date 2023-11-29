@@ -1,4 +1,8 @@
-# Quickstart
+# Welcome!
+
+OVOS Docker is one of the fastest ways to get started with OVOS.
+
+## Quickstart
 
 A nice, simple and intuitive way to install Open Voice OS and/or HiveMind using Bash, Whiptail (Newt) and Ansible.
 
@@ -10,7 +14,7 @@ sh -c "curl -s https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main
 
 Then follow the instructions display on screen.
 
-## Automated install
+### Automated install
 
 The installer supports a non-interactive *(automated)* process of installation by using a scenario file, this file must be created under the `~/.config/ovos-installer/` directory and should be named `scenario.yaml`.
 
@@ -32,7 +36,7 @@ share_telemetry: true
 EOF
 ```
 
-# Getting started
+## Getting started
 
 Want to give Open Voice OS a try? Open Voice OS is an open source software that runs where you want it to, whether it’s on your [own hardware](./about/why-use-ovos.md#multi-device-compatibility) or one of the dedicated [Mark 1](https://mycroft.ai/product/mycroft-mark-1/) or [Mark II](https://mycroft.ai/product/mark-ii/).
 
