@@ -3,19 +3,23 @@
 # stt.list file is deprecated and will be removed
 stt_list=~/.config/mycroft/stt.list
 listener_list=~/.config/mycroft/listener.list
+listener_list_state=/tmp/listener.state
 
 # Only here until stt.list full removal
 file=""
 if test -f "$stt_list"; then
-    file=$stt_list
+    file="$stt_list"
     echo "stt.list file is deprecated, please use listener.list instead"
 elif test -f "$listener_list"; then
-    file=$listener_list
+    file="$listener_list"
 fi
 
 # Install STT plugins, plugins or others Python libraries via pip command when a setup.py exists
 if [ -n "$file" ]; then
-    pip3 install -r "$file"
+    if ! diff -q -B <(grep -vE '^\s*(#|$)' "$file") <(grep -vE '^\s*(#|$)' "$listener_list_state" 2>/dev/null) &>/dev/null; then
+        pip3 install -r "$file"
+        cp "$file" "$listener_list_state"
+    fi
 fi
 
 # Clear Python cache

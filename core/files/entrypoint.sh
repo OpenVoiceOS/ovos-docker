@@ -2,16 +2,20 @@
 
 # Install skills via pip command when a setup.py exists
 skills_list=~/.config/mycroft/skills.list
-if test -f $skills_list; then
-    pip3 install -r $skills_list
+skills_list_state=/tmp/skills.state
+if test -f "$skills_list"; then
+    if ! diff -q -B <(grep -vE '^\s*(#|$)' "$skills_list") <(grep -vE '^\s*(#|$)' "$skills_list_state" 2>/dev/null) &>/dev/null; then
+        pip3 install -r "$skills_list"
+        cp "$skills_list" "$skills_list_state"
+    fi
 fi
 
 # Create skills directory if doesn't exist
 skills_directory=~/.local/share/mycroft/skills
-if ! test -d $skills_directory; then
-    mkdir -p $skills_directory
+if ! test -d "$skills_directory"; then
+    mkdir -p "$skills_directory"
 fi
-cd $skills_directory || exit
+cd "$skills_directory" || exit
 
 # Loop over each skills into the skills directory and install
 # Python requirements if a requirements.txt file exists.

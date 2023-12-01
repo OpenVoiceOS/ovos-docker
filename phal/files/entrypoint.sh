@@ -2,8 +2,12 @@
 
 # Install PHAL plugins via pip command when a setup.py exists
 phal_list=~/.config/mycroft/phal.list
+phal_list_state=/tmp/listener.state
 if test -f "$phal_list"; then
-    pip3 install -r "$phal_list"
+    if ! diff -q -B <(grep -vE '^\s*(#|$)' "$phal_list") <(grep -vE '^\s*(#|$)' "$phal_list_state" 2>/dev/null) &>/dev/null; then
+        pip3 install -r "$phal_list"
+        cp "$phal_list" "$phal_list_state"
+    fi
 fi
 
 # Clear Python cache
