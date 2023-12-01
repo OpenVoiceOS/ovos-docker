@@ -18,7 +18,7 @@ A [composition](../composition.md) file is available in order to deploy `hivemin
 
 !!! note "Podman users :muscle:"
 
-    If you are running Podman instead of Docker, replace `docker compose` with `podmand-compose`.
+    If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
 
 === "Raspberry Pi"
 

@@ -112,7 +112,7 @@ The `xhost` command is part of the `x11-xserver-utils` package on Debian based d
 
 !!! note "Podman users :muscle:"
 
-    If you are running Podman instead of Docker, replace `docker compose` with `podmand-compose`.
+    If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
 
 === "Raspberry Pi"
 

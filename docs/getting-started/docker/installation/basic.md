@@ -13,7 +13,7 @@ Before running the `docker compose` or `podman-compose` commands, please read th
 
 !!! note "Podman users :muscle:"
 
-    If you are running Podman instead of Docker, replace `docker compose` with `podmand-compose`.
+    If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
 
 === "Raspberry Pi"
 

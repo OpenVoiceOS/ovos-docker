@@ -8,7 +8,7 @@ The easiest and quickest way to update an Open Voice OS stack already deployed b
 
 !!! note "Podman users :muscle:"
 
-    If you are running Podman instead of Docker, replace `docker compose` with `podmand-compose`.
+    If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
 
 === "Raspberry Pi"
 
