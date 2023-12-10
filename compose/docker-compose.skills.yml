@@ -14,6 +14,11 @@ x-logging: &default-logging
     max-size: "200m"
     max-file: "1"
 
+volumes:
+  ovos_nltk:
+    name: ovos_nltk
+    driver: local
+
 services:
   ovos_skill_wikipedia:
     <<: *podman
@@ -28,6 +33,7 @@ services:
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_nltk:/home/${OVOS_USER}/nltk_data
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
