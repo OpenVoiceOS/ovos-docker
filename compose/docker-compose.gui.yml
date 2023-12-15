@@ -54,6 +54,7 @@ services:
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
       QML2_IMPORT_PATH: /usr/lib/qml
       QT_QPA_PLATFORM: eglfs
+      QT_QPA_EGLFS_HIDECURSOR: 1
       QT_QPA_EGLFS_KMS_ATOMIC: 1
       QT_QPA_PLATFORMTHEME: qt5ct
       QT_PLUGIN_PATH: /usr/lib/qt/plugins:/usr/lib/plugins:/usr/lib/plugins/kf5
@@ -113,6 +114,7 @@ services:
   #     QML2_IMPORT_PATH: /usr/lib/qml
   #     QT_QPA_PLATFORM: eglfs
   #     QT_QPA_EGLFS_KMS_ATOMIC: 1
+  #     QT_QPA_EGLFS_HIDECURSOR: 1
   #     QT_QPA_PLATFORMTHEME: qt5ct
   #     QT_PLUGIN_PATH: /usr/lib/qt/plugins:/usr/lib/plugins:/usr/lib/plugins/kf5
   #     QT_LOGGING_RULES: "*=false"
@@ -141,6 +143,7 @@ services:
   #     - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
   #     - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
   #     - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
+  #     - /run/udev/data:/run/udev/data:ro
   # depends_on:
   #   ovos_messagebus:
   #     condition: service_started
