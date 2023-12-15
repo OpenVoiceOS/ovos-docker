@@ -6,8 +6,8 @@
 
 The Open Voice OS GUI supports two types of system execution:
 
-  - Using [X](https://en.wikipedia.org/wiki/X_Window_System) or [Wayland](https://en.wikipedia.org/wiki/Wayland_(protocol)) display servers
-  - Using [EGLFS](https://doc.qt.io/qt-6/embedded-linux.html#eglfs) which doesn't require any display server which is perfect for headless installation
+- Using [X](https://en.wikipedia.org/wiki/X_Window_System) or [Wayland](<https://en.wikipedia.org/wiki/Wayland_(protocol)>) display servers
+- Using [EGLFS](https://doc.qt.io/qt-6/embedded-linux.html#eglfs) which doesn't require any display server which is perfect for headless installation
 
 When using EGLFS, the `DISPLAY` variable from the `.env` [composition environment file](../composition.md#environment-files) must be removed or commented as if present the X or Wayland display servers will be tried first and result in an `ovos_gui` container in error.
 
@@ -35,7 +35,6 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
   },
   "gui": {
     "extension": "ovos-gui-plugin-shell-companion",
-    "idle_display_skill": "skill-ovos-homescreen.openvoiceos",
     "gui_file_host_path": "/home/ovos/.cache/gui_files"
   },
   "websocket": {
@@ -50,7 +49,7 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
 
     You can skip this section if your are using EGLFS and go to [GUI services deployment](#gui-services-deployment).
 
-In order to allow only the `ovos_gui` container to access to the X or Wayland display server, you will have to allow the container *(based on its hostname)* to connect to the display session.
+In order to allow only the `ovos_gui` container to access to the X or Wayland display server, you will have to allow the container _(based on its hostname)_ to connect to the display session.
 
 ```bash
 export DISPLAY=":0"
