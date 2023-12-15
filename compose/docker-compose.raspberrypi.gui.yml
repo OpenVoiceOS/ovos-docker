@@ -9,3 +9,7 @@ services:
       - $INPUT_GID
       - $RENDER_GID
       - $VIDEO_GID
+
+  ovos_gui_websocket:
+    healthcheck:
+      disable: true
