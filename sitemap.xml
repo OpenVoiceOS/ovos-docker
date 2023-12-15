@@ -2,132 +2,132 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/quickstart/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/about/what-is-it/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/about/why-use-ovos/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/about/glossary/components/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/about/glossary/terms/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/cli/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/composition/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/debug/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/images/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/update/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/installation/basic/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/installation/configuration/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/installation/gui/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/installation/requirements/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/installation/skills/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/plugins/microphone/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/plugins/phal/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/plugins/stt/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/plugins/tts/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/prerequisites/cpu/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/prerequisites/engine/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/prerequisites/sound/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/security/hardening/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openvoiceos.github.io/ovos-docker/getting-started/docker/security/hivemind/</loc>
-         <lastmod>2023-12-01</lastmod>
+         <lastmod>2023-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
