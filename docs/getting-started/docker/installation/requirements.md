@@ -8,12 +8,12 @@ The `~/hivemind` directory is only required if you plan to use [HiveMind](../../
 
 === "All"
 
-  ```shell
-  git clone https://github.com/OpenVoiceOS/ovos-docker.git ~/ovos-docker
-  mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
-  chown ${USER}:${USER} -R ~/ovos ~/hivemind
-  cd ~/ovos-docker/compose
-  ```
+```shell
+git clone https://github.com/OpenVoiceOS/ovos-docker.git ~/ovos-docker
+mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
+chown ${USER}:${USER} -R ~/ovos ~/hivemind
+cd ~/ovos-docker/compose
+```
 
 ## Enable user manager
 
@@ -37,16 +37,15 @@ Because some containers require `/run/user/1000` to be mounted, [systemd](https:
 
     Please make sure to read and understand this section as if you don't then the deployment migth fail.
 
-
 The `composer` requires an environment file in order to deploy the services and volumes with the correct settings for your setup.
 
 !!! info "`alpha` version by default"
 
     As mentioned [in this section](../composition.md#environment-files), the current default `VERSION` *(tag)* is `alpha`.
 
-The example files start with a `.` *(dot)* which means they are hidden, use the `ls -a` command to list all the files included the hidden ones.
+The example files start with a `.` _(dot)_ which means they are hidden, use the `ls -a` command to list all the files included the hidden ones.
 
-Below is an example of `.env` for Linux *(not Raspberry Pi)*, please read [this section](../composition.md#environment-files) for more details about what these variables do.
+Below is an example of `.env` for Linux _(not Raspberry Pi)_, please read [this section](../composition.md#environment-files) for more details about what these variables do.
 
 ```ini title=".env"
 DISPLAY=:0
@@ -90,3 +89,23 @@ XDG_RUNTIME_DIR=/run/user/1000
     ```
 
 Examples are provided, please make sure to select the right one and to set the proper values.
+
+## I2C and SPI on Raspberry Pi
+
+The Raspberry Pi board supports [I2C](https://en.wikipedia.org/wiki/I%C2%B2C), [I2S](https://en.wikipedia.org/wiki/I%C2%B2S) and [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface) buses. These three buses must be enabled in order to allow the containers below to start:
+
+- `ovos_core`
+- `ovos_phal`
+- `ovos_phal_admin`
+
+Follow the steps below to enable I2C, I2S and SPI.
+
+=== "Raspberry Pi"
+
+    ```shell
+    echo "dtparam=i2c_arm=on" | sudo tee -a /boot/config.txt
+    echo "dtparam=i2s=on" | sudo tee -a /boot/config.txt
+    echo "dtparam=spi=on" | sudo tee -a /boot/config.txt
+    echo "i2c-dev" | sudo tee /etc/modules-load.d/i2c.conf
+    sudo reboot
+    ```
