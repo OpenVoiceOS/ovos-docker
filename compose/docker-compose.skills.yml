@@ -236,3 +236,21 @@ services:
     depends_on:
       ovos_core:
         condition: service_started
+
+  ovos_skill_tunein:
+    <<: *podman
+    container_name: ovos_skill_tunein
+    hostname: ovos_skill_tunein
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-tunein:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_core:
+        condition: service_started
