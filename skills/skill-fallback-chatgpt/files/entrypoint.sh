@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Path to the skill's configuration directory
 config_skill_directory=~/.config/mycroft/skills/skill-ovos-fallback-chatgpt.openvoiceos
@@ -9,10 +9,9 @@ if ! test -d "$config_skill_directory"; then
     mkdir -p "$config_skill_directory"
     cat <<EOF >"$config_skill_directory/settings.json"
 {
-    "api_key": "sk-XXXXXXXX",
+    "key": "sk-XXXXXXXX",
     "model": "gpt-3.5-turbo",
-    "system_prompt": "You are a helpful voice assistant with a friendly tone and fun sense of humor",
-    "wait_timeout": 90,
+    "persona": "You are a helpful voice assistant with a friendly tone and fun sense of humor",
     "__mycroft_skill_firstrun": false
 }
 EOF

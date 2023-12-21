@@ -24,6 +24,6 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     && rm -rf "${HOME}/.cache" \
     && mkdir -p "${HOME}"/.config/mycroft/skills/skill-ovos-fallback-chatgpt.openvoiceos
 
-ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "/usr/local/bin/entrypoint.sh"]
 
 WORKDIR /home/"${USER}"
