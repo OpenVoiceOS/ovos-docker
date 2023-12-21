@@ -32,14 +32,14 @@ RUN apt-get update \
     else \
     pip3 install -r /tmp/requirements.txt; \
     fi \
-    && chown ${USER}:${USER} -R /home/${USER} \
+    && chown "${USER}":"${USER}" -R /home/"${USER}" \
     && apt-get --purge remove --purge -y libasound2-dev \
     && apt-get --purge autoremove -y \
     && apt-get clean \
-    && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+    && rm -rf "${HOME}"/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
-USER $USER
+USER "$USER"
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
 
-WORKDIR /home/${USER}
+WORKDIR /home/"${USER}"
