@@ -21,8 +21,7 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     else \
     pip3 install ovos-skill-fallback-chatgpt; \
     fi \
-    && rm -rf "${HOME}/.cache" \
-    && mkdir -p "${HOME}"/.config/mycroft/skills/skill-ovos-fallback-chatgpt.openvoiceos
+    && rm -rf "${HOME}/.cache"
 
 ENTRYPOINT ["/bin/sh", "/usr/local/bin/entrypoint.sh"]
 
