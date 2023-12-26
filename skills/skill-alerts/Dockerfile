@@ -15,11 +15,10 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install PyYAML==5.4.1; \
-    pip3 install neon-skill-alerts --pre; \
+    pip3 install ovos-skill-alerts --pre; \
     else \
-    pip3 install neon-skill-alerts; \
+    pip3 install ovos-skill-alerts; \
     fi \
     && rm -rf "${HOME}/.cache"
 
-ENTRYPOINT ["ovos-skill-launcher", "skill-alerts.neongeckocom"]
+ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-alerts.openvoiceos"]
