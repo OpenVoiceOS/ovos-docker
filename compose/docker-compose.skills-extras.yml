@@ -1,0 +1,111 @@
+---
+version: "3.9"
+
+x-podman: &podman
+  userns_mode: keep-id
+  security_opt:
+    - "label=disable"
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    mode: non-blocking
+    max-buffer-size: 4m
+    max-size: "200m"
+    max-file: "1"
+
+volumes:
+  ovos_nltk:
+    name: ovos_nltk
+    driver: local
+
+services:
+  ovos_skill_wolfie:
+    <<: *podman
+    container_name: ovos_skill_wolfie
+    hostname: ovos_skill_wolfie
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-wolfie:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_core:
+        condition: service_started
+
+  ovos_skill_jokes:
+    <<: *podman
+    container_name: ovos_skill_jokes
+    hostname: ovos_skill_jokes
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-jokes:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_core:
+        condition: service_started
+
+  ovos_skill_easter_eggs:
+    <<: *podman
+    container_name: ovos_skill_easter_eggs
+    hostname: ovos_skill_easter_eggs
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-easter-eggs:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_core:
+        condition: service_started
+
+  ovos_skill_tunein:
+    <<: *podman
+    container_name: ovos_skill_tunein
+    hostname: ovos_skill_tunein
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-tunein:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_core:
+        condition: service_started
+
+  ovos_skill_fallback_chatgpt:
+    <<: *podman
+    container_name: ovos_skill_fallback_chatgpt
+    hostname: ovos_skill_fallback_chatgpt
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-fallback-chatgpt:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_core:
+        condition: service_started
