@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2+insiders-4.47.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3+insiders-4.49.0">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.78d85e4f.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.67c3bdf0.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1864,6 +1864,7 @@
                 
                   
 
+
   
     <a href="https://github.com/OpenVoiceOS/ovos-docker/edit/documentation/docs/getting-started/docker/debug.md" title="Edit this page" class="md-content__button md-icon">
       
@@ -1887,26 +1888,28 @@
 <div class="admonition info">
 <p class="admonition-title">Restart containers</p>
 <p>All containers will have to be restarted to receive the configuration change.</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>restart<span class="w"> </span>--time<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>container<span class="w"> </span>list<span class="w"> </span>--all<span class="w"> </span>--filter<span class="w"> </span><span class="s1">'name=ovos'</span><span class="w"> </span>--filter<span class="w"> </span><span class="s1">'name=hivemind'</span><span class="w"> </span>--quiet<span class="k">)</span>
+</span></code></pre></div>
 </div>
-<div class="language-json highlight"><span class="filename">~/ovos/config/mycroft.conf</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"debug"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"log_level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEBUG"</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">}</span>
+<div class="language-json highlight"><span class="filename">~/ovos/config/mycroft.conf</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"debug"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"log_level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEBUG"</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The commands below don't have to be executed in the same order as they are presented, free free to run them in the order you want!</p>
 </div>
+<p>The commands below don't have to be executed in the same order as they are presented, free free to run them in the order you want!</p>
 <h2 id="all-containers-logs">All containers logs<a class="headerlink" href="#all-containers-logs" title="Permanent link">¶</a></h2>
 <p>Access all the container logs at the same time, run the following command <em>(make sure it matches the <code>docker compose</code> or <code>podman-compose</code> command you run to deploy the stack)</em>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Docker</label><label for="__tabbed_1_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--env-file<span class="w"> </span>.env<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w"> </span>--tail<span class="w"> </span><span class="m">200</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--env-file<span class="w"> </span>.env<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w"> </span>--tail<span class="w"> </span><span class="m">200</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>podman-compose<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--env-file<span class="w"> </span>.env<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w"> </span>--tail<span class="w"> </span><span class="m">200</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>podman-compose<span class="w"> </span>--file<span class="w"> </span>docker-compose.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.raspberrypi.yml<span class="w"> </span>--file<span class="w"> </span>docker-compose.skills.yml<span class="w"> </span>--env-file<span class="w"> </span>.env<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w"> </span>--tail<span class="w"> </span><span class="m">200</span>
 </span></code></pre></div>
 </div>
 </div>
@@ -1916,11 +1919,11 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Docker</label><label for="__tabbed_2_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w"> </span>--tail<span class="w"> </span><span class="m">200</span><span class="w"> </span>ovos_audio
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w"> </span>--tail<span class="w"> </span><span class="m">200</span><span class="w"> </span>ovos_audio
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>podman<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w"> </span>--tail<span class="w"> </span><span class="m">200</span><span class="w"> </span>ovos_audio
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>podman<span class="w"> </span>logs<span class="w"> </span>--follow<span class="w"> </span>--tail<span class="w"> </span><span class="m">200</span><span class="w"> </span>ovos_audio
 </span></code></pre></div>
 </div>
 </div>
@@ -1930,11 +1933,11 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Docker</label><label for="__tabbed_3_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--tty<span class="w"> </span>--interactive<span class="w"> </span>ovos_audio<span class="w"> </span>pactl<span class="w"> </span>info
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--tty<span class="w"> </span>--interactive<span class="w"> </span>ovos_audio<span class="w"> </span>pactl<span class="w"> </span>info
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--tty<span class="w"> </span>--interactive<span class="w"> </span>ovos_audio<span class="w"> </span>pactl<span class="w"> </span>info
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--tty<span class="w"> </span>--interactive<span class="w"> </span>ovos_audio<span class="w"> </span>pactl<span class="w"> </span>info
 </span></code></pre></div>
 </div>
 </div>
@@ -1944,11 +1947,11 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Docker</label><label for="__tabbed_4_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--tty<span class="w"> </span>--interactive<span class="w"> </span>ovos_audio<span class="w"> </span>sh
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--tty<span class="w"> </span>--interactive<span class="w"> </span>ovos_audio<span class="w"> </span>sh
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--tty<span class="w"> </span>--interactive<span class="w"> </span>ovos_audio<span class="w"> </span>sh
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--tty<span class="w"> </span>--interactive<span class="w"> </span>ovos_audio<span class="w"> </span>sh
 </span></code></pre></div>
 </div>
 </div>
@@ -1959,21 +1962,21 @@
 <p class="admonition-title"><code>jq</code> command</p>
 <p>In order to use the <code>jq</code> command, the package should be installed on your operating system.</p>
 </div>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>cat<span class="w"> </span>~/ovos/config/mycroft.conf<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>cat<span class="w"> </span>~/ovos/config/mycroft.conf<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 </span></code></pre></div>
 <p>If the configuration file is not valid JSON, <code>jq</code> will return something like this:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>parse error: Expected another key-value pair at line 81, column 3
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>parse error: Expected another key-value pair at line 81, column 3
 </span></code></pre></div>
 <h2 id="dockerpodman-consumption">Docker/Podman consumption<a class="headerlink" href="#dockerpodman-consumption" title="Permanent link">¶</a></h2>
 <p>Get the CPU, memory and <a href="https://en.wikipedia.org/wiki/Input/output">I/O</a> consumption per container.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">Docker</label><label for="__tabbed_5_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>stats<span class="w"> </span>--all<span class="w"> </span>--no-trunc
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>stats<span class="w"> </span>--all<span class="w"> </span>--no-trunc
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>podman<span class="w"> </span>stats<span class="w"> </span>--all<span class="w"> </span>--no-trunc
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>podman<span class="w"> </span>stats<span class="w"> </span>--all<span class="w"> </span>--no-trunc
 </span></code></pre></div>
 </div>
 </div>
@@ -1983,11 +1986,11 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked id="__tabbed_6_1" name="__tabbed_6" type="radio"><input id="__tabbed_6_2" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">Docker</label><label for="__tabbed_6_2">Podman</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>system<span class="w"> </span>df
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>system<span class="w"> </span>df
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>podman<span class="w"> </span>system<span class="w"> </span>df
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>podman<span class="w"> </span>system<span class="w"> </span>df
 </span></code></pre></div>
 </div>
 </div>
@@ -2014,7 +2017,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 31, 2023</span>
   </span>
 
     
