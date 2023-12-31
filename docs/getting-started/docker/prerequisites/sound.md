@@ -1,6 +1,6 @@
 # Sound system
 
-[PulseAudio](https://en.wikipedia.org/wiki/PulseAudio) is a requirement and has to be up and running on the host *(not inside the containers)* to expose a socket *(for communication)* and a cookie *(for authentication)* to allow the containers to have access to the microphone *(input device)* and speakers *(output device)*.
+[PulseAudio](https://en.wikipedia.org/wiki/PulseAudio) is a requirement and has to be up and running on the host _(not inside the containers)_ to expose a socket _(for communication)_ and a cookie _(for authentication)_ to allow the containers to have access to the microphone _(input device)_ and speakers _(output device)_.
 
 On modern Linux distribution, [PipeWire](https://en.wikipedia.org/wiki/PipeWire) now handles the sound stack on the system.
 
@@ -29,7 +29,7 @@ If you are running an operating system other Linux such as Mac OS or Windows, th
 
 ## Permissions
 
-The user running the containers must be part of the `audio` system group *(depending the Linux distribution)*.
+The user running the containers must be part of the `audio` system group _(depending the Linux distribution)_.
 
 !!! warning "PulseAudio files permissions"
 
@@ -57,7 +57,7 @@ These commands provide information about the status of PulseAudio or PipeWire.
 
 ### List microphones
 
-At least one of the sources *(microphones/audio input)* returned, should match the `Default Source` line from the `pactl info` command or the `Audio/Source` line from the `wpctl status` command.
+At least one of the sources _(microphones/audio input)_ returned, should match the `Default Source` line from the `pactl info` command or the `Audio/Source` line from the `wpctl status` command.
 
 === "PulseAudio"
 
@@ -73,7 +73,7 @@ At least one of the sources *(microphones/audio input)* returned, should match t
 
 ### List speakers
 
-At least one of the sinks *(speakers/audio output)* returned, should match the `Default Sink` line from the `pactl info` command or the `Audio/Sink` line from the `wpctl status` command.
+At least one of the sinks _(speakers/audio output)_ returned, should match the `Default Sink` line from the `pactl info` command or the `Audio/Sink` line from the `wpctl status` command.
 
 === "PulseAudio"
 

@@ -10,7 +10,6 @@ This section covers the installation of the [core components](../../../about/glo
 
 Before running the `docker compose` or `podman-compose` commands, please read this [section](../prerequisites/engine.md) first.
 
-
 !!! note "Podman users :muscle:"
 
     If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
@@ -39,14 +38,14 @@ Before running the `docker compose` or `podman-compose` commands, please read th
     docker compose --project-name ovos --file docker-compose.windows.yml up --detach
     ```
 
-Depending your Internet speed, your Wi-Fi or Ethernet connection speed and your hardware *([I/O](https://en.wikipedia.org/wiki/Input/output))*, the whole process could take several minutes.
+Depending your Internet speed, your Wi-Fi or Ethernet connection speed and your hardware _([I/O](https://en.wikipedia.org/wiki/Input/output))_, the whole process could take several minutes.
 
 | Hardware                           | Time           |
 | ---------------------------------- | -------------- |
-| Raspberry Pi 3B+ with USB drive    | *~20 minutes*  |
-| Raspberry Pi 4B with USB drive     | *~3 minutes*   |
-| MacBook Air i7 Early 2015 with SSD | *~2.5 minutes* |
-| AMD Ryzen 7 5800 with NVMe drive   | *~45 seconds*  |
+| Raspberry Pi 3B+ with USB drive    | _~20 minutes_  |
+| Raspberry Pi 4B with USB drive     | _~3 minutes_   |
+| MacBook Air i7 Early 2015 with SSD | _~2.5 minutes_ |
+| AMD Ryzen 7 5800 with NVMe drive   | _~45 seconds_  |
 
 !!! danger "Resources overhead"
 

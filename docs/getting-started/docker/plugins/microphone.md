@@ -8,7 +8,7 @@ A microhpone plugin allows you to use a specific sound protocol in order to get 
 
 The `ovos_listener` container comes with few pre-installed microphone plugins such as:
 
-- `ovos-microphone-plugin-alsa` is using [pyalsaaudio](https://larsimmisch.github.io/pyalsaaudio/) Python library *(default)*
+- `ovos-microphone-plugin-alsa` is using [pyalsaaudio](https://larsimmisch.github.io/pyalsaaudio/) Python library _(default)_
 - `ovos-microphone-plugin-sounddevice` is using [sounddevice](https://python-sounddevice.readthedocs.io/) Python library
 
 If the existing microphone plugins are not enough then you can install yours by following the same principle as for the [STT plugins](./stt.md) by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
@@ -44,7 +44,7 @@ The `ovos_listener` container must be restarted if a change occurs in the `liste
 Here are the two main plugins to use per platform.
 
 | Plugin                               | Platforms                                                                                                                                                                                                               |
-| ------------------------------------ |  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ovos-microphone-plugin-alsa`        | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } |
 | `ovos-microphone-plugin-sounddevice` | :fontawesome-brands-linux:{ .lg title="Linux" } :fontawesome-brands-raspberry-pi:{ .lg title="Raspberry Pi" } :fontawesome-brands-apple:{ .lg title="Mac OS" } :fontawesome-brands-windows:{ .lg title="Windows WSL2" } |
 

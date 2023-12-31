@@ -4,9 +4,9 @@
 
 > HiveMind is a community-developed superset or extension of Open Voice OS, the open-source voice operating system.
 >
-> With HiveMind, you can extend one *(or more, but usually just one!)* instance of Open Voice OS to as many devices as you want, including devices that can't ordinarily run Open Voice OS!
+> With HiveMind, you can extend one _(or more, but usually just one!)_ instance of Open Voice OS to as many devices as you want, including devices that can't ordinarily run Open Voice OS!
 
-*<div align="right">[Official documentation](https://jarbashivemind.github.io/HiveMind-community-docs/)</div>*
+_<div align="right">[Official documentation](https://jarbashivemind.github.io/HiveMind-community-docs/)</div>_
 
 What it means, is that [HiveMind](../../../about/glossary/terms.md#hivemind) allows external connections to the message bus by using a secured protocol.
 

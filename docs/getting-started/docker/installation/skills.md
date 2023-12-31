@@ -22,19 +22,19 @@ ovos-skill-volume==0.0.1 # Specific skill version on PyPi
 git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git@fix/whatever # Specific skill's branch on GitHub
 ```
 
-If the `ovos_core` container is wiped for any reasons *(like an update)*, the skill(s) will be automatically reprovisioned.
+If the `ovos_core` container is wiped for any reasons _(like an update)_, the skill(s) will be automatically reprovisioned.
 
 !!! tip "Not only for skills"
 
     `skills.list` file could be used as well to install extra Python librairies, *e.g.*, `SoCo`, `RPi.GPIO`. Just make sure to avoid empty lines.
 
-The main advantage of this method is the simplicity **but** the downside will be more Python dependencies *(libraries)* within the `ovos_core` container, potential conflicts across them, a lack of isolation and a slower start of the container.
+The main advantage of this method is the simplicity **but** the downside will be more Python dependencies _(libraries)_ within the `ovos_core` container, potential conflicts across them, a lack of isolation and a slower start of the container.
 
-## As standalone container *(recommended)*
+## As standalone container _(recommended)_
 
 The second method is to leverage the [ovos-workshop](../../../about/glossary/components.md#ovos-workshop) component by running a skill as standalone, it means the skill will not be part of `ovos_core` container but it will be running inside its own container.
 
-The main advantage is that each skill is isolated which provide more flexibility about Python dependencies *(libraries)*, packages. It is easier to update and more secure **but** the downside will be that more system resources will be consumed and a container image has to be built for each skill.
+The main advantage is that each skill is isolated which provide more flexibility about Python dependencies _(libraries)_, packages. It is easier to update and more secure **but** the downside will be that more system resources will be consumed and a container image has to be built for each skill.
 
 !!! note "Podman users :muscle:"
 
@@ -64,14 +64,14 @@ The main advantage is that each skill is isolated which provide more flexibility
     docker compose --project-name ovos --file docker-compose.windows.yml --file docker-compose.skills.yml up --detach
     ```
 
-Depending your Internet speed, your Wi-Fi or Ethernet connection speed and your hardware *([I/O](https://en.wikipedia.org/wiki/Input/output))*, the whole process could take several minutes.
+Depending your Internet speed, your Wi-Fi or Ethernet connection speed and your hardware _([I/O](https://en.wikipedia.org/wiki/Input/output))_, the whole process could take several minutes.
 
-| Hardware                           | Time           |
-| ---------------------------------- | -------------- |
-| Raspberry Pi 3B+ with USB drive    | *~12 minutes*  |
-| Raspberry Pi 4B with USB drive     | *~48 seconds*  |
-| MacBook Air i7 Early 2015 with SSD | *~50 seconds*  |
-| AMD Ryzen 7 5800 with NVMe drive   | *~15 seconds*  |
+| Hardware                           | Time          |
+| ---------------------------------- | ------------- |
+| Raspberry Pi 3B+ with USB drive    | _~12 minutes_ |
+| Raspberry Pi 4B with USB drive     | _~48 seconds_ |
+| MacBook Air i7 Early 2015 with SSD | _~50 seconds_ |
+| AMD Ryzen 7 5800 with NVMe drive   | _~15 seconds_ |
 
 !!! danger "Resources overhead"
 

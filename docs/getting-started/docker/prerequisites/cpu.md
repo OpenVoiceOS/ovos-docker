@@ -1,6 +1,6 @@
 # CPU instructions
 
-In order to run [TensorFlow](https://en.wikipedia.org/wiki/TensorFlow) used by few Open Voice OS components, the [CPU](https://en.wikipedia.org/wiki/Central_processing_unit) must support `AVX` *(Advanced Vector Extensions)* instruction set for x86 processors or `SIMD` *(Single Instruction, Multiple Data)* instruction set for ARM processors.
+In order to run [TensorFlow](https://en.wikipedia.org/wiki/TensorFlow) used by few Open Voice OS components, the [CPU](https://en.wikipedia.org/wiki/Central_processing_unit) must support `AVX` _(Advanced Vector Extensions)_ instruction set for x86 processors or `SIMD` _(Single Instruction, Multiple Data)_ instruction set for ARM processors.
 
 === "Linux"
 

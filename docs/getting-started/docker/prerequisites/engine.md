@@ -2,9 +2,9 @@
 
 ## Installation
 
-As we are leveraging containers, a container engine such as Docker or Podman is required *(only one of them should be installed)*, as well as their `composer`.
+As we are leveraging containers, a container engine such as Docker or Podman is required _(only one of them should be installed)_, as well as their `composer`.
 
-*If you are not familiar with what a container engine or a `composer` are then please refer to [this section](../index.md) first as these fundamentals must be understood.*
+_If you are not familiar with what a container engine or a `composer` are then please refer to [this section](../index.md) first as these fundamentals must be understood._
 
 ### Versions
 
@@ -32,7 +32,7 @@ To allow a simple user to execute the `docker` command, make sure to add the use
     sudo usermod -a -G docker $USER
     ```
 
-Once added to the `docker` group you will have to logout from the current session *(graphical or [SSH](https://en.wikipedia.org/wiki/Secure_Shell))* in order to get the group added to your user once you reconnect.
+Once added to the `docker` group you will have to logout from the current session _(graphical or [SSH](https://en.wikipedia.org/wiki/Secure_Shell))_ in order to get the group added to your user once you reconnect.
 
 Once reconnected, run the following command to ensure the `docker` has been appened to your `$USER`.
 
@@ -43,7 +43,7 @@ Once reconnected, run the following command to ensure the `docker` has been appe
     uid=1000(foobar) gid=1000(foobar) groups=1000(foobar),973(docker)
     ```
 
-*The `GID` could differ compare to your setup.*
+_The `GID` could differ compare to your setup._
 
 ## Validation
 

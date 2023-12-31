@@ -1,6 +1,6 @@
 # Open Voice OS command line
 
-The command line allows you to send a message *(but not only)* directly to the message bus by using the `ovos-cli-client` command from the `ovo_cli` container.
+The command line allows you to send a message _(but not only)_ directly to the message bus by using the `ovos-cli-client` command from the `ovo_cli` container.
 
 !!! warning "Skill interactions"
 
@@ -70,7 +70,7 @@ An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
 
 ## mana
 
-[Neon Mana](https://github.com/NeonGeckoCom/neon-mana-utils) *(Messagebus Application for Neon AI)* provides tools for interacting with the message bus.
+[Neon Mana](https://github.com/NeonGeckoCom/neon-mana-utils) _(Messagebus Application for Neon AI)_ provides tools for interacting with the message bus.
 
 === "Docker"
 

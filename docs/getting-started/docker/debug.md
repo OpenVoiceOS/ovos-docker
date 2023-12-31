@@ -8,6 +8,10 @@ First thing's first, enable the Open Voice OS's debug mode in `~/ovos/config/myc
 
     All containers will have to be restarted to receive the configuration change.
 
+    ```shell
+    docker restart --time 0 $(docker container list --all --filter 'name=ovos' --filter 'name=hivemind' --quiet)
+    ```
+
 ```json title="~/ovos/config/mycroft.conf"
 {
   "debug": true,
@@ -16,11 +20,11 @@ First thing's first, enable the Open Voice OS's debug mode in `~/ovos/config/myc
 ```
 
 !!! note
-    The commands below don't have to be executed in the same order as they are presented, free free to run them in the order you want!
+The commands below don't have to be executed in the same order as they are presented, free free to run them in the order you want!
 
 ## All containers logs
 
-Access all the container logs at the same time, run the following command *(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)*.
+Access all the container logs at the same time, run the following command _(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)_.
 
 === "Docker"
 
@@ -68,7 +72,7 @@ Execute a command inside a container without going into it.
 
 ## Connect inside a container
 
-Go inside a container and run multiple commands *(where `sh` is the available shell in there)*.
+Go inside a container and run multiple commands _(where `sh` is the available shell in there)_.
 
 === "Docker"
 

@@ -18,7 +18,7 @@ Container images could be used for different CPU architectures using the [multi-
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | :material-check-circle-outline:{ style="color: green"} `amd64`   | Such as AMD and Intel processors                                               |
 | :material-check-circle-outline:{ style="color: green"} `aarch64` | Such as Raspberry Pi 64-bit SoC                                                |
-| :material-close-circle-outline:{ style="color: red" } `armv7l`   | Such as Raspberry Pi 32-bit SoC (*not supported because of `onnxruntime`[^1]*) |
+| :material-close-circle-outline:{ style="color: red" } `armv7l`   | Such as Raspberry Pi 32-bit SoC (_not supported because of `onnxruntime`[^1]_) |
 
 ## Containers
 
@@ -57,14 +57,14 @@ Container image tags allows you to deploy a specific version of Open Voice OS, i
 
 To allow data persistence, Docker or Podman volumes are required, they will prevent downloading the requirements everytime the containers are re-created.
 
-| Volume                  | Description                                                                                                                       |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `ovos_gui_file`         | Share QML files from skills between the GUI message bus and the GUI client                                                        |
-| `ovos_listener_records` | [Wake words](../../about/glossary/terms.md#wake-word) and [utterances](../../about/glossary/terms.md#utterance) recorded samples  |
-| `ovos_models`           | Models downloaded by `precise-lite` wake word plugin                                                                              |
-| `ovos_nltk`             | [Punkt](https://www.askpython.com/python-modules/nltk-punkt) Python package required by [NLTK](https://www.nltk.org/index.html)   |
-| `ovos_tts_cache`        | `.wav` and `.pho` files acting as cache from TTS transcription                                                                    |
-| `ovos_vosk`             | Models downloaded by [VOSK](https://alphacephei.com/vosk/) during the initial boot                                                |
+| Volume                  | Description                                                                                                                      |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `ovos_gui_file`         | Share QML files from skills between the GUI message bus and the GUI client                                                       |
+| `ovos_listener_records` | [Wake words](../../about/glossary/terms.md#wake-word) and [utterances](../../about/glossary/terms.md#utterance) recorded samples |
+| `ovos_models`           | Models downloaded by `precise-lite` wake word plugin                                                                             |
+| `ovos_nltk`             | [Punkt](https://www.askpython.com/python-modules/nltk-punkt) Python package required by [NLTK](https://www.nltk.org/index.html)  |
+| `ovos_tts_cache`        | `.wav` and `.pho` files acting as cache from TTS transcription                                                                   |
+| `ovos_vosk`             | Models downloaded by [VOSK](https://alphacephei.com/vosk/) during the initial boot                                               |
 
 `ovos_listener_records` allows you to store samples of wake words and utterances which could help you to build or improve models.
 

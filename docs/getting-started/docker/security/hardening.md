@@ -4,7 +4,7 @@ In order to secure your Open Voice OS instance, few more steps are **required** 
 
 ## AppArmor
 
-AppArmor and SELinux are examples of [Mandatory Access Control](https://en.wikipedia.org/wiki/Mandatory_access_control) *(MAC)* systems. These systems differ from other security controls which are generally called [Discretionary Access Control](https://en.wikipedia.org/wiki/Discretionary_access_control) *(DAC)* systems in that, generally, the user can't change their operation.
+AppArmor and SELinux are examples of [Mandatory Access Control](https://en.wikipedia.org/wiki/Mandatory_access_control) _(MAC)_ systems. These systems differ from other security controls which are generally called [Discretionary Access Control](https://en.wikipedia.org/wiki/Discretionary_access_control) _(DAC)_ systems in that, generally, the user can't change their operation.
 
 !!! note "AppArmor packages"
 
@@ -98,7 +98,7 @@ To prevent potential security issues, it is recommended to use a firewall the po
     sudo iptables iptables -A INPUT -p tcp --dport 8181 -j DROP
     ```
 
-This will allow connections to port `8181` **only** from localhost *(internal)*.
+This will allow connections to port `8181` **only** from localhost _(internal)_.
 
 !!! warning "Keep your ports closed"
 
