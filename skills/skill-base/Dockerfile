@@ -17,13 +17,11 @@ ARG USER=ovos
 RUN adduser --disabled-password "$USER" \
     && mkdir -p /home/"${USER}"/.config/mycroft /home/"${USER}"/.cache/mycroft /home/"${USER}"/.local/share/mycroft /tmp/mycroft/ipc /tmp/mycroft/cache \
     && chown "${USER}":"${USER}" -R /home/"${USER}" /tmp/mycroft \
-    && apk add --no-cache git python3 py3-pip py3-wheel py3-numpy swig fann-dev \
+    && apk add --no-cache git python3 py3-pip py3-wheel py3-numpy swig fann-dev py3-scikit-learn \
     && apk add --no-cache --virtual .build-deps python3-dev gcc g++ \
     && python3 -m venv /home/"${USER}"/.venv --system-site-packages \
     && . /home/"${USER}"/.venv/bin/activate \
     && if [ "${ALPHA}" == "true" ]; then \
-    # Install PyYAML before as a workaround to avoid AttributeError: cython_sources error.
-    pip3 install PyYAML; \
     pip3 install ovos-core[lgpl] ovos-translate-server-plugin --pre; \
     else \
     pip3 install ovos-core[lgpl] ovos-translate-server-plugin; \
