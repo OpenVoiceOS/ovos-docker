@@ -1,4 +1,4 @@
-# Welcome!
+# Welcome
 
 `ovos-docker` is one of the fastest ways to get started with Open Voice OS.
 
@@ -22,6 +22,8 @@ Want to give Open Voice OS a try? Open Voice OS is an open source software that 
 
 - :material-docker:{ .xl .middle } **Docker**
 
+  ---
+  
   `arm64` :material-check-circle-outline:{ style="color: green" } `x86_64` :material-check-circle-outline:{ style="color: green" }
 
   Use container engine such as [Docker](https://www.docker.com/) or [Podman](https://podman.io/) and their `composer` to run a ^^complete^^, ^^secure^^, ^^isolated^^ and ^^"easy to update"^^ instance of Open Voice OS!
