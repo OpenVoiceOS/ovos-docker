@@ -10,7 +10,7 @@ The `~/hivemind` directory is only required if you plan to use [HiveMind](../../
 
 ```shell
 git clone https://github.com/OpenVoiceOS/ovos-docker.git ~/ovos-docker
-mkdir -p ~/ovos/{config,share,tmp} ~/hivemind/{config,share}
+mkdir -p ~/ovos/{config/phal,share,tmp} ~/hivemind/{config/phal,share}
 chown ${USER}:${USER} -R ~/ovos ~/hivemind
 cd ~/ovos-docker/compose
 ```
@@ -50,10 +50,12 @@ Below is an example of `.env` for Linux _(not Raspberry Pi)_, please read [this 
 ```ini title=".env"
 DISPLAY=:0
 HIVEMIND_CONFIG_FOLDER=~/hivemind/config
+HIVEMIND_CONFIG_PHAL_FOLDER=~/hivemind/config/phal
 HIVEMIND_SHARE_FOLDER=~/hivemind/share
 HIVEMIND_USER=hivemind
 INPUT_GID=102
 OVOS_CONFIG_FOLDER=~/ovos/config
+OVOS_CONFIG_PHAL_FOLDER=~/ovos/config/phal
 OVOS_SHARE_FOLDER=~/ovos/share
 OVOS_USER=ovos
 PULL_POLICY=always
