@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3+insiders-4.49.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4+insiders-4.49.2">
     
     
       
@@ -1823,7 +1823,7 @@
 </div>
 </div>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/OpenVoiceOS/ovos-docker.git<span class="w"> </span>~/ovos-docker
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ovos/<span class="o">{</span>config,share,tmp<span class="o">}</span><span class="w"> </span>~/hivemind/<span class="o">{</span>config,share<span class="o">}</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ovos/<span class="o">{</span>config/phal,share,tmp<span class="o">}</span><span class="w"> </span>~/hivemind/<span class="o">{</span>config/phal,share<span class="o">}</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>chown<span class="w"> </span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="w"> </span>-R<span class="w"> </span>~/ovos<span class="w"> </span>~/hivemind
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">cd</span><span class="w"> </span>~/ovos-docker/compose
 </span></code></pre></div>
@@ -1855,18 +1855,20 @@
 <p>Below is an example of <code>.env</code> for Linux <em>(not Raspberry Pi)</em>, please read <a href="../../composition/#environment-files">this section</a> for more details about what these variables do.</p>
 <div class="language-ini highlight"><span class="filename">.env</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="na">DISPLAY</span><span class="o">=</span><span class="s">:0</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">HIVEMIND_CONFIG_FOLDER</span><span class="o">=</span><span class="s">~/hivemind/config</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="na">HIVEMIND_SHARE_FOLDER</span><span class="o">=</span><span class="s">~/hivemind/share</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="na">HIVEMIND_USER</span><span class="o">=</span><span class="s">hivemind</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="na">INPUT_GID</span><span class="o">=</span><span class="s">102</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="na">OVOS_CONFIG_FOLDER</span><span class="o">=</span><span class="s">~/ovos/config</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="na">OVOS_SHARE_FOLDER</span><span class="o">=</span><span class="s">~/ovos/share</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="na">OVOS_USER</span><span class="o">=</span><span class="s">ovos</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="na">PULL_POLICY</span><span class="o">=</span><span class="s">always</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="na">TMP_FOLDER</span><span class="o">=</span><span class="s">~/ovos/tmp</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="na">TZ</span><span class="o">=</span><span class="s">America/Montreal</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="na">VERSION</span><span class="o">=</span><span class="s">alpha</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="na">VIDEO_GID</span><span class="o">=</span><span class="s">44</span>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="na">XDG_RUNTIME_DIR</span><span class="o">=</span><span class="s">/run/user/1000</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="na">HIVEMIND_CONFIG_PHAL_FOLDER</span><span class="o">=</span><span class="s">~/hivemind/config/phal</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="na">HIVEMIND_SHARE_FOLDER</span><span class="o">=</span><span class="s">~/hivemind/share</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="na">HIVEMIND_USER</span><span class="o">=</span><span class="s">hivemind</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="na">INPUT_GID</span><span class="o">=</span><span class="s">102</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="na">OVOS_CONFIG_FOLDER</span><span class="o">=</span><span class="s">~/ovos/config</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="na">OVOS_CONFIG_PHAL_FOLDER</span><span class="o">=</span><span class="s">~/ovos/config/phal</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="na">OVOS_SHARE_FOLDER</span><span class="o">=</span><span class="s">~/ovos/share</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="na">OVOS_USER</span><span class="o">=</span><span class="s">ovos</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="na">PULL_POLICY</span><span class="o">=</span><span class="s">always</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="na">TMP_FOLDER</span><span class="o">=</span><span class="s">~/ovos/tmp</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="na">TZ</span><span class="o">=</span><span class="s">America/Montreal</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="na">VERSION</span><span class="o">=</span><span class="s">alpha</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="na">VIDEO_GID</span><span class="o">=</span><span class="s">44</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="na">XDG_RUNTIME_DIR</span><span class="o">=</span><span class="s">/run/user/1000</span>
 </span></code></pre></div>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:4"><input checked id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><input id="__tabbed_3_4" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Raspberry Pi</label><label for="__tabbed_3_2">Linux</label><label for="__tabbed_3_3">Mac OS</label><label for="__tabbed_3_4">Windows WSL2</label></div>
 <div class="tabbed-content">
@@ -1931,7 +1933,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 19, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 19, 2024</span>
   </span>
 
     
@@ -2239,7 +2241,7 @@
     <script id="__config" type="application/json">{"base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.8e8db93a.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.a0279539.min.js"></script>
       
     
   </body>
