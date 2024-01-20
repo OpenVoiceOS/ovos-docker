@@ -9,28 +9,10 @@ services:
   ovos_phal:
     healthcheck:
       disable: true
-    devices:
-      - /dev/gpiomem
-      - /dev/i2c-1
-      - /dev/spidev0.0
-      - /dev/spidev0.1
-    group_add:
-      - "$GPIO_GID"
-      - "$I2C_GID"
-      - "$SPI_GID"
 
   ovos_phal_admin:
     healthcheck:
       disable: true
-    devices:
-      - /dev/gpiomem
-      - /dev/i2c-1
-      - /dev/spidev0.0
-      - /dev/spidev0.1
-    group_add:
-      - "$GPIO_GID"
-      - "$I2C_GID"
-      - "$SPI_GID"
 
   ovos_listener:
     healthcheck:
@@ -43,12 +25,3 @@ services:
   ovos_core:
     healthcheck:
       disable: true
-    devices:
-      - /dev/gpiomem
-      - /dev/i2c-1
-      - /dev/spidev0.0
-      - /dev/spidev0.1
-    group_add:
-      - "$GPIO_GID"
-      - "$I2C_GID"
-      - "$SPI_GID"

@@ -61,8 +61,7 @@ services:
       TZ: $TZ
       XDG_RUNTIME_DIR: $XDG_RUNTIME_DIR
     network_mode: host
-    devices:
-      - /dev/snd
+    privileged: true
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
