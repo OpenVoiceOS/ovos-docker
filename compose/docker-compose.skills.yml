@@ -164,3 +164,21 @@ services:
     depends_on:
       ovos_core:
         condition: service_started
+
+  ovos_skill_boot_finished:
+    <<: *podman
+    container_name: ovos_skill_boot_finished
+    hostname: ovos_skill_boot_finished
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-skill-boot-finished:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_core:
+        condition: service_started
