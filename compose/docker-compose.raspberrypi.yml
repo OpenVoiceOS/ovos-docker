@@ -9,11 +9,19 @@ services:
   ovos_phal:
     healthcheck:
       disable: true
+    group_add:
+      - "$GPIO_GID"
+      - "$I2C_GID"
+      - "$SPI_GID"
 
   ovos_phal_admin:
     healthcheck:
       disable: true
-
+    group_add:
+      - "$GPIO_GID"
+      - "$I2C_GID"
+      - "$SPI_GID"
+  
   ovos_listener:
     healthcheck:
       disable: true
@@ -25,3 +33,7 @@ services:
   ovos_core:
     healthcheck:
       disable: true
+    group_add:
+      - "$GPIO_GID"
+      - "$I2C_GID"
+      - "$SPI_GID"
