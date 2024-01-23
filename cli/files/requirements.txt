@@ -1,0 +1,7 @@
+git+https://github.com/OpenVoiceOS/ovos-cli-client.git
+ovos-config
+git+https://github.com/OpenVoiceOS/ovos-docs-viewer.git
+neon-mana-utils
+ovos-plugin-manager
+ovos-skills-manager
+PyYAML==6.0
