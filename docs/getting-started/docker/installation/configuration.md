@@ -24,7 +24,7 @@ This configuration is very basic, it instructs the Open Voice OS instance to run
 
 ## Configure the logging
 
-By default, the Open Voice OS [services](../../../about/glossary/components.md) will write their logs into a file under `~/.local` directory, these files are not rotated or compressed which could lead to a disk space issue.
+By default, the Open Voice OS [services](../../../about/glossary/components.md) will write their logs into a file under `~/.local/state/mycroft` directory but since we are running containers, we can leverage the `docker logs` or `podman logs` commands.
 
 The solution is to add these lines into the `~/ovos/config/mycroft.conf` file _(create the file if it does not exist)_, this will tell the services to redirect their logs to the container `stdout`.
 
@@ -39,6 +39,16 @@ The solution is to add these lines into the `~/ovos/config/mycroft.conf` file _(
     "VAD": {
       "module": "ovos-vad-plugin-silero"
     }
+  }
+}
+```
+
+During debug session, it might be useful to retrieve information from the different component using the `ovos-logs` command, this command is looking for log files from the `~/.local/state/mycroft` directory. If needed, then remove the following lines from the `~/ovos/config/mycroft.conf` file.
+
+```json title="~/ovos/config/mycroft.conf"
+{
+  "logs": {
+    "path": "stdout"
   }
 }
 ```
