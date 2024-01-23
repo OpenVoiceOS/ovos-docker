@@ -25,7 +25,7 @@ RUN apt-get update \
   && useradd --no-log-init $USER -m -c "Open Voice OS user" \
   && python3 -m venv /home/${USER}/.venv \
   && . /home/${USER}/.venv/bin/activate \
-  && mkdir -p /home/${USER}/{.config,.cache,.local/share}/{mycroft,OpenVoiceOS} \
+  && mkdir -p /home/${USER}/{.config,.cache,.local/{state/mycroft,share}}/{mycroft,OpenVoiceOS} \
   && chown ${USER}:${USER} -R /home/${USER} \
   && apt-get --purge remove python3-dev build-essential -y \
   && apt-get --purge autoremove -y \

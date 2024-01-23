@@ -30,6 +30,9 @@ volumes:
   ovos_nltk:
     name: ovos_nltk
     driver: local
+  ovos_local_state:
+    name: ovos_local_state
+    driver: local
 
 services:
   ovos_messagebus:
@@ -45,6 +48,7 @@ services:
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
 
   ovos_phal:
@@ -66,6 +70,7 @@ services:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${OVOS_CONFIG_PHAL_FOLDER}:/home/${OVOS_USER}/.config/OpenVoiceOS
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
@@ -88,6 +93,7 @@ services:
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${OVOS_CONFIG_PHAL_FOLDER}:/home/${OVOS_USER}/.config/OpenVoiceOS
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - /sys:/sys:ro
       - /dev:/dev:ro
@@ -115,6 +121,7 @@ services:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
       - ovos_listener_records:/home/${OVOS_USER}/.local/share/mycroft/listener
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
       - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -146,6 +153,7 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/bus:${XDG_RUNTIME_DIR}/bus:ro
@@ -176,6 +184,7 @@ services:
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ovos_nltk:/home/${OVOS_USER}/nltk_data
       - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
@@ -200,6 +209,7 @@ services:
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
