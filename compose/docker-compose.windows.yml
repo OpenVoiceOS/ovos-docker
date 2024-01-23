@@ -78,6 +78,7 @@ services:
       PULSE_SERVER: /mnt/wslg/PulseServer
       TZ: $TZ
     network_mode: host
+    privileged: true
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ${TMP_FOLDER}:/tmp/mycroft

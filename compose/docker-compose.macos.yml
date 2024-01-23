@@ -78,6 +78,7 @@ services:
       PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
       TZ: $TZ
     network_mode: host
+    privileged: true
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
