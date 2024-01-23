@@ -43,7 +43,7 @@ The solution is to add these lines into the `~/ovos/config/mycroft.conf` file _(
 }
 ```
 
-During debug session, it might be useful to retrieve information from the different component using the `ovos-logs` command, this command is looking for log files from the `~/.local/state/mycroft` directory. If needed, then remove the following lines from the `~/ovos/config/mycroft.conf` file.
+During debug session, it might be useful to retrieve information from the different components using the `ovos-logs` command, this command is looking for log files from the `~/.local/state/mycroft` directory. If needed, then remove the following lines from the `~/ovos/config/mycroft.conf` file.
 
 ```json title="~/ovos/config/mycroft.conf"
 {
