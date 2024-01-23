@@ -38,7 +38,7 @@ Access all the container logs at the same time, run the following command _(make
     podman-compose --file docker-compose.yml --file docker-compose.raspberrypi.yml --file docker-compose.skills.yml --env-file .env logs --follow --tail 200
     ```
 
-## Specific contaienr logs
+## Specific container logs
 
 Access the logs of a specific container.
 

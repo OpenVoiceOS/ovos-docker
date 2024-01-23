@@ -61,6 +61,7 @@ To allow data persistence, Docker or Podman volumes are required, they will prev
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `ovos_gui_file`         | Share QML files from skills between the GUI message bus and the GUI client                                                       |
 | `ovos_listener_records` | [Wake words](../../about/glossary/terms.md#wake-word) and [utterances](../../about/glossary/terms.md#utterance) recorded samples |
+| `ovos_local_state`      | Moslty used to store logs from the different components                                                                          |
 | `ovos_models`           | Models downloaded by `precise-lite` wake word plugin                                                                             |
 | `ovos_nltk`             | [Punkt](https://www.askpython.com/python-modules/nltk-punkt) Python package required by [NLTK](https://www.nltk.org/index.html)  |
 | `ovos_tts_cache`        | `.wav` and `.pho` files acting as cache from TTS transcription                                                                   |
