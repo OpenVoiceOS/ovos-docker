@@ -30,7 +30,7 @@ SHELL ["/bin/bash", "-c"]
 RUN curl -sS https://forslund.github.io/mycroft-desktop-repo/mycroft-desktop.gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/mimic.gpg \
   && echo "deb http://forslund.github.io/mycroft-desktop-repo bionic main" | tee -a /etc/apt/sources.list.d/mimic.list \
   && apt-get update \
-  && apt-get install -y --no-install-recommends portaudio19-dev mimic build-essential python3-dev vlc libespeak-ng1 \
+  && apt-get install -y --no-install-recommends portaudio19-dev mimic build-essential python3-dev libvlc-bin libespeak-ng1 \
   && if [ "${ALPHA}" == "true" ]; then \
   pip3 install -r /tmp/requirements.txt --pre; \
   else \
