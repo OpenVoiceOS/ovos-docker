@@ -6,8 +6,8 @@ ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI CLI image"
 LABEL org.opencontainers.image.description="Command line for Open Voice OS"
-LABEL org.opencontainers.image.version=${VERSION}
-LABEL org.opencontainers.image.created=${BUILD_DATE}
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
 LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
@@ -31,7 +31,7 @@ RUN apt-get update \
     && apt-get --purge remove python3-dev build-essential -y \
     && apt-get --purge autoremove -y \
     && apt-get clean \
-    && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+    && rm -rf "${HOME}"/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
 USER $USER
 
