@@ -8,6 +8,7 @@ The [Speech-To-Text](../../../about/glossary/terms.md#speech-to-text-stt) plugin
 
 The `ovos_listener` container comes with few pre-installed STT plugins such as:
 
+- `ovos-stt-plugin-chromium` uses the Google Chrome browser API
 - `ovos-stt-plugin-server` allows you to reach an external STT service
 - `ovos-stt-plugin-vosk` is an offline STT service
 

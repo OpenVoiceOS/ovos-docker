@@ -15,6 +15,7 @@ The [Plugin based Hardware Abstraction Layer](../../../about/glossary/components
 The `ovos_phal` container comes with few pre-installed PHAL plugins such as:
 
 - `ovos-PHAL-plugin-alsa` controls system volume with [ALSA](https://en.wikipedia.org/wiki/Advanced_Linux_Sound_Architecture)
+- `ovos-PHAL-plugin-ipgeo` provides geolocation information via the message bus
 - `ovos-PHAL-plugin-system` handles bus events to interact with the operating system
 
 If the existing PHAL plugins are not enough then you can install yours by following the same principle as for the [STT plugins](./stt.md) by adding a `phal.list` or `phal_admin.list` files within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.

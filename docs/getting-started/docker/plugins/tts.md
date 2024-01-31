@@ -8,9 +8,7 @@ The [Text-To-Speech](../../../about/glossary/terms.md#text-to-speech-tts) plugin
 
 The `ovos_audio` container comes with few pre-installed TTS plugins such as:
 
-- `ovos-tts-plugin-mimic` is the original Mycroft AI TTS with the iconic Alan Pope's voice
-- `ovos-tts-plugin-mimic2` is the cloud based version hosted on Mycroft AI infrastructure
-- `ovos-tts-plugin-mimic3-server` is the latest Mycroft AI TTS engine
+- `ovos-tts-plugin-polly` is the Amazon Polly TTS server _(authentication required)_
 - `ovos-tts-plugin-server` allows you to reach an external TTS service
 
 If the existing TTS plugins are not enough then you can install yours by following the same principle as for the [skills](../installation/skills.md) by adding an `audio.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
@@ -24,7 +22,7 @@ When the `ovos_audio` container starts, it will look for this file and install t
 ```ini title="~/ovos/config/audio.list"
 ovos-tts-plugin-marytts==0.0.1a1 # Specific plugin version on PyPi
 neon-tts-plugin-mozilla-remote # Latest plugin version on PyPi
-git+https://github.com/NeonGeckoCom/neon-tts-plugin-polly.git@fix/whatever # Specific branch of a plugin on GitHub
+git+https://github.com/OpenVoiceOS/ovos-tts-plugin-piper.git@fix/whatever # Specific branch of a plugin on GitHub
 ```
 
 The `ovos_audio` container must be restarted if a change occurs in the `audio.list` file.
