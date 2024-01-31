@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4+insiders-4.50.0">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6+insiders-4.52.1">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.67c3bdf0.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.76d06c94.min.css">
       
         
         <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1689,9 +1689,7 @@
 </div>
 <p>The <code>ovos_audio</code> container comes with few pre-installed TTS plugins such as:</p>
 <ul>
-<li><code>ovos-tts-plugin-mimic</code> is the original Mycroft AI TTS with the iconic Alan Pope's voice</li>
-<li><code>ovos-tts-plugin-mimic2</code> is the cloud based version hosted on Mycroft AI infrastructure</li>
-<li><code>ovos-tts-plugin-mimic3-server</code> is the latest Mycroft AI TTS engine</li>
+<li><code>ovos-tts-plugin-polly</code> is the Amazon Polly TTS server <em>(authentication required)</em></li>
 <li><code>ovos-tts-plugin-server</code> allows you to reach an external TTS service</li>
 </ul>
 <p>If the existing TTS plugins are not enough then you can install yours by following the same principle as for the <a href="../../installation/skills/">skills</a> by adding an <code>audio.list</code> file within the <code>~/ovos/config/</code> directory, this file acts as a Python <code>requirements.txt</code> file.</p>
@@ -1702,7 +1700,7 @@
 <p>When the <code>ovos_audio</code> container starts, it will look for this file and install the plugins defined in there.</p>
 <div class="language-ini highlight"><span class="filename">~/ovos/config/audio.list</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">ovos-tts-plugin-marytts</span><span class="o">=</span><span class="s">=0.0.1a1</span><span class="w"> </span><span class="c1"># Specific plugin version on PyPi</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">neon-tts-plugin-mozilla-remote # Latest plugin version on PyPi</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">git+https</span><span class="o">:</span><span class="s">//github.com/NeonGeckoCom/neon-tts-plugin-polly.git@fix/whatever</span><span class="w"> </span><span class="c1"># Specific branch of a plugin on GitHub</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">git+https</span><span class="o">:</span><span class="s">//github.com/OpenVoiceOS/ovos-tts-plugin-piper.git@fix/whatever</span><span class="w"> </span><span class="c1"># Specific branch of a plugin on GitHub</span>
 </span></code></pre></div>
 <p>The <code>ovos_audio</code> container must be restarted if a change occurs in the <code>audio.list</code> file.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Docker</label><label for="__tabbed_1_2">Podman</label></div>
@@ -1739,7 +1737,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 31, 2024</span>
   </span>
 
     
@@ -2047,7 +2045,7 @@
     <script id="__config" type="application/json">{"base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.a0279539.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.b547eccd.min.js"></script>
       
     
   </body>
