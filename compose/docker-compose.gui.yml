@@ -58,7 +58,6 @@ services:
       QT_QPA_EGLFS_KMS_ATOMIC: 1
       QT_QPA_PLATFORMTHEME: qt5ct
       QT_PLUGIN_PATH: /usr/lib/qt/plugins:/usr/lib/plugins:/usr/lib/plugins/kf5
-      QT_LOGGING_RULES: "*=false"
       QT_FILE_SELECTORS: ovos
       QT_FONT_DPI: 120
       QT_IM_MODULE: qtvirtualkeyboard
@@ -117,7 +116,6 @@ services:
   #     QT_QPA_EGLFS_HIDECURSOR: 1
   #     QT_QPA_PLATFORMTHEME: qt5ct
   #     QT_PLUGIN_PATH: /usr/lib/qt/plugins:/usr/lib/plugins:/usr/lib/plugins/kf5
-  #     QT_LOGGING_RULES: "*=false"
   #     QT_FILE_SELECTORS: ovos
   #     QT_FONT_DPI: 120
   #     QT_IM_MODULE: qtvirtualkeyboard
