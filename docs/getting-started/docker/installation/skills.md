@@ -8,7 +8,7 @@ Two different methods are supported by `ovos-docker` to install Open Voice OS's 
 
 ## As part of `ovos_core` container
 
-The first method is to use a `skills.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
+The first method is to use a `skills.list` file within the `~/ovos/config/` directory _(it does not exist by default)_, this file acts as a Python `requirements.txt` file.
 
 When `ovos_core` container starts, it will look for a `skills.list` file and install the skills defined in there.
 
@@ -16,7 +16,7 @@ When `ovos_core` container starts, it will look for a `skills.list` file and ins
 
     The skill has to be compatible with the `pip install` method which requires a `setup.py` file.
 
-```ini title="skills.list"
+```ini title="~/ovos/config/skills.list"
 ovos-skill-stop # Latest skill version on PyPi
 ovos-skill-volume==0.0.1 # Specific skill version on PyPi
 git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git@fix/whatever # Specific skill's branch on GitHub
@@ -29,6 +29,36 @@ If the `ovos_core` container is wiped for any reasons _(like an update)_, the sk
     `skills.list` file could be used as well to install extra Python librairies, *e.g.*, `SoCo`, `RPi.GPIO`. Just make sure to avoid empty lines.
 
 The main advantage of this method is the simplicity **but** the downside will be more Python dependencies _(libraries)_ within the `ovos_core` container, potential conflicts across them, a lack of isolation and a slower start of the container.
+
+Once the `~/ovos/config/skills.list` file is populated with the wanted skills, the `ovos_core` container must be restarted to handle the new requirements.
+
+!!! note "Podman users :muscle:"
+
+    If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
+
+=== "Raspberry Pi"
+
+    ```shell
+    docker restart ovos_core
+    ```
+
+=== "Linux"
+
+    ```shell
+    docker restart ovos_core
+    ```
+
+=== "Mac OS"
+
+    ```shell
+    docker restart ovos_core
+    ```
+
+=== "Windows WSL2"
+
+    ```shell
+    docker restart ovos_core
+    ```
 
 ## As standalone container _(recommended)_
 
