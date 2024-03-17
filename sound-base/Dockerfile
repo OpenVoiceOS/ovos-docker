@@ -25,9 +25,9 @@ RUN apt-get update \
     && apt-get --purge autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt /var/log/{apt,dpkg.log} \
-    && mkdir -p /home/${USER}/.config/pulse \
-    && chown ${USER}:${USER} -R /home/${USER} \
-    && usermod -a -G audio $USER
+    && mkdir -p /home/"${USER}"/.config/mycroft/apps /home/"${USER}"/.config/pulse \
+    && chown "${USER}":"${USER}" -R /home/"${USER}" \
+    && usermod -a -G audio "$USER"
 
 USER $USER
 

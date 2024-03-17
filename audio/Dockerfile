@@ -34,7 +34,7 @@ RUN apt-get update \
   else \
   pip3 install -r /tmp/requirements.txt; \
   fi \
-  && mkdir -p /home/"${USER}"/.config/mycroft/apps /home/"${USER}"/.cache/mycroft \
+  && mkdir -p /home/"${USER}"/.cache/mycroft \
   && chown "${USER}":"${USER}" -R /home/"${USER}" \
   && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
