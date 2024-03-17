@@ -6,5 +6,5 @@ ovos-classifiers
 ovos-plugin-vlc
 git+https://github.com/OpenVoiceOS/ovos-ocp-news-plugin.git
 git+https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin.git
-git+https://github.com/NeonGeckoCom/neon-tts-plugin-polly
+git+https://github.com/OpenVoiceOS/ovos-tts-plugin-polly.git
 ovos-workshop
