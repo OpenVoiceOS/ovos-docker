@@ -1,5 +1,4 @@
 onnxruntime
-ovos-audio-transformer-plugin-ggwave
 ovos-dinkum-listener[extras]
 ovos-microphone-plugin-sounddevice
 git+https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium.git
