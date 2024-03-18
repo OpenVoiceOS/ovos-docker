@@ -133,6 +133,34 @@ services:
       ovos_phal:
         condition: service_started
 
+  ovos_plugin_ggwave:
+    <<: *podman
+    container_name: ovos_plugin_ggwave
+    hostname: ovos_plugin_ggwave
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-plugin-ggwave:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
+      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
+      TZ: $TZ
+      XDG_RUNTIME_DIR: $XDG_RUNTIME_DIR
+    network_mode: host
+    devices:
+      - /dev/snd
+    volumes:
+      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
+      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
+    depends_on:
+      ovos_messagebus:
+        condition: service_started
+      ovos_phal:
+        condition: service_started
+
   ovos_audio:
     <<: *podman
     container_name: ovos_audio

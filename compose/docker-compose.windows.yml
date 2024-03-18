@@ -121,6 +121,28 @@ services:
       ovos_phal:
         condition: service_started
 
+  ovos_plugin_ggwave:
+    <<: *podman
+    container_name: ovos_plugin_ggwave
+    hostname: ovos_plugin_ggwave
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-plugin-ggwave:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      PULSE_SERVER: /mnt/wslg/PulseServer
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ${TMP_FOLDER}:/tmp/mycroft
+      - /mnt/wslg/:/mnt/wslg/
+    depends_on:
+      ovos_messagebus:
+        condition: service_started
+      ovos_phal:
+        condition: service_started
+
   ovos_audio:
     <<: *podman
     container_name: ovos_audio
