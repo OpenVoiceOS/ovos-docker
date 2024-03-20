@@ -17,6 +17,21 @@ When using EGLFS, the `DISPLAY` variable from the `.env` [composition environmen
 
     **If not running on a Raspberry Pi 4 or 5 then the CPU might be used to render the GUI which will result in a high CPU consumption and a poor user exprience.**
 
+## EGLFS on Raspberry Pi 5
+
+The Raspberry Pi 5 board doesn't use `/dev/dri/card0` by default anymore for the GPU rendering. The solution to this issue is to create an EGLFS configuration referencing the right card to use.
+
+```json title="~/ovos/config/ovos-eglfs.json"
+{
+  "device": "/dev/dri/card1",
+  "hwcursor": false
+}
+```
+
+The `QT_QPA_EGLFS_INTEGRATION` variable must be set to `eglfs_ksm` and `QT_QPA_EGLFS_KMS_CONFIG` variable must be set to `/home/$OVOS_USER/.config/mycroft/ovos-eglfs.json` in the `.env` file.
+
+Please check the [composition environment file](../composition.md#environment-files) section for more details.
+
 ## Configuration
 
 The `ovos-gui-messagebus` component must be configured in order to receive the QML files from the skill containers. Because of these file transfers, the `ovos-message-bus` component must be configured to allow bigger payload.
