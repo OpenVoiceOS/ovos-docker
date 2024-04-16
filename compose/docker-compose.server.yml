@@ -1,0 +1,99 @@
+---
+version: "3.9"
+
+x-podman: &podman
+  userns_mode: keep-id
+  security_opt:
+    - "label=disable"
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    mode: non-blocking
+    max-buffer-size: 4m
+    max-size: "200m"
+    max-file: "1"
+
+volumes:
+  ovos_nltk:
+    name: ovos_nltk
+    driver: local
+  ovos_local_state:
+    name: ovos_local_state
+    driver: local
+
+services:
+  ovos_messagebus:
+    <<: *podman
+    container_name: ovos_messagebus
+    hostname: ovos_messagebus
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-messagebus:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+
+  ovos_core:
+    <<: *podman
+    container_name: ovos_core
+    hostname: ovos_core
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-core:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+      - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
+      - ovos_nltk:/home/${OVOS_USER}/nltk_data
+      - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
+      - ${TMP_FOLDER}:/tmp/mycroft
+    depends_on:
+      ovos_messagebus:
+        condition: service_started
+
+  hivemind_listener:
+    <<: *podman
+    container_name: hivemind_listener
+    hostname: hivemind_listener
+    restart: unless-stopped
+    image: docker.io/smartgic/hivemind-listener:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    tty: true
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${HIVEMIND_CONFIG_FOLDER}:/home/${HIVEMIND_USER}/.config/hivemind:z
+      - ${HIVEMIND_SHARE_FOLDER}:/home/${HIVEMIND_USER}/.local/share/hivemind:z
+    depends_on:
+      ovos_core:
+        condition: service_started
+
+  hivemind_cli:
+    <<: *podman
+    container_name: hivemind_cli
+    hostname: hivemind_cli
+    restart: unless-stopped
+    image: docker.io/smartgic/hivemind-cli:${VERSION}
+    logging: *default-logging
+    pull_policy: $PULL_POLICY
+    tty: true
+    environment:
+      TZ: $TZ
+    network_mode: host
+    volumes:
+      - ${HIVEMIND_CONFIG_FOLDER}:/home/${HIVEMIND_USER}/.config/hivemind:z
+      - ${HIVEMIND_SHARE_FOLDER}:/home/${HIVEMIND_USER}/.local/share/hivemind:z
+    depends_on:
+      hivemind_listener:
+        condition: service_started
