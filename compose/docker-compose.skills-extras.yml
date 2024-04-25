@@ -133,7 +133,7 @@ services:
     container_name: ovos_skill_randomness
     hostname: ovos_skill_randomness
     restart: unless-stopped
-    image: docker.io/smartgic/ovos-skill-parrot:${VERSION}
+    image: docker.io/smartgic/ovos-skill-randomness:${VERSION}
     logging: *default-logging
     pull_policy: $PULL_POLICY
     environment:
