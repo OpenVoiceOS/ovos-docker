@@ -19,7 +19,6 @@ ARG ALPHA=false
 ARG USER=ovos
 
 COPY files/requirements.txt /tmp/requirements.txt
-COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN if [ "${ALPHA}" == "true" ]; then \
     pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
@@ -27,7 +26,7 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
     && mkdir "${HOME}/.cache/ovos_gui_file_server" \
-    && rm -rf "${HOME}"/.cache  /tmp/requirements.txt
+    && rm -rf "${HOME}"/.cache /tmp/requirements.txt
 
 ENTRYPOINT ovos-gui-service
 
