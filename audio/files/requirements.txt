@@ -4,6 +4,7 @@ ovos-audio-plugin-simple
 git+https://github.com/OpenVoiceOS/ovos-bidirectional-translation-plugin.git
 ovos-classifiers
 ovos-plugin-vlc
+git+https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin.git
 git+https://github.com/OpenVoiceOS/ovos-ocp-news-plugin.git
 git+https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin.git
 git+https://github.com/OpenVoiceOS/ovos-tts-plugin-polly.git

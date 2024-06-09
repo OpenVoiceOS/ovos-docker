@@ -23,20 +23,17 @@ USER root
 COPY files/requirements.txt /tmp/requirements.txt
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
-SHELL ["/bin/bash", "-c"]
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libasound2-dev procps ddcutil build-essential python3-dev network-manager \
+RUN apk update \
+    && apk add --no-cache --virtual build-dependencies alsa-lib-dev build-base python3-dev linux-headers \
+    && apk add --no-cache py3-scikit-learn ddcutil networkmanager \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install -r /tmp/requirements.txt --pre; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
     else \
-    pip3 install -r /tmp/requirements.txt; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
     && chown "${USER}":"${USER}" -R /home/"${USER}" \
-    && apt-get --purge remove --purge -y libasound2-dev \
-    && apt-get --purge autoremove -y \
-    && apt-get clean \
-    && rm -rf "${HOME}"/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+    && apk del build-dependencies \
+    && rm -rf "${HOME}"/.cache /tmp/requirements.txt
 
 USER "$USER"
 

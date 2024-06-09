@@ -18,17 +18,13 @@ COPY files/client.conf /etc/pulse/client.conf
 
 USER root
 
-SHELL ["/bin/bash", "-c"]
-
-RUN apt-get update \
-    && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends gpg alsa-utils libasound2-plugins flac libportaudio2 pulseaudio-utils pipewire pipewire-alsa mpg123 music123 sox swig libsox-fmt-all procps \
-    && apt-get --purge autoremove -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt /var/log/{apt,dpkg.log} \
-    && mkdir -p /home/"${USER}"/.config/mycroft/apps /home/"${USER}"/.config/pulse \
+RUN apk update \
+    && apk add --no-cache shadow alsa-utils alsa-lib flac libportaudiocxx pulseaudio-utils pipewire pipewire-alsa mpg123 sox swig procps-ng \
+    && mkdir -p /home/"${USER}"/.config/{mycroft/apps,pulse} \
     && chown "${USER}":"${USER}" -R /home/"${USER}" \
-    && usermod -a -G audio "$USER"
+    && usermod -a -G audio "$USER" \
+    && apk del shadow
 
-USER $USER
+USER "$USER"
 
 ENV IS_OVOS_CONTAINER "true"

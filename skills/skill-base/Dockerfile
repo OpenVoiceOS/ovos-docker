@@ -23,14 +23,14 @@ RUN adduser --disabled-password "$USER" \
     && python3 -m venv /home/"${USER}"/.venv --system-site-packages \
     && . /home/"${USER}"/.venv/bin/activate \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-core[lgpl] ovos-translate-server-plugin --pre; \
+    pip3 install --no-cache-dir ovos-core[lgpl] ovos-translate-server-plugin --pre; \
     else \
-    pip3 install ovos-core[lgpl] ovos-translate-server-plugin; \
+    pip3 install --no-cache-dir ovos-core[lgpl] ovos-translate-server-plugin; \
     fi \
     && chown "${USER}":"${USER}" -R /home/"${USER}" \
     && rm -rf /home/"${USER}"/.cache
 
-USER $USER
+USER "$USER"
 
 ENV IS_OVOS_CONTAINER "true"
 ENV PATH /home/"${USER}"/.venv/bin:$PATH

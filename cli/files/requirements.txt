@@ -3,4 +3,3 @@ ovos-config
 git+https://github.com/OpenVoiceOS/ovos-docs-viewer.git
 neon-mana-utils
 ovos-plugin-manager
-PyYAML==6.0

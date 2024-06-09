@@ -18,13 +18,16 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 ARG USER=ovos
 
+COPY files/requirements.txt /tmp/requirements.txt
+COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
+
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip install ovos-plugin-manager[offline] ovos-gui ovos-gui-plugin-shell-companion ovos-backend-client --pre; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
     else \
-    pip install ovos-plugin-manager[offline] ovos-gui ovos-gui-plugin-shell-companion ovos-backend-client; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
     && mkdir "${HOME}/.cache/ovos_gui_file_server" \
-    && rm -rf "${HOME}/.cache/pip"
+    && rm -rf "${HOME}"/.cache  /tmp/requirements.txt
 
 ENTRYPOINT ovos-gui-service
 

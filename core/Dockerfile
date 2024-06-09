@@ -23,23 +23,21 @@ USER root
 COPY files/requirements.txt /tmp/requirements.txt
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
-SHELL ["/bin/bash", "-c"]
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libfann-dev build-essential python3-dev \
+RUN apk update \
+    && apk add --no-cache --virtual build-dependencies fann-dev build-base python3-dev \
+    && apk add --no-cache py3-scikit-learn \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install -r /tmp/requirements.txt --pre; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
     else \
-    pip3 install -r /tmp/requirements.txt; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
-    && mkdir -p /home/${USER}/.local/share/mycroft/skills /home/${USER}/nltk_data \
-    && chown ${USER}:${USER} -R /home/${USER} \
-    && apt-get --purge autoremove -y \
-    && apt-get clean \
-    && rm -rf ${HOME}/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+    && mkdir -p /home/"${USER}"/{.local/share/mycroft/skills,nltk_data} \
+    && chown "${USER}":"${USER}" -R /home/"${USER}" \
+    && apk del build-dependencies \
+    && rm -rf "${HOME}"/.cache /tmp/requirements.txt
 
-USER $USER
+USER "$USER"
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
 
-WORKDIR /home/${USER}
+WORKDIR /home/"${USER}"

@@ -38,7 +38,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt /var/log/{apt,dpkg.log}
 
-USER $USER
+USER "$USER"
 
 ENV IS_OVOS_CONTAINER "true"
 
