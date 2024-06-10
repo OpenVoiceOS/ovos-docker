@@ -15,8 +15,6 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 ARG USER=ovos
 
-ENV DEBIAN_FRONTEND noninteractive
-
 USER root
 
 RUN apk update \
