@@ -18,6 +18,8 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 ARG USER=ovos
 
+USER root
+
 COPY files/requirements.txt /tmp/requirements.txt
 
 RUN if [ "${ALPHA}" == "true" ]; then \
@@ -26,7 +28,10 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
     && mkdir "${HOME}/.cache/ovos_gui_file_server" \
+    && chown "${USER}":"${USER}" -R /home/"${USER}" \
     && rm -rf "${HOME}"/.cache /tmp/requirements.txt
+
+USER "$USER"
 
 ENTRYPOINT ovos-gui-service
 
