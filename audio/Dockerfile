@@ -28,7 +28,7 @@ COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends portaudio19-dev build-essential python3-dev vlc libespeak-ng1 \
+  && apt-get install -y --no-install-recommends portaudio19-dev build-essential python3-dev mpv libespeak-ng1 \
   && if [ "${ALPHA}" == "true" ]; then \
   pip3 install -r /tmp/requirements.txt --pre; \
   else \
