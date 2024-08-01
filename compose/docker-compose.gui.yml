@@ -65,6 +65,7 @@ services:
       QT_IM_MODULE: qtvirtualkeyboard
       QT_QUICK_CONTROLS_STYLE: OpenVoiceStyle
       TZ: $TZ
+      WAYLAND_DISPLAY: $WAYLAND_DISPLAY
       XDG_CURRENT_DESKTOP: kde
       XDG_RUNTIME_DIR: $XDG_RUNTIME_DIR
     network_mode: host
@@ -125,6 +126,7 @@ services:
   #     QT_IM_MODULE: qtvirtualkeyboard
   #     QT_QUICK_CONTROLS_STYLE: OpenVoiceStyle
   #     TZ: $TZ
+  #     WAYLAND_DISPLAY: $WAYLAND_DISPLAY
   #     XDG_CURRENT_DESKTOP: kde
   #     XDG_RUNTIME_DIR: $XDG_RUNTIME_DIR
   #   network_mode: host
