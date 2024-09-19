@@ -31,7 +31,7 @@ RUN apk update \
     else \
     pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
-    && mkdir -p "/home/${USER}/{.local/share/mycroft/skills,nltk_data}" \
+    && bash -c 'mkdir -p "/home/${USER}/{.local/share/mycroft/skills,nltk_data}"' \
     && chown "${USER}:${USER}" -R "/home/${USER}" \
     && apk del build-dependencies \
     && rm -rf "${HOME}/.cache" /tmp/requirements.txt
