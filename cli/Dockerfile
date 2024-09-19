@@ -27,7 +27,7 @@ RUN apk update \
     else \
     pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
-    && bash -c 'mkdir -p "/home/${USER}/.local/state/mycroft" "/home/${USER}/stdout /var/log/mycroft"' \
+    && bash -c 'mkdir -p "/home/${USER}/.local/state/mycroft" "/home/${USER}/stdout" /var/log/mycroft' \
     && chown "${USER}:${USER}" -R "/home/${USER}" /var/log/mycroft \
     && apk del build-dependencies \
     && rm -rf "${HOME}/.cache /tmp/requirements.txt"
