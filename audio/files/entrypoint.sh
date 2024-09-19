@@ -3,7 +3,7 @@
 # tts.list file is deprecated and will be removed
 tts_list=~/.config/mycroft/tts.list
 audio_list=~/.config/mycroft/audio.list
-audio_list_state=/tmp/audio.state
+audio_list_state=~/.local/state/audio.state
 
 # Only here until tts.list full removal
 file=""

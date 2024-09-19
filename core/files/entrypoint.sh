@@ -2,10 +2,10 @@
 
 # Install skills via pip command when a setup.py exists
 skills_list=~/.config/mycroft/skills.list
-skills_list_state=/tmp/skills.state
+skills_list_state=~/.local/state/skills.state
 if test -f "$skills_list"; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$skills_list") <(grep -vE '^\s*(#|$)' "$skills_list_state" 2>/dev/null) &>/dev/null; then
-        pip3 install --no-cache-dir  -r "$skills_list"
+        pip3 install --no-cache-dir -r "$skills_list"
         cp "$skills_list" "$skills_list_state"
     fi
 fi
