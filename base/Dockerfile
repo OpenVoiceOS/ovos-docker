@@ -21,7 +21,7 @@ RUN apk update \
   && adduser "$USER" -G "$USER" -g "Open Voice OS user" -D -s /bin/bash \
   && python3 -m venv --system-site-packages "/home/${USER}/.venv" \
   && . "/home/${USER}/.venv/bin/activate" \
-  && bash -c 'mkdir -p "/home/${USER}/{.config,.cache,.local/{state/mycroft,share}}/{mycroft,OpenVoiceOS}"' \
+  && bash -c "mkdir -p /home/"${USER}"/{.config,.cache,.local/{state/mycroft,share}}/{mycroft,OpenVoiceOS}" \
   && chown "${USER}:${USER}" -R "/home/${USER}" \
   && apk del python3-dbg python3-dev python3-doc \
   && rm -rf "${HOME}/.cache"

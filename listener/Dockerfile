@@ -33,7 +33,7 @@ RUN apk update \
   else \
   pip3 install --no-cache-dir -r /tmp/requirements.txt; \
   fi \
-  && bash -c 'mkdir -p "/home/${USER}/.local/share/{vosk,precise-lite,mycroft/listener}"' \
+  && bash -c "mkdir -p /home/"${USER}"/.local/share/{vosk,precise-lite,mycroft/listener}" \
   && chown "${USER}:${USER}" -R "/home/${USER}" \
   && apk del build-dependencies \
   && rm -rf "${HOME}/.cache" /tmp/requirements.txt

@@ -20,7 +20,7 @@ USER root
 
 RUN apk update \
     && apk add --no-cache shadow alsa-utils alsa-lib flac libportaudiocxx pulseaudio-utils pipewire pipewire-alsa mpg123 sox swig procps-ng \
-    && bash -c 'mkdir -p "/home/${USER}/.config/{mycroft/apps,pulse}"' \
+    && bash -c "mkdir -p /home/"${USER}"/.config/{mycroft/apps,pulse}" \
     && chown "${USER}:${USER}" -R "/home/${USER}" \
     && usermod -a -G audio "$USER" \
     && apk del shadow
