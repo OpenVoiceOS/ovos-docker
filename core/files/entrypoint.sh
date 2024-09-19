@@ -5,7 +5,7 @@ skills_list=~/.config/mycroft/skills.list
 skills_list_state=/tmp/skills.state
 if test -f "$skills_list"; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$skills_list") <(grep -vE '^\s*(#|$)' "$skills_list_state" 2>/dev/null) &>/dev/null; then
-        pip3 install -r "$skills_list"
+        pip3 install --no-cache-dir  -r "$skills_list"
         cp "$skills_list" "$skills_list_state"
     fi
 fi
@@ -23,7 +23,7 @@ cd "$skills_directory" || exit
 for skill in $(ls -d -- */ 2>/dev/null); do
     cd "$skill" || exit
     if test -f requirements.txt; then
-        pip3 install -r requirements.txt
+        pip3 install --no-cache-dir -r requirements.txt
     fi
     pip3 install .
     cd ..

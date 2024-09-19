@@ -1,21 +1,21 @@
 # Open Voice OS running on Windows with WSL2 and Docker
 
-*   [Open Voice OS running on Windows with WSL2 and Docker](#open-voice-os-running-on-windows-with-wsl2-and-docker)
-   *   [Limitations](#limitations)
-   *   [Requirements](#requirements)
-      *   [Docker](#docker)
-      *   [PulseAudio](#pulseaudio)
-  *   [How to use these images](#how-to-use-these-images)
-  *   [Thanks](#thanks)
-  *   [Support](#support)
+- [Open Voice OS running on Windows with WSL2 and Docker](#open-voice-os-running-on-windows-with-wsl2-and-docker)
+- [Limitations](#limitations)
+- [Requirements](#requirements)
+- [Docker](#docker)
+- [PulseAudio](#pulseaudio)
+- [How to use these images](#how-to-use-these-images)
+- [Thanks](#thanks)
+- [Support](#support)
 
 ## Limitations
 
 Because Open Voice OS was designed to run on Linux operating system, some limitations exist on Windows.
 
-*   Open Voice OS GUI is not available
-*   DBus is not yet supported which prevent the use of MPRIS via the `ovos_audio` container
-*   Some plugins with PHAL will/could be limited to what WSL2 supports
+- Open Voice OS GUI is not available
+- DBus is not yet supported which prevent the use of MPRIS via the `ovos_audio` container
+- Some plugins with PHAL will/could be limited to what WSL2 supports
 
 ## Requirements
 
@@ -29,7 +29,7 @@ Once installed and started, run the following command to ensure that Docker engi
 docker system info
 ```
 
-*Docker Desktop doesn't start by default when Windows boots up. You must have Docker Desktop running in Windows before WSL2 can use Docker.*
+_Docker Desktop doesn't start by default when Windows boots up. You must have Docker Desktop running in Windows before WSL2 can use Docker._
 
 ### PulseAudio
 
@@ -77,6 +77,6 @@ Thanks to [@mikejgray](https://github.com/mikejgray/) and community member Ben f
 
 ## Support
 
-*   [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
-*   [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
-*   [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)
+- [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
+- [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
+- [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)

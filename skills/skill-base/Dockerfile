@@ -5,8 +5,8 @@ ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI skill base image (Alpine based)"
 LABEL org.opencontainers.image.description="Used as base layer for other OCI skill images"
-LABEL org.opencontainers.image.version=${VERSION}
-LABEL org.opencontainers.image.created=${BUILD_DATE}
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
 LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
 LABEL org.opencontainers.image.vendor="Open Voice OS"

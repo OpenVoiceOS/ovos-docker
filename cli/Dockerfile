@@ -1,5 +1,5 @@
-ARG TAG=alpha
-FROM smartgic/ovos-base:${TAG}
+ARG TAG=0.1.0
+FROM "smartgic/ovos-base:${TAG}"
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
@@ -27,10 +27,10 @@ RUN apk update \
     else \
     pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
-    && mkdir -p /home/"${USER}"/.local/state/mycroft /home/"${USER}"/stdout /var/log/mycroft \
-    && chown "${USER}":"${USER}" -R /home/"${USER}" /var/log/mycroft \
+    && mkdir -p "/home/${USER}/.local/state/mycroft" "/home/${USER}/stdout /var/log/mycroft" \
+    && chown "${USER}:${USER}" -R "/home/${USER}" /var/log/mycroft \
     && apk del build-dependencies \
-    && rm -rf "${HOME}"/.cache /tmp/requirements.txt
+    && rm -rf "${HOME}/.cache /tmp/requirements.txt"
 
 USER "$USER"
 
@@ -39,4 +39,4 @@ ENV TERM=linux
 
 ENTRYPOINT ["sleep", "infinity"]
 
-WORKDIR /home/"${USER}"
+WORKDIR "/home/${USER}"

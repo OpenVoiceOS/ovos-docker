@@ -1,13 +1,13 @@
-ARG TAG=alpha
-FROM smartgic/ovos-sound-base:${TAG}
+ARG TAG=0.1.0
+FROM "smartgic/ovos-sound-base:${TAG}"
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI ggwave plugin image"
 LABEL org.opencontainers.image.description="Tiny data-over-sound library to install skills, configure wireless, etc..."
-LABEL org.opencontainers.image.version=${VERSION}
-LABEL org.opencontainers.image.created=${BUILD_DATE}
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
 LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
@@ -26,10 +26,10 @@ RUN apk update \
   pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave; \
   fi \
   && apk del build-dependencies \
-  && rm -rf "${HOME}"/.cache
+  && rm -rf "${HOME}/.cache"
 
 USER "$USER"
 
 ENTRYPOINT ovos-ggwave-listener
 
-WORKDIR /home/"${USER}"
+WORKDIR "/home/${USER}"

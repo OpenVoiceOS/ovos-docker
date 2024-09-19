@@ -1,4 +1,4 @@
 ovos-backend-client
 ovos-gui
 ovos-gui-plugin-shell-companion
-ovos-plugin-manager[offline]
+ovos-plugin-manager

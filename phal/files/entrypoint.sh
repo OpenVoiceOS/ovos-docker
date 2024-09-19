@@ -5,7 +5,7 @@ phal_list=~/.config/mycroft/phal.list
 phal_list_state=/tmp/phal.state
 if test -f "$phal_list"; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$phal_list") <(grep -vE '^\s*(#|$)' "$phal_list_state" 2>/dev/null) &>/dev/null; then
-        pip3 install -r "$phal_list"
+        pip3 install --no-cache-dir -r "$phal_list"
         cp "$phal_list" "$phal_list_state"
     fi
 fi

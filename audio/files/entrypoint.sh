@@ -17,7 +17,7 @@ fi
 # Install TTS plugins, OCP plugins or others Python libraries via pip command when a setup.py exists
 if [ -n "$file" ]; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$file") <(grep -vE '^\s*(#|$)' "$audio_list_state" 2>/dev/null) &>/dev/null; then
-        pip3 install -r "$file"
+        pip3 install --no-cache-dir -r "$file"
         cp "$file" "$audio_list_state"
     fi
 fi
