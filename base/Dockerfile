@@ -16,7 +16,7 @@ ARG USER=ovos
 COPY --chmod=0755 files/ovos-hc.py /usr/local/bin/ovos-hc
 
 RUN apk update \
-  && apk add --no-cache bash git curl python3 py3-pip py3-virtualenv \
+  && apk add --no-cache bash git curl python3 py3-pip py3-virtualenv tzdata \
   && addgroup "$USER" \
   && adduser "$USER" -G "$USER" -g "Open Voice OS user" -D -s /bin/bash \
   && python3 -m venv --system-site-packages "/home/${USER}/.venv" \
