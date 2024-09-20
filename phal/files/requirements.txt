@@ -1,4 +1,5 @@
-ovos-PHAL[extras,linux]
+ovos-PHAL[linux]
+ovos-PHAL-plugin-ipgeo
 RPi.GPIO
 smbus2
 spidev
