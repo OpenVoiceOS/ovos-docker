@@ -21,9 +21,9 @@ RUN apk update \
   && apk add --no-cache --virtual build-dependencies portaudio-dev build-base python3-dev \
   && pip3 install --no-cache-dir -f 'https://whl.smartgic.io/' ggwave \
   && if [ "${ALPHA}" == "true" ]; then \
-  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave --pre; \
+  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave padacioso --pre; \
   else \
-  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave; \
+  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave padacioso; \
   fi \
   && apk del build-dependencies \
   && rm -rf "${HOME}/.cache"
