@@ -26,7 +26,7 @@ COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN apk update \
   && apk add --no-cache --virtual build-dependencies portaudio-dev build-base python3-dev \
   && apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing py3-onnxruntime \
-  && apk add --no-cache py3-scikit-learn py3-zeroconf espeak-ng \
+  && apk add --no-cache py3-scikit-learn py3-zeroconf espeak-ng mpv \
   && if [ "${ALPHA}" == "true" ]; then \
   pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
   else \
