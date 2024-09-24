@@ -30,10 +30,10 @@ asoundrc_file=~/.asoundrc
 if test -f ~/.config/mycroft/asoundrc; then
     cp -rfp ~/.config/mycroft/asoundrc "$asoundrc_file"
 else
-    if pactl info &>/dev/null; then
-        echo -e 'pcm.!default pulse\nctl.!default pulse' >"$asoundrc_file"
-    elif pw-link --links &>/dev/null; then
+    if pw-link --links &>/dev/null; then
         echo -e 'pcm.!default pipewire\nctl.!default pipewire' >"$asoundrc_file"
+    elif pactl info &>/dev/null; then
+        echo -e 'pcm.!default pulse\nctl.!default pulse' >"$asoundrc_file"
     fi
 fi
 
