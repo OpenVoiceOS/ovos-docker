@@ -1,5 +1,5 @@
-ARG TAG=alpha
-FROM smartgic/ovos-sound-base:${TAG}
+ARG TAG=0.1.0
+FROM "smartgic/ovos-sound-base:${TAG}"
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
   CMD ovos-hc -s audio || exit 1
@@ -18,7 +18,7 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 ARG USER=ovos
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 USER root
 
@@ -30,19 +30,19 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update \
   && apt-get install -y --no-install-recommends portaudio19-dev build-essential python3-dev mpv libespeak-ng1 \
   && if [ "${ALPHA}" == "true" ]; then \
-  pip3 install -r /tmp/requirements.txt --pre; \
+  pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
   else \
-  pip3 install -r /tmp/requirements.txt; \
+  pip3 install --no-cache-dir -r /tmp/requirements.txt; \
   fi \
-  && mkdir -p /home/"${USER}"/.cache/mycroft \
-  && chown "${USER}":"${USER}" -R /home/"${USER}" \
+  && mkdir -p "/home/${USER}/.cache/mycroft" \
+  && chown "${USER}:${USER}" -R "/home/${USER}" \
   && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
   && apt-get clean \
-  && rm -rf "${HOME}"/.cache/pip /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+  && rm -rf "${HOME}/.cache" /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
-USER $USER
+USER "$USER"
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
 
-WORKDIR /home/"${USER}"
+WORKDIR "/home/${USER}"

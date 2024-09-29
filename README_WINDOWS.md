@@ -1,13 +1,13 @@
 # Open Voice OS running on Windows with WSL2 and Docker
 
-*   [Open Voice OS running on Windows with WSL2 and Docker](#open-voice-os-running-on-windows-with-wsl2-and-docker)
-   *   [Limitations](#limitations)
-   *   [Requirements](#requirements)
-      *   [Docker](#docker)
-      *   [PulseAudio](#pulseaudio)
-  *   [How to use these images](#how-to-use-these-images)
-  *   [Thanks](#thanks)
-  *   [Support](#support)
+- [Open Voice OS running on Windows with WSL2 and Docker](#open-voice-os-running-on-windows-with-wsl2-and-docker)
+  - [Limitations](#limitations)
+  - [Requirements](#requirements)
+    - [Docker](#docker)
+    - [PulseAudio](#pulseaudio)
+  - [How to use these images](#how-to-use-these-images)
+  - [Thanks](#thanks)
+  - [Support](#support)
 
 ## Limitations
 

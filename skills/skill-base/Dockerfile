@@ -16,7 +16,7 @@ ARG USER=ovos
 
 RUN adduser --disabled-password "$USER" \
     && mkdir -p /home/"${USER}"/.config/mycroft /home/"${USER}"/.cache/mycroft /home/"${USER}"/.local/share/mycroft /tmp/mycroft/ipc /tmp/mycroft/cache \
-    && chown "${USER}":"${USER}" -R /home/"${USER}" /tmp/mycroft \
+    && chown "${USER}:${USER}" -R "/home/${USER}" /tmp/mycroft \
     && apk upgrade --no-cache libssl3 libcrypto3 \
     && apk add --no-cache git python3 py3-pip py3-wheel py3-numpy swig fann-dev py3-scikit-learn \
     && apk add --no-cache --virtual .build-deps python3-dev gcc g++ \
@@ -27,7 +27,7 @@ RUN adduser --disabled-password "$USER" \
     else \
     pip3 install ovos-core[lgpl] ovos-translate-server-plugin; \
     fi \
-    && chown "${USER}":"${USER}" -R /home/"${USER}" \
+    && chown "${USER}:${USER}" -R "/home/${USER}" \
     && rm -rf /home/"${USER}"/.cache
 
 USER $USER
