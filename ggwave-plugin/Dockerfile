@@ -25,11 +25,11 @@ RUN apt-get update \
   && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends portaudio19-dev build-essential python3-dev \
   && pip3 install -f 'https://whl.smartgic.io/' ggwave \
   && if [ "${ALPHA}" == "true" ]; then \
-  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave --pre; \
+  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave padacioso --pre; \
   else \
-  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave; \
+  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave padacioso; \
   fi \
-  && apt-get --purge remove -y portaudio19-dev  build-essential python3-dev \
+  && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
   && apt-get clean \
   && rm -rf "${HOME}/.cache" /var/lib/apt /var/log/{apt,dpkg.log}
