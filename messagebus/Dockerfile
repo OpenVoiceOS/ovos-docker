@@ -9,8 +9,8 @@ ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI message bus image"
 LABEL org.opencontainers.image.description="Message bus service, the nervous system of OpenVoiceOS (Python implementation)"
-LABEL org.opencontainers.image.version=${VERSION}
-LABEL org.opencontainers.image.created=${BUILD_DATE}
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
 LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
