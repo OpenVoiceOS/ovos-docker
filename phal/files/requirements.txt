@@ -1,5 +1,6 @@
 ovos-PHAL[linux]
 ovos-PHAL-plugin-ipgeo
+pillow
 RPi.GPIO
 smbus2
 spidev
