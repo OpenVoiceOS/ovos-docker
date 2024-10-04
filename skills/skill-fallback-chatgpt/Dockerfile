@@ -17,7 +17,7 @@ ARG ALPHA=false
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir skill-ovos-fallback-chatgptt --pre; \
+    pip3 install --no-cache-dir skill-ovos-fallback-chatgpt --pre; \
     else \
     pip3 install --no-cache-dir skill-ovos-fallback-chatgpt; \
     fi \
