@@ -1,6 +1,7 @@
 ovos-audio[extras]
 ovos-bidirectional-translation-plugin
 ovos-classifiers
+ovos-tts-plugin-mimic
 ovos-tts-plugin-polly
 ovos-workshop
 pyalsaaudio
