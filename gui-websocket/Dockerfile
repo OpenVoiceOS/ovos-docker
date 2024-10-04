@@ -27,7 +27,7 @@ RUN if [ "${ALPHA}" == "true" ]; then \
     else \
     pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
-    && mkdir "${HOME}/.cache/ovos_gui_file_server" \
+    && mkdir "${HOME}/.cache/ovos_gui_file_server" /etc/xdg \
     && chown "${USER}:${USER}" -R "/home/${USER}" \
     && rm -rf "${HOME}/.cache/pip" /tmp/requirements.txt
 
