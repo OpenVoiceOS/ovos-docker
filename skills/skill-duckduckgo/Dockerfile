@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install skill-ddg --pre; \
+    pip3 install --no-cache-dir skill-ddg --pre; \
     else \
-    pip3 install skill-ddg; \
+    pip3 install --no-cache-dir skill-ddg; \
     fi \
     && rm -rf "${HOME}/.cache"
 

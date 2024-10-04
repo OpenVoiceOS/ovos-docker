@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skill-parrot --pre; \
+    pip3 install --no-cache-dir ovos-skill-parrot --pre; \
     else \
-    pip3 install ovos-skill-parrot; \
+    pip3 install --no-cache-dir ovos-skill-parrot; \
     fi \
     && rm -rf "${HOME}/.cache"
 

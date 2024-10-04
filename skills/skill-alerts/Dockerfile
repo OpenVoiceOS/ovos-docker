@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skill-alerts --pre; \
+    pip3 install --no-cache-dir ovos-skill-alerts --pre; \
     else \
-    pip3 install ovos-skill-alerts; \
+    pip3 install --no-cache-dir ovos-skill-alerts; \
     fi \
     && rm -rf "${HOME}/.cache"
 

@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skill-icanhazdadjokes --pre; \
+    pip3 install --no-cache-dir ovos-skill-icanhazdadjokes --pre; \
     else \
-    pip3 install ovos-skill-icanhazdadjokes; \
+    pip3 install --no-cache-dir ovos-skill-icanhazdadjokes; \
     fi \
     && rm -rf "${HOME}/.cache"
 

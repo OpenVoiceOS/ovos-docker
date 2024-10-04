@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skill-tunein --pre; \
+    pip3 install --no-cache-dir ovos-skill-tunein --pre; \
     else \
-    pip3 install ovos-skill-tunein; \
+    pip3 install --no-cache-dir ovos-skill-tunein; \
     fi \
     && rm -rf "${HOME}/.cache"
 

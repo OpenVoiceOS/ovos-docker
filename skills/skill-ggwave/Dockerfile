@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skill-ggwave --pre; \
+    pip3 install --no-cache-dir ovos-skill-ggwave --pre; \
     else \
-    pip3 install ovos-skill-ggwave; \
+    pip3 install --no-cache-dir ovos-skill-ggwave; \
     fi \
     && rm -rf "${HOME}/.cache"
 

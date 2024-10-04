@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-randomness.git --pre; \
+    pip3 install --no-cache-dir git+https://github.com/OpenVoiceOS/skill-ovos-randomness.git --pre; \
     else \
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-randomness.gi; \
+    pip3 install --no-cache-dir git+https://github.com/OpenVoiceOS/skill-ovos-randomness.gi; \
     fi \
     && rm -rf "${HOME}/.cache"
 

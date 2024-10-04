@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skill-wikipedia --pre; \
+    pip3 install --no-cache-dir ovos-skill-wikipedia --pre; \
     else \
-    pip3 install ovos-skill-wikipedia; \
+    pip3 install --no-cache-dir ovos-skill-wikipedia; \
     fi \
     && rm -rf "${HOME}/.cache"
 

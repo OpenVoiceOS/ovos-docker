@@ -22,9 +22,9 @@ RUN apk add --no-cache libgomp
 USER $USER
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-skill-weather --pre; \
+    pip3 install --no-cache-dir ovos-skill-weather --pre; \
     else \
-    pip3 install ovos-skill-weather; \
+    pip3 install --no-cache-dir ovos-skill-weather; \
     fi \
     && rm -rf "${HOME}/.cache"
 
