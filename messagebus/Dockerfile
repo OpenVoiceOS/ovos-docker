@@ -16,14 +16,15 @@ LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docke
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
 ARG ALPHA=false
+ARG USER=ovos
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install ovos-messagebus --pre; \
+    pip3 install --no-cache-dir ovos-messagebus --pre; \
     else \
-    pip3 install ovos-messagebus; \
+    pip3 install --no-cache-dir ovos-messagebus; \
     fi \
-    && rm -rf "${HOME}"/.cache
+    && rm -rf "${HOME}/.cache"
 
 ENTRYPOINT ovos-messagebus
 
-WORKDIR /home/"${USER}"
+WORKDIR "/home/${USER}"
