@@ -13,6 +13,7 @@ LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docke
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 
 ARG ALPHA=false
+ARG USER=ovos
 
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
