@@ -1,6 +1,5 @@
 bitstruct
 ovos-core[lgpl,plugins]
-ovos-skill-boot-finished
 ovos-skill-fallback-unknown
 ovos-skill-alerts
 ovos-skill-personal
