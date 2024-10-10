@@ -34,7 +34,7 @@ RUN apt-get update \
     fi \
     && mkdir -p "/home/${USER}/.local/share/mycroft/skills" "/home/${USER}/nltk_data" \
     && chown "${USER}:${USER}" -R "/home/${USER}" \
-    && apt-get --purge remove --purge -y libfann-dev build-essential python3-dev \
+    && apt-get --purge remove --purge -y build-essential python3-dev \
     && apt-get --purge autoremove -y \
     && apt-get clean \
     && rm -rf "${HOME}/.cache" /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
