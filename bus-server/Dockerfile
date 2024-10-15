@@ -4,7 +4,7 @@ ARG BRANCH=master
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git cmake gcc g++ build-essential ca-certificates \
-    && git clone https://github.com/OpenVoiceOS/ovos-bus-server.git -b $BRANCH /usr/src/ovos-bus-server
+    && git clone https://github.com/OpenVoiceOS/ovos-bus-server.git -b "$BRANCH" /usr/src/ovos-bus-server
 
 WORKDIR /usr/src/ovos-bus-server/server
 
@@ -33,13 +33,13 @@ COPY --from=build /usr/src/ovos-bus-server/server/ovos-bus-server /usr/local/bin
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
-    && useradd --no-log-init $USER -m -c "Open Voice OS user" \
+    && useradd --no-log-init "$USER" -m -c "Open Voice OS user" \
     && apt-get --purge autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt /var/log/{apt,dpkg.log}
 
-USER $USER
+USER "$USER"
 
-ENV IS_OVOS_CONTAINER "true"
+ENV IS_OVOS_CONTAINER="true"
 
 ENTRYPOINT ovos-bus-server

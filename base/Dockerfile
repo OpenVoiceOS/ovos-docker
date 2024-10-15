@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
@@ -15,25 +15,25 @@ ARG USER=ovos
 
 COPY --chmod=0755 files/ovos-hc.py /usr/local/bin/ovos-hc
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends git curl python3-minimal python3-pip python3-venv \
+  && apt-get install -y --no-install-recommends git curl python3-pip python3-venv python3-wheel \
   && c_rehash \
   && useradd --no-log-init "$USER" -m -c "Open Voice OS user" \
-  && python3 -m venv /home/"${USER}"/.venv \
-  && . /home/"${USER}"/.venv/bin/activate \
+  && python3 -m venv "/home/${USER}/.venv" \
+  && source "/home/${USER}/.venv/bin/activate" \
   && mkdir -p /home/"${USER}"/{.config,.cache,.local/{state/mycroft,share}}/{mycroft,OpenVoiceOS} \
-  && chown "${USER}":"${USER}" -R /home/"${USER}" \
+  && chown "${USER}:${USER}" -R "/home/${USER}" \
   && apt-get --purge remove python3-dev build-essential -y \
   && apt-get --purge autoremove -y \
   && apt-get clean \
-  && rm -rf "${HOME}"/.cache /var/lib/apt /var/log/{apt,dpkg.log}
+  && rm -rf "${HOME}/.cache" /var/lib/apt /var/log/{apt,dpkg.log}
 
-USER $USER
+USER "$USER"
 
-ENV IS_OVOS_CONTAINER "true"
-ENV PATH /home/"${USER}"/.venv/bin:$PATH
-ENV VIRTUAL_ENV /home/"${USER}"/.venv
+ENV IS_OVOS_CONTAINER=true
+ENV PATH="/home/${USER}/.venv/bin:$PATH"
+ENV VIRTUAL_ENV="/home/${USER}/.venv"

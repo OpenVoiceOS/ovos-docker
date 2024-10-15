@@ -1,14 +1,14 @@
 # Open Voice OS running on Mac OS with Docker
 
-*   [Open Voice OS running on Mac OS with Docker](#open-voice-os-running-on-mac-os-with-docker)
-   *   [Limitations](#limitations)
-   *   [Requirements](#requirements)
-      *  [Brew](#brew)
-      *   [Docker](#docker)
-      *   [PulseAudio](#pulseaudio)
-   *   [How to use these images](#how-to-use-these-images)
-   *   [Thanks](#thanks)
-   *   [Support](#support)
+- [Open Voice OS running on Mac OS with Docker](#open-voice-os-running-on-mac-os-with-docker)
+  - [Limitations](#limitations)
+  - [Requirements](#requirements)
+    - [Brew](#brew)
+    - [Docker](#docker)
+    - [PulseAudio](#pulseaudio)
+  - [How to use these images](#how-to-use-these-images)
+  - [Thanks](#thanks)
+  - [Support](#support)
 
 ## Limitations
 

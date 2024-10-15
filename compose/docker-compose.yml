@@ -106,7 +106,7 @@ services:
     container_name: ovos_listener
     hostname: ovos_listener
     restart: unless-stopped
-    image: docker.io/smartgic/ovos-listener-dinkum:${VERSION}
+    image: docker.io/smartgic/ovos-listener:${VERSION}
     logging: *default-logging
     pull_policy: $PULL_POLICY
     environment:

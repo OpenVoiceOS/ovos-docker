@@ -1,9 +1,6 @@
-ovos-PHAL
-ovos-PHAL-plugin-alsa
-ovos-PHAL-plugin-system
+ovos-PHAL[linux]
 ovos-PHAL-plugin-ipgeo
-ovos-plugin-manager
+pillow
 RPi.GPIO
 smbus2
 spidev
-wheel

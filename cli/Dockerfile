@@ -1,5 +1,5 @@
-ARG TAG=alpha
-FROM smartgic/ovos-base:${TAG}
+ARG TAG=0.1.0
+FROM "smartgic/ovos-base:${TAG}"
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
@@ -22,22 +22,22 @@ COPY files/requirements.txt /tmp/requirements.txt
 RUN apt-get update \
     && apt-get install -y --no-install-recommends vim nano python3-dev build-essential \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install -r /tmp/requirements.txt --pre; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
     else \
-    pip3 install -r /tmp/requirements.txt; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt; \
     fi \
-    && mkdir -p /home/"${USER}"/.local/state/mycroft /home/"${USER}"/stdout  /var/log/mycroft \
-    && chown "${USER}":"${USER}" -R /home/"${USER}" /var/log/mycroft \
+    && mkdir -p "/home/${USER}/.local/state/mycroft" "/home/${USER}/stdout" /var/log/mycroft \
+    && chown "${USER}:${USER}" -R "/home/${USER}" /var/log/mycroft \
     && apt-get --purge remove python3-dev build-essential -y \
     && apt-get --purge autoremove -y \
     && apt-get clean \
     && rm -rf "${HOME}"/.cache /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
 
-USER $USER
+USER "$USER"
 
 ENV EDITOR=vim
 ENV TERM=linux
 
 ENTRYPOINT ["sleep", "infinity"]
 
-WORKDIR /home/"${USER}"
+WORKDIR "/home/${USER}"
