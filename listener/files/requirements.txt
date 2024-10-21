@@ -1,0 +1,2 @@
+ovos-dinkum-listener[extras,linux,onnx]
+pyalsaaudio
