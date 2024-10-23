@@ -1,4 +1,4 @@
-FROM debian:trixie-backports
+FROM debian:trixie
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
@@ -22,7 +22,7 @@ ENV MYCROFT_DIR_GUI=/opt/mycroft-gui
 ENV TERM=linux
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git-core build-essential cmake gettext pkg-config pkg-kde-tools qtbase5-dev qtdeclarative5-dev libkf5kio-dev libqt5websockets5-dev libkf5i18n-dev libkf5notifications-dev libkf5plasma-dev libqt5webview5-dev qtmultimedia5-dev kirigami2-dev libqt5websockets5 libqt5webview5 libkf5configcore5 qml-module-qtwebengine qml-module-qtmultimedia qml-module-qtquick-shapes libqt5virtualkeyboard5 libqt5multimedia5 libkf5dbusaddons-dev gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools ca-certificates qtvirtualkeyboard-plugin kdeconnect qmltermwidget-common qml-module-termwidget qt5ct breeze-icon-theme  \
+    && apt-get install -y --no-install-recommends git-core build-essential cmake gettext pkg-config pkg-kde-tools qtbase5-dev qtdeclarative5-dev libkf5kio-dev libqt5websockets5-dev libkf5i18n-dev libkf5notifications-dev libkf5plasma-dev libqt5webview5-dev qtmultimedia5-dev kirigami2-dev libqt5websockets5 libqt5webview5 libkf5configcore5 qml-module-qtwebengine qml-module-qtmultimedia qml-module-qtquick-shapes libqt5virtualkeyboard5 libqt5multimedia5 libkf5dbusaddons-dev gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools ca-certificates qtvirtualkeyboard-plugin kdeconnect qt5ct breeze-icon-theme  \
     && git clone https://github.com/OpenVoiceOS/mycroft-gui-qt5.git "$MYCROFT_DIR_GUI" -b "$BRANCH_MYCROFT" \
     && mkdir -p "${MYCROFT_DIR_GUI}/build-testing" \
     && cd "${MYCROFT_DIR_GUI}/build-testing" \
