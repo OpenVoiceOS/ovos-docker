@@ -3,7 +3,7 @@
 # stt.list file is deprecated and will be removed
 stt_list=~/.config/mycroft/stt.list
 listener_list=~/.config/mycroft/listener.list
-listener_list_state=/.local/state/mycroft/listener.state
+listener_list_state=~/.local/state/mycroft/listener.state
 
 # Only here until stt.list full removal
 file=""
