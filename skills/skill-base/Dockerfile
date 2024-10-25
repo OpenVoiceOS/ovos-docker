@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:latest
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
@@ -15,7 +15,7 @@ ARG ALPHA=false
 ARG USER=ovos
 
 RUN adduser --disabled-password "$USER" \
-    && mkdir -p "/home/${USER}/.config/mycroft" "/home/${USER}/.cache/mycroft" "/home/${USER}/.local/share/mycroft "/tmp/mycroft/ipc /tmp/mycroft/cache \
+    && mkdir -p "/home/${USER}/.config/mycroft" "/home/${USER}/.cache/mycroft" "/home/${USER}/.local/share/mycroft"/tmp/mycroft/ipc /tmp/mycroft/cache \
     && chown "${USER}:${USER}" -R "/home/${USER}" /tmp/mycroft \
     && apk upgrade --no-cache libssl3 libcrypto3 \
     && apk add --no-cache git python3 py3-pip py3-wheel py3-numpy swig fann-dev py3-scikit-learn \
