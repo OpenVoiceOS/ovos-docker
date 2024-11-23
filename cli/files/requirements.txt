@@ -1,4 +1,3 @@
 ovos-config
-git+https://github.com/OpenVoiceOS/ovos-cli-client.git
 git+https://github.com/OpenVoiceOS/ovos-docs-viewer.git
 ovos-plugin-manager
