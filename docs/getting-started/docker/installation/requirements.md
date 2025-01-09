@@ -35,7 +35,7 @@ Because some containers require `/run/user/1000` to be mounted, [systemd](https:
 
 !!! danger "`.env` file is a strong requirement"
 
-    Please make sure to read and understand this section as if you don't then the deployment migth fail.
+    Please make sure to read and understand this section as if you don't then the deployment might fail.
 
 The `composer` requires an environment file in order to deploy the services and volumes with the correct settings for your setup.
 
