@@ -67,19 +67,3 @@ An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
     ```shell
     podman exec --interactive --tty ovos_cli ovos-speak "hello world"
     ```
-
-## mana
-
-[Neon Mana](https://github.com/NeonGeckoCom/neon-mana-utils) _(Messagebus Application for Neon AI)_ provides tools for interacting with the message bus.
-
-=== "Docker"
-
-    ```shell
-    docker exec --interactive --tty ovos_cli mana --help
-    ```
-
-=== "Podman"
-
-    ```shell
-    podman exec --interactive --tty ovos_cli mana --help
-    ```
