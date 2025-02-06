@@ -164,24 +164,6 @@ services:
       ovos_core:
         condition: service_started
 
-  ovos_skill_persona:
-    <<: *podman
-    container_name: ovos_skill_persona
-    hostname: ovos_skill_persona
-    restart: unless-stopped
-    image: docker.io/smartgic/ovos-skill-persona:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
-
   ovos_skill_wikihow:
     <<: *podman
     container_name: ovos_skill_wikihow
