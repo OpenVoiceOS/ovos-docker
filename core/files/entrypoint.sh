@@ -5,7 +5,8 @@ skills_list=~/.config/mycroft/skills.list
 skills_list_state=~/.local/state/mycroft/skills.state
 if test -f "$skills_list"; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$skills_list") <(grep -vE '^\s*(#|$)' "$skills_list_state" 2>/dev/null) &>/dev/null; then
-        pip3 install --no-cache-dir -r "$skills_list"
+        # TODO if using testing/stable channels change the constraints file also
+        pip3 install --no-cache-dir -r "$skills_list" -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
         cp "$skills_list" "$skills_list_state"
     fi
 fi
