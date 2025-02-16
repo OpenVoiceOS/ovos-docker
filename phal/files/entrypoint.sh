@@ -5,13 +5,11 @@ phal_list=~/.config/mycroft/phal.list
 phal_list_state=~/.local/state/mycroft/phal.state
 if test -f "$phal_list"; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$phal_list") <(grep -vE '^\s*(#|$)' "$phal_list_state" 2>/dev/null) &>/dev/null; then
-        pip3 install --no-cache-dir -r "$phal_list"
+        # TODO if using testing/stable channels change the constraints file also
+        pip3 install --no-cache-dir -r "$phal_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
         cp "$phal_list" "$phal_list_state"
     fi
 fi
-
-# Clear Python cache
-rm -rf ~/.cache/pip
 
 # Auto-detect which sound server is running (PipeWire or PulseAudio)
 asoundrc_file=~/.asoundrc
