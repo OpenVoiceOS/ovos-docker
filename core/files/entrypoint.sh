@@ -5,8 +5,7 @@ skills_list=~/.config/mycroft/skills.list
 skills_list_state=~/.local/state/mycroft/skills.state
 if test -f "$skills_list"; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$skills_list") <(grep -vE '^\s*(#|$)' "$skills_list_state" 2>/dev/null) &>/dev/null; then
-        # TODO if using testing/stable channels change the constraints file also
-        pip3 install --no-cache-dir -r "$skills_list" -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
+        pip3 install --no-cache-dir -r "$skills_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
         cp "$skills_list" "$skills_list_state"
     fi
 fi
@@ -24,14 +23,11 @@ cd "$skills_directory" || exit
 for skill in $(ls -d -- */ 2>/dev/null); do
     cd "$skill" || exit
     if test -f requirements.txt; then
-        pip3 install --no-cache-dir -r requirements.txt
+        pip3 install --no-cache-dir -r requirements.txt -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
     fi
-    pip3 install .
+    pip3 install . -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
     cd ..
 done
-
-# Clear Python cache
-rm -rf ~/.cache/pip
 
 # Auto-detect which sound server is running (PipeWire or PulseAudio)
 asoundrc_file=~/.asoundrc

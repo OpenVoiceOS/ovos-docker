@@ -18,13 +18,10 @@ fi
 if [ -n "$file" ]; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$file") <(grep -vE '^\s*(#|$)' "$listener_list_state" 2>/dev/null) &>/dev/null; then
         # TODO if using testing/stable channels change the constraints file also
-        pip3 install --no-cache-dir -r "$file" -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
+        pip3 install --no-cache-dir -r "$file" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
         cp "$file" "$listener_list_state"
     fi
 fi
-
-# Clear Python cache
-rm -rf ~/.cache/pip
 
 # Auto-detect which sound server is running (PipeWire or PulseAudio)
 asoundrc_file=~/.asoundrc

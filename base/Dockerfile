@@ -1,6 +1,7 @@
 FROM debian:trixie-slim
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI base image"
@@ -34,6 +35,7 @@ RUN apt-get update \
 
 USER "$USER"
 
+ENV OVOS_CHANNEL="$CHANNEL"
 ENV IS_OVOS_CONTAINER=true
 ENV PATH="/home/${USER}/.venv/bin:$PATH"
 ENV VIRTUAL_ENV="/home/${USER}/.venv"
