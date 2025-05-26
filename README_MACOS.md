@@ -112,6 +112,10 @@ E: [] socket-server.c: bind(): Address already in use
 E: [] module.c: Failed to load module "module-esound-protocol-unix" (argument: ""): initialization failed.
 ```
 
+Make sure that PulseAudio has Microphone permissions on System Settings > Privacy & Security.
+
+PulseAudio may use a different audio output (sink) than the one actually used by the macOS system, so make sure that the current sink is the same than the current system audio output. Run the command ``pactl info`` into your macOS machine and compare the **Default sink** with the Description of ``pactl list sinks`` command. You can change the current PulseAudio output with the command ``pactl set-default-sink "<sink-name>"``.
+
 ## How to use these images
 
 Please refer to [this section](README.md#how-to-use-these-images) of the documentation.
