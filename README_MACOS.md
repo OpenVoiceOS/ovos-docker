@@ -72,6 +72,12 @@ Make sure the service is running properly as a daemon.
 pulseaudio --check -v
 ```
 
+Make sure that the module `module-native-protocol-tcp` is loaded:
+
+```bash
+pactl list modules | grep module-native-protocol-tcp
+```
+
 If eveything is up and running, then the `pactl info` command should return basic information about PulseAudio such as the default `sink` and `source`.
 
 The ultime test will be to run a Docker container and waiting for the sounds the be played.
