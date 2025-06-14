@@ -1,6 +1,6 @@
 # Composition and environment files
 
-The easiest and quickest way to deploy Open Voice OS containers is to use a [composer](./index.md#composer-definition) such as `docker composer` or `podman-compose`.
+The easiest and quickest way to deploy Open Voice OS containers is to use a [composer](./index.md#composer-definition) such as `docker compose` or `podman-compose`.
 
 ## Composition files
 
