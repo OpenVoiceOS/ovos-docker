@@ -9,7 +9,7 @@ repo_url: https://github.com/OpenVoiceOS/ovos-docker
 edit_uri: edit/documentation/docs/
 
 copyright: |
-  2023 <a href="https://www.openvoiceos.org"  target="_blank" rel="noopener">Open Voice OS</a>
+  2025 <a href="https://www.openvoiceos.org"  target="_blank" rel="noopener">Open Voice OS</a>
 
 theme:
   name: material
