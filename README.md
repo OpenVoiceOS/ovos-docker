@@ -7,7 +7,7 @@
 [![Chat](https://img.shields.io/matrix/openvoiceos:matrix.org)](https://matrix.to/#/#OpenVoiceOS:matrix.org)
 [![Docker pulls](https://img.shields.io/docker/pulls/smartgic/ovos-core)](https://hub.docker.com/r/smartgic/ovos-core)
 
-[![Open Voice OS logo](https://openvoiceos.org/wp-content/uploads/2021/04/ovos-egg.png)](https://openvoiceos.org/)
+[![Open Voice OS logo](./docs/assets/logo.png)](https://openvoiceos.org/)
 
 ## Documentation
 
