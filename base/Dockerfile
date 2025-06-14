@@ -43,7 +43,7 @@ RUN apt-get update \
   && c_rehash \
   && python3 -m venv "/home/${USER}/.venv" \
   && source "/home/${USER}/.venv/bin/activate" \
-  && pip install --no-cache-dir --upgrade pip setuptools wheel \
+  && pip install --upgrade pip setuptools wheel \
   && mkdir -p "/home/${USER}"/.config/{mycroft,OpenVoiceOS} \
   && mkdir -p "/home/${USER}"/.cache/{mycroft,OpenVoiceOS} \
   && mkdir -p "/home/${USER}"/.local/state/mycroft \
