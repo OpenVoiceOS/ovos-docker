@@ -35,12 +35,11 @@ RUN groupadd --gid "$USER_GID" "$USER" \
 # Install packages and setup environment
 RUN apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests \
-     ca-certificates \
-     git \
-     curl \
-     python3-pip \
-     python3-venv \
-     python3-wheel \
+  ca-certificates \
+  git \
+  curl \
+  python3-pip \
+  python3-venv \
   && c_rehash \
   && python3 -m venv "/home/${USER}/.venv" \
   && source "/home/${USER}/.venv/bin/activate" \
