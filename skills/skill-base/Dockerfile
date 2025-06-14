@@ -1,6 +1,7 @@
 FROM alpine:latest
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI skill base image (Alpine based)"
@@ -23,9 +24,9 @@ RUN adduser --disabled-password "$USER" \
     && python3 -m venv "/home/${USER}/.venv" --system-site-packages \
     && . "/home/${USER}/.venv/bin/activate" \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir ovos-core[lgpl] ovos-translate-server-plugin --pre; \
+    pip3 install --no-cache-dir ovos-core[lgpl] ovos-translate-server-plugin -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     else \
-    pip3 install --no-cache-dir ovos-core[lgpl] ovos-translate-server-plugin; \
+    pip3 install --no-cache-dir ovos-core[lgpl] ovos-translate-server-plugin -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     fi \
     && chown "${USER}:${USER}" -R "/home/${USER}" \
     && rm -rf "/home/${USER}/.cache"

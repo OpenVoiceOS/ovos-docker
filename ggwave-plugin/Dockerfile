@@ -3,6 +3,7 @@ ARG REGISTRY=docker.io/smartgic
 FROM "${REGISTRY}/ovos-sound-base:${TAG}"
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI ggwave plugin image"
@@ -26,7 +27,7 @@ RUN apt-get update \
   && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends portaudio19-dev build-essential python3-dev \
   && pip3 install -f 'https://whl.smartgic.io/' ggwave \
   && if [ "${ALPHA}" == "true" ]; then \
-  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave padacioso --pre; \
+  pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave padacioso -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
   else \
   pip3 install --no-cache-dir ovos-audio-transformer-plugin-ggwave padacioso; \
   fi \

@@ -3,6 +3,7 @@ ARG REGISTRY=docker.io/smartgic
 FROM "${REGISTRY}/ovos-skill-base:${TAG}"
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI hello world skill image"
@@ -16,9 +17,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 ARG ALPHA=false
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir ovos-skill-hello-world --pre; \
+    pip3 install --no-cache-dir ovos-skill-hello-world -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     else \
-    pip3 install --no-cache-dir ovos-skill-hello-world; \
+    pip3 install --no-cache-dir ovos-skill-hello-world -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     fi \
     && rm -rf "${HOME}/.cache"
 

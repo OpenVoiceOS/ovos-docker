@@ -6,6 +6,7 @@ HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
   CMD ovos-hc -s voice || exit 1
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI listener image (Dinkum implementation)"
@@ -32,9 +33,9 @@ RUN apt-get update \
   && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
   && pip3 install --no-cache-dir -f 'https://whl.smartgic.io/' tflite_runtime \
   && if [ "${ALPHA}" == "true" ]; then \
-  pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
+  pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
   else \
-  pip3 install --no-cache-dir -r /tmp/requirements.txt; \
+  pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
   fi \
   && mkdir -p /home/"${USER}"/.local/share/{vosk,precise-lite,mycroft/listener} \
   && chown "${USER}:${USER}" -R "/home/${USER}" \

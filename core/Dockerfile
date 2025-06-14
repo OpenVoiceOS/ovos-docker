@@ -6,6 +6,7 @@ HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
     CMD ovos-hc -s skills || exit 1
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI core image"
@@ -29,9 +30,9 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libfann-dev build-essential python3-dev  \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     else \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     fi \
     && mkdir -p "/home/${USER}/.local/share/mycroft/skills" "/home/${USER}/nltk_data" \
     && chown "${USER}:${USER}" -R "/home/${USER}" \

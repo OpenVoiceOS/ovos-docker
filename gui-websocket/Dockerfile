@@ -6,6 +6,7 @@ HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
     CMD curl --header "Connection: Upgrade" --header "Upgrade: Websocket" http://127.0.0.1:18181/core || kill 1
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI GUI websocket image"
@@ -24,9 +25,9 @@ USER root
 COPY files/requirements.txt /tmp/requirements.txt
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     else \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     fi \
     && mkdir "${HOME}/.cache/ovos_gui_file_server" /etc/xdg \
     && chown "${USER}:${USER}" -R "/home/${USER}" \

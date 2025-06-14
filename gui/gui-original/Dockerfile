@@ -1,6 +1,7 @@
 FROM debian:trixie
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI Mycroft original GUI image"

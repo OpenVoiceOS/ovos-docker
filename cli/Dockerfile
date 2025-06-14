@@ -3,6 +3,7 @@ ARG REGISTRY=docker.io/smartgic
 FROM "${REGISTRY}/ovos-base:${TAG}"
 
 ARG BUILD_DATE=unknown
+ARG CHANNEL=alpha
 ARG VERSION=unknown
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI CLI image"
@@ -23,9 +24,9 @@ COPY files/requirements.txt /tmp/requirements.txt
 RUN apt-get update \
     && apt-get install -y --no-install-recommends vim nano python3-dev build-essential \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt --pre; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     else \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt; \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     fi \
     && mkdir -p "/home/${USER}/.local/state/mycroft" "/home/${USER}/stdout" /var/log/mycroft \
     && chown "${USER}:${USER}" -R "/home/${USER}" /var/log/mycroft \
