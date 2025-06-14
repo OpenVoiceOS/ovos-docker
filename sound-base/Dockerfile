@@ -1,5 +1,6 @@
 ARG TAG=0.1.0
-FROM "smartgic/ovos-base:${TAG}"
+ARG REGISTRY=docker.io/smartgic
+FROM "${REGISTRY}/ovos-base:${TAG}"
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown

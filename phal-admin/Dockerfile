@@ -1,5 +1,6 @@
 ARG TAG=0.1.0
-FROM "smartgic/ovos-phal:${TAG}"
+ARG REGISTRY=docker.io/smartgic
+FROM "${REGISTRY}/ovos-phal:${TAG}"
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
     CMD ovos-hc -s PHAL.admin || exit 1

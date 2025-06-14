@@ -1,5 +1,6 @@
 ARG TAG=0.1.0
-FROM "smartgic/ovos-sound-base:${TAG}"
+ARG REGISTRY=docker.io/smartgic
+FROM "${REGISTRY}/ovos-sound-base:${TAG}"
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
   CMD ovos-hc -s voice || exit 1
