@@ -1,15 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 # Install PHAL admin plugins via pip command when a setup.py exists
-phal_admin_list=~/.config/mycroft/phal_admin.list
-phal_admin_list_state=~/.local/state/mycroft/phal_admin.state
-if test -f "$phal_admin_list"; then
+phal_admin_list="${HOME}/.config/mycroft/phal_admin.list"
+phal_admin_list_state="${HOME}/.local/state/mycroft/phal_admin.state"
+if [[ -f "$phal_admin_list" ]]; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$phal_admin_list") <(grep -vE '^\s*(#|$)' "$phal_admin_list_state" 2>/dev/null) &>/dev/null; then
-        # TODO if using testing/stable channels change the constraints file also
-        pip3 install --no-cache-dir -r "$phal_admin_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
+        echo "Installing PHAL admin plugins from $phal_admin_list"
+        pip3 install -r "$phal_admin_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
         cp "$phal_admin_list" "$phal_admin_list_state"
     fi
 fi
 
-# Run ovos_PHAL_admin
-ovos_PHAL_admin
+# Run ovos-PHAL-admin
+echo "Starting ovos-PHAL-admin"
+exec ovos-PHAL-admin

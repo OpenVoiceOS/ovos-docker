@@ -6,8 +6,9 @@ HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
     CMD ovos-hc -s PHAL || exit 1
 
 ARG BUILD_DATE=unknown
-ARG CHANNEL=alpha
 ARG VERSION=unknown
+ARG TAG
+ARG REGISTRY
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI PHAL image"
 LABEL org.opencontainers.image.description="PHAL is our Platform/Hardware Abstraction Layer, it completely replaces the concept of hardcoded enclosure from mycroft-core"
@@ -16,29 +17,27 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
 LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
+LABEL org.opencontainers.image.authors="Open Voice OS Community"
+LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-sound-base:${TAG}"
 
-ARG ALPHA=false
 ARG USER=ovos
-
-USER root
 
 COPY files/requirements.txt /tmp/requirements.txt
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
+USER root
+
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libasound2-dev procps ddcutil build-essential python3-dev network-manager \
-    && if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
-    else \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
-    fi \
-    && chown "${USER}:${USER}" -R "/home/${USER}" \
-    && apt-get --purge remove --purge -y libasound2-dev \
-    && apt-get --purge autoremove -y \
-    && apt-get clean \
-    && rm -rf "${HOME}/.cache" /var/lib/apt /var/log/{apt,dpkg.log} /tmp/requirements.txt
+  && apt-get install -y --no-install-recommends --no-install-suggests libasound2-dev procps ddcutil build-essential python3-dev network-manager \
+  && pip3 install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+  && chown "${USER}:${USER}" -R "/home/${USER}" \
+  && apt-get --purge remove -y libasound2-dev build-essential python3-dev \
+  && apt-get --purge autoremove -y \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* /var/log/{apt,dpkg.log} /tmp/* /var/tmp/*
 
 USER "$USER"
 
