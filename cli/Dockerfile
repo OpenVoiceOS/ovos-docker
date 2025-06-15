@@ -18,7 +18,6 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.authors="Open Voice OS Community"
 LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-base:${TAG}"
 
-ARG ALPHA=false
 ARG USER=ovos
 
 COPY files/requirements.txt /tmp/requirements.txt
@@ -29,7 +28,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests vim nano python3-dev build-essential \
-  && pip3 install -r /tmp/requirements.txt \
+  && pip3 install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
   && mkdir -p "/home/${USER}/.local/state/mycroft" "/home/${USER}/stdout" /var/log/mycroft \
   && chown "${USER}:${USER}" -R "/home/${USER}" /var/log/mycroft \
   && apt-get --purge remove -y python3-dev build-essential \
