@@ -86,7 +86,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "pgrep", "-f", "ovos-gui-service"]
       interval: 30s
@@ -126,11 +126,11 @@ services:
       - /run/udev/data:/run/udev/data:ro
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy
       # ovos_gui_websocket:
       #   condition: service_healthy
       ovos_phal:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "pgrep", "-f", "ovos-gui"]
       interval: 30s
@@ -174,11 +174,11 @@ services:
   #     - /run/udev/data:/run/udev/data:ro
   #   depends_on:
   #     ovos_messagebus:
-  #       condition: service_started
+  #       condition: service_healthy
   #     ovos_gui_websocket:
   #       condition: service_healthy
   #     ovos_phal:
-  #       condition: service_started
+  #       condition: service_healthy
   #   healthcheck:
   #     test: ["CMD", "pgrep", "-f", "ovos-gui"]
   #     interval: 30s
@@ -202,7 +202,7 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_core:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "pgrep", "-f", "skill-ovos-homescreen"]
       interval: 30s

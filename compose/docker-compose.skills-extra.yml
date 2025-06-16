@@ -36,7 +36,7 @@ x-skill-base: &skill-base
     - ${TMP_FOLDER}:/tmp/mycroft
   depends_on:
     ovos_core:
-      condition: service_started
+      condition: service_healthy
   healthcheck:
     interval: 30s
     timeout: 10s
