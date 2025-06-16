@@ -36,7 +36,7 @@ x-skill-base: &skill-base
     - ${TMP_FOLDER}:/tmp/mycroft
   depends_on:
     ovos_core:
-      condition: service_healthy
+      condition: service_started
 
 volumes:
   ovos_nltk:
