@@ -1,6 +1,4 @@
 ---
-version: "3.9"
-
 x-podman: &podman
   userns_mode: keep-id
   security_opt:
@@ -13,6 +11,32 @@ x-logging: &default-logging
     max-buffer-size: 4m
     max-size: "200m"
     max-file: "1"
+
+x-common-environment: &common-environment
+  TZ: ${TZ:-UTC}
+
+x-audio-environment: &audio-environment
+  <<: *common-environment
+  PULSE_SERVER: ${PULSE_SERVER:-docker.for.mac.host.internal}
+  PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
+
+x-resource-limits: &resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: 512M
+      reservations:
+        memory: 128M
+
+x-core-resource-limits: &core-resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: 1G
+        cpus: "1.0"
+      reservations:
+        memory: 256M
+        cpus: "0.25"
 
 volumes:
   ovos_models:
@@ -36,14 +60,15 @@ volumes:
 
 services:
   ovos_messagebus:
-    <<: *podman
+    <<: [*podman, *resource-limits]
     container_name: ovos_messagebus
     hostname: ovos_messagebus
     restart: unless-stopped
     image: docker.io/smartgic/ovos-messagebus:${VERSION}
-    pull_policy: $PULL_POLICY
+    logging: *default-logging
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      TZ: $TZ
+      <<: *common-environment
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
@@ -51,17 +76,15 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
 
   ovos_phal:
-    <<: *podman
+    <<: [*podman, *resource-limits]
     container_name: ovos_phal
     hostname: ovos_phal
     restart: unless-stopped
     image: docker.io/smartgic/ovos-phal:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      PULSE_SERVER: docker.for.mac.host.internal
-      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
-      TZ: $TZ
+      <<: *audio-environment
     network_mode: host
     privileged: true
     volumes:
@@ -71,18 +94,18 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy
 
   ovos_phal_admin:
-    <<: *podman
+    <<: [*podman, *resource-limits]
     container_name: ovos_phal_admin
     hostname: ovos_phal_admin
     restart: unless-stopped
     image: docker.io/smartgic/ovos-phal-admin:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      TZ: $TZ
+      <<: *common-environment
     network_mode: host
     privileged: true
     volumes:
@@ -92,20 +115,18 @@ services:
       - /dev:/dev:ro
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy
 
   ovos_listener:
-    <<: *podman
+    <<: [*podman, *resource-limits]
     container_name: ovos_listener
     hostname: ovos_listener
     restart: unless-stopped
     image: docker.io/smartgic/ovos-listener:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      PULSE_SERVER: docker.for.mac.host.internal
-      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
-      TZ: $TZ
+      <<: *audio-environment
     network_mode: host
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
@@ -117,22 +138,20 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy
       ovos_phal:
-        condition: service_started
+        condition: service_healthy
 
   ovos_plugin_ggwave:
-    <<: *podman
+    <<: [*podman, *resource-limits]
     container_name: ovos_plugin_ggwave
     hostname: ovos_plugin_ggwave
     restart: unless-stopped
     image: docker.io/smartgic/ovos-plugin-ggwave:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      PULSE_SERVER: docker.for.mac.host.internal
-      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
-      TZ: $TZ
+      <<: *audio-environment
     network_mode: host
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
@@ -140,22 +159,26 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy
       ovos_phal:
-        condition: service_started
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "ggwave"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
 
   ovos_audio:
-    <<: *podman
+    <<: [*podman, *resource-limits]
     container_name: ovos_audio
     hostname: ovos_audio
     restart: unless-stopped
     image: docker.io/smartgic/ovos-audio:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      PULSE_SERVER: docker.for.mac.host.internal
-      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
-      TZ: $TZ
+      <<: *audio-environment
     network_mode: host
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
@@ -165,22 +188,20 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy
       ovos_phal:
-        condition: service_started
+        condition: service_healthy
 
   ovos_core:
-    <<: *podman
+    <<: [*podman, *core-resource-limits]
     container_name: ovos_core
     hostname: ovos_core
     restart: unless-stopped
     image: docker.io/smartgic/ovos-core:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      PULSE_SERVER: docker.for.mac.host.internal
-      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
-      TZ: $TZ
+      <<: *audio-environment
     network_mode: host
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
@@ -192,20 +213,20 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy
       ovos_phal:
-        condition: service_started
+        condition: service_healthy
 
   ovos_cli:
-    <<: *podman
+    <<: [*podman, *resource-limits]
     container_name: ovos_cli
     hostname: ovos_cli
     restart: unless-stopped
     image: docker.io/smartgic/ovos-cli:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      TZ: $TZ
+      <<: *common-environment
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
@@ -213,4 +234,4 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_started
+        condition: service_healthy

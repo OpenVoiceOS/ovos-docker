@@ -1,6 +1,4 @@
 ---
-version: "3.9"
-
 x-podman: &podman
   userns_mode: keep-id
   security_opt:
@@ -14,6 +12,57 @@ x-logging: &default-logging
     max-size: "200m"
     max-file: "1"
 
+x-common-environment: &common-environment
+  TZ: ${TZ:-UTC}
+
+x-gui-environment: &gui-environment
+  <<: *common-environment
+  DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
+  DISPLAY: ${DISPLAY}
+  PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
+  PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
+  QML2_IMPORT_PATH: /usr/lib/qml
+  QT_QPA_PLATFORM: ${QT_QPA_PLATFORM}
+  QT_QPA_EGLFS_HIDECURSOR: 1
+  QT_QPA_EGLFS_KMS_ATOMIC: 1
+  QT_QPA_EGLFS_INTEGRATION: ${QT_QPA_EGLFS_INTEGRATION}
+  QT_QPA_EGLFS_KMS_CONFIG: ${QT_QPA_EGLFS_KMS_CONFIG}
+  QT_QPA_PLATFORMTHEME: qt5ct
+  QT_PLUGIN_PATH: /usr/lib/qt/plugins:/usr/lib/plugins:/usr/lib/plugins/kf5
+  QT_FILE_SELECTORS: ovos
+  QT_FONT_DPI: 120
+  QT_IM_MODULE: qtvirtualkeyboard
+  QT_QUICK_CONTROLS_STYLE: OpenVoiceStyle
+  WAYLAND_DISPLAY: ${WAYLAND_DISPLAY}
+  XDG_CURRENT_DESKTOP: kde
+  XDG_RUNTIME_DIR: ${XDG_RUNTIME_DIR}
+
+x-resource-limits: &resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: 512M
+      reservations:
+        memory: 128M
+
+x-gui-resource-limits: &gui-resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: 1G
+        cpus: "1.0"
+      reservations:
+        memory: 256M
+        cpus: "0.25"
+
+x-skill-resource-limits: &skill-resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: 256M
+      reservations:
+        memory: 64M
+
 volumes:
   ovos_gui_files:
     name: ovos_gui_files
@@ -21,15 +70,15 @@ volumes:
 
 services:
   ovos_gui_websocket:
-    <<: *podman
+    <<: [*podman, *resource-limits]
     container_name: ovos_gui_websocket
     hostname: ovos_gui_websocket
     restart: unless-stopped
     image: docker.io/smartgic/ovos-gui-websocket:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      TZ: $TZ
+      <<: *common-environment
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
@@ -38,45 +87,32 @@ services:
     depends_on:
       ovos_messagebus:
         condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "ovos-gui-service"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
 
   ovos_gui:
-    <<: *podman
+    <<: [*podman, *gui-resource-limits]
     container_name: ovos_gui
     hostname: ovos_gui
     restart: unless-stopped
     image: docker.io/smartgic/ovos-gui-shell:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
-      DISPLAY: $DISPLAY
-      PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
-      PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
-      QML2_IMPORT_PATH: /usr/lib/qml
-      QT_QPA_PLATFORM: $QT_QPA_PLATFORM
-      QT_QPA_EGLFS_HIDECURSOR: 1
-      QT_QPA_EGLFS_KMS_ATOMIC: 1
-      QT_QPA_EGLFS_INTEGRATION: $QT_QPA_EGLFS_INTEGRATION
-      QT_QPA_EGLFS_KMS_CONFIG: $QT_QPA_EGLFS_KMS_CONFIG
-      QT_QPA_PLATFORMTHEME: qt5ct
-      QT_PLUGIN_PATH: /usr/lib/qt/plugins:/usr/lib/plugins:/usr/lib/plugins/kf5
-      QT_FILE_SELECTORS: ovos
-      QT_FONT_DPI: 120
-      QT_IM_MODULE: qtvirtualkeyboard
-      QT_QUICK_CONTROLS_STYLE: OpenVoiceStyle
-      TZ: $TZ
-      WAYLAND_DISPLAY: $WAYLAND_DISPLAY
-      XDG_CURRENT_DESKTOP: kde
-      XDG_RUNTIME_DIR: $XDG_RUNTIME_DIR
+      <<: *gui-environment
     network_mode: host
     devices:
       - /dev/input
       - /dev/dri
       - /dev/snd
     group_add:
-      - $INPUT_GID
-      - $RENDER_GID
-      - $VIDEO_GID
+      - ${INPUT_GID}
+      - ${RENDER_GID}
+      - ${VIDEO_GID}
     volumes:
       - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
@@ -91,53 +127,41 @@ services:
     depends_on:
       ovos_messagebus:
         condition: service_started
-      ovos_gui_websocket:
-        condition: service_started
+      # ovos_gui_websocket:
+      #   condition: service_healthy
       ovos_phal:
         condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "ovos-gui"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   ########################
-  # Uncomment this service if you want to use the origial GUI
+  # Uncomment this service if you want to use the original GUI
   # without the Open Voice OS Shell layer
   ########################
-  # ovos_gui:
-  #   <<: *podman
-  #   container_name: ovos_gui
-  #   hostname: ovos_gui
+  # ovos_gui_original:
+  #   <<: [*podman, *gui-resource-limits]
+  #   container_name: ovos_gui_original
+  #   hostname: ovos_gui_original
   #   restart: unless-stopped
   #   image: docker.io/smartgic/ovos-gui-original:${VERSION}
   #   logging: *default-logging
-  #   pull_policy: $PULL_POLICY
+  #   pull_policy: ${PULL_POLICY:-always}
   #   environment:
-  #     DBUS_SESSION_BUS_ADDRESS: unix:path=${XDG_RUNTIME_DIR}/bus
+  #     <<: *gui-environment
   #     DISPLAY: :0
-  #     PULSE_SERVER: unix:${XDG_RUNTIME_DIR}/pulse/native
-  #     PULSE_COOKIE: /home/${OVOS_USER}/.config/pulse/cookie
-  #     QML2_IMPORT_PATH: /usr/lib/qml
-  #     QT_QPA_PLATFORM: $QT_QPA_PLATFORM
-  #     QT_QPA_EGLFS_KMS_ATOMIC: 1
-  #     QT_QPA_EGLFS_HIDECURSOR: 1
-  #     QT_QPA_EGLFS_INTEGRATION: $QT_QPA_EGLFS_INTEGRATION
-  #     QT_QPA_EGLFS_KMS_CONFIG: $QT_QPA_EGLFS_KMS_CONFIG
-  #     QT_QPA_PLATFORMTHEME: qt5ct
-  #     QT_PLUGIN_PATH: /usr/lib/qt/plugins:/usr/lib/plugins:/usr/lib/plugins/kf5
-  #     QT_FILE_SELECTORS: ovos
-  #     QT_FONT_DPI: 120
-  #     QT_IM_MODULE: qtvirtualkeyboard
-  #     QT_QUICK_CONTROLS_STYLE: OpenVoiceStyle
-  #     TZ: $TZ
-  #     WAYLAND_DISPLAY: $WAYLAND_DISPLAY
-  #     XDG_CURRENT_DESKTOP: kde
-  #     XDG_RUNTIME_DIR: $XDG_RUNTIME_DIR
   #   network_mode: host
   #   devices:
   #     - /dev/input
   #     - /dev/dri
   #     - /dev/snd
   #   group_add:
-  #     - $INPUT_GID
-  #     - $RENDER_GID
-  #     - $VIDEO_GID
+  #     - ${INPUT_GID}
+  #     - ${RENDER_GID}
+  #     - ${VIDEO_GID}
   #   volumes:
   #     - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
   #     - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
@@ -148,24 +172,30 @@ services:
   #     - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
   #     - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
   #     - /run/udev/data:/run/udev/data:ro
-  # depends_on:
-  #   ovos_messagebus:
-  #     condition: service_started
-  #   ovos_gui_websocket:
-  #     condition: service_started
-  #   ovos_phal:
-  #     condition: service_started
+  #   depends_on:
+  #     ovos_messagebus:
+  #       condition: service_started
+  #     ovos_gui_websocket:
+  #       condition: service_healthy
+  #     ovos_phal:
+  #       condition: service_started
+  #   healthcheck:
+  #     test: ["CMD", "pgrep", "-f", "ovos-gui"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 30s
 
   ovos_skill_homescreen:
-    <<: *podman
+    <<: [*podman, *skill-resource-limits]
     container_name: ovos_skill_homescreen
     hostname: ovos_skill_homescreen
     restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-homescreen:${VERSION}
     logging: *default-logging
-    pull_policy: $PULL_POLICY
+    pull_policy: ${PULL_POLICY:-always}
     environment:
-      TZ: $TZ
+      <<: *common-environment
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
@@ -173,3 +203,9 @@ services:
     depends_on:
       ovos_core:
         condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "skill-ovos-homescreen"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s

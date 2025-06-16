@@ -1,6 +1,4 @@
 ---
-version: "3.9"
-
 x-podman: &podman
   userns_mode: keep-id
   security_opt:
@@ -14,6 +12,37 @@ x-logging: &default-logging
     max-size: "200m"
     max-file: "1"
 
+x-common-environment: &common-environment
+  TZ: ${TZ:-UTC}
+
+x-skill-resource-limits: &skill-resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: 256M
+      reservations:
+        memory: 64M
+
+x-skill-base: &skill-base
+  <<: [*podman, *skill-resource-limits]
+  restart: unless-stopped
+  logging: *default-logging
+  pull_policy: ${PULL_POLICY:-always}
+  environment:
+    <<: *common-environment
+  network_mode: host
+  volumes:
+    - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
+    - ${TMP_FOLDER}:/tmp/mycroft
+  depends_on:
+    ovos_core:
+      condition: service_started
+  healthcheck:
+    interval: 30s
+    timeout: 10s
+    retries: 3
+    start_period: 15s
+
 volumes:
   ovos_nltk:
     name: ovos_nltk
@@ -21,201 +50,97 @@ volumes:
 
 services:
   ovos_skill_wikipedia:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_wikipedia
     hostname: ovos_skill_wikipedia
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-wikipedia:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ovos_nltk:/home/${OVOS_USER}/nltk_data
       - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "skill-ovos-wikipedia"]
 
   ovos_skill_weather:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_weather
     hostname: ovos_skill_weather
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-weather:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "skill-ovos-weather"]
 
   ovos_skill_volume:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_volume
     hostname: ovos_skill_volume
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-volume:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "skill-ovos-volume"]
 
   ovos_skill_date_time:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_date_time
     hostname: ovos_skill_date_time
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-date-time:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "skill-ovos-date-time"]
 
   ovos_skill_personal:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_personal
     hostname: ovos_skill_personal
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-personal:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "ovos-skill-personal"]
 
   ovos_skill_fallback_unknown:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_fallback_unknown
     hostname: ovos_skill_fallback_unknown
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-fallback-unknown:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "skill-ovos-fallback-unknown"]
 
   ovos_skill_hello_world:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_hello_world
     hostname: ovos_skill_hello_world
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-hello-world:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "skill-ovos-hello-world"]
 
   ovos_skill_alerts:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_alerts
     hostname: ovos_skill_alerts
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-alerts:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "ovos-skill-alerts"]
 
   ovos_skill_ggwave:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_ggwave
     hostname: ovos_skill_ggwave
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-ggwave:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "ovos-skill-ggwave"]
 
   ovos_skill_duckduckgo:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_duckduckgo
     hostname: ovos_skill_duckduckgo
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-duckduckgo:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
-    volumes:
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "skill-ovos-ddg"]
 
   ovos_skill_wordnet:
-    <<: *podman
+    <<: *skill-base
     container_name: ovos_skill_wordnet
     hostname: ovos_skill_wordnet
-    restart: unless-stopped
     image: docker.io/smartgic/ovos-skill-wordnet:${VERSION}
-    logging: *default-logging
-    pull_policy: $PULL_POLICY
-    environment:
-      TZ: $TZ
-    network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ovos_nltk:/home/${OVOS_USER}/nltk_data
       - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_core:
-        condition: service_started
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "ovos-skill-wordnet"]
