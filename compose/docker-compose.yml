@@ -257,7 +257,7 @@ services:
       ovos_messagebus:
         condition: service_started
       ovos_phal:
-        condition: service_healthy
+        condition: service_started
 
   ovos_cli:
     <<: [*podman, *resource-limits]
