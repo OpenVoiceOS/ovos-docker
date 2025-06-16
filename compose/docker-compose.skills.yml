@@ -37,11 +37,6 @@ x-skill-base: &skill-base
   depends_on:
     ovos_core:
       condition: service_healthy
-  healthcheck:
-    interval: 30s
-    timeout: 10s
-    retries: 3
-    start_period: 15s
 
 volumes:
   ovos_nltk:
@@ -58,80 +53,60 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ovos_nltk:/home/${OVOS_USER}/nltk_data
       - ${TMP_FOLDER}:/tmp/mycroft
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-wikipedia"]
 
   ovos_skill_weather:
     <<: *skill-base
     container_name: ovos_skill_weather
     hostname: ovos_skill_weather
     image: docker.io/smartgic/ovos-skill-weather:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-weather"]
 
   ovos_skill_volume:
     <<: *skill-base
     container_name: ovos_skill_volume
     hostname: ovos_skill_volume
     image: docker.io/smartgic/ovos-skill-volume:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-volume"]
 
   ovos_skill_date_time:
     <<: *skill-base
     container_name: ovos_skill_date_time
     hostname: ovos_skill_date_time
     image: docker.io/smartgic/ovos-skill-date-time:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-date-time"]
 
   ovos_skill_personal:
     <<: *skill-base
     container_name: ovos_skill_personal
     hostname: ovos_skill_personal
     image: docker.io/smartgic/ovos-skill-personal:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "ovos-skill-personal"]
 
   ovos_skill_fallback_unknown:
     <<: *skill-base
     container_name: ovos_skill_fallback_unknown
     hostname: ovos_skill_fallback_unknown
     image: docker.io/smartgic/ovos-skill-fallback-unknown:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-fallback-unknown"]
 
   ovos_skill_hello_world:
     <<: *skill-base
     container_name: ovos_skill_hello_world
     hostname: ovos_skill_hello_world
     image: docker.io/smartgic/ovos-skill-hello-world:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-hello-world"]
 
   ovos_skill_alerts:
     <<: *skill-base
     container_name: ovos_skill_alerts
     hostname: ovos_skill_alerts
     image: docker.io/smartgic/ovos-skill-alerts:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "ovos-skill-alerts"]
 
   ovos_skill_ggwave:
     <<: *skill-base
     container_name: ovos_skill_ggwave
     hostname: ovos_skill_ggwave
     image: docker.io/smartgic/ovos-skill-ggwave:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "ovos-skill-ggwave"]
 
   ovos_skill_duckduckgo:
     <<: *skill-base
     container_name: ovos_skill_duckduckgo
     hostname: ovos_skill_duckduckgo
     image: docker.io/smartgic/ovos-skill-duckduckgo:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-ddg"]
 
   ovos_skill_wordnet:
     <<: *skill-base
@@ -142,5 +117,3 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ovos_nltk:/home/${OVOS_USER}/nltk_data
       - ${TMP_FOLDER}:/tmp/mycroft
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "ovos-skill-wordnet"]

@@ -37,11 +37,6 @@ x-skill-base: &skill-base
   depends_on:
     ovos_core:
       condition: service_healthy
-  healthcheck:
-    interval: 30s
-    timeout: 10s
-    retries: 3
-    start_period: 15s
 
 volumes:
   ovos_nltk:
@@ -54,69 +49,51 @@ services:
     container_name: ovos_skill_wolfie
     hostname: ovos_skill_wolfie
     image: docker.io/smartgic/ovos-skill-wolfie:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-wolfie"]
 
   ovos_skill_jokes:
     <<: *skill-base
     container_name: ovos_skill_jokes
     hostname: ovos_skill_jokes
     image: docker.io/smartgic/ovos-skill-jokes:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-icanhazdadjokes"]
 
   ovos_skill_easter_eggs:
     <<: *skill-base
     container_name: ovos_skill_easter_eggs
     hostname: ovos_skill_easter_eggs
     image: docker.io/smartgic/ovos-skill-easter-eggs:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-easter-eggs"]
 
   ovos_skill_tunein:
     <<: *skill-base
     container_name: ovos_skill_tunein
     hostname: ovos_skill_tunein
     image: docker.io/smartgic/ovos-skill-tunein:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-tunein"]
 
   ovos_skill_fallback_chatgpt:
     <<: *skill-base
     container_name: ovos_skill_fallback_chatgpt
     hostname: ovos_skill_fallback_chatgpt
     image: docker.io/smartgic/ovos-skill-fallback-chatgpt:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-fallback-chatgpt"]
 
   ovos_skill_parrot:
     <<: *skill-base
     container_name: ovos_skill_parrot
     hostname: ovos_skill_parrot
     image: docker.io/smartgic/ovos-skill-parrot:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-parrot"]
 
   ovos_skill_randomness:
     <<: *skill-base
     container_name: ovos_skill_randomness
     hostname: ovos_skill_randomness
     image: docker.io/smartgic/ovos-skill-randomness:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "skill-ovos-randomness"]
 
   ovos_skill_camera:
     <<: *skill-base
     container_name: ovos_skill_camera
     hostname: ovos_skill_camera
     image: docker.io/smartgic/ovos-skill-camera:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "ovos-skill-camera"]
 
   ovos_skill_wikihow:
     <<: *skill-base
     container_name: ovos_skill_wikihow
     hostname: ovos_skill_wikihow
     image: docker.io/smartgic/ovos-skill-wikihow:${VERSION}
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "ovos-skill-wikihow"]
