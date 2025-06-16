@@ -13,5 +13,5 @@ if [[ -f "$phal_admin_list" ]]; then
 fi
 
 # Run ovos-PHAL-admin
-echo "Starting ovos-PHAL-admin"
-exec ovos-PHAL-admin
+echo "Starting ovos_PHAL_admin"
+exec ovos_PHAL_admin

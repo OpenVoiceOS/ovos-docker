@@ -29,5 +29,5 @@ else
 fi
 
 # Run ovos-PHAL
-echo "Starting ovos-PHAL"
-exec ovos-PHAL
+echo "Starting ovos_PHAL"
+exec ovos_PHAL
