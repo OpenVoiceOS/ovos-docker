@@ -49,7 +49,7 @@ services:
     image: docker.io/smartgic/hivemind-listener:${VERSION}
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
     healthcheck:
       test: ["CMD", "pgrep", "-f", "hivemind-listener"]
 
@@ -60,4 +60,4 @@ services:
     image: docker.io/smartgic/hivemind-cli:${VERSION}
     depends_on:
       hivemind_listener:
-        condition: service_healthy
+        condition: service_started

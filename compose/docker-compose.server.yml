@@ -123,7 +123,7 @@ services:
       - ${HIVEMIND_SHARE_FOLDER}:/home/${HIVEMIND_USER}/.local/share/hivemind:z
     depends_on:
       ovos_core:
-        condition: service_healthy
+        condition: service_started
     healthcheck:
       test: ["CMD", "pgrep", "-f", "hivemind-listener"]
       interval: 30s
@@ -148,4 +148,4 @@ services:
       - ${HIVEMIND_SHARE_FOLDER}:/home/${HIVEMIND_USER}/.local/share/hivemind:z
     depends_on:
       hivemind_listener:
-        condition: service_healthy
+        condition: service_started
