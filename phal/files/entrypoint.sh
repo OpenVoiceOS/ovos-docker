@@ -1,27 +1,33 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 # Install PHAL plugins via pip command when a setup.py exists
-phal_list=~/.config/mycroft/phal.list
-phal_list_state=~/.local/state/mycroft/phal.state
-if test -f "$phal_list"; then
+phal_list="${HOME}/.config/mycroft/phal.list"
+phal_list_state="${HOME}/.local/state/mycroft/phal.state"
+if [[ -f "$phal_list" ]]; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$phal_list") <(grep -vE '^\s*(#|$)' "$phal_list_state" 2>/dev/null) &>/dev/null; then
-        # TODO if using testing/stable channels change the constraints file also
-        pip3 install --no-cache-dir -r "$phal_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
+        echo "Installing PHAL plugins from $phal_list"
+        pip3 install -r "$phal_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
         cp "$phal_list" "$phal_list_state"
     fi
 fi
 
 # Auto-detect which sound server is running (PipeWire or PulseAudio)
-asoundrc_file=~/.asoundrc
-if test -f ~/.config/mycroft/asoundrc; then
-    cp -rfp ~/.config/mycroft/asoundrc "$asoundrc_file"
+asoundrc_file="${HOME}/.asoundrc"
+mycroft_asoundrc="${HOME}/.config/mycroft/asoundrc"
+
+if [[ -f "$mycroft_asoundrc" ]]; then
+    cp "$mycroft_asoundrc" "$asoundrc_file"
 else
     if pw-link --links &>/dev/null; then
-        echo -e 'pcm.!default pipewire\nctl.!default pipewire' >"$asoundrc_file"
+        echo "Configuring for PipeWire"
+        printf 'pcm.!default pipewire\nctl.!default pipewire\n' >"$asoundrc_file"
     elif pactl info &>/dev/null; then
-        echo -e 'pcm.!default pulse\nctl.!default pulse' >"$asoundrc_file"
+        echo "Configuring for PulseAudio"
+        printf 'pcm.!default pulse\nctl.!default pulse\n' >"$asoundrc_file"
     fi
 fi
 
 # Run ovos-PHAL
-ovos_PHAL
+echo "Starting ovos_PHAL"
+exec ovos_PHAL

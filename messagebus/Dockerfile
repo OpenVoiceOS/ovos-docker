@@ -6,8 +6,9 @@ HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
     CMD curl --header "Connection: Upgrade" --header "Upgrade: Websocket" http://127.0.0.1:8181/core || kill 1
 
 ARG BUILD_DATE=unknown
-ARG CHANNEL=alpha
 ARG VERSION=unknown
+ARG TAG
+ARG REGISTRY
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI message bus image"
 LABEL org.opencontainers.image.description="Message bus service, the nervous system of OpenVoiceOS (Python implementation)"
@@ -16,17 +17,16 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
 LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker"
 LABEL org.opencontainers.image.vendor="Open Voice OS"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
+LABEL org.opencontainers.image.authors="Open Voice OS Community"
+LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-base:${TAG}"
 
-ARG ALPHA=false
 ARG USER=ovos
 
-RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir ovos-messagebus -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
-    else \
-    pip3 install --no-cache-dir ovos-messagebus; \
-    fi \
-    && rm -rf "${HOME}/.cache"
+SHELL ["/bin/bash", "-c"]
 
-ENTRYPOINT ovos-messagebus
+RUN pip3 install ovos-messagebus -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+
+ENTRYPOINT ["ovos-messagebus"]
 
 WORKDIR "/home/${USER}"
