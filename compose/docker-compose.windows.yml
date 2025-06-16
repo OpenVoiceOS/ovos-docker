@@ -93,7 +93,7 @@ services:
       - /mnt/wslg/:/mnt/wslg/
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
 
   ovos_phal_admin:
     <<: [*podman, *resource-limits]
@@ -115,7 +115,7 @@ services:
       - /dev:/dev:ro
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
 
   ovos_listener:
     <<: [*podman, *resource-limits]
@@ -138,7 +138,7 @@ services:
       - /mnt/wslg/:/mnt/wslg/
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
       ovos_phal:
         condition: service_healthy
 
@@ -159,7 +159,7 @@ services:
       - /mnt/wslg/:/mnt/wslg/
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
       ovos_phal:
         condition: service_healthy
     healthcheck:
@@ -190,7 +190,7 @@ services:
       - /mnt/wslg/:/mnt/wslg/
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
       ovos_phal:
         condition: service_healthy
 
@@ -215,7 +215,7 @@ services:
       - /mnt/wslg/:/mnt/wslg/
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
       ovos_phal:
         condition: service_healthy
 
@@ -236,4 +236,4 @@ services:
       - ${TMP_FOLDER}:/tmp/mycroft
     depends_on:
       ovos_messagebus:
-        condition: service_healthy
+        condition: service_started
