@@ -1,9 +1,15 @@
 ---
 services:
   ovos_gui:
+    healthcheck:
+      disable: true
     devices:
       - /dev/vchiq
 
   ovos_gui_websocket:
+    healthcheck:
+      disable: true
+
+  ovos_skill_homescreen:
     healthcheck:
       disable: true

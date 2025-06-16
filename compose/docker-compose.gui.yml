@@ -132,7 +132,7 @@ services:
       ovos_phal:
         condition: service_started
     healthcheck:
-      test: ["CMD", "pgrep", "-f", "ovos-gui"]
+      test: ["CMD", "pgrep", "-f", "ovos-shell"]
       interval: 30s
       timeout: 10s
       retries: 3
