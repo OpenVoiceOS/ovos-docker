@@ -168,7 +168,7 @@ services:
       ovos_messagebus:
         condition: service_started
       ovos_phal:
-        condition: service_healthy
+        condition: service_started
 
   ovos_plugin_ggwave:
     <<: [*podman, *resource-limits]
@@ -228,7 +228,7 @@ services:
       ovos_messagebus:
         condition: service_started
       ovos_phal:
-        condition: service_healthy
+        condition: service_started
 
   ovos_core:
     <<: [*podman, *core-resource-limits]
