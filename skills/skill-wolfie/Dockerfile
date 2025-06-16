@@ -7,8 +7,8 @@ ARG VERSION=unknown
 ARG TAG
 ARG REGISTRY
 
-LABEL org.opencontainers.image.title="Open Voice OS OCI wolfie skill image"
-LABEL org.opencontainers.image.description=""
+LABEL org.opencontainers.image.title="Open Voice OS OCI Wolfie skill image"
+LABEL org.opencontainers.image.description="Wolfram Alpha integration for mathematical calculations and factual queries"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"

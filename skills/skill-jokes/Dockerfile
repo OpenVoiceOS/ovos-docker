@@ -8,7 +8,7 @@ ARG TAG
 ARG REGISTRY
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI jokes skill image"
-LABEL org.opencontainers.image.description=""
+LABEL org.opencontainers.image.description="Tell dad jokes and humorous content on demand"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"

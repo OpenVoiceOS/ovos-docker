@@ -8,7 +8,7 @@ ARG TAG
 ARG REGISTRY
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI randomness skill image"
-LABEL org.opencontainers.image.description=""
+LABEL org.opencontainers.image.description="Generate random numbers, flip coins, and make random choices"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"

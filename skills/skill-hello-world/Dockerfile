@@ -8,7 +8,7 @@ ARG TAG
 ARG REGISTRY
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI hello-world skill image"
-LABEL org.opencontainers.image.description=""
+LABEL org.opencontainers.image.description="Simple demonstration skill for testing and development purposes"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
