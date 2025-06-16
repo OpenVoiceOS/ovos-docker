@@ -13,7 +13,7 @@ LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docke
 LABEL org.opencontainers.image.vendor="Open Voice OS"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.authors="Open Voice OS Community"
-LABEL org.opencontainers.image.base.name="alpine:latest"
+LABEL org.opencontainers.image.base.name="alpine:3.22"
 
 ARG USER=ovos
 ARG USER_UID=1000
@@ -39,10 +39,10 @@ RUN python3 -m venv "/home/${USER}/.venv" --system-site-packages \
   && pip install --upgrade pip setuptools \
   && pip install ovos-core[lgpl] ovos-translate-server-plugin -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt \
   && mkdir -p "/home/${USER}/.config/mycroft" "/home/${USER}/.config/OpenVoiceOS" \
-             "/home/${USER}/.cache/mycroft" "/home/${USER}/.cache/OpenVoiceOS" \
-             "/home/${USER}/.local/state/mycroft" "/home/${USER}/.local/state/OpenVoiceOS" \
-             "/home/${USER}/.local/share/mycroft" "/home/${USER}/.local/share/OpenVoiceOS" \
-             /tmp/mycroft/ipc /tmp/mycroft/cache \
+  "/home/${USER}/.cache/mycroft" "/home/${USER}/.cache/OpenVoiceOS" \
+  "/home/${USER}/.local/state/mycroft" "/home/${USER}/.local/state/OpenVoiceOS" \
+  "/home/${USER}/.local/share/mycroft" "/home/${USER}/.local/share/OpenVoiceOS" \
+  /tmp/mycroft/ipc /tmp/mycroft/cache \
   && chown "${USER}:${USER}" -R "/home/${USER}" /tmp/mycroft \
   && apk del .build-deps
 
