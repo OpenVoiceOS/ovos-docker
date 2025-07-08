@@ -18,6 +18,6 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.authors="Open Voice OS Community"
 LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-skill-base:${TAG}"
 
-RUN pip3 install skill-ovos-randomness -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+RUN pip3 install ovos-skill-randomness -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
-ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-randomness.openvoiceos"]
+ENTRYPOINT ["ovos-skill-launcher", "ovos-skill-randomness.openvoiceos"]
