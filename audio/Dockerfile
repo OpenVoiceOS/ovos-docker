@@ -32,7 +32,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests portaudio19-dev build-essential python3-dev mpv libespeak-ng1 \
-  && pip3 install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+  && uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
   && mkdir -p "/home/${USER}/.cache/mycroft" \
   && chown "${USER}:${USER}" -R "/home/${USER}" \
   && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \

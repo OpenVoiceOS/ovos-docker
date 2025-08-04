@@ -25,7 +25,7 @@ ARG USER=ovos
 
 SHELL ["/bin/bash", "-c"]
 
-RUN pip3 install ovos-messagebus -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+RUN uv pip install ovos-messagebus -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
 ENTRYPOINT ["ovos-messagebus"]
 

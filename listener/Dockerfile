@@ -32,8 +32,8 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
   && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends --no-install-suggests libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
-  && pip3 install -f 'https://whl.smartgic.io/' tflite_runtime \
-  && pip3 install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+  && uv pip install -f 'https://whl.smartgic.io/' tflite_runtime \
+  && uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
   && mkdir -p "/home/${USER}/.local/share/vosk" "/home/${USER}/.local/share/precise-lite" "/home/${USER}/.local/share/mycroft/listener" \
   && chown "${USER}:${USER}" -R "/home/${USER}" \
   && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \

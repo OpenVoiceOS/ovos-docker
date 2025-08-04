@@ -19,6 +19,6 @@ LABEL org.opencontainers.image.authors="Open Voice OS Community"
 LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-skill-base:${TAG}"
 # ovos-audio is required because of https://github.com/OpenVoiceOS/skill-ovos-date-time/issues/22
 
-RUN pip3 install ovos-skill-date-time ovos-audio -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+RUN uv pip install ovos-skill-date-time ovos-audio -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
 ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-date-time.openvoiceos"]

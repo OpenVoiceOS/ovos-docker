@@ -22,7 +22,7 @@ ARG USER=ovos
 
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
-RUN pip3 install skill-ovos-fallback-chatgpt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+RUN uv pip install skill-ovos-fallback-chatgpt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
 ENTRYPOINT ["/bin/sh", "/usr/local/bin/entrypoint.sh"]
 

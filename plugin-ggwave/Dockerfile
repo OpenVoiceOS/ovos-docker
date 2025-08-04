@@ -26,8 +26,8 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
   && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends --no-install-suggests portaudio19-dev build-essential python3-dev \
-  && pip3 install -f 'https://whl.smartgic.io/' ggwave \
-  && pip3 install ovos-audio-transformer-plugin-ggwave padacioso -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+  && uv pip install -f 'https://whl.smartgic.io/' ggwave \
+  && uv pip install ovos-audio-transformer-plugin-ggwave padacioso -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
   && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
   && apt-get clean \

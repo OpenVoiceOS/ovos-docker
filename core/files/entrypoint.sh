@@ -8,7 +8,7 @@ skills_list_state="${HOME}/.local/state/mycroft/skills.state"
 if [[ -f "$skills_list" ]]; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$skills_list") <(grep -vE '^\s*(#|$)' "$skills_list_state" 2>/dev/null) &>/dev/null; then
         echo "Installing skills from $skills_list"
-        pip3 install -r "$skills_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
+        uv pip install -r "$skills_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
         cp "$skills_list" "$skills_list_state"
     fi
 fi
@@ -33,11 +33,11 @@ for skill_dir in */; do
 
     if [[ -f "requirements.txt" ]]; then
         echo "Installing requirements for $skill_dir"
-        pip3 install -r requirements.txt -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
+        uv pip install -r requirements.txt -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
     fi
 
     echo "Installing skill $skill_dir"
-    pip3 install . -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
+    uv pip install . -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
 
     cd "$skills_directory" || exit 1
 done

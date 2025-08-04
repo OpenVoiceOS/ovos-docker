@@ -32,7 +32,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests libfann-dev build-essential python3-dev \
-  && pip3 install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+  && uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
   && mkdir -p "/home/${USER}/.local/share/mycroft/skills" "/home/${USER}/nltk_data" \
   && chown "${USER}:${USER}" -R "/home/${USER}" \
   && apt-get --purge remove -y build-essential python3-dev \

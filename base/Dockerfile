@@ -49,7 +49,7 @@ RUN groupadd --gid "$USER_GID" "$USER" \
 # Setup Python environment and directories
 RUN python3 -m venv "/home/${USER}/.venv" \
   && source "/home/${USER}/.venv/bin/activate" \
-  && pip3 install --upgrade pip setuptools wheel \
+  && pip3 install --upgrade pip setuptools wheel uv \
   && mkdir -p "/home/${USER}"/.{config,cache,local/{state,share}}/{mycroft,OpenVoiceOS} \
   && chown "${USER}:${USER}" -R "/home/${USER}"
 

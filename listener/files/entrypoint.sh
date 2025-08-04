@@ -19,7 +19,7 @@ fi
 if [[ -n "$file" ]]; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$file") <(grep -vE '^\s*(#|$)' "$listener_list_state" 2>/dev/null) &>/dev/null; then
         echo "Installing listener plugins from $file"
-        pip3 install -r "$listener_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
+        uv pip install -r "$listener_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
         cp "$file" "$listener_list_state"
     fi
 fi

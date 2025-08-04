@@ -32,7 +32,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests libasound2-dev procps ddcutil build-essential python3-dev network-manager \
-  && pip3 install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+  && uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
   && chown "${USER}:${USER}" -R "/home/${USER}" \
   && apt-get --purge remove -y libasound2-dev build-essential python3-dev \
   && apt-get --purge autoremove -y \
