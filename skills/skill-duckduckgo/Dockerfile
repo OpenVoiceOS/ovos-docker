@@ -4,8 +4,7 @@ FROM "${REGISTRY}/ovos-skill-base:${TAG}"
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
-ARG TAG
-ARG REGISTRY
+ARG USER=ovos
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI DuckDuckGo skill image"
 LABEL org.opencontainers.image.description="Use DuckDuckGo to answer questions"
@@ -18,6 +17,18 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.authors="Open Voice OS Community"
 LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-skill-base:${TAG}"
 
+USER root
+
+RUN apk add --no-cache --virtual .build-deps python3-dev gcc g++
+
+USER "$USER"
+
 RUN uv pip install ovos-skill-ddg -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+
+USER root
+
+RUN apk del .build-deps
+
+USER "$USER"
 
 ENTRYPOINT ["ovos-skill-launcher", "ovos-skill-ddg.openvoiceos"]

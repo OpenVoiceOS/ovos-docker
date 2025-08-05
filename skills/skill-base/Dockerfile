@@ -36,8 +36,8 @@ RUN apk upgrade --no-cache libssl3 libcrypto3 \
 # Setup Python environment and directories
 RUN python3 -m venv "/home/${USER}/.venv" --system-site-packages \
   && source "/home/${USER}/.venv/bin/activate" \
-  && pip install --upgrade pip setuptools \
-  && pip install ovos-core[lgpl] ovos-translate-server-plugin -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt \
+  && pip install --upgrade pip setuptools uv \
+  && uv pip install ovos-core[lgpl] ovos-translate-server-plugin -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt \
   && mkdir -p "/home/${USER}/.config/mycroft" "/home/${USER}/.config/OpenVoiceOS" \
   "/home/${USER}/.cache/mycroft" "/home/${USER}/.cache/OpenVoiceOS" \
   "/home/${USER}/.local/state/mycroft" "/home/${USER}/.local/state/OpenVoiceOS" \

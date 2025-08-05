@@ -3,9 +3,8 @@ ARG REGISTRY=docker.io/smartgic
 FROM "${REGISTRY}/ovos-skill-base:${TAG}"
 
 ARG BUILD_DATE=unknown
+ARG USER=ovos
 ARG VERSION=unknown
-ARG TAG
-ARG REGISTRY
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI wikipedia skill image"
 LABEL org.opencontainers.image.description="Search and retrieve information from Wikipedia articles"
@@ -18,6 +17,18 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.authors="Open Voice OS Community"
 LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-skill-base:${TAG}"
 
+USER root
+
+RUN apk add --no-cache --virtual .build-deps python3-dev gcc g++
+
+USER "$USER"
+
 RUN uv pip install ovos-skill-wikipedia -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+
+USER root
+
+RUN apk del .build-deps
+
+USER "$USER"
 
 ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-wikipedia.openvoiceos"]
