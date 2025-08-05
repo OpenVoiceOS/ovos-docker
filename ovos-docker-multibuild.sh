@@ -30,8 +30,8 @@ readonly CONTAINERS=(
 )
 readonly SKILLS=(
   skill-base skill-alerts skill-camera skill-date-time skill-duckduckgo skill-easter-eggs
-  skill-fallback-chatgpt skill-fallback-unknown skill-ggwave skill-hello-world skill-homescreen
-  skill-jokes skill-parrot skill-personal skill-randomness skill-tunein skill-volume skill-weather
+  skill-fallback-unknown skill-ggwave skill-hello-world skill-homescreen
+  skill-jokes skill-parrot skill-personal skill-randomness skill-volume skill-weather
   skill-wikihow skill-wikipedia skill-wolfie skill-wordnet
 )
 
@@ -65,9 +65,9 @@ main() {
     local build_date
     build_date="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
 
-    for container in "${CONTAINERS[@]}"; do
-      build_image "$container" "$container" "$tag" "$channel" "$version" "$build_date"
-    done
+   for container in "${CONTAINERS[@]}"; do
+     build_image "$container" "$container" "$tag" "$channel" "$version" "$build_date"
+   done
 
     for skill in "${SKILLS[@]}"; do
       build_image "skills/${skill}" "$skill" "$tag" "$channel" "$version" "$build_date"
