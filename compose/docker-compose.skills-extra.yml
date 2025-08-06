@@ -62,18 +62,6 @@ services:
     hostname: ovos_skill_easter_eggs
     image: docker.io/smartgic/ovos-skill-easter-eggs:${VERSION}
 
-  ovos_skill_tunein:
-    <<: *skill-base
-    container_name: ovos_skill_tunein
-    hostname: ovos_skill_tunein
-    image: docker.io/smartgic/ovos-skill-tunein:${VERSION}
-
-  ovos_skill_fallback_chatgpt:
-    <<: *skill-base
-    container_name: ovos_skill_fallback_chatgpt
-    hostname: ovos_skill_fallback_chatgpt
-    image: docker.io/smartgic/ovos-skill-fallback-chatgpt:${VERSION}
-
   ovos_skill_parrot:
     <<: *skill-base
     container_name: ovos_skill_parrot
