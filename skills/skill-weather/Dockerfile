@@ -20,4 +20,4 @@ LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-skill-base:${TAG}"
 
 RUN uv pip install ovos-skill-weather -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
-ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-weather.openvoiceos"]
+ENTRYPOINT ["ovos-skill-launcher", "ovos-skill-weather.openvoiceos"]
