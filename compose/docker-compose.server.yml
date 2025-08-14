@@ -91,7 +91,7 @@ services:
     network_mode: host
     volumes:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
-      - ${OVOS_PERSONA_FOLDER}:/home/${OVOS_USER}/.config/ovos-persona
+      - ${OVOS_PERSONA_FOLDER}:/home/${OVOS_USER}/.config/ovos_persona
       - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ovos_nltk:/home/${OVOS_USER}/nltk_data
       - ${OVOS_SHARE_FOLDER}:/home/${OVOS_USER}/.local/share/mycroft
