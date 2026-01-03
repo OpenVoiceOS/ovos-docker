@@ -65,6 +65,7 @@ plugins:
   - git-committers:
       repository: OpenVoiceOS/ovos-docker
       branch: documentation
+      token: !ENV MKDOCS_GIT_COMMITTERS_APIKEY
   - git-revision-date-localized:
       enable_creation_date: true
   - privacy:
@@ -149,6 +150,7 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
+  - Home: index.md
   - About:
       - What is it?: about/what-is-it.md
       - Why use OVOS?: about/why-use-ovos.md
