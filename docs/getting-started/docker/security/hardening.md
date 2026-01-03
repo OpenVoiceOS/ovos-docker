@@ -1,6 +1,6 @@
 # Basic OVOS hardening
 
-In order to secure your Open Voice OS instance, few more steps are **required** and few concepts must be understood.
+In order to secure your Open Voice OS instance, a few more steps are **required** and a few concepts must be understood.
 
 ## AppArmor
 
@@ -24,7 +24,7 @@ AppArmor and SELinux are examples of [Mandatory Access Control](https://en.wikip
     apparmor=1 security=apparmor
     ```
 
-System must be rebooted to instruct the kernel to load AppArmor during the boot sequence. Once rebooted, check the AppArmor status using the `aa-status` command.
+The system must be rebooted to instruct the kernel to load AppArmor during the boot sequence. Once rebooted, check the AppArmor status using the `aa-status` command.
 
 === "Raspberry Pi OS"
 
@@ -57,15 +57,17 @@ All the containers except `ovos_phal_admin` should now be confined with the `doc
 
 ```shell
 docker container list --quiet --all --filter "name=ovos" | xargs docker inspect --format "{{ .Name }}: AppArmorProfile={{ .AppArmorProfile }}"
-/ovos_skill_volume: AppArmorProfile=docker-default
 /ovos_skill_wikipedia: AppArmorProfile=docker-default
-/ovos_skill_fallback_unknown: AppArmorProfile=docker-default
-/ovos_skill_alerts: AppArmorProfile=docker-default
-/ovos_skill_hello_world: AppArmorProfile=docker-default
 /ovos_skill_weather: AppArmorProfile=docker-default
-/ovos_skill_stop: AppArmorProfile=docker-default
+/ovos_skill_volume: AppArmorProfile=docker-default
 /ovos_skill_date_time: AppArmorProfile=docker-default
 /ovos_skill_personal: AppArmorProfile=docker-default
+/ovos_skill_fallback_unknown: AppArmorProfile=docker-default
+/ovos_skill_hello_world: AppArmorProfile=docker-default
+/ovos_skill_alerts: AppArmorProfile=docker-default
+/ovos_skill_ggwave: AppArmorProfile=docker-default
+/ovos_skill_duckduckgo: AppArmorProfile=docker-default
+/ovos_skill_wordnet: AppArmorProfile=docker-default
 /ovos_listener: AppArmorProfile=docker-default
 /ovos_audio: AppArmorProfile=docker-default
 /ovos_core: AppArmorProfile=docker-default
@@ -73,6 +75,7 @@ docker container list --quiet --all --filter "name=ovos" | xargs docker inspect 
 /ovos_phal_admin: AppArmorProfile=unconfined
 /ovos_messagebus: AppArmorProfile=docker-default
 /ovos_cli: AppArmorProfile=docker-default
+/ovos_plugin_ggwave: AppArmorProfile=docker-default
 ```
 
 !!! note "`ovos_phal_admin` container is not confined"
@@ -87,7 +90,7 @@ By default, the message bus is listening on address `0.0.0.0` and port `8181` be
 
     Some Open Voice OS skills such as [Home Assistant](https://www.home-assistant.io/) or [Sonos](https://www.sonos.com/) require access to your private network in order to communicate with your [IoT](https://en.wikipedia.org/wiki/Internet_of_things) devices.
 
-To prevent potential security issues, it is recommended to use a firewall the port `8181`.
+To prevent potential security issues, it is recommended to use a firewall on port `8181`.
 
 `iptables` will be demonstrated as an example but if `firewalld` or `ufw` services are used, then make sure to be compliant with your distribution.
 
@@ -95,7 +98,7 @@ To prevent potential security issues, it is recommended to use a firewall the po
 
     ```shell
     sudo iptables -A INPUT -p tcp -s localhost --dport 8181 -j ACCEPT
-    sudo iptables iptables -A INPUT -p tcp --dport 8181 -j DROP
+    sudo iptables -A INPUT -p tcp --dport 8181 -j DROP
     ```
 
 This will allow connections to port `8181` **only** from localhost _(internal)_.

@@ -7,15 +7,18 @@
 The Open Voice OS GUI supports two types of system execution:
 
 - Using [X](https://en.wikipedia.org/wiki/X_Window_System) or [Wayland](<https://en.wikipedia.org/wiki/Wayland_(protocol)>) display servers
-- Using [EGLFS](https://doc.qt.io/qt-6/embedded-linux.html#eglfs) which doesn't require any display server which is perfect for headless installation
+- Using [EGLFS](https://doc.qt.io/qt-6/embedded-linux.html#eglfs) which doesn't require any display server, which is perfect for headless installation
 
-When using EGLFS, the `DISPLAY` variable from the `.env` [composition environment file](../composition.md#environment-files) must be removed or commented as if present the X or Wayland display servers will be tried first and result in an `ovos_gui` container in error.
+Open Voice OS ships two GUI images: `ovos-gui-shell` and `ovos-gui-original`. Pick
+the one you want in your compose files.
+
+When using EGLFS, the `DISPLAY` variable from the `.env` [composition environment file](../composition.md#environment-files) must be removed or commented. If present, the X or Wayland display servers will be tried first and the GUI container will error.
 
 !!! question "Hardware accelerated on Raspberry Pi 4 and 5"
 
     Raspberry Pi 4 and 5 will leverage the GPU hardware acceleration which will provide a smoother experience.
 
-    **If not running on a Raspberry Pi 4 or 5 then the CPU might be used to render the GUI which will result in a high CPU consumption and a poor user exprience.**
+    **If not running on a Raspberry Pi 4 or 5 then the CPU might be used to render the GUI which will result in a high CPU consumption and a poor user experience.**
 
 ## EGLFS on Raspberry Pi 5
 
@@ -28,13 +31,13 @@ The Raspberry Pi 5 board doesn't use `/dev/dri/card0` by default anymore for the
 }
 ```
 
-The `QT_QPA_EGLFS_INTEGRATION` variable must be set to `eglfs_ksm` and `QT_QPA_EGLFS_KMS_CONFIG` variable must be set to `/home/$OVOS_USER/.config/mycroft/ovos-eglfs.json` in the `.env` file.
+The `QT_QPA_EGLFS_INTEGRATION` variable must be set to `eglfs_kms` and `QT_QPA_EGLFS_KMS_CONFIG` variable must be set to `/home/$OVOS_USER/.config/mycroft/ovos-eglfs.json` in the `.env` file.
 
 Please check the [composition environment file](../composition.md#environment-files) section for more details.
 
 ## Configuration
 
-The `ovos-gui-messagebus` component must be configured in order to receive the QML files from the skill containers. Because of these file transfers, the `ovos-message-bus` component must be configured to allow bigger payload.
+The `ovos-gui-websocket` component must be configured in order to receive the QML files from the skill containers. Because of these file transfers, the `ovos-messagebus` component must be configured to allow bigger payload.
 
 ```json title="~/ovos/config/mycroft.conf"
 {
@@ -50,7 +53,7 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
   },
   "gui": {
     "extension": "ovos-gui-plugin-shell-companion",
-    "gui_file_host_path": "/home/ovos/.cache/gui_files"
+    "gui_file_host_path": "/home/ovos/.cache/ovos_gui_file_server"
   },
   "websocket": {
     "max_msg_size": 100
@@ -62,16 +65,18 @@ The `ovos-gui-messagebus` component must be configured in order to receive the Q
 
 !!! tip
 
-    You can skip this section if your are using EGLFS and go to [GUI services deployment](#gui-services-deployment).
+    You can skip this section if you are using EGLFS and go to [GUI services deployment](#gui-services-deployment).
 
-In order to allow only the `ovos_gui` container to access to the X or Wayland display server, you will have to allow the container _(based on its hostname)_ to connect to the display session.
+In order to allow only the GUI container to access the X or Wayland display server, you will have to allow the container _(based on its hostname)_ to connect to the display session.
 
 ```bash
 export DISPLAY=":0"
 xhost +local:ovos_gui
 ```
 
-This command is not permanent, when your operating system will reboot you will have to run the command again. To make it permanent systemd should be leveraged as a user service.
+Replace `ovos_gui` with your GUI container name if it differs.
+
+This command is not permanent; when your operating system reboots you will have to run the command again. To make it permanent systemd should be leveraged as a user service.
 
 === "Raspberry Pi"
 
@@ -127,6 +132,12 @@ The `xhost` command is part of the `x11-xserver-utils` package on Debian based d
 !!! note "Podman users :muscle:"
 
     If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
+
+!!! note "Compose file names"
+
+    The file names below are examples. Use the compose files provided by your
+    installer or your own bundle names. If you cloned `ovos-docker`, the bundles
+    live under `compose/`.
 
 === "Raspberry Pi"
 

@@ -6,12 +6,12 @@ The [Text-To-Speech](../../../about/glossary/terms.md#text-to-speech-tts) plugin
 
     The Text-To-Speech plugins are handled by the `ovos_audio` container.
 
-The `ovos_audio` container comes with few pre-installed TTS plugins such as:
+The `ovos_audio` container comes with a few pre-installed TTS plugins such as:
 
 - `ovos-tts-plugin-polly` is the Amazon Polly TTS server _(authentication required)_
 - `ovos-tts-plugin-server` allows you to reach an external TTS service
 
-If the existing TTS plugins are not enough then you can install yours by following the same principle as for the [skills](../installation/skills.md) by adding an `audio.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
+If the existing TTS plugins are not enough, you can install your own by following the same principle as for the [skills](../installation/skills.md). Add an `audio.list` file within the `~/ovos/config/` directory; this file acts as a Python `requirements.txt` file.
 
 !!! warning "Plugins requirements"
 

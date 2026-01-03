@@ -1,17 +1,17 @@
 # Microphone plugins
 
-A microhpone plugin allows you to use a specific sound protocol in order to get voice samples from your microphone. Depending the operating system you are running on, you will have to choose the correct plugin.
+A microphone plugin allows you to use a specific sound protocol in order to get voice samples from your microphone. Depending on the operating system you are running on, you will have to choose the correct plugin.
 
 !!! note
 
-    The microhpone plugins are handled by the `ovos_listener` container.
+    The microphone plugins are handled by the `ovos_listener` container.
 
-The `ovos_listener` container comes with few pre-installed microphone plugins such as:
+The `ovos_listener` container comes with a few pre-installed microphone plugins such as:
 
 - `ovos-microphone-plugin-alsa` is using [pyalsaaudio](https://larsimmisch.github.io/pyalsaaudio/) Python library _(default)_
 - `ovos-microphone-plugin-sounddevice` is using [sounddevice](https://python-sounddevice.readthedocs.io/) Python library
 
-If the existing microphone plugins are not enough then you can install yours by following the same principle as for the [STT plugins](./stt.md) by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
+If the existing microphone plugins are not enough, you can install your own by following the same principle as for the [STT plugins](./stt.md). Add a `listener.list` file within the `~/ovos/config/` directory; this file acts as a Python `requirements.txt` file.
 
 !!! warning "Plugins requirements"
 

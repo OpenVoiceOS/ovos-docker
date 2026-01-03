@@ -93,7 +93,7 @@ extra:
     - icon: material/matrix
       link: https://matrix.to/#/!XFpdtmgyCoPDxOMPpH:matrix.org?via=matrix.org
     - icon: fontawesome/brands/docker
-      link: https://hub.docker.com/r/smartgic/ovos-core
+      link: https://hub.docker.com/u/smartgic
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/ovos-core/
     - icon: fontawesome/brands/twitter
@@ -164,6 +164,7 @@ nav:
               - Sound system: getting-started/docker/prerequisites/sound.md
               - CPU instructions: getting-started/docker/prerequisites/cpu.md
           - Images and volumes: getting-started/docker/images.md
+          - Build images: getting-started/docker/build.md
           - Composition: getting-started/docker/composition.md
           - Install Open Voice OS:
               - Requirements: getting-started/docker/installation/requirements.md

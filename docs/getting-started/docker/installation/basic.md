@@ -14,6 +14,12 @@ Before running the `docker compose` or `podman-compose` commands, please read th
 
     If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
 
+!!! note "Compose file names"
+
+    The file names below are examples. Use the compose files provided by your
+    installer or your own bundle names. If you cloned `ovos-docker`, the bundles
+    live under `compose/`.
+
 === "Raspberry Pi"
 
     ```shell
@@ -38,7 +44,7 @@ Before running the `docker compose` or `podman-compose` commands, please read th
     docker compose --project-name ovos --file docker-compose.windows.yml up --detach
     ```
 
-Depending your Internet speed, your Wi-Fi or Ethernet connection speed and your hardware _([I/O](https://en.wikipedia.org/wiki/Input/output))_, the whole process could take several minutes.
+Depending on your Internet speed, your Wi-Fi or Ethernet connection speed, and your hardware _([I/O](https://en.wikipedia.org/wiki/Input/output))_, the whole process could take several minutes.
 
 | Hardware                           | Time           |
 | ---------------------------------- | -------------- |
@@ -49,24 +55,30 @@ Depending your Internet speed, your Wi-Fi or Ethernet connection speed and your 
 
 !!! danger "Resources overhead"
 
-    To reduce the potential ressources overhead due to the image downloads and extractions, the `--parallel x` option could be added to the command in order to process the images by batch of `x` *(where `x` is an integer)*.
+    To reduce the potential resources overhead due to image downloads and extractions, the `--parallel x` option can be added to the command in order to process the images in batches of `x` *(where `x` is an integer)*.
 
 ## Containers status
 
 At this point of the installation, here are the containers that should be up and running.
+
+!!! note "Registry"
+
+    The image prefix in your output depends on the compose files you use.
+    The default bundles under `compose/` reference `docker.io/smartgic`.
 
 === "Docker"
 
     ```shell
     docker container list --all --filter 'name=ovos'
     CONTAINER ID   IMAGE                                        COMMAND                  CREATED      STATUS                PORTS     NAMES
-    219eb6254d32   smartgic/ovos-listener-dinkum:alpha          "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_listener
-    31f5d5e7a1ec   smartgic/ovos-audio:alpha                    "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_audio
-    05e94905b867   smartgic/ovos-core:alpha                     "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_core
-    d256c2e7b6f3   smartgic/ovos-phal:alpha                     "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_phal
-    a4db13a597a4   smartgic/ovos-phal-admin:alpha               "/bin/bash /usr/loca…"   25 hours ago   Up 8 hours                       ovos_phal_admin
-    d157740c9965   smartgic/ovos-messagebus:alpha               "/bin/bash -c ovos-m…"   25 hours ago   Up 8 hours (healthy)             ovos_messagebus
-    6e3536dcfae5   smartgic/ovos-cli:alpha                      "sleep infinity"         25 hours ago   Up 8 hours                       ovos_cli
+    219eb6254d32   docker.io/smartgic/ovos-listener:alpha       "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_listener
+    31f5d5e7a1ec   docker.io/smartgic/ovos-audio:alpha          "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_audio
+    05e94905b867   docker.io/smartgic/ovos-core:alpha           "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_core
+    d256c2e7b6f3   docker.io/smartgic/ovos-phal:alpha           "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_phal
+    a4db13a597a4   docker.io/smartgic/ovos-phal-admin:alpha     "/bin/bash /usr/loca…"   25 hours ago   Up 8 hours                       ovos_phal_admin
+    d157740c9965   docker.io/smartgic/ovos-messagebus:alpha     "/bin/bash -c ovos-m…"   25 hours ago   Up 8 hours (healthy)             ovos_messagebus
+    6e3536dcfae5   docker.io/smartgic/ovos-cli:alpha            "sleep infinity"         25 hours ago   Up 8 hours                       ovos_cli
+    12c2b6d4f6e7   docker.io/smartgic/ovos-plugin-ggwave:alpha  "sleep infinity"         25 hours ago   Up 8 hours                       ovos_plugin_ggwave
     ```
 
 === "Podman"
@@ -74,11 +86,12 @@ At this point of the installation, here are the containers that should be up and
     ```shell
     podman container list --all --filter 'name=ovos'
     CONTAINER ID   IMAGE                                        COMMAND                  CREATED      STATUS                PORTS     NAMES
-    219eb6254d32   smartgic/ovos-listener-dinkum:alpha          "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_listener
-    31f5d5e7a1ec   smartgic/ovos-audio:alpha                    "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_audio
-    05e94905b867   smartgic/ovos-core:alpha                     "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_core
-    d256c2e7b6f3   smartgic/ovos-phal:alpha                     "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_phal
-    a4db13a597a4   smartgic/ovos-phal-admin:alpha               "/bin/bash /usr/loca…"   25 hours ago   Up 8 hours                       ovos_phal_admin
-    d157740c9965   smartgic/ovos-messagebus:alpha               "/bin/bash -c ovos-m…"   25 hours ago   Up 8 hours (healthy)             ovos_messagebus
-    6e3536dcfae5   smartgic/ovos-cli:alpha                      "sleep infinity"         25 hours ago   Up 8 hours                       ovos_cli
+    219eb6254d32   docker.io/smartgic/ovos-listener:alpha       "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_listener
+    31f5d5e7a1ec   docker.io/smartgic/ovos-audio:alpha          "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_audio
+    05e94905b867   docker.io/smartgic/ovos-core:alpha           "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_core
+    d256c2e7b6f3   docker.io/smartgic/ovos-phal:alpha           "/bin/bash /usr/loca…"   18 hours ago   Up 8 hours                       ovos_phal
+    a4db13a597a4   docker.io/smartgic/ovos-phal-admin:alpha     "/bin/bash /usr/loca…"   25 hours ago   Up 8 hours                       ovos_phal_admin
+    d157740c9965   docker.io/smartgic/ovos-messagebus:alpha     "/bin/bash -c ovos-m…"   25 hours ago   Up 8 hours (healthy)             ovos_messagebus
+    6e3536dcfae5   docker.io/smartgic/ovos-cli:alpha            "sleep infinity"         25 hours ago   Up 8 hours                       ovos_cli
+    12c2b6d4f6e7   docker.io/smartgic/ovos-plugin-ggwave:alpha  "sleep infinity"         25 hours ago   Up 8 hours                       ovos_plugin_ggwave
     ```

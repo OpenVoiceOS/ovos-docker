@@ -1,6 +1,6 @@
 # Open Voice OS command line
 
-The command line allows you to send a message _(but not only)_ directly to the message bus by using the `ovos-cli-client` command from the `ovo_cli` container.
+The command line allows you to send a message _(but not only)_ directly to the message bus by using the `ovos-cli-client` command from the `ovos_cli` container.
 
 !!! warning "Skill interactions"
 
@@ -54,7 +54,7 @@ To display or manage the current configuration, the `ovos-config` command could 
 
 ## ovos-speak
 
-An easy way to make Open Voice OS speaks is to run the `ovos-speak` command.
+An easy way to make Open Voice OS speak is to run the `ovos-speak` command.
 
 === "Docker"
 

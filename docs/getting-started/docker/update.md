@@ -4,11 +4,17 @@
 
     In order to update the deployed stack *(services and volumes)*, you *must* use the exact same command that has been used during the initial stack deployment.
 
-The easiest and quickest way to update an Open Voice OS stack already deployed by `docker compose` or `podman-compose` is; of course to use `docker compose` or `podman-compose` as well. :relaxed: :muscle:
+The easiest and quickest way to update an Open Voice OS stack already deployed by `docker compose` or `podman-compose` is, of course, to use `docker compose` or `podman-compose` as well. :relaxed: :muscle:
 
 !!! note "Podman users :muscle:"
 
     If you are running Podman instead of Docker, replace `docker compose` with `podman-compose`.
+
+!!! note "Compose file names"
+
+    The file names below are examples. Use the compose files provided by your
+    installer or your own bundle names. If you cloned `ovos-docker`, the bundles
+    live under `compose/`.
 
 === "Raspberry Pi"
 
@@ -34,8 +40,8 @@ The easiest and quickest way to update an Open Voice OS stack already deployed b
     docker compose --project-name ovos --file docker-compose.windows.yml --file docker-compose.skills.yml  up --detach
     ```
 
-Because the `pull_policy` option of each service is set to `always`, everytime that a new image is uploaded with the same tag `docker compose` or `podman-compose` will pull-it and re-create the container based on this new image.
+Because the `pull_policy` option of each service is set to `always`, every time that a new image is uploaded with the same tag `docker compose` or `podman-compose` will pull it and re-create the container based on this new image.
 
 !!! tip "Change the version"
 
-    If you want to change the image's tag to deploy, update the [.env](./composition.md#environment-files) file with the right one. The `alpha` [tag](./images.md#tags) images are rebuilt every nights with the latest commits from the `dev` branch.
+    If you want to change the image tag to deploy, update the [.env](./composition.md#environment-files) file with the right one. The `alpha` [tag](./images.md#tags) images are rebuilt every night with the latest commits from the `dev` branch.

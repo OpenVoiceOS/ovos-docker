@@ -6,13 +6,13 @@ The [Speech-To-Text](../../../about/glossary/terms.md#speech-to-text-stt) plugin
 
     The Speech-To-Text plugins are handled by the `ovos_listener` container.
 
-The `ovos_listener` container comes with few pre-installed STT plugins such as:
+The `ovos_listener` container comes with a few pre-installed STT plugins such as:
 
 - `ovos-stt-plugin-chromium` uses the Google Chrome browser API
 - `ovos-stt-plugin-server` allows you to reach an external STT service
 - `ovos-stt-plugin-vosk` is an offline STT service
 
-If the existing STT plugins are not enough then you can install yours by following the same principle as for the [microphone plugins](./microphone.md) by adding a `listener.list` file within the `~/ovos/config/` directory, this file acts as a Python `requirements.txt` file.
+If the existing STT plugins are not enough, you can install your own by following the same principle as for the [microphone plugins](./microphone.md). Add a `listener.list` file within the `~/ovos/config/` directory; this file acts as a Python `requirements.txt` file.
 
 !!! warning "Plugins requirements"
 

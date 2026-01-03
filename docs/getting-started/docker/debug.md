@@ -20,11 +20,17 @@ First thing's first, enable the Open Voice OS's debug mode in `~/ovos/config/myc
 ```
 
 !!! note
-The commands below don't have to be executed in the same order as they are presented, free free to run them in the order you want!
+The commands below don't have to be executed in the same order as they are presented, feel free to run them in the order you want!
 
 ## All containers logs
 
 Access all the container logs at the same time, run the following command _(make sure it matches the `docker compose` or `podman-compose` command you run to deploy the stack)_.
+
+!!! note "Compose file names"
+
+    The file names below are examples. Use the compose files provided by your
+    installer or your own bundle names. If you cloned `ovos-docker`, the bundles
+    live under `compose/`.
 
 === "Docker"
 

@@ -24,18 +24,18 @@ When a user speaks an [utterance](#utterance) to Open Voice OS, Open Voice OS tr
 
 ## Playback
 
-Playback is the [audio](./components.md/#ovos-audio) output going through the speakers, for example when asking `What's the temperature?`, OVOS will speaks to you using the playback capability.
+Playback is the [audio](./components.md#ovos-audio) output going through the speakers. For example, when asking `What's the temperature?`, OVOS will speak to you using the playback capability.
 
 ## Plugin
 
-A plugin allows you to install "small bricks" of functionnalities using [OVOS Plugin Manager](./components.md/#ovos-plugin-manager) in order to make your voice assistant more capable.
+A plugin allows you to install "small bricks" of functionalities using [OVOS Plugin Manager](./components.md#ovos-plugin-manager) in order to make your voice assistant more capable.
 
 Open Voice OS uses many plugins in many different areas:
 
 - [Wake word](#wake-word) plugin
 - [VAD](#vad) plugins
 - Microphone plugins
-- [PHAL](./components.md/#ovos-phal) plugins
+- [PHAL](./components.md#ovos-phal) plugins
 - [TTS](#text-to-speech-tts) plugins
 - [STT](#speech-to-text-stt) plugins
 - *etc...*
@@ -44,7 +44,7 @@ Open Voice OS uses many plugins in many different areas:
 
 When Open Voice OS hears the [wake word](#wake-word), then an [utterance](#utterance), Open Voice OS will try to find a skill that matches the [utterance](#utterance). The skill might fetch some data, or play some audio, or speak, or display some information.
 
-If Open Voice OS can't find a skill that matches the utterance, he will tell you he doesn't understand and [fallback](#fallback) *(when configured)*.
+If Open Voice OS can't find a skill that matches the utterance, it will tell you it doesn't understand and [fallback](#fallback) *(when configured)*.
 
 ## Speech-To-Text (STT)
 
@@ -64,7 +64,7 @@ An utterance is how you interact with Open Voice OS. An utterance is a command o
 
 ## VAD
 
-Voice Activity Detection is used by the [listener](./components.md/#ovos-listener) to determine when a user stopped speaking, this indicates the voice command is ready to be executed.
+Voice Activity Detection is used by the [listener](./components.md#ovos-listener) to determine when a user stopped speaking. This indicates the voice command is ready to be executed.
 
 ## Wake Word
 

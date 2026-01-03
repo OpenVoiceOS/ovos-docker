@@ -1,10 +1,13 @@
 # Images
 
-!!! tip "Pre-build images"
+!!! tip "Pre-built images"
 
-    Open Voice OS provides pre-build images available on [Docker Hub](https://hub.docker.com/u/smartgic). These images are referenced by default within the `docker-compose.*.yml` files.
+    The compose bundles in `compose/` currently reference images hosted on
+    Docker Hub under `docker.io/smartgic`. Buildx Bake defaults to
+    `docker.io/smartgic`. If you publish to a different registry, update the
+    `image:` references in your compose files.
 
-Open Voice OS is a sofisticated piece of software which has several [components](../../about/glossary/components.md). These components have been split into containers to provide a better isolation and a [microservices](https://en.wikipedia.org/wiki/Microservices) approach.
+Open Voice OS is a sophisticated piece of software which has several [components](../../about/glossary/components.md). These components have been split into containers to provide better isolation and a [microservice](https://en.wikipedia.org/wiki/Microservices) approach.
 
 !!! info "GUI images size"
 
@@ -12,13 +15,13 @@ Open Voice OS is a sofisticated piece of software which has several [components]
 
 ## Supported CPU architectures
 
-Container images could be used for different CPU architectures using the [multi-platform images](https://docs.docker.com/build/building/multi-platform/) feature.
+Container images can be used for different CPU architectures using the [multi-platform images](https://docs.docker.com/build/building/multi-platform/) feature.
 
-| CPU architecture                                                 | Description                                                                    |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| :material-check-circle-outline:{ style="color: green"} `amd64`   | Such as AMD and Intel processors                                               |
-| :material-check-circle-outline:{ style="color: green"} `aarch64` | Such as Raspberry Pi 64-bit SoC                                                |
-| :material-close-circle-outline:{ style="color: red" } `armv7l`   | Such as Raspberry Pi 32-bit SoC (_not supported because of `onnxruntime`[^1]_) |
+| CPU architecture                                               | Description                                                                    |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| :material-check-circle-outline:{ style="color: green"} `amd64` | Such as AMD and Intel processors                                               |
+| :material-check-circle-outline:{ style="color: green"} `arm64` | Such as Raspberry Pi 64-bit SoC                                                |
+| :material-close-circle-outline:{ style="color: red" } `armv7l` | Such as Raspberry Pi 32-bit SoC (_not supported because of `onnxruntime`[^1]_) |
 
 ## Containers
 
@@ -33,35 +36,56 @@ The list below is not exhaustive and doesn't mention anything about skill contai
 | `ovos_listener`      | [Read more about ovos-listener](../../about/glossary/components.md#ovos-listener)             |
 | `ovos_core`          | [Read more about ovos-core](../../about/glossary/components.md#ovos-core)                     |
 | `ovos_cli`           | [Read more about ovos-cli](../../about/glossary/components.md#ovos-cli)                       |
-| `ovos_gui_websocket` | [Read more about ovos-gui-messagebus](../../about/glossary/components.md#ovos-gui-messagebus) |
-| `ovos_gui`           | [Read more about ovos-gui](../../about/glossary/components.md#ovos-gui)                       |
-| `hivemind_listener`  | [Read more about hivemind-listener](../../about/glossary/terms.md#hivemind)                   |
-| `hivemind_cli`       | [Read more about hivemind-cli](../../about/glossary/terms.md#hivemind)                        |
+| `ovos_gui_websocket` | [Read more about ovos-gui-websocket](../../about/glossary/components.md#ovos-gui-websocket)  |
+| `ovos_gui_shell`     | [Read more about ovos-gui](../../about/glossary/components.md#ovos-gui)                       |
+| `ovos_gui_original`  | [Read more about ovos-gui](../../about/glossary/components.md#ovos-gui)                       |
+| `ovos_plugin_ggwave` | [Read more about ovos-plugin-ggwave](../../about/glossary/components.md#ovos-plugin-ggwave)   |
 
 ## Tags
 
-Container image tags allows you to deploy a specific version of Open Voice OS, it could be an untested version based on nigthly build or a stable version.
+Container image tags allow you to deploy a specific version of Open Voice OS. This could be an untested version based on a nightly build or a stable version.
 
-| Image tag                                                       | Description                                                          |
-| --------------------------------------------------------------- | -------------------------------------------------------------------- |
-| :material-check-circle-outline:{ style="color: green"} `alpha`  | Nightly build based on alpha releases from [PyPi](https://pypi.org/) |
-| :material-check-circle-outline:{ style="color: green"} `0.0.8a` | Nightly build based on alpha releases from [PyPi](https://pypi.org/) |
-| :material-close-circle-outline:{ style="color: red" } `stable`  | Build at every new stable release                                    |
-| :material-close-circle-outline:{ style="color: red" } `0.0.8`   | Build at every new stable release                                    |
+| Image tag                                                      | Description                                                          |
+| -------------------------------------------------------------- | -------------------------------------------------------------------- |
+| :material-check-circle-outline:{ style="color: green"} `alpha` | Nightly build based on alpha releases from [PyPi](https://pypi.org/) |
+| :material-check-circle-outline:{ style="color: green"} `stable` | Published when stable releases are available                         |
+| :material-check-circle-outline:{ style="color: green"} `x.y.z` | Pinned release tag (when published)                                  |
 
-!!! warning "Stable release"
+!!! warning "Tag availability"
 
-    As Open Voice OS doesn't have a stable release for version `0.0.8` which has been designed to work with containers, there is no `stable` or `0.0.8` tags available yet.
+    Tag availability depends on what has been published to the registry. Check
+    the registry if you need a specific version.
+
+## Build images locally
+
+If you need a private registry, custom tags, or local builds, use Docker Buildx
+Bake from the source repository:
+
+```shell
+./scripts/bake.sh --load --no-push
+TAG=alpha CHANNEL=alpha VERSION=alpha PLATFORMS=linux/amd64,linux/arm64 ./scripts/bake.sh
+./scripts/bake.sh -T skills
+```
+
+Builds require Docker with Buildx (BuildKit). Podman works for running images,
+but builds use Docker Buildx Bake.
+
+For a full list of targets and build variables, see
+[Build images](./build.md).
+
+`--load` forces `linux/amd64` and cannot load multi-arch manifests locally.
+Multi-arch builds may require binfmt/qemu; set `ENSURE_BINFMT=true` or use
+`--ensure-binfmt`.
 
 ## Volumes
 
-To allow data persistence, Docker or Podman volumes are required, they will prevent downloading the requirements everytime the containers are re-created.
+To allow data persistence, Docker or Podman volumes are required. They will prevent downloading the requirements every time the containers are re-created.
 
 | Volume                  | Description                                                                                                                      |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `ovos_gui_file`         | Share QML files from skills between the GUI message bus and the GUI client                                                       |
+| `ovos_gui_files`        | Share QML files from skills between the GUI websocket service and the GUI client                                                  |
 | `ovos_listener_records` | [Wake words](../../about/glossary/terms.md#wake-word) and [utterances](../../about/glossary/terms.md#utterance) recorded samples |
-| `ovos_local_state`      | Moslty used to store logs from the different components                                                                          |
+| `ovos_local_state`      | Mostly used to store logs from the different components                                                                          |
 | `ovos_models`           | Models downloaded by `precise-lite` wake word plugin                                                                             |
 | `ovos_nltk`             | [Punkt](https://www.askpython.com/python-modules/nltk-punkt) Python package required by [NLTK](https://www.nltk.org/index.html)  |
 | `ovos_tts_cache`        | `.wav` and `.pho` files acting as cache from TTS transcription                                                                   |
@@ -75,7 +99,7 @@ To allow data persistence, Docker or Podman volumes are required, they will prev
 
     ```json title="~/ovos/config/mycroft.conf"
     {
-    "listener": {
+      "listener": {
         "record_wake_words": true,
         "save_utterances": true
       }
