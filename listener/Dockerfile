@@ -1,14 +1,19 @@
+# syntax=docker/dockerfile:1.7
 ARG TAG=0.1.0
 ARG REGISTRY=docker.io/smartgic
-FROM "${REGISTRY}/ovos-sound-base:${TAG}"
+ARG SOUND_BASE_IMAGE=${REGISTRY}/ovos-sound-base:${TAG}
+FROM ${SOUND_BASE_IMAGE}
+ARG TAG
+ARG REGISTRY
+ARG GIT_SHA=unknown
+
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
   CMD ovos-hc -s voice || exit 1
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
-ARG TAG
-ARG REGISTRY
+ARG SOUND_BASE_IMAGE
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI listener image (Dinkum implementation)"
 LABEL org.opencontainers.image.description="The speech client is responsible for loading STT, VAD and Wake Word plugins"
@@ -20,6 +25,9 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.authors="Open Voice OS Community"
 LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-sound-base:${TAG}"
+LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
+LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-listener:${TAG}"
+LABEL org.opencontainers.image.revision="${GIT_SHA}"
 
 ARG USER=ovos
 
@@ -30,16 +38,18 @@ USER root
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update \
-  && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends --no-install-suggests libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
-  && uv pip install -f 'https://whl.smartgic.io/' tflite_runtime \
-  && uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
-  && mkdir -p "/home/${USER}/.local/share/vosk" "/home/${USER}/.local/share/precise-lite" "/home/${USER}/.local/share/mycroft/listener" \
-  && chown "${USER}:${USER}" -R "/home/${USER}" \
-  && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \
-  && apt-get --purge autoremove -y \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* /var/log/{apt,dpkg.log} /tmp/* /var/tmp/*
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    --mount=type=cache,target=/root/.cache/uv \
+    apt-get update \
+ && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends --no-install-suggests libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
+ && uv pip install -f 'https://whl.smartgic.io/' tflite_runtime \
+ && uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+ && mkdir -p "/home/${USER}/.local/share/vosk" "/home/${USER}/.local/share/precise-lite" "/home/${USER}/.local/share/mycroft/listener" \
+ && chown "${USER}:${USER}" -R "/home/${USER}" \
+ && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \
+ && apt-get --purge autoremove -y \
+ && rm -rf /var/log/{apt,dpkg.log} /tmp/* /var/tmp/*
 
 USER "$USER"
 

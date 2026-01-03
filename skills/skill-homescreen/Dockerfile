@@ -1,11 +1,16 @@
+# syntax=docker/dockerfile:1.7
 ARG TAG=0.1.0
 ARG REGISTRY=docker.io/smartgic
-FROM "${REGISTRY}/ovos-skill-base:${TAG}"
+ARG SKILL_BASE_IMAGE=${REGISTRY}/ovos-skill-base:${TAG}
+FROM ${SKILL_BASE_IMAGE}
+ARG TAG
+ARG REGISTRY
+ARG GIT_SHA=unknown
+
 
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
-ARG TAG
-ARG REGISTRY
+ARG SKILL_BASE_IMAGE
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI homescreen skill image"
 LABEL org.opencontainers.image.description="Manage and display the main homescreen interface"
@@ -17,7 +22,11 @@ LABEL org.opencontainers.image.vendor="Open Voice OS"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.authors="Open Voice OS Community"
 LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-skill-base:${TAG}"
+LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
+LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-skill-homescreen:${TAG}"
+LABEL org.opencontainers.image.revision="${GIT_SHA}"
 
-RUN uv pip install ovos-skill-homescreen -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000 \
+    uv pip install ovos-skill-homescreen -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
-ENTRYPOINT ["ovos-skill-launcher", "skill-ovos-homescreen.openvoiceos"]
+CMD ["ovos-skill-launcher", "skill-ovos-homescreen.openvoiceos"]
