@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Defaults (override via flags or env)
-REGISTRY="${REGISTRY:-oci.uoi.io/ovos}"
+REGISTRY="${REGISTRY:-docker.io/smartgic}"
 TAG="${TAG:-alpha}"
 VERSION="${VERSION:-$TAG}"
 CHANNEL="${CHANNEL:-alpha}"
