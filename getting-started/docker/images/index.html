@@ -2094,6 +2094,10 @@ Docker Hub under <code>docker.io/smartgic</code>. Buildx Bake defaults to
 <td>Published when stable releases are available</td>
 </tr>
 <tr>
+<td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg></span> <code>latest</code></td>
+<td>Alias for the stable build (published only when <code>stable</code> is built)</td>
+</tr>
+<tr>
 <td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg></span> <code>x.y.z</code></td>
 <td>Pinned release tag (when published)</td>
 </tr>
@@ -2103,6 +2107,11 @@ Docker Hub under <code>docker.io/smartgic</code>. Buildx Bake defaults to
 <p class="admonition-title">Tag availability</p>
 <p>Tag availability depends on what has been published to the registry. Check
 the registry if you need a specific version.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Stable alias</p>
+<p>When building locally, <code>TAG=stable</code> also tags <code>LATEST_TAG</code> (default
+<code>latest</code>). Override <code>LATEST_TAG</code> if you want a different alias.</p>
 </div>
 <h2 id="build-images-locally">Build images locally<a class="headerlink" href="#build-images-locally" title="Permanent link">¶</a></h2>
 <p>If you need a private registry, custom tags, or local builds, use Docker Buildx
@@ -2201,7 +2210,7 @@ Multi-arch builds may require binfmt/qemu; set <code>ENSURE_BINFMT=true</code> o
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 3, 2026 02:54:14 UTC">January 3, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 5, 2026 22:57:30 UTC">January 5, 2026</span>
   </span>
 
     

@@ -2005,8 +2005,9 @@ to it.</p>
 <h2 id="quick-examples">Quick examples<a class="headerlink" href="#quick-examples" title="Permanent link">¶</a></h2>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>./scripts/bake.sh<span class="w"> </span>--load<span class="w"> </span>--no-push
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">TAG</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">CHANNEL</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">PLATFORMS</span><span class="o">=</span>linux/amd64,linux/arm64<span class="w"> </span>./scripts/bake.sh
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>./scripts/bake.sh<span class="w"> </span>-T<span class="w"> </span>services
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">REGISTRY</span><span class="o">=</span>docker.io/smartgic<span class="w"> </span><span class="nv">TAG</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">CHANNEL</span><span class="o">=</span>alpha<span class="w"> </span>./scripts/bake.sh
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">TAG</span><span class="o">=</span>stable<span class="w"> </span><span class="nv">CHANNEL</span><span class="o">=</span>stable<span class="w"> </span>./scripts/bake.sh
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>./scripts/bake.sh<span class="w"> </span>-T<span class="w"> </span>services
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">REGISTRY</span><span class="o">=</span>docker.io/smartgic<span class="w"> </span><span class="nv">TAG</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">CHANNEL</span><span class="o">=</span>alpha<span class="w"> </span>./scripts/bake.sh
 </span></code></pre></div>
 <h2 id="targets-and-groups">Targets and groups<a class="headerlink" href="#targets-and-groups" title="Permanent link">¶</a></h2>
 <table>
@@ -2065,6 +2066,11 @@ to it.</p>
 <td>Image tag to publish</td>
 </tr>
 <tr>
+<td><code>LATEST_TAG</code></td>
+<td><code>latest</code></td>
+<td>Additional tag applied only when <code>TAG=stable</code></td>
+</tr>
+<tr>
 <td><code>VERSION</code></td>
 <td><code>alpha</code></td>
 <td>Version label passed into images</td>
@@ -2109,6 +2115,11 @@ to it.</p>
 <td><code>auto</code></td>
 <td><code>auto</code>, <code>true</code>, or <code>false</code> binfmt/qemu installation</td>
 </tr>
+<tr>
+<td><code>BUILDER</code></td>
+<td><code>ovos-bake</code></td>
+<td>Buildx builder name for multi-arch builds</td>
+</tr>
 </tbody>
 </table>
 <p><code>BUILD_DATE</code> and <code>GIT_SHA</code> are set automatically by <code>scripts/bake.sh</code>.</p>
@@ -2119,14 +2130,18 @@ to it.</p>
 <li><code>CHANNEL</code>/<code>OVOS_CHANNEL</code> selects the constraints file from
   <code>ovos-releases</code> (for example, <code>constraints-alpha.txt</code>).</li>
 <li><code>UV_PRERELEASE</code> controls pre-release resolution for images that install
-  packages via <code>uv pip</code> (currently <code>plugin-ggwave</code> and <code>skill-tunein</code>).</li>
+  packages via <code>uv pip</code>.</li>
 </ul>
 <h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">¶</a></h2>
 <ul>
 <li><code>--load</code> and <code>--push</code> are mutually exclusive.</li>
 <li><code>--load</code> forces <code>linux/amd64</code> because Docker cannot load multi-arch manifests locally.</li>
-<li>For multi-arch builds, <code>scripts/bake.sh</code> can install binfmt/qemu using
-  <code>tonistiigi/binfmt</code> (set <code>ENSURE_BINFMT=true</code> or pass <code>--ensure-binfmt</code>).</li>
+<li>When <code>TAG=stable</code>, Bake also tags <code>LATEST_TAG</code> (default <code>latest</code>).</li>
+<li>For multi-arch builds, <code>scripts/bake.sh</code> installs binfmt/qemu automatically
+  when needed (set <code>ENSURE_BINFMT=true</code> or pass <code>--ensure-binfmt</code> to force, or
+  <code>ENSURE_BINFMT=false</code>/<code>--no-binfmt</code> to skip).</li>
+<li>The script switches to a <code>docker-container</code> buildx builder for multi-arch
+  builds (override with <code>BUILDER</code> or <code>--builder</code>).</li>
 <li>Use <code>--no-cache-from</code> if registry cache is unavailable or not desired.</li>
 </ul></div>
 
@@ -2151,7 +2166,7 @@ to it.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 3, 2026 02:54:14 UTC">January 3, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 5, 2026 22:57:30 UTC">January 5, 2026</span>
   </span>
 
     
