@@ -4,7 +4,7 @@ set -euo pipefail
 # Defaults (override via flags or env)
 REGISTRY="${REGISTRY:-docker.io/smartgic}"
 TAG="${TAG:-alpha}"
-LATEST_TAG="${LATEST_TAG:-}"
+LATEST_TAG="${LATEST_TAG:-latest}"
 VERSION="${VERSION:-$TAG}"
 CHANNEL="${CHANNEL:-alpha}"
 UV_PRERELEASE="${UV_PRERELEASE:-allow}"
@@ -28,7 +28,7 @@ Usage: $0 [options]
 Options:
   -r, --registry REGISTRY     Registry (default: $REGISTRY)
   -t, --tag TAG               Tag (default: $TAG)
-  --latest-tag TAG            Additional tag (default: same as TAG, stable -> latest)
+  --latest-tag TAG            Additional tag (default: latest; only used when TAG=stable)
   -v, --version VERSION       Version label (default: $VERSION)
   -c, --channel CHANNEL       OVOS channel (default: $CHANNEL)
   -p, --platforms PLATFORMS   CSV platforms (default: $PLATFORMS)
@@ -63,13 +63,6 @@ while [[ $# -gt 0 ]]; do
     *) echo "Unknown arg: $1"; usage; exit 1 ;;
   esac
 done
-
-if [[ -z "$LATEST_TAG" ]]; then
-  LATEST_TAG="$TAG"
-fi
-if [[ "$TAG" == "stable" && "$LATEST_TAG" == "$TAG" ]]; then
-  LATEST_TAG="latest"
-fi
 
 # Preflight
 command -v docker >/dev/null || { echo "docker not found"; exit 1; }

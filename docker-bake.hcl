@@ -88,7 +88,7 @@ group "skills" {
 # ---------- Variables (override via env or scripts/bake.sh) ----------
 variable "REGISTRY"   { default = "docker.io/smartgic" }
 variable "TAG"        { default = "alpha" }
-variable "LATEST_TAG" { default = "alpha" }
+variable "LATEST_TAG" { default = "latest" }
 variable "CHANNEL"    { default = "alpha" }
 variable "UV_PRERELEASE" { default = "allow" }
 variable "VERSION"    { default = "alpha" }
@@ -122,7 +122,12 @@ target "base" {
   inherits   = ["common"]
   context    = "base"
   dockerfile = "Dockerfile"
-  tags       = ["${REGISTRY}/ovos-base:${TAG}", "${REGISTRY}/ovos-base:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-base:${TAG}",
+    "${REGISTRY}/ovos-base:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-base:${TAG}",
+  ]
   args = {
     IMAGE_REF = "ovos-base:${TAG}"
   }
@@ -138,7 +143,12 @@ target "sound-base" {
   context    = "sound-base"
   dockerfile = "Dockerfile"
   depends_on = ["base"]
-  tags       = ["${REGISTRY}/ovos-sound-base:${TAG}", "${REGISTRY}/ovos-sound-base:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-sound-base:${TAG}",
+    "${REGISTRY}/ovos-sound-base:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-sound-base:${TAG}",
+  ]
   # Map Dockerfile's BASE_IMAGE name to locally-built base target
   contexts = {
     "ovos-base" = "target:base"
@@ -158,7 +168,12 @@ target "skill-base" {
   inherits   = ["common"]
   context    = "skills/skill-base"
   dockerfile = "Dockerfile"
-  tags       = ["${REGISTRY}/ovos-skill-base:${TAG}", "${REGISTRY}/ovos-skill-base:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-base:${TAG}",
+    "${REGISTRY}/ovos-skill-base:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-base:${TAG}",
+  ]
   cache-from = ["type=registry,ref=${REGISTRY}/ovos-skill-base:${TAG}"]
   cache-to   = ["type=inline"]
 }
@@ -169,7 +184,12 @@ target "core" {
   context    = "core"
   dockerfile = "Dockerfile"
   depends_on = ["sound-base"]
-  tags       = ["${REGISTRY}/ovos-core:${TAG}", "${REGISTRY}/ovos-core:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-core:${TAG}",
+    "${REGISTRY}/ovos-core:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-core:${TAG}",
+  ]
   # Map Dockerfile's SOUND_BASE_IMAGE name to locally-built sound-base target
   contexts = {
     "ovos-sound-base" = "target:sound-base"
@@ -190,7 +210,12 @@ target "audio" {
   context    = "audio"
   dockerfile = "Dockerfile"
   depends_on = ["sound-base"]
-  tags       = ["${REGISTRY}/ovos-audio:${TAG}", "${REGISTRY}/ovos-audio:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-audio:${TAG}",
+    "${REGISTRY}/ovos-audio:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-audio:${TAG}",
+  ]
   contexts = {
     "ovos-sound-base" = "target:sound-base"
   }
@@ -209,7 +234,12 @@ target "cli" {
   context    = "cli"
   dockerfile = "Dockerfile"
   depends_on = ["base"]
-  tags       = ["${REGISTRY}/ovos-cli:${TAG}", "${REGISTRY}/ovos-cli:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-cli:${TAG}",
+    "${REGISTRY}/ovos-cli:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-cli:${TAG}",
+  ]
   contexts = {
     "ovos-base" = "target:base"
   }
@@ -228,7 +258,12 @@ target "gui-websocket" {
   context    = "gui-websocket"
   dockerfile = "Dockerfile"
   depends_on = ["base"]
-  tags       = ["${REGISTRY}/ovos-gui-websocket:${TAG}", "${REGISTRY}/ovos-gui-websocket:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-gui-websocket:${TAG}",
+    "${REGISTRY}/ovos-gui-websocket:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-gui-websocket:${TAG}",
+  ]
   contexts = {
     "ovos-base" = "target:base"
   }
@@ -247,7 +282,12 @@ target "listener" {
   context    = "listener"
   dockerfile = "Dockerfile"
   depends_on = ["sound-base"]
-  tags       = ["${REGISTRY}/ovos-listener:${TAG}", "${REGISTRY}/ovos-listener:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-listener:${TAG}",
+    "${REGISTRY}/ovos-listener:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-listener:${TAG}",
+  ]
   contexts = {
     "ovos-sound-base" = "target:sound-base"
   }
@@ -266,7 +306,12 @@ target "messagebus" {
   context    = "messagebus"
   dockerfile = "Dockerfile"
   depends_on = ["base"]
-  tags       = ["${REGISTRY}/ovos-messagebus:${TAG}", "${REGISTRY}/ovos-messagebus:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-messagebus:${TAG}",
+    "${REGISTRY}/ovos-messagebus:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-messagebus:${TAG}",
+  ]
   contexts = {
     "ovos-base" = "target:base"
   }
@@ -285,7 +330,12 @@ target "phal" {
   context    = "phal"
   dockerfile = "Dockerfile"
   depends_on = ["sound-base"]
-  tags       = ["${REGISTRY}/ovos-phal:${TAG}", "${REGISTRY}/ovos-phal:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-phal:${TAG}",
+    "${REGISTRY}/ovos-phal:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-phal:${TAG}",
+  ]
   contexts = {
     "ovos-sound-base" = "target:sound-base"
   }
@@ -304,7 +354,12 @@ target "phal-admin" {
   context    = "phal-admin"
   dockerfile = "Dockerfile"
   depends_on = ["phal"]
-  tags       = ["${REGISTRY}/ovos-phal-admin:${TAG}", "${REGISTRY}/ovos-phal-admin:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-phal-admin:${TAG}",
+    "${REGISTRY}/ovos-phal-admin:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-phal-admin:${TAG}",
+  ]
   contexts = {
     "ovos-phal" = "target:phal"
   }
@@ -323,7 +378,12 @@ target "plugin-ggwave" {
   context    = "plugin-ggwave"
   dockerfile = "Dockerfile"
   depends_on = ["sound-base"]
-  tags       = ["${REGISTRY}/ovos-plugin-ggwave:${TAG}", "${REGISTRY}/ovos-plugin-ggwave:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-plugin-ggwave:${TAG}",
+    "${REGISTRY}/ovos-plugin-ggwave:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-plugin-ggwave:${TAG}",
+  ]
   contexts = {
     "ovos-sound-base" = "target:sound-base"
   }
@@ -341,7 +401,12 @@ target "gui-original" {
   inherits   = ["common"]
   context    = "gui/gui-original"
   dockerfile = "Dockerfile"
-  tags       = ["${REGISTRY}/ovos-gui-original:${TAG}", "${REGISTRY}/ovos-gui-original:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-gui-original:${TAG}",
+    "${REGISTRY}/ovos-gui-original:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-gui-original:${TAG}",
+  ]
   cache-from = ["type=registry,ref=${REGISTRY}/ovos-gui-original:${TAG}"]
   cache-to   = ["type=inline"]
 }
@@ -351,7 +416,12 @@ target "gui-shell" {
   inherits   = ["common"]
   context    = "gui/gui-shell"
   dockerfile = "Dockerfile"
-  tags       = ["${REGISTRY}/ovos-gui-shell:${TAG}", "${REGISTRY}/ovos-gui-shell:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-gui-shell:${TAG}",
+    "${REGISTRY}/ovos-gui-shell:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-gui-shell:${TAG}",
+  ]
   cache-from = ["type=registry,ref=${REGISTRY}/ovos-gui-shell:${TAG}"]
   cache-to   = ["type=inline"]
 }
@@ -362,7 +432,12 @@ target "skill-alerts" {
   context    = "skills/skill-alerts"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-alerts:${TAG}", "${REGISTRY}/ovos-skill-alerts:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-alerts:${TAG}",
+    "${REGISTRY}/ovos-skill-alerts:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-alerts:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -380,7 +455,12 @@ target "skill-camera" {
   context    = "skills/skill-camera"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-camera:${TAG}", "${REGISTRY}/ovos-skill-camera:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-camera:${TAG}",
+    "${REGISTRY}/ovos-skill-camera:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-camera:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -398,7 +478,12 @@ target "skill-date-time" {
   context    = "skills/skill-date-time"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-date-time:${TAG}", "${REGISTRY}/ovos-skill-date-time:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-date-time:${TAG}",
+    "${REGISTRY}/ovos-skill-date-time:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-date-time:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -416,7 +501,12 @@ target "skill-duckduckgo" {
   context    = "skills/skill-duckduckgo"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-duckduckgo:${TAG}", "${REGISTRY}/ovos-skill-duckduckgo:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-duckduckgo:${TAG}",
+    "${REGISTRY}/ovos-skill-duckduckgo:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-duckduckgo:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -434,7 +524,12 @@ target "skill-easter-eggs" {
   context    = "skills/skill-easter-eggs"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-easter-eggs:${TAG}", "${REGISTRY}/ovos-skill-easter-eggs:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-easter-eggs:${TAG}",
+    "${REGISTRY}/ovos-skill-easter-eggs:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-easter-eggs:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -452,7 +547,12 @@ target "skill-fallback-unknown" {
   context    = "skills/skill-fallback-unknown"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-fallback-unknown:${TAG}", "${REGISTRY}/ovos-skill-fallback-unknown:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-fallback-unknown:${TAG}",
+    "${REGISTRY}/ovos-skill-fallback-unknown:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-fallback-unknown:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -470,7 +570,12 @@ target "skill-ggwave" {
   context    = "skills/skill-ggwave"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-ggwave:${TAG}", "${REGISTRY}/ovos-skill-ggwave:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-ggwave:${TAG}",
+    "${REGISTRY}/ovos-skill-ggwave:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-ggwave:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -488,7 +593,12 @@ target "skill-hello-world" {
   context    = "skills/skill-hello-world"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-hello-world:${TAG}", "${REGISTRY}/ovos-skill-hello-world:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-hello-world:${TAG}",
+    "${REGISTRY}/ovos-skill-hello-world:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-hello-world:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -506,7 +616,12 @@ target "skill-homescreen" {
   context    = "skills/skill-homescreen"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-homescreen:${TAG}", "${REGISTRY}/ovos-skill-homescreen:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-homescreen:${TAG}",
+    "${REGISTRY}/ovos-skill-homescreen:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-homescreen:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -524,7 +639,12 @@ target "skill-jokes" {
   context    = "skills/skill-jokes"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-jokes:${TAG}", "${REGISTRY}/ovos-skill-jokes:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-jokes:${TAG}",
+    "${REGISTRY}/ovos-skill-jokes:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-jokes:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -542,7 +662,12 @@ target "skill-parrot" {
   context    = "skills/skill-parrot"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-parrot:${TAG}", "${REGISTRY}/ovos-skill-parrot:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-parrot:${TAG}",
+    "${REGISTRY}/ovos-skill-parrot:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-parrot:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -560,7 +685,12 @@ target "skill-personal" {
   context    = "skills/skill-personal"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-personal:${TAG}", "${REGISTRY}/ovos-skill-personal:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-personal:${TAG}",
+    "${REGISTRY}/ovos-skill-personal:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-personal:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -578,7 +708,12 @@ target "skill-randomness" {
   context    = "skills/skill-randomness"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-randomness:${TAG}", "${REGISTRY}/ovos-skill-randomness:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-randomness:${TAG}",
+    "${REGISTRY}/ovos-skill-randomness:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-randomness:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -596,7 +731,12 @@ target "skill-tunein" {
   context    = "skills/skill-tunein"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-tunein:${TAG}", "${REGISTRY}/ovos-skill-tunein:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-tunein:${TAG}",
+    "${REGISTRY}/ovos-skill-tunein:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-tunein:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -614,7 +754,12 @@ target "skill-volume" {
   context    = "skills/skill-volume"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-volume:${TAG}", "${REGISTRY}/ovos-skill-volume:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-volume:${TAG}",
+    "${REGISTRY}/ovos-skill-volume:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-volume:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -632,7 +777,12 @@ target "skill-weather" {
   context    = "skills/skill-weather"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-weather:${TAG}", "${REGISTRY}/ovos-skill-weather:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-weather:${TAG}",
+    "${REGISTRY}/ovos-skill-weather:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-weather:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -650,7 +800,12 @@ target "skill-wikihow" {
   context    = "skills/skill-wikihow"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-wikihow:${TAG}", "${REGISTRY}/ovos-skill-wikihow:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-wikihow:${TAG}",
+    "${REGISTRY}/ovos-skill-wikihow:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-wikihow:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -668,7 +823,12 @@ target "skill-wikipedia" {
   context    = "skills/skill-wikipedia"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-wikipedia:${TAG}", "${REGISTRY}/ovos-skill-wikipedia:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-wikipedia:${TAG}",
+    "${REGISTRY}/ovos-skill-wikipedia:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-wikipedia:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -686,7 +846,12 @@ target "skill-wolfie" {
   context    = "skills/skill-wolfie"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-wolfie:${TAG}", "${REGISTRY}/ovos-skill-wolfie:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-wolfie:${TAG}",
+    "${REGISTRY}/ovos-skill-wolfie:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-wolfie:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
@@ -704,7 +869,12 @@ target "skill-wordnet" {
   context    = "skills/skill-wordnet"
   dockerfile = "Dockerfile"
   depends_on = ["skill-base"]
-  tags       = ["${REGISTRY}/ovos-skill-wordnet:${TAG}", "${REGISTRY}/ovos-skill-wordnet:${LATEST_TAG}"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-wordnet:${TAG}",
+    "${REGISTRY}/ovos-skill-wordnet:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-wordnet:${TAG}",
+  ]
   contexts = {
     "ovos-skill-base" = "target:skill-base"
   }
