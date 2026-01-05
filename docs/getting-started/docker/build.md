@@ -25,6 +25,7 @@ base image dependencies defined in `docker-bake.hcl`.
 ```shell
 ./scripts/bake.sh --load --no-push
 TAG=alpha CHANNEL=alpha VERSION=alpha PLATFORMS=linux/amd64,linux/arm64 ./scripts/bake.sh
+TAG=stable CHANNEL=stable ./scripts/bake.sh
 ./scripts/bake.sh -T services
 REGISTRY=docker.io/smartgic TAG=alpha CHANNEL=alpha ./scripts/bake.sh
 ```
@@ -54,6 +55,7 @@ Defaults come from `scripts/bake.sh` and `docker-bake.hcl`:
 | ----------------- | ----------------------------- | ------------------------------------------------------------- |
 | `REGISTRY`        | `docker.io/smartgic`           | Registry prefix for tags                                      |
 | `TAG`             | `alpha`                       | Image tag to publish                                          |
+| `LATEST_TAG`      | `latest`                      | Additional tag applied only when `TAG=stable`                 |
 | `VERSION`         | `alpha`                       | Version label passed into images                              |
 | `CHANNEL`         | `alpha`                       | Constraints channel (e.g., `alpha`, `stable`)                 |
 | `UV_PRERELEASE`   | `allow`                       | `uv pip` prerelease policy                                    |
@@ -63,6 +65,7 @@ Defaults come from `scripts/bake.sh` and `docker-bake.hcl`:
 | `LOAD`            | `false`                       | Load images locally (forces `linux/amd64`)                    |
 | `CACHE_FROM`      | `true`                        | Enable registry cache-from                                    |
 | `ENSURE_BINFMT`   | `auto`                        | `auto`, `true`, or `false` binfmt/qemu installation           |
+| `BUILDER`         | `ovos-bake`                   | Buildx builder name for multi-arch builds                     |
 
 `BUILD_DATE` and `GIT_SHA` are set automatically by `scripts/bake.sh`.
 
@@ -74,12 +77,16 @@ The Dockerfiles use a few build args that are set via Bake:
 - `CHANNEL`/`OVOS_CHANNEL` selects the constraints file from
   `ovos-releases` (for example, `constraints-alpha.txt`).
 - `UV_PRERELEASE` controls pre-release resolution for images that install
-  packages via `uv pip` (currently `plugin-ggwave` and `skill-tunein`).
+  packages via `uv pip`.
 
 ## Notes
 
 - `--load` and `--push` are mutually exclusive.
 - `--load` forces `linux/amd64` because Docker cannot load multi-arch manifests locally.
-- For multi-arch builds, `scripts/bake.sh` can install binfmt/qemu using
-  `tonistiigi/binfmt` (set `ENSURE_BINFMT=true` or pass `--ensure-binfmt`).
+- When `TAG=stable`, Bake also tags `LATEST_TAG` (default `latest`).
+- For multi-arch builds, `scripts/bake.sh` installs binfmt/qemu automatically
+  when needed (set `ENSURE_BINFMT=true` or pass `--ensure-binfmt` to force, or
+  `ENSURE_BINFMT=false`/`--no-binfmt` to skip).
+- The script switches to a `docker-container` buildx builder for multi-arch
+  builds (override with `BUILDER` or `--builder`).
 - Use `--no-cache-from` if registry cache is unavailable or not desired.

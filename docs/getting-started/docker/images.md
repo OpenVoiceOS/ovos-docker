@@ -49,12 +49,18 @@ Container image tags allow you to deploy a specific version of Open Voice OS. Th
 | -------------------------------------------------------------- | -------------------------------------------------------------------- |
 | :material-check-circle-outline:{ style="color: green"} `alpha` | Nightly build based on alpha releases from [PyPi](https://pypi.org/) |
 | :material-check-circle-outline:{ style="color: green"} `stable` | Published when stable releases are available                         |
+| :material-check-circle-outline:{ style="color: green"} `latest` | Alias for the stable build (published only when `stable` is built)   |
 | :material-check-circle-outline:{ style="color: green"} `x.y.z` | Pinned release tag (when published)                                  |
 
 !!! warning "Tag availability"
 
     Tag availability depends on what has been published to the registry. Check
     the registry if you need a specific version.
+
+!!! info "Stable alias"
+
+    When building locally, `TAG=stable` also tags `LATEST_TAG` (default
+    `latest`). Override `LATEST_TAG` if you want a different alias.
 
 ## Build images locally
 
