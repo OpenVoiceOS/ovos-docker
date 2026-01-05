@@ -53,7 +53,7 @@ RUN --mount=type=cache,target=/var/cache/apk \
 # Setup Python environment and directories
 RUN --mount=type=cache,target=/var/cache/apk \
   --mount=type=cache,target=/root/.cache/pip \
-  --mount=type=cache,target=/root/.cache/uv \
+  --mount=type=cache,target=/root/.cache/uv,sharing=locked \
   python3 -m venv "/home/${USER}/.venv" --system-site-packages \
   && source "/home/${USER}/.venv/bin/activate" \
   && PIP_NO_CACHE_DIR=0 pip install --upgrade pip setuptools uv \

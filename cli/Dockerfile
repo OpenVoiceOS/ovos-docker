@@ -36,7 +36,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
-    --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=cache,target=/root/.cache/uv,sharing=locked \
     apt-get update \
  && apt-get install -y --no-install-recommends --no-install-suggests vim nano python3-dev build-essential \
  && uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \

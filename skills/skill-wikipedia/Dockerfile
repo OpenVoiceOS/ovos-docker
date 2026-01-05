@@ -35,7 +35,7 @@ RUN --mount=type=cache,target=/var/cache/apk \
 
 USER "$USER"
 
-RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000 \
+RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000,sharing=locked \
     uv pip install ovos-skill-wikipedia -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
 USER root

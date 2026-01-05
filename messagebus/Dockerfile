@@ -35,7 +35,7 @@ ARG USER_GID=1000
 
 SHELL ["/bin/bash", "-c"]
 
-RUN --mount=type=cache,target=/home/${USER}/.cache/uv,uid=${USER_UID},gid=${USER_GID} \
+RUN --mount=type=cache,target=/home/${USER}/.cache/uv,uid=${USER_UID},gid=${USER_GID},sharing=locked \
     uv pip install ovos-messagebus -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
 ENTRYPOINT ["ovos-messagebus"]

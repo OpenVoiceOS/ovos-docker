@@ -37,7 +37,7 @@ USER root
 
 SHELL ["/bin/bash", "-c"]
 
-RUN --mount=type=cache,target=/root/.cache/uv \
+RUN --mount=type=cache,target=/root/.cache/uv,sharing=locked \
     uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
   && mkdir -p "/home/${USER}/.cache/ovos_gui_file_server" /etc/xdg \
   && chown "${USER}:${USER}" -R "/home/${USER}" \
