@@ -4,6 +4,7 @@ set -euo pipefail
 # Defaults (override via flags or env)
 REGISTRY="${REGISTRY:-docker.io/smartgic}"
 TAG="${TAG:-alpha}"
+LATEST_TAG="${LATEST_TAG:-}"
 VERSION="${VERSION:-$TAG}"
 CHANNEL="${CHANNEL:-alpha}"
 UV_PRERELEASE="${UV_PRERELEASE:-allow}"
@@ -27,6 +28,7 @@ Usage: $0 [options]
 Options:
   -r, --registry REGISTRY     Registry (default: $REGISTRY)
   -t, --tag TAG               Tag (default: $TAG)
+  --latest-tag TAG            Additional tag (default: same as TAG, stable -> latest)
   -v, --version VERSION       Version label (default: $VERSION)
   -c, --channel CHANNEL       OVOS channel (default: $CHANNEL)
   -p, --platforms PLATFORMS   CSV platforms (default: $PLATFORMS)
@@ -46,6 +48,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     -r|--registry) REGISTRY="$2"; shift 2 ;;
     -t|--tag) TAG="$2"; shift 2 ;;
+    --latest-tag) LATEST_TAG="$2"; shift 2 ;;
     -v|--version) VERSION="$2"; shift 2 ;;
     -c|--channel) CHANNEL="$2"; shift 2 ;;
     -p|--platforms) PLATFORMS="$2"; shift 2 ;;
@@ -60,6 +63,13 @@ while [[ $# -gt 0 ]]; do
     *) echo "Unknown arg: $1"; usage; exit 1 ;;
   esac
 done
+
+if [[ -z "$LATEST_TAG" ]]; then
+  LATEST_TAG="$TAG"
+fi
+if [[ "$TAG" == "stable" && "$LATEST_TAG" == "$TAG" ]]; then
+  LATEST_TAG="latest"
+fi
 
 # Preflight
 command -v docker >/dev/null || { echo "docker not found"; exit 1; }
@@ -147,9 +157,9 @@ ensure_builder() {
 # Metadata
 export BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 export GIT_SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
-export REGISTRY TAG VERSION CHANNEL UV_PRERELEASE
+export REGISTRY TAG LATEST_TAG VERSION CHANNEL UV_PRERELEASE
 
-echo "==> REGISTRY=$REGISTRY TAG=$TAG VERSION=$VERSION CHANNEL=$CHANNEL UV_PRERELEASE=$UV_PRERELEASE"
+echo "==> REGISTRY=$REGISTRY TAG=$TAG LATEST_TAG=$LATEST_TAG VERSION=$VERSION CHANNEL=$CHANNEL UV_PRERELEASE=$UV_PRERELEASE"
 echo "==> BUILD_DATE=$BUILD_DATE GIT_SHA=$GIT_SHA"
 echo "==> TARGETS=$TARGETS PLATFORMS=$PLATFORMS PUSH=$PUSH LOAD=$LOAD CACHE_FROM=$CACHE_FROM"
 

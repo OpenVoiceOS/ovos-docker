@@ -64,6 +64,7 @@ Defaults are defined in `docker-bake.hcl` and `scripts/bake.sh`:
 
 - `REGISTRY` (default `docker.io/smartgic`)
 - `TAG` and `VERSION` (default `alpha`)
+- `LATEST_TAG` (default matches `TAG`, `stable` builds also tag `latest`)
 - `CHANNEL` (default `alpha`, used for constraints files)
 - `PLATFORMS` (default `linux/amd64,linux/arm64`)
 - `UV_PRERELEASE` (default `allow`)
