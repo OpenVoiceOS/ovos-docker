@@ -13,6 +13,12 @@ PUSH="${PUSH:-true}"            # true -> --push
 LOAD="${LOAD:-false}"           # true -> --load (local), forces amd64
 CACHE_FROM="${CACHE_FROM:-true}" # true -> use registry cache-from
 ENSURE_BINFMT="${ENSURE_BINFMT:-auto}" # auto|true|false
+BUILDER_SPECIFIED="false"
+if [[ -n "${BUILDER+x}" ]]; then
+  BUILDER_SPECIFIED="true"
+fi
+BUILDER="${BUILDER:-ovos-bake}" # buildx builder name to use for multi-arch builds
+BUILDER_ARG=()
 
 usage() {
   cat <<EOF
@@ -30,6 +36,7 @@ Options:
   --load                      Build for local use (loads into docker)
   --ensure-binfmt             Force binfmt/qemu installation for cross-arch builds
   --no-binfmt                 Skip binfmt/qemu installation
+  --builder NAME              Buildx builder name (default: $BUILDER)
   -h, --help                  Show this help
 EOF
 }
@@ -48,6 +55,7 @@ while [[ $# -gt 0 ]]; do
     --load) LOAD="true"; shift ;;
     --ensure-binfmt) ENSURE_BINFMT="true"; shift ;;
     --no-binfmt) ENSURE_BINFMT="false"; shift ;;
+    --builder) BUILDER="$2"; BUILDER_SPECIFIED="true"; shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *) echo "Unknown arg: $1"; usage; exit 1 ;;
   esac
@@ -111,6 +119,31 @@ ensure_binfmt() {
   fi
 }
 
+ensure_builder() {
+  local native_arch effective_platforms
+  native_arch="$(docker info --format '{{.Architecture}}' 2>/dev/null || uname -m)"
+  native_arch="$(normalize_arch "$native_arch")"
+
+  effective_platforms="$PLATFORMS"
+  if [[ "$LOAD" == "true" ]]; then
+    effective_platforms="linux/amd64"
+  fi
+
+  if [[ "$BUILDER_SPECIFIED" == "true" ]] || needs_binfmt "$native_arch" "$effective_platforms"; then
+    local current_driver
+    current_driver="$(docker buildx inspect --format '{{.Driver}}' 2>/dev/null || true)"
+    if [[ "$current_driver" != "docker-container" ]]; then
+      if docker buildx inspect "$BUILDER" >/dev/null 2>&1; then
+        docker buildx use "$BUILDER" >/dev/null
+      else
+        docker buildx create --name "$BUILDER" --driver docker-container --use >/dev/null
+      fi
+    fi
+    docker buildx inspect --bootstrap >/dev/null
+    BUILDER_ARG=(--builder "$BUILDER")
+  fi
+}
+
 # Metadata
 export BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 export GIT_SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
@@ -137,6 +170,7 @@ read -r -a TARGETS_ARR <<< "$TARGETS"
 
 # Ensure binfmt/qemu for cross-arch builds.
 ensure_binfmt
+ensure_builder
 
 # Run bake from repo root (where docker-bake.hcl lives)
-exec docker buildx bake "${TARGETS_ARR[@]}" "${BAKE_ARGS[@]}"
+exec docker buildx bake "${BUILDER_ARG[@]}" "${TARGETS_ARR[@]}" "${BAKE_ARGS[@]}"
