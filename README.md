@@ -2,13 +2,13 @@
 
 [![Open Voice OS](https://img.shields.io/badge/OpenVoiceOS-containers-blue)](https://openvoiceos.com/)
 [![Documentation](https://img.shields.io/badge/Documentation-latest-purple)](https://openvoiceos.github.io/ovos-docker/)
-[![Registry](https://img.shields.io/badge/Registry-oci.uoi.io%2Fovos-2e7d32)](https://openvoiceos.github.io/ovos-docker/)
+[![Registry](https://img.shields.io/badge/Registry-docker.io%2Fsmartgic-2e7d32)](https://hub.docker.com/u/smartgic)
 [![Debian version](https://img.shields.io/badge/Debian-Trixie-yellow)](https://www.debian.org)
 [![Python version](https://img.shields.io/badge/Python-3.13-orange)](https://python.org)
 [![Chat](https://img.shields.io/matrix/openvoiceos:matrix.org)](https://matrix.to/#/#OpenVoiceOS:matrix.org)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ebeee74fb69f43b0b255416208f884de)](https://app.codacy.com/gh/OpenVoiceOS/ovos-docker/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-[![Open Voice OS logo](https://openvoiceos.org/wp-content/uploads/2021/04/ovos-egg.png)](https://openvoiceos.org/)
+[![Open Voice OS logo](https://raw.githubusercontent.com/OpenVoiceOS/ovos-docker/dev/docs/assets/logo.png)](https://openvoiceos.org/)
 
 ## Documentation
 
@@ -27,8 +27,8 @@ Please follow the dedicated [documentation](https://openvoiceos.github.io/ovos-d
 These images run on Docker or Podman. For compose files, audio/GUI setup, and device
 mapping examples, follow the documentation.
 
-- Docker: `docker pull oci.uoi.io/ovos/ovos-core:alpha`
-- Podman: `podman pull oci.uoi.io/ovos/ovos-core:alpha`
+- Docker: `docker pull docker.io/smartgic/ovos-core:alpha`
+- Podman: `podman pull docker.io/smartgic/ovos-core:alpha`
 
 ## Build requirements
 
@@ -62,12 +62,13 @@ Bake contexts.
 
 Defaults are defined in `docker-bake.hcl` and `scripts/bake.sh`:
 
-- `REGISTRY` (default `oci.uoi.io/ovos`)
+- `REGISTRY` (default `docker.io/smartgic`)
 - `TAG` and `VERSION` (default `alpha`)
 - `CHANNEL` (default `alpha`, used for constraints files)
 - `PLATFORMS` (default `linux/amd64,linux/arm64`)
 - `UV_PRERELEASE` (default `allow`)
 - `ENSURE_BINFMT` (default `auto`, set `true` to force or `false` to skip)
+- `BUILDER` (default `ovos-bake`)
 
 Examples:
 

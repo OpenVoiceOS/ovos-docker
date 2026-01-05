@@ -86,7 +86,7 @@ group "skills" {
 }
 
 # ---------- Variables (override via env or scripts/bake.sh) ----------
-variable "REGISTRY"   { default = "oci.uoi.io/ovos" }
+variable "REGISTRY"   { default = "docker.io/smartgic" }
 variable "TAG"        { default = "alpha" }
 variable "CHANNEL"    { default = "alpha" }
 variable "UV_PRERELEASE" { default = "allow" }
