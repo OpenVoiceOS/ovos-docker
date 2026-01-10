@@ -29,4 +29,4 @@ LABEL org.opencontainers.image.revision="${GIT_SHA}"
 RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000,sharing=locked \
     uv pip install ovos-skill-volume -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
-CMD ["ovos-skill-launcher", "skill-ovos-volume.openvoiceos"]
+CMD ["ovos-skill-launcher", "ovos-skill-volume.openvoiceos"]

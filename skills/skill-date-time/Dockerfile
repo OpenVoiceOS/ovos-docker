@@ -46,4 +46,4 @@ RUN --mount=type=cache,target=/var/cache/apk \
 
 USER "$USER"
 
-CMD ["ovos-skill-launcher", "skill-ovos-date-time.openvoiceos"]
+CMD ["ovos-skill-launcher", "ovos-skill-date-time.openvoiceos"]
