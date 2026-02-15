@@ -85,3 +85,9 @@ services:
     container_name: ovos_skill_wikihow
     hostname: ovos_skill_wikihow
     image: docker.io/smartgic/ovos-skill-wikihow:${VERSION}
+
+  ovos_skill_homeassistant:
+    <<: *skill-base
+    container_name: ovos_skill_homeassistant
+    hostname: ovos_skill_homeassistant
+    image: docker.io/smartgic/ovos-skill-homeassistant:${VERSION}

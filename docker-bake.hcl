@@ -22,6 +22,7 @@ group "default" {
     "skill-fallback-unknown",
     "skill-ggwave",
     "skill-hello-world",
+    "skill-homeassistant",
     "skill-homescreen",
     "skill-jokes",
     "skill-parrot",
@@ -70,6 +71,7 @@ group "skills" {
     "skill-fallback-unknown",
     "skill-ggwave",
     "skill-hello-world",
+    "skill-homeassistant",
     "skill-homescreen",
     "skill-jokes",
     "skill-parrot",
@@ -608,6 +610,29 @@ target "skill-hello-world" {
   }
 
   cache-from = ["type=registry,ref=${REGISTRY}/ovos-skill-hello-world:${TAG}"]
+  cache-to   = ["type=inline"]
+}
+
+target "skill-homeassistant" {
+  inherits   = ["common"]
+  context    = "skills/skill-homeassistant"
+  dockerfile = "Dockerfile"
+  depends_on = ["skill-base"]
+  tags = TAG == "stable" ? [
+    "${REGISTRY}/ovos-skill-homeassistant:${TAG}",
+    "${REGISTRY}/ovos-skill-homeassistant:${LATEST_TAG}",
+  ] : [
+    "${REGISTRY}/ovos-skill-homeassistant:${TAG}",
+  ]
+  contexts = {
+    "ovos-skill-base" = "target:skill-base"
+  }
+
+  args = {
+    SKILL_BASE_IMAGE = "ovos-skill-base"
+  }
+
+  cache-from = ["type=registry,ref=${REGISTRY}/ovos-skill-homeassistant:${TAG}"]
   cache-to   = ["type=inline"]
 }
 
