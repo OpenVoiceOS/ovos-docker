@@ -29,5 +29,4 @@ LABEL org.opencontainers.image.revision="${GIT_SHA}"
 RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000,sharing=locked \
     uv pip install skill-homeassistant -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
 
-CMD ["ovos-skill-launcher", "skill_homeassistant.oscillatelabsllc"]
-
+CMD ["ovos-skill-launcher", "skill-homeassistant.oscillatelabsllc"]
