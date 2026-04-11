@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.21
-FROM python:3.14.3-slim-trixie@sha256:486b8092bfb12997e10d4920897213a06563449c951c5506c2a2cfaf591c599f
+FROM python:3.14.4-slim-trixie@sha256:538a18f1db92b4210a0b71aca2d14c156a96dedbe8867465c8ff4dce04d2ec39
 
 ARG BUILD_DATE=unknown
 ARG CHANNEL=alpha
