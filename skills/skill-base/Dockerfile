@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.21
-FROM python:3.14.4-alpine3.23@sha256:01f125438100bb6b5770c0b1349e5200b23ca0ae20a976b5bd8628457af607ae
+FROM python:3.14.4-alpine3.23@sha256:dd4d2bd5b53d9b25a51da13addf2be586beebd5387e289e798e4083d94ca837a
 ARG TAG=0.1.0
 ARG REGISTRY=docker.io/smartgic
 ARG GIT_SHA=unknown
