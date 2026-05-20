@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.21
+# syntax=docker/dockerfile:1.24
 ARG TAG=0.1.0
 ARG REGISTRY=docker.io/smartgic
 ARG BASE_IMAGE=${REGISTRY}/ovos-base:${TAG}

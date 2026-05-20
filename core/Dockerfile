@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.21
+# syntax=docker/dockerfile:1.24
 # core/Dockerfile
 
 ARG SOUND_BASE_IMAGE=ovos-sound-base

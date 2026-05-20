@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.21
+# syntax=docker/dockerfile:1.24
 # sound-base/Dockerfile
 # Multi-stage to compile pyalsaaudio without shipping toolchains.
 
