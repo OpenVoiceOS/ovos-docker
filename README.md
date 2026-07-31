@@ -10,9 +10,11 @@
 
 [![Open Voice OS logo](https://raw.githubusercontent.com/OpenVoiceOS/ovos-docker/dev/docs/assets/logo.png)](https://openvoiceos.org/)
 
+This repo holds the Dockerfiles and Buildx Bake configuration for the container images of [Open Voice OS](https://openvoiceos.org/), an open-source voice assistant platform. The images cover the core runtime, its services, GUIs, and default skills. Docker Buildx Bake builds and publishes the images.
+
 ## Documentation
 
-Please follow the dedicated [documentation](https://openvoiceos.github.io/ovos-docker/).
+Follow the dedicated [documentation](https://openvoiceos.github.io/ovos-docker/) for compose files, audio setup, GUI setup, and device mapping.
 
 ## What this repo builds
 
@@ -23,18 +25,20 @@ Please follow the dedicated [documentation](https://openvoiceos.github.io/ovos-d
 
 ## Run images
 
-These images run on Docker or Podman. For compose files, audio/GUI setup, and device
-mapping examples, follow the documentation.
+These images run on Docker or Podman.
 
 - Docker: `docker pull docker.io/smartgic/ovos-core:alpha`
 - Podman: `podman pull docker.io/smartgic/ovos-core:alpha`
+
+For compose files, audio/GUI setup, and device mapping examples, follow the
+documentation.
 
 ## Build requirements
 
 - Docker with Buildx (BuildKit) available for builds
 - Podman works for running images, but builds use Docker Buildx Bake
 - Network access to pull base images and dependencies
-- Multi-arch builds may require binfmt/qemu; `scripts/bake.sh` can install it via
+- Multi-arch builds may need binfmt/qemu. `scripts/bake.sh` can install it with
   `tonistiigi/binfmt` (set `ENSURE_BINFMT=true` or use `--ensure-binfmt`)
 
 ## Build images
@@ -96,8 +100,18 @@ manifest lists (see `.github/workflows/`):
 from (digest, ovos-releases commit, installed packages). Every image carries the label
 `io.openvoiceos.constraints.ref` with the ovos-releases commit its constraints came from.
 
+## Related projects
+
+- [OpenVoiceOS/ovos-core](https://github.com/OpenVoiceOS/ovos-core): the core runtime this repo packages
+- [OpenVoiceOS/ovos-docker-stt](https://github.com/OpenVoiceOS/ovos-docker-stt): speech-to-text container images
+- [OpenVoiceOS/ovos-docker-tts](https://github.com/OpenVoiceOS/ovos-docker-tts): text-to-speech container images
+
 ## Support
 
 - [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
 - [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
 - [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)
+
+## License
+
+This repo is under the [Apache License 2.0](LICENSE).
