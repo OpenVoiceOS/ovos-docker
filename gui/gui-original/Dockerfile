@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.24
-FROM debian:trixie-20260518@sha256:4ae67669760b807c19f23902a3fd7c121a6a70cf2ae709035674b23e712e4d62
+FROM debian:13@sha256:f324c7ff54321e8d9c588493a20244965938ce0aa50bbd1022d38010e9ffc4b1
 ARG TAG=0.1.0
 ARG REGISTRY=docker.io/smartgic
 ARG GIT_SHA=unknown
