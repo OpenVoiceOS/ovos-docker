@@ -271,11 +271,21 @@ jobs:
           retention-days: 7
 
   verify:
-    name: Verify pushed images
+    name: Verify ${{ matrix.arch }}
     needs: [resolve, build]
     if: inputs.push
-    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
       - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
 
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
@@ -296,13 +306,14 @@ jobs:
           EXPECTED_REF: ${{ needs.resolve.outputs.ovos_releases_sha }}
           REGISTRY: ${{ inputs.registry }}
           MIRROR: ${{ inputs.mirror_registry }}
+          ARCH: ${{ matrix.arch }}
         run: |
           set +e   # report every bad image, then fail once at the end
           fail=0
           for target in $(echo "$TARGETS" | jq -r '.[]'); do
             # digests are identical on both registries; read from the mirror (no pull-rate limit)
             repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]' | sed "s#^${REGISTRY}/#${MIRROR}/#")
-            for arch in amd64 arm64; do
+            for arch in "$ARCH"; do
               digest=$(jq -r --arg t "$target" '.[$t]["containerimage.digest"] // empty' "bake-meta-${arch}.json")
               if [ -z "$digest" ]; then echo "::error::${target}/${arch}: no digest in bake metadata"; fail=1; continue; fi
               ref="${repo}@${digest}"
@@ -325,6 +336,85 @@ jobs:
             done
           done
           exit $fail
+
+      - name: Smoke-run every image (from the mirror, this architecture)
+        env:
+          TARGETS: ${{ needs.resolve.outputs.targets }}
+          IMAGES: ${{ needs.resolve.outputs.images }}
+          REGISTRY: ${{ inputs.registry }}
+          MIRROR: ${{ inputs.mirror_registry }}
+          ARCH: ${{ matrix.arch }}
+        run: |
+          set +e
+          fail=0
+          for target in $(echo "$TARGETS" | jq -r '.[]'); do
+            repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]' | sed "s#^${REGISTRY}/#${MIRROR}/#")
+            ref="${repo}@$(jq -r --arg t "$target" '.[$t]["containerimage.digest"]' "bake-meta-${ARCH}.json")"
+            echo "::group::${target} (${ARCH})"
+            if ! docker pull -q "$ref" > /dev/null; then echo "::error::${target}: pull failed"; fail=1; echo "::endgroup::"; continue; fi
+            # the binary the image starts: first ENTRYPOINT element unless that is a shell/script, else first CMD element
+            bin=$(docker image inspect "$ref" --format '{{json .Config}}' | jq -r '
+              (.Entrypoint // []) as $e | (.Cmd // []) as $c
+              | if ($e | length) > 0 and ($e[0] | test("^(/bin/(ba)?sh|bash|sh)$") | not) and ($e[0] | test("\\.sh$") | not) then $e[0]
+                elif ($c | length) > 0 and ($c[0] | test("\\.sh$") | not) then $c[0] else "" end')
+            if docker run --rm -i -e SMOKE_BIN="$bin" --entrypoint /bin/bash "$ref" -s < scripts/ci/smoke.sh; then
+              echo "OK  ${target}"
+            else
+              echo "::error::${target} (${ARCH}): smoke test failed"; fail=1
+            fi
+            docker image rm -f "$ref" > /dev/null 2>&1 || true
+            echo "::endgroup::"
+          done
+          exit $fail
+
+  scan:
+    name: Vulnerability scan
+    needs: [resolve, build]
+    if: inputs.push
+    runs-on: ubuntu-24.04
+    continue-on-error: true   # informational for now; flip once the baseline is clean
+    steps:
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v6
+        with:
+          pattern: bake-meta-*
+          merge-multiple: true
+
+      - uses: aquasecurity/setup-trivy@81e514348e19b6112ce2a7e3ecbafe19c1e1f567 # v0.3.1
+
+      - name: Scan every image (amd64 copy on the mirror) for fixed CRITICAL/HIGH CVEs
+        env:
+          TARGETS: ${{ needs.resolve.outputs.targets }}
+          IMAGES: ${{ needs.resolve.outputs.images }}
+          REGISTRY: ${{ inputs.registry }}
+          MIRROR: ${{ inputs.mirror_registry }}
+          CHANNEL: ${{ inputs.channel }}
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ github.token }}
+        run: |
+          {
+            echo "### Vulnerability scan (\`${CHANNEL}\`, CRITICAL/HIGH with a fix available)"
+            echo
+            echo "| Image | Critical | High |"
+            echo "|---|---|---|"
+          } > scan.md
+          for target in $(echo "$TARGETS" | jq -r '.[]'); do
+            repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]' | sed "s#^${REGISTRY}/#${MIRROR}/#")
+            ref="${repo}@$(jq -r --arg t "$target" '.[$t]["containerimage.digest"]' bake-meta-amd64.json)"
+            echo "::group::${target}"
+            trivy image --quiet --scanners vuln --severity CRITICAL,HIGH --ignore-unfixed --exit-code 0 --format json --output "scan-${target}.json" "$ref" || echo "scan failed for ${target}"
+            c=$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity=="CRITICAL")] | length' "scan-${target}.json" 2>/dev/null || echo "?")
+            h=$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity=="HIGH")] | length' "scan-${target}.json" 2>/dev/null || echo "?")
+            jq -r '.Results[]?.Vulnerabilities[]? | "\(.Severity) \(.VulnerabilityID) \(.PkgName) \(.InstalledVersion) -> \(.FixedVersion)"' "scan-${target}.json" 2>/dev/null | sort -u | head -40
+            echo "| \`${target}\` | ${c} | ${h} |" >> scan.md
+            echo "::endgroup::"
+          done
+          cat scan.md >> "$GITHUB_STEP_SUMMARY"
 
   merge:
     name: Create channel manifests

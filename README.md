@@ -91,7 +91,7 @@ manifest lists (see `.github/workflows/`):
 | `on-constraints.yml` | `repository_dispatch` from ovos-releases, hourly poll, manual | per channel, the images that contain a package whose `constraints-<channel>.txt` line changed since they were last built |
 | `pull-request.yml` | pull request | the affected targets, both architectures, no push |
 | `scheduled-rebuild.yml` | weekly | every image of a channel |
-| `build-images.yml` | called by the above, or manually | the reusable build: resolve → build per arch → verify → merge (+ cosign, `<channel>-YYYYMMDD` tag) |
+| `build-images.yml` | called by the above, or manually | the reusable build: resolve → build per arch → verify (labels, platform, runtime smoke test on each arch) + vulnerability scan → merge (+ cosign, `<channel>-YYYYMMDD` tag) |
 
 `scripts/affected.py` is the selector; the `build-state` branch records what each channel was built
 from (digest, ovos-releases commit, installed packages). Every image carries the label

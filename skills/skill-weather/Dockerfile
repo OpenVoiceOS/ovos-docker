@@ -48,4 +48,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 USER "$USER"
 
+ENV SKILL_ID="ovos-skill-weather.openvoiceos"
+
+# A loaded skill answers mycroft.<skill_id>.is_ready (ovos-workshop ProcessStatus); the start period
+# covers waiting for ovos-core to become ready before the skill loads.
+HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=180s \
+  CMD ovos-hc -s "$SKILL_ID" || exit 1
+
 CMD ["ovos-skill-launcher", "ovos-skill-weather.openvoiceos"]
