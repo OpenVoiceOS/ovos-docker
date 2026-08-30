@@ -202,7 +202,9 @@ jobs:
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 240
     concurrency:
-      group: build-images-${{ inputs.channel }}-${{ matrix.arch }}
+      # publishing runs of one channel are serialized per architecture; dry runs (pull requests)
+      # get a group of their own so they never displace or wait for a publishing run
+      group: ${{ inputs.push && format('build-images-{0}-{1}', inputs.channel, matrix.arch) || format('dry-run-{0}-{1}', github.run_id, matrix.arch) }}
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
