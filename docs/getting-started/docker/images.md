@@ -13,7 +13,11 @@
 
 Open Voice OS is a sophisticated piece of software which has several [components](../../about/glossary/components.md). These components have been split into containers to provide better isolation and a [microservice](https://en.wikipedia.org/wiki/Microservices) approach.
 
-!!! info "GUI images size"
+!!! warning "GUI images"
+
+    The `ovos-gui-shell` and `ovos-gui-original` images are no longer built or
+    supported; the last published tags remain on the registries but receive no
+    updates.
 
     The GUI container images are larger than the other images as they need many QT libraries and [GStreamer](https://en.wikipedia.org/wiki/GStreamer) plugins in order to provide all the features supported by the voice assistant.
 
@@ -41,8 +45,6 @@ The list below is not exhaustive and doesn't mention anything about skill contai
 | `ovos_core`          | [Read more about ovos-core](../../about/glossary/components.md#ovos-core)                     |
 | `ovos_cli`           | [Read more about ovos-cli](../../about/glossary/components.md#ovos-cli)                       |
 | `ovos_gui_websocket` | [Read more about ovos-gui-websocket](../../about/glossary/components.md#ovos-gui-websocket)  |
-| `ovos_gui_shell`     | [Read more about ovos-gui](../../about/glossary/components.md#ovos-gui)                       |
-| `ovos_gui_original`  | [Read more about ovos-gui](../../about/glossary/components.md#ovos-gui)                       |
 | `ovos_plugin_ggwave` | [Read more about ovos-plugin-ggwave](../../about/glossary/components.md#ovos-plugin-ggwave)   |
 
 ## Tags
