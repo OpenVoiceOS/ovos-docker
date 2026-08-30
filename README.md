@@ -41,7 +41,7 @@ The images run on Docker or on Podman.
 - Podman: `podman pull docker.io/smartgic/ovos-core:alpha`
 
 The same images, with the same tags and digests, are available from the mirror
-`ghcr.io/openvoiceos`. Use the mirror if Docker Hub limits your pulls.
+`ghcr.io/openvoiceos/ovos-docker`. Use the mirror if Docker Hub limits your pulls.
 
 ### Tags
 
@@ -85,7 +85,7 @@ Note: `--load` forces `linux/amd64`, because Docker cannot load multi-arch manif
 `docker-bake.hcl` and `scripts/bake.sh` define the defaults:
 
 - `REGISTRY` (default `docker.io/smartgic`)
-- `MIRROR_REGISTRY` (default empty; CI uses `ghcr.io/openvoiceos`): a second registry each image is also pushed to
+- `MIRROR_REGISTRY` (default empty; CI uses `ghcr.io/openvoiceos/ovos-docker`): a second registry each image is also pushed to
 - `TAG` and `VERSION` (default `alpha`)
 - `LATEST_TAG` (default `latest`; applied only when `TAG=stable`)
 - `CHANNEL` (default `alpha`): selects the constraints file
