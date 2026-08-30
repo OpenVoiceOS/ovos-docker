@@ -47,7 +47,6 @@ variable "SKILLS" {
     "ggwave",
     "hello-world",
     "homeassistant",
-    "homescreen",
     "jokes",
     "parrot",
     "personal",
