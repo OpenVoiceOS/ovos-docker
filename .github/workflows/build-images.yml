@@ -81,7 +81,7 @@ jobs:
       images: ${{ steps.targets.outputs.images }}
       build_date: ${{ steps.meta.outputs.build_date }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Resolve ovos-releases ref to a commit
         id: ref
@@ -133,7 +133,7 @@ jobs:
       group: build-images-${{ inputs.channel }}-${{ matrix.arch }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Free disk space
         run: |
@@ -237,7 +237,7 @@ jobs:
       group: merge-images-${{ inputs.channel }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: docker/setup-buildx-action@v3
 
