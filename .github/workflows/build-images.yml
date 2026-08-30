@@ -14,8 +14,11 @@ name: Build images
 # writes the build-state branch with its own permissions, so this one only needs contents: read
 # and can be called from pull requests, including forks.
 #
-# The build cache lives on GHCR (ghcr.io/openvoiceos/ovos-docker-cache), which has no pull-rate
-# limits; Docker Hub only sees the image pushes themselves.
+# Docker Hub (the registry users pull from) counts every manifest GET against a small hourly
+# budget, so the pipeline never reads from it: every image is also pushed to a GHCR mirror
+# (ghcr.io/openvoiceos, no pull-rate limit) and verify, manifest creation, inspection and SBOM
+# reads use the mirror. Hub only receives pushes and the cosign signatures. The build cache lives
+# on GHCR as well.
 
 on:
   workflow_call:
@@ -39,6 +42,10 @@ on:
       registry:
         type: string
         default: docker.io/smartgic
+      mirror_registry:
+        description: Second registry every image is pushed to; the pipeline reads from it (no pull-rate limit)
+        type: string
+        default: ghcr.io/openvoiceos
       uv_prerelease:
         description: "uv --prerelease mode; auto = allow for alpha, if-necessary-or-explicit for testing/stable"
         type: string
@@ -77,9 +84,13 @@ on:
         type: boolean
         default: false
       registry:
-        description: Registry
+        description: Registry users pull from
         type: string
         default: docker.io/smartgic
+      mirror_registry:
+        description: Second registry the pipeline pushes to and reads from
+        type: string
+        default: ghcr.io/openvoiceos
       uv_prerelease:
         description: "uv --prerelease mode (auto = allow for alpha, if-necessary-or-explicit otherwise)"
         type: string
@@ -145,7 +156,7 @@ jobs:
           # every resolved name must be a real target
           jq -e --slurpfile t targets.json '($t[0] - (.target | keys)) == []' bake.json > /dev/null \
             || { echo "::error::unknown target(s): $(jq -c --slurpfile t targets.json '$t[0] - (.target | keys)' bake.json)"; exit 1; }
-          # target -> repository (tag stripped)
+          # target -> repository (tag stripped), on the user-facing registry
           jq -c --slurpfile t targets.json '.target | with_entries(select(.key as $k | $t[0] | index($k))) | with_entries(.value = (.value.tags[0] | split(":")[0]))' bake.json | tee images.json
           echo "list=$(cat targets.json)" >> "$GITHUB_OUTPUT"
           echo "images=$(cat images.json)" >> "$GITHUB_OUTPUT"
@@ -228,6 +239,7 @@ jobs:
       - name: Bake ${{ inputs.targets }} for ${{ matrix.platform }}
         env:
           REGISTRY: ${{ inputs.registry }}
+          MIRROR_REGISTRY: ${{ inputs.mirror_registry }}
           # arch-suffixed tag; the channel tag is created by the merge job from digests
           TAG: ${{ inputs.channel }}-${{ matrix.arch }}
           CHANNEL: ${{ inputs.channel }}
@@ -267,8 +279,9 @@ jobs:
 
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
 
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
@@ -280,11 +293,14 @@ jobs:
           TARGETS: ${{ needs.resolve.outputs.targets }}
           IMAGES: ${{ needs.resolve.outputs.images }}
           EXPECTED_REF: ${{ needs.resolve.outputs.ovos_releases_sha }}
+          REGISTRY: ${{ inputs.registry }}
+          MIRROR: ${{ inputs.mirror_registry }}
         run: |
           set +e   # report every bad image, then fail once at the end
           fail=0
           for target in $(echo "$TARGETS" | jq -r '.[]'); do
-            repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]')
+            # digests are identical on both registries; read from the mirror (no pull-rate limit)
+            repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]' | sed "s#^${REGISTRY}/#${MIRROR}/#")
             for arch in amd64 arm64; do
               digest=$(jq -r --arg t "$target" '.[$t]["containerimage.digest"] // empty' "bake-meta-${arch}.json")
               if [ -z "$digest" ]; then echo "::error::${target}/${arch}: no digest in bake metadata"; fail=1; continue; fi
@@ -327,6 +343,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           pattern: bake-meta-*
@@ -342,35 +364,41 @@ jobs:
           TARGET_LIST: ${{ needs.resolve.outputs.targets }}
           IMAGES: ${{ needs.resolve.outputs.images }}
           REGISTRY: ${{ inputs.registry }}
+          MIRROR_REGISTRY: ${{ inputs.mirror_registry }}
           TAG: ${{ inputs.channel }}
           CHANNEL: ${{ inputs.channel }}
           DATE_TAG: ${{ needs.resolve.outputs.date_tag }}
           IMMUTABLE: ${{ inputs.immutable_tag }}
           SIGN: ${{ inputs.sign }}
         run: |
-          # The bake file decides the channel tags (<repo>:<channel>, plus :latest when stable).
+          # The bake file decides the channel tags (<repo>:<channel>, plus :latest when stable), on both
+          # registries. Sources are read from the mirror: Docker Hub then only receives the manifest
+          # list (PUT) and blob existence checks (HEAD), neither of which counts as a pull.
           # shellcheck disable=SC2086
           docker buildx bake --print $TARGETS > bake.json
           echo "[]" > entries.json
           for target in $(echo "$TARGET_LIST" | jq -r '.[]'); do
             repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]')
+            mirror=$(echo "$repo" | sed "s#^${REGISTRY}/#${MIRROR_REGISTRY}/#")
             mapfile -t tags < <(jq -r --arg t "$target" '.target[$t].tags[]' bake.json)
-            if [ "$IMMUTABLE" = "true" ]; then tags+=("${repo}:${CHANNEL}-${DATE_TAG}"); fi
+            if [ "$IMMUTABLE" = "true" ]; then tags+=("${repo}:${CHANNEL}-${DATE_TAG}" "${mirror}:${CHANNEL}-${DATE_TAG}"); fi
             src=()
             for arch in amd64 arm64; do
-              src+=("${repo}@$(jq -r --arg t "$target" '.[$t]["containerimage.digest"]' "bake-meta-${arch}.json")")
+              src+=("${mirror}@$(jq -r --arg t "$target" '.[$t]["containerimage.digest"]' "bake-meta-${arch}.json")")
             done
             args=()
             for t in "${tags[@]}"; do args+=(-t "$t"); done
             echo "==> ${target}: ${tags[*]}"
             printf '      <- %s\n' "${src[@]}"
             docker buildx imagetools create "${args[@]}" "${src[@]}"
-            digest=$(docker buildx imagetools inspect "${tags[0]}" --format '{{.Manifest.Digest}}')
+            # the manifest list is byte-identical on both registries, so its digest can be read from the mirror
+            digest=$(docker buildx imagetools inspect "${mirror}:${CHANNEL}" --format '{{.Manifest.Digest}}')
             if [ "$SIGN" = "true" ]; then
               cosign sign --yes "${repo}@${digest}"
+              cosign sign --yes "${mirror}@${digest}"
             fi
-            jq --arg t "$target" --arg r "$repo" --arg d "$digest" --arg a "${src[0]#*@}" \
-               '. + [{target: $t, repo: $r, digest: $d, amd64_digest: $a}]' entries.json > entries.tmp && mv entries.tmp entries.json
+            jq --arg t "$target" --arg r "$repo" --arg m "$mirror" --arg d "$digest" --arg a "${src[0]#*@}" \
+               '. + [{target: $t, repo: $r, mirror: $m, digest: $d, amd64_digest: $a}]' entries.json > entries.tmp && mv entries.tmp entries.json
           done
 
       - name: Hand what was published to record-state.yml
@@ -390,8 +418,6 @@ jobs:
 
       - name: Summary
         env:
-          TARGET_LIST: ${{ needs.resolve.outputs.targets }}
-          IMAGES: ${{ needs.resolve.outputs.images }}
           CHANNEL: ${{ inputs.channel }}
           SIGN: ${{ inputs.sign }}
         run: |
@@ -400,12 +426,10 @@ jobs:
             echo
             echo "| Image | Platforms | Digest | Signed |"
             echo "|---|---|---|---|"
-            for target in $(echo "$TARGET_LIST" | jq -r '.[]'); do
-              repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]')
-              ref="${repo}:${CHANNEL}"
-              p=$(docker buildx imagetools inspect "$ref" --format '{{range .Manifest.Manifests}}{{if ne .Platform.Architecture "unknown"}}{{.Platform.OS}}/{{.Platform.Architecture}} {{end}}{{end}}')
-              d=$(docker buildx imagetools inspect "$ref" --format '{{.Manifest.Digest}}')
+            for row in $(jq -c '.[]' entries.json); do
+              repo=$(echo "$row" | jq -r .repo); mirror=$(echo "$row" | jq -r .mirror); d=$(echo "$row" | jq -r .digest)
+              p=$(docker buildx imagetools inspect "${mirror}:${CHANNEL}" --format '{{range .Manifest.Manifests}}{{if ne .Platform.Architecture "unknown"}}{{.Platform.OS}}/{{.Platform.Architecture}} {{end}}{{end}}')
               s=$([ "$SIGN" = "true" ] && echo "cosign" || echo "no")
-              echo "| \`$ref\` | $p | \`${d:0:19}…\` | $s |"
+              echo "| \`${repo}:${CHANNEL}\` (+ \`${mirror}:${CHANNEL}\`) | $p | \`${d:0:19}…\` | $s |"
             done
           } >> "$GITHUB_STEP_SUMMARY"

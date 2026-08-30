@@ -11,6 +11,7 @@ UV_PRERELEASE="${UV_PRERELEASE:-allow}"
 OVOS_RELEASES_REF="${OVOS_RELEASES_REF:-main}" # git ref of OpenVoiceOS/ovos-releases for constraints-${CHANNEL}.txt
 CACHE_REPO="${CACHE_REPO:-ghcr.io/openvoiceos/ovos-docker-cache}" # build cache on GHCR (read anonymously)
 CACHE_TO="${CACHE_TO:-}"           # "max" to also export the cache (needs GHCR write access; CI does this)
+MIRROR_REGISTRY="${MIRROR_REGISTRY:-}" # optional second registry to push to (CI: ghcr.io/openvoiceos)
 PLATFORMS="${PLATFORMS:-linux/amd64,linux/arm64}"
 TARGETS="${TARGETS:-default}"   # can be "stack services skills guis" or individual targets
 PUSH="${PUSH:-true}"            # true -> --push
@@ -157,7 +158,7 @@ ensure_builder() {
 # Metadata
 export BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 export GIT_SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
-export REGISTRY TAG LATEST_TAG VERSION CHANNEL UV_PRERELEASE OVOS_RELEASES_REF CACHE_REPO CACHE_TO
+export REGISTRY TAG LATEST_TAG VERSION CHANNEL UV_PRERELEASE OVOS_RELEASES_REF CACHE_REPO CACHE_TO MIRROR_REGISTRY
 
 echo "==> REGISTRY=$REGISTRY TAG=$TAG LATEST_TAG=$LATEST_TAG VERSION=$VERSION CHANNEL=$CHANNEL UV_PRERELEASE=$UV_PRERELEASE OVOS_RELEASES_REF=$OVOS_RELEASES_REF"
 echo "==> BUILD_DATE=$BUILD_DATE GIT_SHA=$GIT_SHA"

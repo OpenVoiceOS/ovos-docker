@@ -31,6 +31,11 @@ variable "OVOS_RELEASES_REF" { default = "main" }
 variable "CACHE_REPO" { default = "ghcr.io/openvoiceos/ovos-docker-cache" }
 variable "CACHE_TO"   { default = "" }
 
+# Optional second registry every image is also pushed to (CI uses ghcr.io/openvoiceos). The pipeline
+# reads manifests, labels and SBOMs from there, which has no pull-rate limit; users keep pulling
+# from REGISTRY. Empty = single registry (local builds).
+variable "MIRROR_REGISTRY" { default = "" }
+
 # Skills built from skills/skill-<name>/Dockerfile on top of skill-base. Adding a skill = one entry here.
 variable "SKILLS" {
   default = [
@@ -60,14 +65,23 @@ variable "SKILLS" {
 
 # ---------- Helpers ----------
 # stable is additionally tagged LATEST_TAG; every other TAG is published as-is.
+# With MIRROR_REGISTRY set, the same tags are also produced for the mirror.
 function "tags" {
   params = [image]
-  result = TAG == "stable" ? [
-    "${REGISTRY}/${image}:${TAG}",
-    "${REGISTRY}/${image}:${LATEST_TAG}",
-  ] : [
-    "${REGISTRY}/${image}:${TAG}",
-  ]
+  result = compact(concat(
+    TAG == "stable" ? [
+      "${REGISTRY}/${image}:${TAG}",
+      "${REGISTRY}/${image}:${LATEST_TAG}",
+    ] : [
+      "${REGISTRY}/${image}:${TAG}",
+    ],
+    MIRROR_REGISTRY == "" ? [""] : (TAG == "stable" ? [
+      "${MIRROR_REGISTRY}/${image}:${TAG}",
+      "${MIRROR_REGISTRY}/${image}:${LATEST_TAG}",
+    ] : [
+      "${MIRROR_REGISTRY}/${image}:${TAG}",
+    ]),
+  ))
 }
 
 function "cache_from" {
