@@ -16,7 +16,7 @@ name: Build images
 #
 # Docker Hub (the registry users pull from) counts every manifest GET against a small hourly
 # budget, so the pipeline never reads from it: every image is also pushed to a GHCR mirror
-# (ghcr.io/openvoiceos, no pull-rate limit) and verify, manifest creation, inspection and SBOM
+# (ghcr.io/openvoiceos/ovos-docker, no pull-rate limit) and verify, manifest creation, inspection and SBOM
 # reads use the mirror. Hub only receives pushes and the cosign signatures. The build cache lives
 # on GHCR as well.
 
@@ -45,7 +45,7 @@ on:
       mirror_registry:
         description: Second registry every image is pushed to; the pipeline reads from it (no pull-rate limit)
         type: string
-        default: ghcr.io/openvoiceos
+        default: ghcr.io/openvoiceos/ovos-docker
       uv_prerelease:
         description: "uv --prerelease mode; auto = allow for alpha, if-necessary-or-explicit for testing/stable"
         type: string
@@ -90,7 +90,7 @@ on:
       mirror_registry:
         description: Second registry the pipeline pushes to and reads from
         type: string
-        default: ghcr.io/openvoiceos
+        default: ghcr.io/openvoiceos/ovos-docker
       uv_prerelease:
         description: "uv --prerelease mode (auto = allow for alpha, if-necessary-or-explicit otherwise)"
         type: string

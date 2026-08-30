@@ -30,7 +30,7 @@ variable "OVOS_RELEASES_REF" { default = "main" }
 variable "CACHE_REPO" { default = "ghcr.io/openvoiceos/ovos-docker-cache" }
 variable "CACHE_TO"   { default = "" }
 
-# Optional second registry every image is also pushed to (CI uses ghcr.io/openvoiceos). The pipeline
+# Optional second registry every image is also pushed to (CI uses ghcr.io/openvoiceos/ovos-docker). The pipeline
 # reads manifests, labels and SBOMs from there, which has no pull-rate limit; users keep pulling
 # from REGISTRY. Empty = single registry (local builds).
 variable "MIRROR_REGISTRY" { default = "" }
