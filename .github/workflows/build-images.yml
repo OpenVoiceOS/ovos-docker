@@ -140,6 +140,7 @@ jobs:
         env:
           TARGETS: ${{ inputs.targets }}
           REGISTRY: ${{ inputs.registry }}
+          MIRROR_REGISTRY: ${{ inputs.mirror_registry }}
           TAG: ${{ inputs.channel }}
         run: |
           # shellcheck disable=SC2086
@@ -358,6 +359,10 @@ jobs:
         if: inputs.sign
         uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
 
+      - name: Install crane
+        if: inputs.sign
+        uses: imjasonh/setup-crane@feee3b6bb0d4c68370f256a4502498c9227e5c6b # v0.7
+
       - name: Create manifest lists from the verified digests
         env:
           TARGETS: ${{ inputs.targets }}
@@ -394,8 +399,12 @@ jobs:
             # the manifest list is byte-identical on both registries, so its digest can be read from the mirror
             digest=$(docker buildx imagetools inspect "${mirror}:${CHANNEL}" --format '{{.Manifest.Digest}}')
             if [ "$SIGN" = "true" ]; then
-              cosign sign --yes "${repo}@${digest}"
-              cosign sign --yes "${mirror}@${digest}"
+              # Sign on the mirror (no pull-rate limit), then copy the signature artifact
+              # (<repo>:sha256-<digest>.sig) to the user-facing registry: the signature is bound to the
+              # digest, which is the same on both, and copying only costs Hub a PUT and blob HEADs.
+              for attempt in 1 2 3; do cosign sign --yes "${mirror}@${digest}" && break; echo "cosign attempt ${attempt} failed; retrying"; sleep 30; done
+              sig="sha256-${digest#sha256:}.sig"
+              for attempt in 1 2 3; do crane copy "${mirror}:${sig}" "${repo}:${sig}" && break; echo "signature copy attempt ${attempt} failed; retrying"; sleep 30; done
             fi
             jq --arg t "$target" --arg r "$repo" --arg m "$mirror" --arg d "$digest" --arg a "${src[0]#*@}" \
                '. + [{target: $t, repo: $r, mirror: $m, digest: $d, amd64_digest: $a}]' entries.json > entries.tmp && mv entries.tmp entries.json
