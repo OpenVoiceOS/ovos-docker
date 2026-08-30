@@ -158,7 +158,7 @@ jobs:
 
       - uses: docker/setup-buildx-action@v3
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         if: steps.creds.outputs.available == 'true'
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -193,7 +193,7 @@ jobs:
     steps:
       - uses: docker/setup-buildx-action@v3
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -241,7 +241,7 @@ jobs:
 
       - uses: docker/setup-buildx-action@v3
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
