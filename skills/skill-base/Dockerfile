@@ -3,6 +3,7 @@ FROM python:3.14.5-alpine3.23@sha256:5a824eb82cc75361f98611f3cfc5091ea33f10a6cce
 ARG TAG=0.1.0
 ARG REGISTRY=docker.io/smartgic
 ARG GIT_SHA=unknown
+ARG OVOS_RELEASES_REF=main
 
 
 ARG BUILD_DATE=unknown
@@ -22,6 +23,7 @@ LABEL org.opencontainers.image.base.name="python:3.13.11-alpine3.23@sha256:e7e04
 LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
 LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-skill-base:${TAG}"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 ARG USER=ovos
 ARG USER_UID=1000
@@ -51,13 +53,15 @@ RUN --mount=type=cache,target=/var/cache/apk \
   && chown "${USER}:${USER}" "/home/${USER}/.localtime" "/home/${USER}/.timezone"
 
 # Setup Python environment and directories
+ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${CHANNEL}.txt /tmp/constraints.txt
+
 RUN --mount=type=cache,target=/var/cache/apk \
   --mount=type=cache,target=/root/.cache/pip \
   --mount=type=cache,target=/root/.cache/uv,sharing=locked \
   python3 -m venv "/home/${USER}/.venv" --system-site-packages \
   && source "/home/${USER}/.venv/bin/activate" \
   && PIP_NO_CACHE_DIR=0 pip install --upgrade pip setuptools uv \
-  && uv pip install ovos-core[lgpl] ovos-translate-server-plugin ahocorasick-ner -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt \
+  && uv pip install ovos-core[lgpl] ovos-translate-server-plugin ahocorasick-ner -c /tmp/constraints.txt \
   && mkdir -p "/home/${USER}/.config/mycroft" "/home/${USER}/.config/OpenVoiceOS" \
   "/home/${USER}/.cache/mycroft" "/home/${USER}/.cache/OpenVoiceOS" \
   "/home/${USER}/.local/state/mycroft" "/home/${USER}/.local/state/OpenVoiceOS" \

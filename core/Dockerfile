@@ -16,6 +16,7 @@ ARG BUILD_DATE=unknown
 ARG VERSION=unknown
 ARG IMAGE_REF=ovos-core:dev
 ARG GIT_SHA=unknown
+ARG OVOS_RELEASES_REF=main
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI core image" \
       org.opencontainers.image.description="The skills service is responsible for loading skills and intent parsers" \
@@ -29,7 +30,8 @@ LABEL org.opencontainers.image.title="Open Voice OS OCI core image" \
       org.opencontainers.image.base.name="${SOUND_BASE_IMAGE}" \
       org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker" \
       org.opencontainers.image.ref.name="${IMAGE_REF}" \
-      org.opencontainers.image.revision="${GIT_SHA}"
+      org.opencontainers.image.revision="${GIT_SHA}" \
+      io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 ARG USER=ovos
 USER root
@@ -45,6 +47,7 @@ FROM ${SOUND_BASE_IMAGE} AS builder
 
 ARG OVOS_CHANNEL=alpha
 ENV OVOS_CHANNEL=${OVOS_CHANNEL}
+ARG OVOS_RELEASES_REF=main
 
 USER root
 SHELL ["/bin/bash", "-c"]
@@ -59,11 +62,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 COPY files/requirements.txt /tmp/requirements.txt
 
+ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
+
 # ✅ allow pre-releases while building the wheelhouse
 RUN --mount=type=cache,target=/root/.cache/pip \
     PIP_NO_CACHE_DIR=0 python -m pip install --upgrade pip setuptools wheel \
  && PIP_NO_CACHE_DIR=0 python -m pip wheel --pre -r /tmp/requirements.txt \
-        -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt" \
+        -c /tmp/constraints.txt \
         -w /tmp/wheels
 
 ############################

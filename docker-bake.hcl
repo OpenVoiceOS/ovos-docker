@@ -96,6 +96,9 @@ variable "UV_PRERELEASE" { default = "allow" }
 variable "VERSION"    { default = "alpha" }
 variable "BUILD_DATE" { default = "1970-01-01T00:00:00Z" }
 variable "GIT_SHA"    { default = "unknown" }
+# Git ref (branch, tag or commit SHA) of OpenVoiceOS/ovos-releases to take constraints-${CHANNEL}.txt from.
+# Passing a commit SHA makes the build reproducible and busts the layer cache when the constraints change.
+variable "OVOS_RELEASES_REF" { default = "main" }
 
 # ---------- Common settings ----------
 target "common" {
@@ -110,6 +113,7 @@ target "common" {
     GIT_SHA      = "${GIT_SHA}"
     OVOS_CHANNEL = "${CHANNEL}"
     UV_PRERELEASE = "${UV_PRERELEASE}"
+    OVOS_RELEASES_REF = "${OVOS_RELEASES_REF}"
   }
 
   # SBOM + provenance
