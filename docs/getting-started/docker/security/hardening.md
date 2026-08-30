@@ -2,6 +2,22 @@
 
 In order to secure your Open Voice OS instance, a few more steps are **required** and a few concepts must be understood.
 
+## Container settings
+
+The compose bundles already apply the container-level hardening that is safe
+for every deployment:
+
+| Setting                                  | Applies to                                                                                     | Effect                                                              |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `init: true`                             | all services                                                                                   | a minimal PID 1 reaps child processes and forwards signals          |
+| `cap_drop: [ALL]`                        | `ovos_messagebus`, `ovos_core`, `ovos_cli`, `ovos_gui_websocket`, every skill, HiveMind services | no Linux capability at all: these only talk to the message bus       |
+| `security_opt: no-new-privileges:true`   | same services                                                                                  | no privilege escalation through setuid binaries                     |
+| non-root user (`ovos`, UID 1000)         | all images except `ovos_phal_admin`                                                            | processes never run as root                                         |
+
+`ovos_phal` and `ovos_phal_admin` (hardware access), `ovos_listener`,
+`ovos_audio` and `ovos_plugin_ggwave` (sound devices) and `ovos_gui` (display
+and input devices) keep the device access they need.
+
 ## AppArmor
 
 AppArmor and SELinux are examples of [Mandatory Access Control](https://en.wikipedia.org/wiki/Mandatory_access_control) _(MAC)_ systems. These systems differ from other security controls which are generally called [Discretionary Access Control](https://en.wikipedia.org/wiki/Discretionary_access_control) _(DAC)_ systems in that, generally, the user can't change their operation.
