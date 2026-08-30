@@ -50,6 +50,7 @@ x-core-resource-limits: &core-resource-limits
         memory: ${CORE_MEMORY_LIMIT:-2G}
       reservations:
         memory: 256M
+        cpus: "0.25"
 
 x-skill-resource-limits: &skill-resource-limits
   deploy:

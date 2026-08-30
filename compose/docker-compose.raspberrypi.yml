@@ -16,6 +16,7 @@ x-pi-core-resource-limits: &pi-core-resource-limits
         memory: ${CORE_MEMORY_LIMIT:-1G}
       reservations:
         memory: 128M
+        cpus: "0.2"
 
 x-pi-light-resource-limits: &pi-light-resource-limits
   deploy:

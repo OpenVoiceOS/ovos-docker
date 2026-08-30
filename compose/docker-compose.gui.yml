@@ -66,6 +66,7 @@ x-gui-resource-limits: &gui-resource-limits
         memory: ${GUI_MEMORY_LIMIT:-1G}
       reservations:
         memory: 256M
+        cpus: "0.25"
 
 x-skill-resource-limits: &skill-resource-limits
   deploy:
