@@ -17,6 +17,7 @@ ARG VERSION=unknown
 ARG IMAGE_REF=ovos-core:dev
 ARG GIT_SHA=unknown
 ARG OVOS_RELEASES_REF=main
+ENV OVOS_RELEASES_REF=${OVOS_RELEASES_REF}
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI core image" \
       org.opencontainers.image.description="The skills service is responsible for loading skills and intent parsers" \

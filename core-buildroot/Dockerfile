@@ -6,6 +6,7 @@ ARG TAG
 ARG REGISTRY
 ARG GIT_SHA=unknown
 ARG OVOS_RELEASES_REF=main
+ENV OVOS_RELEASES_REF=${OVOS_RELEASES_REF}
 
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
