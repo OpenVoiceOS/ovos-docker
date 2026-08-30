@@ -2017,8 +2017,11 @@ publish to a different registry, update the <code>image:</code> references in yo
 compose files.</p>
 </div>
 <p>Open Voice OS is a sophisticated piece of software which has several <a href="../../../about/glossary/components/">components</a>. These components have been split into containers to provide better isolation and a <a href="https://en.wikipedia.org/wiki/Microservices">microservice</a> approach.</p>
-<div class="admonition info">
-<p class="admonition-title">GUI images size</p>
+<div class="admonition warning">
+<p class="admonition-title">GUI images</p>
+<p>The <code>ovos-gui-shell</code> and <code>ovos-gui-original</code> images are no longer built or
+supported; the last published tags remain on the registries but receive no
+updates.</p>
 <p>The GUI container images are larger than the other images as they need many QT libraries and <a href="https://en.wikipedia.org/wiki/GStreamer">GStreamer</a> plugins in order to provide all the features supported by the voice assistant.</p>
 </div>
 <h2 id="supported-cpu-architectures">Supported CPU architectures<a class="headerlink" href="#supported-cpu-architectures" title="Permanent link">¶</a></h2>
@@ -2086,14 +2089,6 @@ compose files.</p>
 <tr>
 <td><code>ovos_gui_websocket</code></td>
 <td><a href="../../../about/glossary/components/#ovos-gui-websocket">Read more about ovos-gui-websocket</a></td>
-</tr>
-<tr>
-<td><code>ovos_gui_shell</code></td>
-<td><a href="../../../about/glossary/components/#ovos-gui">Read more about ovos-gui</a></td>
-</tr>
-<tr>
-<td><code>ovos_gui_original</code></td>
-<td><a href="../../../about/glossary/components/#ovos-gui">Read more about ovos-gui</a></td>
 </tr>
 <tr>
 <td><code>ovos_plugin_ggwave</code></td>
@@ -2279,7 +2274,7 @@ Multi-arch builds may require binfmt/qemu; set <code>ENSURE_BINFMT=true</code> o
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 30, 2026 17:53:09 UTC">August 30, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 30, 2026 18:47:23 UTC">August 30, 2026</span>
   </span>
 
     
