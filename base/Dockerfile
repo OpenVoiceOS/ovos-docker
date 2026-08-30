@@ -6,6 +6,7 @@ ARG CHANNEL=alpha
 ARG VERSION=unknown
 ARG IMAGE_REF=ovos-base:alpha
 ARG GIT_SHA=unknown
+ARG OVOS_RELEASES_REF=main
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI base image" \
       org.opencontainers.image.description="Used as base layer for other OCI images" \
@@ -19,7 +20,8 @@ LABEL org.opencontainers.image.title="Open Voice OS OCI base image" \
       org.opencontainers.image.base.name="python:3.13.11-slim-trixie@sha256:56ab277ddf459858f94052252565945c34617c841818faf8f34f6896de06cffe" \
       org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker" \
       org.opencontainers.image.ref.name="${IMAGE_REF}" \
-      org.opencontainers.image.revision="${GIT_SHA}"
+      org.opencontainers.image.revision="${GIT_SHA}" \
+      io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 ARG USER=ovos
 ARG USER_UID=1000

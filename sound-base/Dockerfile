@@ -15,6 +15,7 @@ ARG BUILD_DATE=unknown
 ARG VERSION=unknown
 ARG IMAGE_REF=ovos-sound-base:dev
 ARG GIT_SHA=unknown
+ARG OVOS_RELEASES_REF=main
 
 LABEL org.opencontainers.image.title="Open Voice OS OCI sound base image" \
       org.opencontainers.image.description="Sound base layer for audio related images" \
@@ -28,7 +29,8 @@ LABEL org.opencontainers.image.title="Open Voice OS OCI sound base image" \
       org.opencontainers.image.base.name="${BASE_IMAGE}" \
       org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker" \
       org.opencontainers.image.ref.name="${IMAGE_REF}" \
-      org.opencontainers.image.revision="${GIT_SHA}"
+      org.opencontainers.image.revision="${GIT_SHA}" \
+      io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 ARG USER=ovos
 USER root
