@@ -9,6 +9,8 @@ VERSION="${VERSION:-$TAG}"
 CHANNEL="${CHANNEL:-alpha}"
 UV_PRERELEASE="${UV_PRERELEASE:-allow}"
 OVOS_RELEASES_REF="${OVOS_RELEASES_REF:-main}" # git ref of OpenVoiceOS/ovos-releases for constraints-${CHANNEL}.txt
+CACHE_REPO="${CACHE_REPO:-ghcr.io/openvoiceos/ovos-docker-cache}" # build cache on GHCR (read anonymously)
+CACHE_TO="${CACHE_TO:-}"           # "max" to also export the cache (needs GHCR write access; CI does this)
 PLATFORMS="${PLATFORMS:-linux/amd64,linux/arm64}"
 TARGETS="${TARGETS:-default}"   # can be "stack services skills guis" or individual targets
 PUSH="${PUSH:-true}"            # true -> --push
@@ -33,6 +35,7 @@ Options:
   -v, --version VERSION       Version label (default: $VERSION)
   -c, --channel CHANNEL       OVOS channel (default: $CHANNEL)
   --ovos-releases-ref REF     ovos-releases git ref for the constraints file (default: $OVOS_RELEASES_REF)
+  --cache-to MODE             Export build cache to \$CACHE_REPO (min|max; default: off)
   -p, --platforms PLATFORMS   CSV platforms (default: $PLATFORMS)
   -T, --targets TARGETS       Bake targets: default|stack|services|skills|guis|<target> (default: $TARGETS)
   --no-cache-from             Disable cache-from (useful if registry cache is unavailable)
@@ -54,6 +57,7 @@ while [[ $# -gt 0 ]]; do
     -v|--version) VERSION="$2"; shift 2 ;;
     -c|--channel) CHANNEL="$2"; shift 2 ;;
     --ovos-releases-ref) OVOS_RELEASES_REF="$2"; shift 2 ;;
+    --cache-to) CACHE_TO="$2"; shift 2 ;;
     -p|--platforms) PLATFORMS="$2"; shift 2 ;;
     -T|--targets) TARGETS="$2"; shift 2 ;;
     --no-cache-from) CACHE_FROM="false"; shift ;;
@@ -153,7 +157,7 @@ ensure_builder() {
 # Metadata
 export BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 export GIT_SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
-export REGISTRY TAG LATEST_TAG VERSION CHANNEL UV_PRERELEASE OVOS_RELEASES_REF
+export REGISTRY TAG LATEST_TAG VERSION CHANNEL UV_PRERELEASE OVOS_RELEASES_REF CACHE_REPO CACHE_TO
 
 echo "==> REGISTRY=$REGISTRY TAG=$TAG LATEST_TAG=$LATEST_TAG VERSION=$VERSION CHANNEL=$CHANNEL UV_PRERELEASE=$UV_PRERELEASE OVOS_RELEASES_REF=$OVOS_RELEASES_REF"
 echo "==> BUILD_DATE=$BUILD_DATE GIT_SHA=$GIT_SHA"
@@ -166,7 +170,7 @@ if [[ "$PUSH" == "true" && "$LOAD" == "true" ]]; then
 fi
 [[ "$PUSH" == "true" ]] && BAKE_ARGS+=(--push)
 [[ "$LOAD" == "true" ]] && BAKE_ARGS+=(--load --set '*.platform=linux/amd64')
-[[ "$CACHE_FROM" != "true" ]] && BAKE_ARGS+=(--set "*.cache-from=")
+[[ "$CACHE_FROM" != "true" ]] && BAKE_ARGS+=(--set "*.cache-from=" --set "*.cache-to=")
 
 # Set multi-arch platforms unless loading locally
 [[ "$LOAD" != "true" ]] && BAKE_ARGS+=(--set "*.platform=${PLATFORMS}")

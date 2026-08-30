@@ -2,12 +2,16 @@ name: Build images
 
 # Reusable multi-arch image build for docker-bake.hcl targets.
 #
-# Each architecture is built natively (ubuntu-24.04 / ubuntu-24.04-arm) and, when
-# pushing, published under an arch-suffixed tag (<repo>:<channel>-amd64,
-# <repo>:<channel>-arm64). Those are verified, and only then is the channel tag
-# (<repo>:<channel>, plus <repo>:latest for stable) created as a manifest list
-# from the two. A failed or missing arch therefore never moves the tag the
-# installer pulls.
+# Each architecture is built natively (ubuntu-24.04 / ubuntu-24.04-arm). When pushing, every
+# build job records the digest of each image it pushed (bake --metadata-file); `verify` checks
+# those digests (platform + constraints label) and `merge` creates the channel tag
+# (<repo>:<channel>, plus :latest for stable, plus an immutable <channel>-YYYYMMDD tag) as a
+# manifest list from the two digests, then signs it with cosign (keyless). Because verify and
+# merge work on digests, two overlapping runs of the same channel can never be mixed, and a
+# failed or missing arch never moves the tag the installer pulls.
+#
+# The build cache lives on GHCR (ghcr.io/openvoiceos/ovos-docker-cache), which has no pull-rate
+# limits; Docker Hub only sees the image pushes themselves.
 
 on:
   workflow_call:
@@ -35,6 +39,14 @@ on:
         description: "uv --prerelease mode; auto = allow for alpha, if-necessary-or-explicit for testing/stable"
         type: string
         default: auto
+      immutable_tag:
+        description: Also tag the merged image <channel>-YYYYMMDD
+        type: boolean
+        default: true
+      sign:
+        description: Sign the merged images with cosign (keyless, GitHub OIDC)
+        type: boolean
+        default: true
     secrets:
       DOCKERHUB_USERNAME:
         required: false
@@ -68,9 +80,19 @@ on:
         description: "uv --prerelease mode (auto = allow for alpha, if-necessary-or-explicit otherwise)"
         type: string
         default: auto
+      immutable_tag:
+        description: Also tag the merged image <channel>-YYYYMMDD
+        type: boolean
+        default: true
+      sign:
+        description: Sign the merged images with cosign
+        type: boolean
+        default: true
 
 permissions:
   contents: read
+  packages: write   # GHCR build cache
+  id-token: write   # cosign keyless signing
 
 jobs:
   resolve:
@@ -81,9 +103,10 @@ jobs:
       targets: ${{ steps.targets.outputs.list }}
       images: ${{ steps.targets.outputs.images }}
       build_date: ${{ steps.meta.outputs.build_date }}
+      date_tag: ${{ steps.meta.outputs.date_tag }}
       uv_prerelease: ${{ steps.pre.outputs.mode }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Resolve ovos-releases ref to a commit
         id: ref
@@ -95,7 +118,7 @@ jobs:
           echo "ovos-releases ${REF} -> ${sha}"
           echo "sha=${sha}" >> "$GITHUB_OUTPUT"
 
-      - uses: docker/setup-buildx-action@v4
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
 
       - name: Expand bake targets
         id: targets
@@ -118,13 +141,17 @@ jobs:
           # every resolved name must be a real target
           jq -e --slurpfile t targets.json '($t[0] - (.target | keys)) == []' bake.json > /dev/null \
             || { echo "::error::unknown target(s): $(jq -c --slurpfile t targets.json '$t[0] - (.target | keys)' bake.json)"; exit 1; }
+          # target -> repository (tag stripped)
           jq -c --slurpfile t targets.json '.target | with_entries(select(.key as $k | $t[0] | index($k))) | with_entries(.value = (.value.tags[0] | split(":")[0]))' bake.json | tee images.json
           echo "list=$(cat targets.json)" >> "$GITHUB_OUTPUT"
           echo "images=$(cat images.json)" >> "$GITHUB_OUTPUT"
 
       - name: Build metadata
         id: meta
-        run: echo "build_date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+        run: |
+          now=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          echo "build_date=${now}" >> "$GITHUB_OUTPUT"
+          echo "date_tag=$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
 
       - name: Effective prerelease mode
         id: pre
@@ -162,14 +189,7 @@ jobs:
       group: build-images-${{ inputs.channel }}-${{ matrix.arch }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v7
-
-      - name: Free disk space
-        run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL \
-                      /usr/local/share/boost /usr/share/swift /usr/local/.ghcup
-          sudo docker image prune -af >/dev/null 2>&1 || true
-          df -h / | tail -1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Registry credentials available?
         id: creds
@@ -185,10 +205,18 @@ jobs:
           echo "::error::push=true but DOCKERHUB_USERNAME/DOCKERHUB_TOKEN are not set"
           exit 1
 
-      - uses: docker/setup-buildx-action@v4
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
 
-      - uses: docker/login-action@v4
+      - name: Log in to GHCR (build cache)
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Log in to Docker Hub
         if: steps.creds.outputs.available == 'true'
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -196,7 +224,7 @@ jobs:
       - name: Bake ${{ inputs.targets }} for ${{ matrix.platform }}
         env:
           REGISTRY: ${{ inputs.registry }}
-          # arch-suffixed tag; the channel tag is created by the merge job
+          # arch-suffixed tag; the channel tag is created by the merge job from digests
           TAG: ${{ inputs.channel }}-${{ matrix.arch }}
           CHANNEL: ${{ inputs.channel }}
           VERSION: ${{ inputs.channel }}
@@ -204,15 +232,26 @@ jobs:
           OVOS_RELEASES_REF: ${{ needs.resolve.outputs.ovos_releases_sha }}
           BUILD_DATE: ${{ needs.resolve.outputs.build_date }}
           GIT_SHA: ${{ github.sha }}
+          # export the build cache to GHCR unless this is a fork PR (read-only token)
+          CACHE_TO: ${{ github.event.pull_request.head.repo.fork == true && '' || 'max' }}
           TARGETS: ${{ inputs.targets }}
           PLATFORM: ${{ matrix.platform }}
           PUSH: ${{ inputs.push }}
+          ARCH: ${{ matrix.arch }}
         run: |
           set -x
-          args=(--set "*.platform=${PLATFORM}")
+          args=(--set "*.platform=${PLATFORM}" --metadata-file "bake-meta-${ARCH}.json")
           if [ "$PUSH" = "true" ]; then args+=(--push); fi
           # shellcheck disable=SC2086
           docker buildx bake $TARGETS "${args[@]}"
+
+      - name: Upload bake metadata
+        if: inputs.push
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: bake-meta-${{ matrix.arch }}
+          path: bake-meta-${{ matrix.arch }}.json
+          retention-days: 7
 
   verify:
     name: Verify pushed images
@@ -220,24 +259,32 @@ jobs:
     if: inputs.push
     runs-on: ubuntu-24.04
     steps:
-      - uses: docker/setup-buildx-action@v4
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
 
-      - uses: docker/login-action@v4
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Check every arch image exists, matches its platform and records the constraints ref
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        with:
+          pattern: bake-meta-*
+          merge-multiple: true
+
+      - name: Check every pushed digest matches its platform and records the constraints ref
         env:
+          TARGETS: ${{ needs.resolve.outputs.targets }}
           IMAGES: ${{ needs.resolve.outputs.images }}
-          CHANNEL: ${{ inputs.channel }}
           EXPECTED_REF: ${{ needs.resolve.outputs.ovos_releases_sha }}
         run: |
           set +e   # report every bad image, then fail once at the end
           fail=0
-          for repo in $(echo "$IMAGES" | jq -r '.[]' | sort -u); do
+          for target in $(echo "$TARGETS" | jq -r '.[]'); do
+            repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]')
             for arch in amd64 arm64; do
-              ref="${repo}:${CHANNEL}-${arch}"
+              digest=$(jq -r --arg t "$target" '.[$t]["containerimage.digest"] // empty' "bake-meta-${arch}.json")
+              if [ -z "$digest" ]; then echo "::error::${target}/${arch}: no digest in bake metadata"; fail=1; continue; fi
+              ref="${repo}@${digest}"
               if ! docker buildx imagetools inspect "$ref" --format '{{json .Image}}' > image.json 2> err.txt; then
                 echo "::error::${ref}: $(cat err.txt)"; fail=1; continue
               fi
@@ -267,51 +314,78 @@ jobs:
       group: merge-images-${{ inputs.channel }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: docker/setup-buildx-action@v4
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
 
-      - uses: docker/login-action@v4
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Create manifest lists
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        with:
+          pattern: bake-meta-*
+          merge-multiple: true
+
+      - name: Install cosign
+        if: inputs.sign
+        uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
+
+      - name: Create manifest lists from the verified digests
         env:
           TARGETS: ${{ inputs.targets }}
           TARGET_LIST: ${{ needs.resolve.outputs.targets }}
+          IMAGES: ${{ needs.resolve.outputs.images }}
           REGISTRY: ${{ inputs.registry }}
           TAG: ${{ inputs.channel }}
           CHANNEL: ${{ inputs.channel }}
+          DATE_TAG: ${{ needs.resolve.outputs.date_tag }}
+          IMMUTABLE: ${{ inputs.immutable_tag }}
+          SIGN: ${{ inputs.sign }}
         run: |
-          # The bake file decides the final tags (<repo>:<channel>, plus :latest when stable).
+          # The bake file decides the channel tags (<repo>:<channel>, plus :latest when stable).
           # shellcheck disable=SC2086
           docker buildx bake --print $TARGETS > bake.json
+          : > signed.txt
           for target in $(echo "$TARGET_LIST" | jq -r '.[]'); do
+            repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]')
             mapfile -t tags < <(jq -r --arg t "$target" '.target[$t].tags[]' bake.json)
-            repo="${tags[0]%%:*}"
+            if [ "$IMMUTABLE" = "true" ]; then tags+=("${repo}:${CHANNEL}-${DATE_TAG}"); fi
+            src=()
+            for arch in amd64 arm64; do
+              src+=("${repo}@$(jq -r --arg t "$target" '.[$t]["containerimage.digest"]' "bake-meta-${arch}.json")")
+            done
             args=()
             for t in "${tags[@]}"; do args+=(-t "$t"); done
-            echo "==> ${target}: ${tags[*]}  <-  ${repo}:${CHANNEL}-amd64 + ${repo}:${CHANNEL}-arm64"
-            docker buildx imagetools create "${args[@]}" "${repo}:${CHANNEL}-amd64" "${repo}:${CHANNEL}-arm64"
+            echo "==> ${target}: ${tags[*]}"
+            printf '      <- %s\n' "${src[@]}"
+            docker buildx imagetools create "${args[@]}" "${src[@]}"
+            if [ "$SIGN" = "true" ]; then
+              digest=$(docker buildx imagetools inspect "${tags[0]}" --format '{{.Manifest.Digest}}')
+              cosign sign --yes "${repo}@${digest}"
+              echo "${repo}@${digest}" >> signed.txt
+            fi
           done
 
       - name: Summary
         env:
-          TARGETS: ${{ inputs.targets }}
           TARGET_LIST: ${{ needs.resolve.outputs.targets }}
-          REGISTRY: ${{ inputs.registry }}
-          TAG: ${{ inputs.channel }}
+          IMAGES: ${{ needs.resolve.outputs.images }}
+          CHANNEL: ${{ inputs.channel }}
+          SIGN: ${{ inputs.sign }}
         run: |
           {
-            echo "### Published \`${TAG}\` images"
+            echo "### Published \`${CHANNEL}\` images"
             echo
-            echo "| Image | Platforms |"
-            echo "|---|---|"
-            # shellcheck disable=SC2086
-            docker buildx bake --print $TARGETS > bake.json
-            for t in $(echo "$TARGET_LIST" | jq -r '.[]' | xargs -I{} jq -r --arg t {} '.target[$t].tags[0]' bake.json | sort -u); do
-              p=$(docker buildx imagetools inspect "$t" --format '{{range .Manifest.Manifests}}{{if ne .Platform.Architecture "unknown"}}{{.Platform.OS}}/{{.Platform.Architecture}} {{end}}{{end}}')
-              echo "| \`$t\` | $p |"
+            echo "| Image | Platforms | Digest | Signed |"
+            echo "|---|---|---|---|"
+            for target in $(echo "$TARGET_LIST" | jq -r '.[]'); do
+              repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]')
+              ref="${repo}:${CHANNEL}"
+              p=$(docker buildx imagetools inspect "$ref" --format '{{range .Manifest.Manifests}}{{if ne .Platform.Architecture "unknown"}}{{.Platform.OS}}/{{.Platform.Architecture}} {{end}}{{end}}')
+              d=$(docker buildx imagetools inspect "$ref" --format '{{.Manifest.Digest}}')
+              s=$([ "$SIGN" = "true" ] && echo "cosign" || echo "no")
+              echo "| \`$ref\` | $p | \`${d:0:19}…\` | $s |"
             done
           } >> "$GITHUB_STEP_SUMMARY"
