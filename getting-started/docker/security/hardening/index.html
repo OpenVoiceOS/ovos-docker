@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1412,6 +1412,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#container-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container settings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#apparmor" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1816,6 +1827,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#container-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container settings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#apparmor" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1992,6 +2014,43 @@
 
 <div><h1 id="basic-ovos-hardening">Basic OVOS hardening<a class="headerlink" href="#basic-ovos-hardening" title="Permanent link">¶</a></h1>
 <p>In order to secure your Open Voice OS instance, a few more steps are <strong>required</strong> and a few concepts must be understood.</p>
+<h2 id="container-settings">Container settings<a class="headerlink" href="#container-settings" title="Permanent link">¶</a></h2>
+<p>The compose bundles already apply the container-level hardening that is safe
+for every deployment:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Applies to</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>init: true</code></td>
+<td>all services</td>
+<td>a minimal PID 1 reaps child processes and forwards signals</td>
+</tr>
+<tr>
+<td><code>cap_drop: [ALL]</code></td>
+<td><code>ovos_messagebus</code>, <code>ovos_core</code>, <code>ovos_cli</code>, <code>ovos_gui_websocket</code>, every skill, HiveMind services</td>
+<td>no Linux capability at all: these only talk to the message bus</td>
+</tr>
+<tr>
+<td><code>security_opt: no-new-privileges:true</code></td>
+<td>same services</td>
+<td>no privilege escalation through setuid binaries</td>
+</tr>
+<tr>
+<td>non-root user (<code>ovos</code>, UID 1000)</td>
+<td>all images except <code>ovos_phal_admin</code></td>
+<td>processes never run as root</td>
+</tr>
+</tbody>
+</table>
+<p><code>ovos_phal</code> and <code>ovos_phal_admin</code> (hardware access), <code>ovos_listener</code>,
+<code>ovos_audio</code> and <code>ovos_plugin_ggwave</code> (sound devices) and <code>ovos_gui</code> (display
+and input devices) keep the device access they need.</p>
 <h2 id="apparmor">AppArmor<a class="headerlink" href="#apparmor" title="Permanent link">¶</a></h2>
 <p>AppArmor and SELinux are examples of <a href="https://en.wikipedia.org/wiki/Mandatory_access_control">Mandatory Access Control</a> <em>(MAC)</em> systems. These systems differ from other security controls which are generally called <a href="https://en.wikipedia.org/wiki/Discretionary_access_control">Discretionary Access Control</a> <em>(DAC)</em> systems in that, generally, the user can't change their operation.</p>
 <div class="admonition note">
@@ -2112,7 +2171,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 3, 2026 02:54:14 UTC">January 3, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 30, 2026 16:41:04 UTC">August 30, 2026</span>
   </span>
 
     
@@ -2435,7 +2494,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

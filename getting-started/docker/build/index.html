@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1136,6 +1136,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous integration
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1875,6 +1886,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous integration
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2036,10 +2058,12 @@ to it.</p>
 </tr>
 <tr>
 <td><code>skills</code></td>
-<td><code>skill-base</code> plus the skill images listed in <code>docker-bake.hcl</code></td>
+<td><code>skill-base</code> plus one <code>skill-&lt;name&gt;</code> image per entry of the <code>SKILLS</code> list in <code>docker-bake.hcl</code></td>
 </tr>
 </tbody>
 </table>
+<p>Adding a skill is one entry in <code>SKILLS</code> plus a <code>skills/skill-&lt;name&gt;/Dockerfile</code>;
+the bake target, tags and cache settings are generated from the list.</p>
 <p>Build a single target with <code>-T</code>, for example:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./scripts/bake.sh<span class="w"> </span>-T<span class="w"> </span>core
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>./scripts/bake.sh<span class="w"> </span>-T<span class="w"> </span>skill-wikipedia
@@ -2078,12 +2102,27 @@ to it.</p>
 <tr>
 <td><code>CHANNEL</code></td>
 <td><code>alpha</code></td>
-<td>Constraints channel (e.g., <code>alpha</code>, <code>stable</code>)</td>
+<td>Constraints channel (<code>alpha</code>, <code>testing</code>, <code>stable</code>)</td>
+</tr>
+<tr>
+<td><code>OVOS_RELEASES_REF</code></td>
+<td><code>main</code></td>
+<td>Git ref of <a href="https://github.com/OpenVoiceOS/ovos-releases">ovos-releases</a> the <code>constraints-${CHANNEL}.txt</code> file is taken from; a commit SHA makes the build reproducible</td>
 </tr>
 <tr>
 <td><code>UV_PRERELEASE</code></td>
 <td><code>allow</code></td>
-<td><code>uv pip</code> prerelease policy</td>
+<td><code>uv pip</code> prerelease policy; use <code>if-necessary-or-explicit</code> for <code>testing</code>/<code>stable</code> (CI does)</td>
+</tr>
+<tr>
+<td><code>CACHE_REPO</code></td>
+<td><code>ghcr.io/openvoiceos/ovos-docker-cache</code></td>
+<td>Registry build cache, read anonymously</td>
+</tr>
+<tr>
+<td><code>CACHE_TO</code></td>
+<td><em>(empty)</em></td>
+<td><code>max</code> also exports the build cache (needs GHCR write access; CI does this)</td>
 </tr>
 <tr>
 <td><code>PLATFORMS</code></td>
@@ -2130,7 +2169,13 @@ to it.</p>
 <li><code>CHANNEL</code>/<code>OVOS_CHANNEL</code> selects the constraints file from
   <code>ovos-releases</code> (for example, <code>constraints-alpha.txt</code>).</li>
 <li><code>UV_PRERELEASE</code> controls pre-release resolution for images that install
-  packages via <code>uv pip</code>.</li>
+  packages via <code>uv pip</code>. <code>constraints-alpha.txt</code> pins pre-releases;
+  <code>constraints-testing.txt</code> and <code>constraints-stable.txt</code> are ranges of stable
+  versions, so they must be built with <code>if-necessary-or-explicit</code>.</li>
+<li><code>OVOS_RELEASES_REF</code> pins the constraints file to a commit of
+  <code>ovos-releases</code>. The file is fetched with <code>ADD</code>, so BuildKit rebuilds the
+  install layer exactly when the constraints change, and every image records
+  the commit in the <code>io.openvoiceos.constraints.ref</code> label.</li>
 </ul>
 <h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">¶</a></h2>
 <ul>
@@ -2143,7 +2188,54 @@ to it.</p>
 <li>The script switches to a <code>docker-container</code> buildx builder for multi-arch
   builds (override with <code>BUILDER</code> or <code>--builder</code>).</li>
 <li>Use <code>--no-cache-from</code> if registry cache is unavailable or not desired.</li>
-</ul></div>
+</ul>
+<h2 id="continuous-integration">Continuous integration<a class="headerlink" href="#continuous-integration" title="Permanent link">¶</a></h2>
+<p>Published images are built by GitHub Actions, not by hand:</p>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Trigger</th>
+<th>Builds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>on-push.yml</code></td>
+<td>commit on <code>dev</code></td>
+<td>the targets whose build context changed, plus everything built on top of them, for every channel</td>
+</tr>
+<tr>
+<td><code>on-constraints.yml</code></td>
+<td><code>ovos-releases</code> constraints change (dispatch or hourly poll)</td>
+<td>per channel, only the images that contain a package whose constraint line changed</td>
+</tr>
+<tr>
+<td><code>pull-request.yml</code></td>
+<td>pull request</td>
+<td>the affected targets on both architectures, without pushing</td>
+</tr>
+<tr>
+<td><code>scheduled-rebuild.yml</code></td>
+<td>weekly</td>
+<td>every image of a channel, so base-OS fixes reach the images</td>
+</tr>
+<tr>
+<td><code>build-images.yml</code></td>
+<td>called by the above, or manually</td>
+<td>the reusable build: resolve → build per architecture on native runners → verify → merge</td>
+</tr>
+</tbody>
+</table>
+<p>Each architecture is built natively (<code>ubuntu-24.04</code>, <code>ubuntu-24.04-arm</code>) and
+pushed as <code>&lt;image&gt;:&lt;channel&gt;-&lt;arch&gt;</code>. The channel tag (<code>&lt;image&gt;:&lt;channel&gt;</code>,
+plus <code>latest</code> for <code>stable</code>, plus an immutable <code>&lt;channel&gt;-YYYYMMDD</code> tag) is a
+manifest list created only after both architectures were verified, and it is
+signed with <a href="https://github.com/sigstore/cosign">cosign</a> (keyless). A failed
+architecture therefore never moves the tag the installer pulls.</p>
+<p>The <code>build-state</code> branch records what each channel was built from (digest,
+<code>ovos-releases</code> commit, installed packages) so the poll can decide what to
+rebuild without touching the registry.</p></div>
 
 
 
@@ -2166,7 +2258,7 @@ to it.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 5, 2026 22:57:30 UTC">January 5, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 30, 2026 16:41:04 UTC">August 30, 2026</span>
   </span>
 
     
@@ -2489,7 +2581,7 @@ to it.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

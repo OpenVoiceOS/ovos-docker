@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1087,6 +1087,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-is-inside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is inside
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#build-images-locally" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1854,6 +1865,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-is-inside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is inside
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#build-images-locally" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2087,19 +2109,27 @@ Docker Hub under <code>docker.io/smartgic</code>. Buildx Bake defaults to
 <tbody>
 <tr>
 <td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg></span> <code>alpha</code></td>
-<td>Nightly build based on alpha releases from <a href="https://pypi.org/">PyPi</a></td>
+<td>Built from <code>constraints-alpha.txt</code> of <a href="https://github.com/OpenVoiceOS/ovos-releases">ovos-releases</a>: alpha releases from <a href="https://pypi.org/">PyPI</a>, rebuilt automatically when the constraints change</td>
+</tr>
+<tr>
+<td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg></span> <code>testing</code></td>
+<td>Built from <code>constraints-testing.txt</code>: stable versions selected for testing (the installer's default channel)</td>
 </tr>
 <tr>
 <td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg></span> <code>stable</code></td>
-<td>Published when stable releases are available</td>
+<td>Built from <code>constraints-stable.txt</code></td>
 </tr>
 <tr>
 <td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg></span> <code>latest</code></td>
-<td>Alias for the stable build (published only when <code>stable</code> is built)</td>
+<td>Always the same image as <code>stable</code></td>
 </tr>
 <tr>
-<td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg></span> <code>x.y.z</code></td>
-<td>Pinned release tag (when published)</td>
+<td><span class="twemoji" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg></span> <code>&lt;channel&gt;-YYYYMMDD</code></td>
+<td>Immutable copy of a channel tag as published on that day, for rollbacks</td>
+</tr>
+<tr>
+<td><span class="twemoji" style="color: grey"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M11 9h2V7h-2m1 13c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-1 15h2v-6h-2z"></path></svg></span> <code>&lt;channel&gt;-amd64</code>, <code>&lt;channel&gt;-arm64</code></td>
+<td>Single-architecture images the build pipeline publishes before merging them; not meant to be pulled directly</td>
 </tr>
 </tbody>
 </table>
@@ -2113,12 +2143,46 @@ the registry if you need a specific version.</p>
 <p>When building locally, <code>TAG=stable</code> also tags <code>LATEST_TAG</code> (default
 <code>latest</code>). Override <code>LATEST_TAG</code> if you want a different alias.</p>
 </div>
+<h2 id="what-is-inside">What is inside<a class="headerlink" href="#what-is-inside" title="Permanent link">¶</a></h2>
+<p>All Python images share one base (<code>ovos-base</code>, Debian slim with Python 3.13,
+a virtual environment and a pinned <a href="https://github.com/astral-sh/uv">uv</a>);
+services needing sound add <code>ovos-sound-base</code>, skills add <code>ovos-skill-base</code>.
+Every channel tag is a multi-architecture manifest list (<code>amd64</code> + <code>arm64</code>)
+carrying an SBOM and SLSA provenance attestation, signed with cosign, and
+labelled with:</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>org.opencontainers.image.revision</code></td>
+<td><code>ovos-docker</code> commit the image was built from</td>
+</tr>
+<tr>
+<td><code>io.openvoiceos.constraints.ref</code></td>
+<td><code>ovos-releases</code> commit whose <code>constraints-&lt;channel&gt;.txt</code> pinned the packages</td>
+</tr>
+<tr>
+<td><code>org.opencontainers.image.created</code></td>
+<td>Build time</td>
+</tr>
+</tbody>
+</table>
+<p>Verify a signature with:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cosign<span class="w"> </span>verify<span class="w"> </span>docker.io/smartgic/ovos-core:stable<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--certificate-identity-regexp<span class="w"> </span><span class="s1">'https://github.com/OpenVoiceOS/ovos-docker/'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--certificate-oidc-issuer<span class="w"> </span>https://token.actions.githubusercontent.com
+</span></code></pre></div>
 <h2 id="build-images-locally">Build images locally<a class="headerlink" href="#build-images-locally" title="Permanent link">¶</a></h2>
 <p>If you need a private registry, custom tags, or local builds, use Docker Buildx
 Bake from the source repository:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>./scripts/bake.sh<span class="w"> </span>--load<span class="w"> </span>--no-push
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">TAG</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">CHANNEL</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">PLATFORMS</span><span class="o">=</span>linux/amd64,linux/arm64<span class="w"> </span>./scripts/bake.sh
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>./scripts/bake.sh<span class="w"> </span>-T<span class="w"> </span>skills
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./scripts/bake.sh<span class="w"> </span>--load<span class="w"> </span>--no-push
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">TAG</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">CHANNEL</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span>alpha<span class="w"> </span><span class="nv">PLATFORMS</span><span class="o">=</span>linux/amd64,linux/arm64<span class="w"> </span>./scripts/bake.sh
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>./scripts/bake.sh<span class="w"> </span>-T<span class="w"> </span>skills
 </span></code></pre></div>
 <p>Builds require Docker with Buildx (BuildKit). Podman works for running images,
 but builds use Docker Buildx Bake.</p>
@@ -2171,12 +2235,12 @@ Multi-arch builds may require binfmt/qemu; set <code>ENSURE_BINFMT=true</code> o
 <div class="admonition info">
 <p class="admonition-title">Enable samples recording</p>
 <p>By default the recording features are disabled, <code>"record_wake_words": true</code> and <code>"save_utterances": true</code> will have to be added to the <code>listener</code> section of <code>mycroft.conf</code> to enable these capabilities.</p>
-<div class="language-json highlight"><span class="filename">~/ovos/config/mycroft.conf</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"listener"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">"record_wake_words"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">"save_utterances"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+<div class="language-json highlight"><span class="filename">~/ovos/config/mycroft.conf</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">"listener"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">"record_wake_words"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">"save_utterances"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>But first thing's first you need to have Open Voice OS's containers up and running. <a href="../installation/requirements/">Follow the guide</a>.</p>
 </div>
@@ -2210,7 +2274,7 @@ Multi-arch builds may require binfmt/qemu; set <code>ENSURE_BINFMT=true</code> o
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 5, 2026 22:57:30 UTC">January 5, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 30, 2026 16:41:04 UTC">August 30, 2026</span>
   </span>
 
     
@@ -2533,7 +2597,7 @@ Multi-arch builds may require binfmt/qemu; set <code>ENSURE_BINFMT=true</code> o
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
