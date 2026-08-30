@@ -104,9 +104,13 @@ jobs:
         run: |
           # shellcheck disable=SC2086
           docker buildx bake --print $TARGETS > bake.json
-          # concrete targets (groups expanded) and, for each, the repository the image lives in
-          jq -c '.target | keys' bake.json | tee targets.json
-          jq -c '.target | with_entries(.value = (.value.tags[0] | split(":")[0]))' bake.json | tee images.json
+          # Requested targets with groups expanded. `.target` also lists targets pulled in only as
+          # build contexts (e.g. base for messagebus); bake builds those but does not push them,
+          # so verify/merge must only look at what was actually requested.
+          jq -c '. as $b
+                 | def expand: if $b.group[.] != null then ($b.group[.].targets[] | expand) else . end;
+                 [ $b.group.default.targets[] | expand ] | unique' bake.json | tee targets.json
+          jq -c --slurpfile t targets.json '.target | with_entries(select(.key as $k | $t[0] | index($k))) | with_entries(.value = (.value.tags[0] | split(":")[0]))' bake.json | tee images.json
           echo "list=$(cat targets.json)" >> "$GITHUB_OUTPUT"
           echo "images=$(cat images.json)" >> "$GITHUB_OUTPUT"
 
@@ -249,6 +253,7 @@ jobs:
       - name: Create manifest lists
         env:
           TARGETS: ${{ inputs.targets }}
+          TARGET_LIST: ${{ needs.resolve.outputs.targets }}
           REGISTRY: ${{ inputs.registry }}
           TAG: ${{ inputs.channel }}
           CHANNEL: ${{ inputs.channel }}
@@ -256,7 +261,7 @@ jobs:
           # The bake file decides the final tags (<repo>:<channel>, plus :latest when stable).
           # shellcheck disable=SC2086
           docker buildx bake --print $TARGETS > bake.json
-          for target in $(jq -r '.target | keys[]' bake.json); do
+          for target in $(echo "$TARGET_LIST" | jq -r '.[]'); do
             mapfile -t tags < <(jq -r --arg t "$target" '.target[$t].tags[]' bake.json)
             repo="${tags[0]%%:*}"
             args=()
@@ -268,6 +273,7 @@ jobs:
       - name: Summary
         env:
           TARGETS: ${{ inputs.targets }}
+          TARGET_LIST: ${{ needs.resolve.outputs.targets }}
           REGISTRY: ${{ inputs.registry }}
           TAG: ${{ inputs.channel }}
         run: |
@@ -277,7 +283,8 @@ jobs:
             echo "| Image | Platforms |"
             echo "|---|---|"
             # shellcheck disable=SC2086
-            for t in $(docker buildx bake --print $TARGETS | jq -r '.target[].tags[0]' | sort -u); do
+            docker buildx bake --print $TARGETS > bake.json
+            for t in $(echo "$TARGET_LIST" | jq -r '.[]' | xargs -I{} jq -r --arg t {} '.target[$t].tags[0]' bake.json | sort -u); do
               p=$(docker buildx imagetools inspect "$t" --format '{{range .Manifest.Manifests}}{{if ne .Platform.Architecture "unknown"}}{{.Platform.OS}}/{{.Platform.Architecture}} {{end}}{{end}}')
               echo "| \`$t\` | $p |"
             done
