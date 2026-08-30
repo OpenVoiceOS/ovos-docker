@@ -140,6 +140,7 @@ jobs:
         env:
           TARGETS: ${{ inputs.targets }}
           REGISTRY: ${{ inputs.registry }}
+          MIRROR_REGISTRY: ${{ inputs.mirror_registry }}
           TAG: ${{ inputs.channel }}
         run: |
           # shellcheck disable=SC2086
