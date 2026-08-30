@@ -5,7 +5,6 @@ FROM "${REGISTRY}/ovos-sound-base:${TAG}"
 ARG TAG
 ARG REGISTRY
 ARG GIT_SHA=unknown
-ARG OVOS_RELEASES_REF=main
 
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
@@ -26,7 +25,6 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
 LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-core-buildroot:${TAG}"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
-LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 ARG ALPHA=false
 ARG USER=ovos
@@ -38,17 +36,15 @@ COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 SHELL ["/bin/bash", "-c"]
 
-ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${CHANNEL}.txt /tmp/constraints.txt
-
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     --mount=type=cache,target=/root/.cache/uv,sharing=locked \
     apt-get update \
     && apt-get install -y --no-install-recommends libfann-dev build-essential python3-dev  \
     && if [ "${ALPHA}" == "true" ]; then \
-    uv pip install -r /tmp/requirements.txt -c /tmp/constraints.txt; \
+    uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     else \
-    uv pip install -r /tmp/requirements.txt -c /tmp/constraints.txt; \
+    uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
     fi \
     && mkdir -p "/home/${USER}/.local/share/mycroft/skills" "/home/${USER}/nltk_data" \
     && chown "${USER}:${USER}" -R "/home/${USER}" \
