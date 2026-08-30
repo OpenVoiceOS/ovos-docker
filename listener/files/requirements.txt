@@ -1,1 +1,4 @@
-ovos-dinkum-listener[extras,linux,onnx]
+# The guaranteed-everywhere base: dinkum + the ALSA microphone. The plugin extras
+# (STT/VAD/wake word) are channel-dependent and installed by the Dockerfile where
+# the channel's constraints allow them.
+ovos-dinkum-listener[linux]

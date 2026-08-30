@@ -50,6 +50,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update \
  && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends --no-install-suggests libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
  && uv pip install --prerelease=${UV_PRERELEASE} -r /tmp/requirements.txt -c /tmp/constraints.txt \
+ # Plugin extras, richest set the channel can resolve: [onnx] needs ovos-plugin-manager>=2
+ # (alpha/testing); the stable constraints are still on opm<0.10, where only [extras]
+ # resolves. Whatever is skipped can be added at runtime via listener.list.
+ && (uv pip install --prerelease=${UV_PRERELEASE} -c /tmp/constraints.txt "ovos-dinkum-listener[extras,onnx]" \
+     || uv pip install --prerelease=${UV_PRERELEASE} -c /tmp/constraints.txt "ovos-dinkum-listener[extras]" \
+     || echo "plugin extras unavailable on this channel; add plugins via listener.list") \
  && mkdir -p "/home/${USER}/.local/share/vosk" "/home/${USER}/.local/share/precise-lite" "/home/${USER}/.local/share/mycroft/listener" \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
  && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \
