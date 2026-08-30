@@ -32,6 +32,7 @@ ARG USER_GID=1000
 
 # uv as a pinned static binary (Renovate tracks the image reference); no unpinned "pip install uv"
 COPY --from=ghcr.io/astral-sh/uv:0.12.7@sha256:95f2aa1fe59274951cfe9b0cbc7972e879ff1004bc8945d130a32eb0dbd85945 /uv /uvx /usr/local/bin/
+# MALLOC_ARENA_MAX=2: the services are heavily threaded; fewer glibc arenas means less RSS on small devices.
 COPY --chmod=0755 files/ovos-hc.py /usr/local/bin/ovos-hc
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -40,7 +41,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     UV_LINK_MODE=copy \
-    UV_COMPILE_BYTECODE=1
+    UV_COMPILE_BYTECODE=1 \
+    MALLOC_ARENA_MAX=2
 
 SHELL ["/bin/bash", "-c"]
 
