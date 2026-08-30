@@ -5,7 +5,7 @@ x-pi-resource-limits: &pi-resource-limits
   deploy:
     resources:
       limits:
-        memory: ${STANDARD_MEMORY_LIMIT:-256M}
+        memory: ${STANDARD_MEMORY_LIMIT:-512M}
       reservations:
         memory: 64M
 
@@ -13,7 +13,7 @@ x-pi-core-resource-limits: &pi-core-resource-limits
   deploy:
     resources:
       limits:
-        memory: ${CORE_MEMORY_LIMIT:-512M}
+        memory: ${CORE_MEMORY_LIMIT:-1G}
       reservations:
         memory: 128M
 
@@ -21,7 +21,7 @@ x-pi-light-resource-limits: &pi-light-resource-limits
   deploy:
     resources:
       limits:
-        memory: ${LIGHT_MEMORY_LIMIT:-128M}
+        memory: ${LIGHT_MEMORY_LIMIT:-256M}
       reservations:
         memory: 32M
 

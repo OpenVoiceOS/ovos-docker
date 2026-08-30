@@ -200,6 +200,7 @@ services:
 
   ovos_skill_homescreen:
     <<: [*hardened, *skill-resource-limits]
+    oom_score_adj: 300
     container_name: ovos_skill_homescreen
     hostname: ovos_skill_homescreen
     restart: unless-stopped

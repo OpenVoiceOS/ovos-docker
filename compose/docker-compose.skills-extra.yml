@@ -38,6 +38,8 @@ x-skill-resource-limits: &skill-resource-limits
         memory: 64M
 
 x-skill-base: &skill-base
+  # a skill is the first thing the kernel should kill under memory pressure, the bus the last
+  oom_score_adj: 300
   <<: [*hardened, *skill-resource-limits]
   restart: unless-stopped
   logging: *default-logging

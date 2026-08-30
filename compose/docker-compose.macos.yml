@@ -73,6 +73,8 @@ volumes:
 services:
   ovos_messagebus:
     <<: [*hardened, *resource-limits]
+    # the bus is the last thing the kernel should kill
+    oom_score_adj: -500
     container_name: ovos_messagebus
     hostname: ovos_messagebus
     restart: unless-stopped
