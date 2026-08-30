@@ -233,6 +233,7 @@ jobs:
           CHANNEL: ${{ inputs.channel }}
           EXPECTED_REF: ${{ needs.resolve.outputs.ovos_releases_sha }}
         run: |
+          set +e   # report every bad image, then fail once at the end
           fail=0
           for repo in $(echo "$IMAGES" | jq -r '.[]' | sort -u); do
             for arch in amd64 arm64; do
@@ -240,7 +241,7 @@ jobs:
               if ! docker buildx imagetools inspect "$ref" --format '{{json .Image}}' > image.json 2> err.txt; then
                 echo "::error::${ref}: $(cat err.txt)"; fail=1; continue
               fi
-              python3 - "$ref" "$arch" "$EXPECTED_REF" <<'PY'
+              if python3 - "$ref" "$arch" "$EXPECTED_REF" <<'PY'
           import json, sys
           ref, arch, expected = sys.argv[1:]
           obj = json.load(open("image.json"))
@@ -252,7 +253,7 @@ jobs:
           print(f"{'OK ' if ok else 'BAD'} {ref}: architecture={got_arch} constraints.ref={got_ref}")
           sys.exit(0 if ok else 1)
           PY
-              [ $? -eq 0 ] || fail=1
+              then :; else fail=1; fi
             done
           done
           exit $fail
