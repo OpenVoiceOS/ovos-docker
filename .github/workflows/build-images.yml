@@ -516,7 +516,9 @@ jobs:
               # Sign on the mirror (no pull-rate limit), then copy the signature artifact
               # (<repo>:sha256-<digest>.sig) to the user-facing registry: the signature is bound to the
               # digest, which is the same on both, and copying only costs Hub a PUT and blob HEADs.
-              for attempt in 1 2 3; do cosign sign --yes "${mirror}@${digest}" && break; echo "cosign attempt ${attempt} failed; retrying"; sleep 30; done
+              # Tag-based ("legacy") storage on purpose: cosign v3 would store an OCI 1.1 referrer on GHCR,
+              # which cannot be copied as a tag, and Docker Hub has no referrers API anyway.
+              for attempt in 1 2 3; do cosign sign --yes --registry-referrers-mode=legacy "${mirror}@${digest}" && break; echo "cosign attempt ${attempt} failed; retrying"; sleep 30; done
               sig="sha256-${digest#sha256:}.sig"
               for attempt in 1 2 3; do crane copy "${mirror}:${sig}" "${repo}:${sig}" && break; echo "signature copy attempt ${attempt} failed; retrying"; sleep 30; done
             fi
