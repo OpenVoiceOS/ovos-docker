@@ -14,9 +14,9 @@ for every deployment:
 | `security_opt: no-new-privileges:true`   | same services                                                                                  | no privilege escalation through setuid binaries                     |
 | non-root user (`ovos`, UID 1000)         | all images except `ovos_phal_admin`                                                            | processes never run as root                                         |
 
-`ovos_phal` and `ovos_phal_admin` (hardware access), `ovos_listener`,
-`ovos_audio` and `ovos_plugin_ggwave` (sound devices) and `ovos_gui` (display
-and input devices) keep the device access they need.
+`ovos_phal` and `ovos_phal_admin` (hardware access) and `ovos_listener`,
+`ovos_audio` and `ovos_plugin_ggwave` (sound devices) keep the device access
+they need.
 
 ## AppArmor
 

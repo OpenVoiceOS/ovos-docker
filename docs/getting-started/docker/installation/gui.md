@@ -1,5 +1,11 @@
 # Install the Open Voice OS GUI
 
+!!! danger "The GUI images are no longer built"
+
+    The `ovos-gui-shell` and `ovos-gui-original` images are no longer built or
+    supported. The last published tags remain on the registries but receive no
+    updates. This page stays for reference only.
+
 !!! warning "For Linux eyes only"
 
     The GUI is currently available only on Linux operating system, not on Mac OS or Windows.

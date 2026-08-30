@@ -49,7 +49,7 @@ The list below is not exhaustive and doesn't mention anything about skill contai
 
 ## Tags
 
-Container image tags allow you to deploy a specific version of Open Voice OS. This could be an untested version based on a nightly build or a stable version.
+Container image tags select which release channel of Open Voice OS you deploy: bleeding-edge alpha packages, stable versions selected for testing, or the stable set.
 
 | Image tag                                                      | Description                                                          |
 | -------------------------------------------------------------- | -------------------------------------------------------------------- |
