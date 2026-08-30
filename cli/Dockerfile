@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.26
+# syntax=docker/dockerfile:1.26@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 ARG TAG=0.1.0
 ARG REGISTRY=docker.io/smartgic
 ARG BASE_IMAGE=${REGISTRY}/ovos-base:${TAG}
