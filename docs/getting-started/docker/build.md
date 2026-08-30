@@ -65,6 +65,7 @@ Defaults come from `scripts/bake.sh` and `docker-bake.hcl`:
 | `UV_PRERELEASE`   | `allow`                       | `uv pip` prerelease policy; use `if-necessary-or-explicit` for `testing`/`stable` (CI does) |
 | `CACHE_REPO`      | `ghcr.io/openvoiceos/ovos-docker-cache` | Registry build cache, read anonymously                |
 | `CACHE_TO`        | _(empty)_                     | `max` also exports the build cache (needs GHCR write access; CI does this) |
+| `MIRROR_REGISTRY` | _(empty)_                     | Second registry every image is also pushed to (CI: `ghcr.io/openvoiceos`); the pipeline reads manifests, labels and SBOMs from it |
 | `PLATFORMS`       | `linux/amd64,linux/arm64`      | Platforms to build                                            |
 | `TARGETS`         | `default`                     | Bake targets/groups                                           |
 | `PUSH`            | `true`                        | Push images to the registry                                   |
