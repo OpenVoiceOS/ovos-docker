@@ -9,7 +9,6 @@
 #         │              ├─ audio, listener, phal ─ phal-admin, plugin-ggwave
 #         ├─ cli, gui-websocket, messagebus
 #         └─ skill-base ─ skill-<name>  (see SKILLS)
-#   gui-original, gui-shell    (standalone, Debian based)
 
 # ---------- Variables (override via env or scripts/bake.sh) ----------
 variable "REGISTRY"          { default = "docker.io/smartgic" }
@@ -95,10 +94,9 @@ function "cache_to" {
 }
 
 # ---------- Groups ----------
-group "default"  { targets = ["stack", "services", "skills", "guis"] }
+group "default"  { targets = ["stack", "services", "skills"] }
 group "stack"    { targets = ["base", "sound-base", "core"] }
 group "services" { targets = ["audio", "cli", "core", "gui-websocket", "listener", "messagebus", "phal", "phal-admin", "plugin-ggwave"] }
-group "guis"     { targets = ["gui-original", "gui-shell"] }
 group "skills"   { targets = concat(["skill-base"], formatlist("skill-%s", SKILLS)) }
 
 # ---------- Common settings ----------
@@ -244,23 +242,6 @@ target "plugin-ggwave" {
   args       = { SOUND_BASE_IMAGE = "ovos-sound-base" }
   cache-from = cache_from("ovos-plugin-ggwave")
   cache-to   = cache_to("ovos-plugin-ggwave")
-}
-
-# ---------- GUIs (standalone) ----------
-target "gui-original" {
-  inherits   = ["common"]
-  context    = "gui/gui-original"
-  tags       = tags("ovos-gui-original")
-  cache-from = cache_from("ovos-gui-original")
-  cache-to   = cache_to("ovos-gui-original")
-}
-
-target "gui-shell" {
-  inherits   = ["common"]
-  context    = "gui/gui-shell"
-  tags       = tags("ovos-gui-shell")
-  cache-from = cache_from("ovos-gui-shell")
-  cache-to   = cache_to("ovos-gui-shell")
 }
 
 # ---------- Skills (one target per SKILLS entry, named skill-<name>) ----------
