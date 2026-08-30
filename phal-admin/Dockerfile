@@ -5,6 +5,8 @@ FROM ${PHAL_IMAGE}
 ARG TAG
 ARG REGISTRY
 ARG GIT_SHA=unknown
+ARG OVOS_RELEASES_REF=main
+ENV OVOS_RELEASES_REF=${OVOS_RELEASES_REF}
 
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
@@ -27,6 +29,7 @@ LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-phal:${TAG}"
 LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
 LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-phal-admin:${TAG}"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 USER root
 

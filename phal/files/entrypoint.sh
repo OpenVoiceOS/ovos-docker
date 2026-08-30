@@ -7,7 +7,7 @@ phal_list_state="${HOME}/.local/state/mycroft/phal.state"
 if [[ -f "$phal_list" ]]; then
     if ! diff -q -B <(grep -vE '^\s*(#|$)' "$phal_list") <(grep -vE '^\s*(#|$)' "$phal_list_state" 2>/dev/null) &>/dev/null; then
         echo "Installing PHAL plugins from $phal_list"
-        uv pip install -r "$phal_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt"
+        uv pip install -r "$phal_list" -c "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF:-main}/constraints-${OVOS_CHANNEL}.txt"
         cp "$phal_list" "$phal_list_state"
     fi
 fi
