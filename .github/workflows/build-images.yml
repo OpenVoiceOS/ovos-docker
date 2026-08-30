@@ -140,6 +140,7 @@ jobs:
         env:
           TARGETS: ${{ inputs.targets }}
           REGISTRY: ${{ inputs.registry }}
+          MIRROR_REGISTRY: ${{ inputs.mirror_registry }}
           TAG: ${{ inputs.channel }}
         run: |
           # shellcheck disable=SC2086
@@ -360,7 +361,7 @@ jobs:
 
       - name: Install crane
         if: inputs.sign
-        uses: imjasonh/setup-crane@ # v0.4
+        uses: imjasonh/setup-crane@feee3b6bb0d4c68370f256a4502498c9227e5c6b # v0.7
 
       - name: Create manifest lists from the verified digests
         env:
