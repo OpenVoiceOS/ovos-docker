@@ -29,23 +29,22 @@ LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-skill-wikipedia:${TAG}
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
 LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
-USER root
-
-RUN --mount=type=cache,target=/var/cache/apk \
-    apk update \
- && apk add --virtual .build-deps gcc g++
-
-USER "$USER"
-
 ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
 
-RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000,sharing=locked \
-    uv pip install ovos-skill-wikipedia -c /tmp/constraints.txt
-
+# Some dependencies have no pre-built wheel for every architecture; the toolchain is installed and
+# purged in the same layer so it never ships in the image.
 USER root
 
-RUN --mount=type=cache,target=/var/cache/apk \
-    apk del .build-deps
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    --mount=type=cache,target=/root/.cache/uv,sharing=locked \
+    apt-get update \
+ && apt-get install -y --no-install-recommends --no-install-suggests build-essential \
+ && uv pip install ovos-skill-wikipedia -c /tmp/constraints.txt \
+ && chown "${USER}:${USER}" -R "/home/${USER}/.venv" \
+ && apt-get --purge remove -y build-essential \
+ && apt-get --purge autoremove -y \
+ && rm -rf /var/log/{apt,dpkg.log}
 
 USER "$USER"
 
