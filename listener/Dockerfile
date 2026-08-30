@@ -49,7 +49,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/root/.cache/uv,sharing=locked \
     apt-get update \
  && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends --no-install-suggests libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
- && uv pip install -f 'https://whl.smartgic.io/' tflite_runtime \
  && uv pip install --prerelease=${UV_PRERELEASE} -r /tmp/requirements.txt -c /tmp/constraints.txt \
  && mkdir -p "/home/${USER}/.local/share/vosk" "/home/${USER}/.local/share/precise-lite" "/home/${USER}/.local/share/mycroft/listener" \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
