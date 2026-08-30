@@ -32,8 +32,9 @@ on:
         type: string
         default: docker.io/smartgic
       uv_prerelease:
+        description: "uv --prerelease mode; auto = allow for alpha, if-necessary-or-explicit for testing/stable"
         type: string
-        default: allow
+        default: auto
     secrets:
       DOCKERHUB_USERNAME:
         required: false
@@ -64,9 +65,9 @@ on:
         type: string
         default: docker.io/smartgic
       uv_prerelease:
-        description: uv --prerelease mode
+        description: "uv --prerelease mode (auto = allow for alpha, if-necessary-or-explicit otherwise)"
         type: string
-        default: allow
+        default: auto
 
 permissions:
   contents: read
@@ -80,6 +81,7 @@ jobs:
       targets: ${{ steps.targets.outputs.list }}
       images: ${{ steps.targets.outputs.images }}
       build_date: ${{ steps.meta.outputs.build_date }}
+      uv_prerelease: ${{ steps.pre.outputs.mode }}
     steps:
       - uses: actions/checkout@v7
 
@@ -117,6 +119,23 @@ jobs:
       - name: Build metadata
         id: meta
         run: echo "build_date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
+      - name: Effective prerelease mode
+        id: pre
+        env:
+          MODE: ${{ inputs.uv_prerelease }}
+          CHANNEL: ${{ inputs.channel }}
+        run: |
+          # constraints-alpha.txt pins pre-releases (>=x.y.za1); testing/stable are stable version ranges,
+          # so pre-releases must not be pulled into them.
+          if [ "$MODE" = "auto" ]; then
+            case "$CHANNEL" in
+              alpha) MODE=allow ;;
+              *)     MODE=if-necessary-or-explicit ;;
+            esac
+          fi
+          echo "channel=$CHANNEL -> uv --prerelease=$MODE"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
 
   build:
     name: Build ${{ matrix.arch }}
@@ -175,7 +194,7 @@ jobs:
           TAG: ${{ inputs.channel }}-${{ matrix.arch }}
           CHANNEL: ${{ inputs.channel }}
           VERSION: ${{ inputs.channel }}
-          UV_PRERELEASE: ${{ inputs.uv_prerelease }}
+          UV_PRERELEASE: ${{ needs.resolve.outputs.uv_prerelease }}
           OVOS_RELEASES_REF: ${{ needs.resolve.outputs.ovos_releases_sha }}
           BUILD_DATE: ${{ needs.resolve.outputs.build_date }}
           GIT_SHA: ${{ github.sha }}
