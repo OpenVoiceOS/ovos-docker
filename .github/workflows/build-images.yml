@@ -93,7 +93,7 @@ jobs:
           echo "ovos-releases ${REF} -> ${sha}"
           echo "sha=${sha}" >> "$GITHUB_OUTPUT"
 
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
       - name: Expand bake targets
         id: targets
@@ -156,7 +156,7 @@ jobs:
           echo "::error::push=true but DOCKERHUB_USERNAME/DOCKERHUB_TOKEN are not set"
           exit 1
 
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
       - uses: docker/login-action@v4
         if: steps.creds.outputs.available == 'true'
@@ -191,7 +191,7 @@ jobs:
     if: inputs.push
     runs-on: ubuntu-24.04
     steps:
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
       - uses: docker/login-action@v4
         with:
@@ -239,7 +239,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
       - uses: docker/login-action@v4
         with:
