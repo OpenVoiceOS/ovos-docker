@@ -106,12 +106,18 @@ jobs:
         run: |
           # shellcheck disable=SC2086
           docker buildx bake --print $TARGETS > bake.json
-          # Requested targets with groups expanded. `.target` also lists targets pulled in only as
-          # build contexts (e.g. base for messagebus); bake builds those but does not push them,
-          # so verify/merge must only look at what was actually requested.
-          jq -c '. as $b
+          # Requested targets with groups expanded, starting from the TARGETS input itself (each word is a
+          # group or a target; groups may nest). `.target` also lists targets pulled in only as build
+          # contexts (e.g. base for messagebus); bake builds those but does not push them, so
+          # verify/merge must only look at what was actually requested.
+          # shellcheck disable=SC2086
+          printf '%s\n' $TARGETS | jq -R . | jq -sc '.' > roots.json
+          jq -c --slurpfile roots roots.json '. as $b
                  | def expand: if $b.group[.] != null then ($b.group[.].targets[] | expand) else . end;
-                 [ $b.group.default.targets[] | expand ] | unique' bake.json | tee targets.json
+                 [ $roots[0][] | expand ] | unique' bake.json | tee targets.json
+          # every resolved name must be a real target
+          jq -e --slurpfile t targets.json '($t[0] - (.target | keys)) == []' bake.json > /dev/null \
+            || { echo "::error::unknown target(s): $(jq -c --slurpfile t targets.json '$t[0] - (.target | keys)' bake.json)"; exit 1; }
           jq -c --slurpfile t targets.json '.target | with_entries(select(.key as $k | $t[0] | index($k))) | with_entries(.value = (.value.tags[0] | split(":")[0]))' bake.json | tee images.json
           echo "list=$(cat targets.json)" >> "$GITHUB_OUTPUT"
           echo "images=$(cat images.json)" >> "$GITHUB_OUTPUT"
