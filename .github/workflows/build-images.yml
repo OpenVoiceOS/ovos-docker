@@ -1,0 +1,284 @@
+name: Build images
+
+# Reusable multi-arch image build for docker-bake.hcl targets.
+#
+# Each architecture is built natively (ubuntu-24.04 / ubuntu-24.04-arm) and, when
+# pushing, published under an arch-suffixed tag (<repo>:<channel>-amd64,
+# <repo>:<channel>-arm64). Those are verified, and only then is the channel tag
+# (<repo>:<channel>, plus <repo>:latest for stable) created as a manifest list
+# from the two. A failed or missing arch therefore never moves the tag the
+# installer pulls.
+
+on:
+  workflow_call:
+    inputs:
+      channel:
+        description: OVOS channel (alpha, testing, stable) — used as image tag and constraints file
+        type: string
+        required: true
+      targets:
+        description: Space-separated bake targets or groups (default, stack, services, skills, guis, <target>)
+        type: string
+        default: default
+      ovos_releases_ref:
+        description: Git ref of OpenVoiceOS/ovos-releases to take constraints-<channel>.txt from
+        type: string
+        default: main
+      push:
+        description: Push the images to the registry
+        type: boolean
+        default: false
+      registry:
+        type: string
+        default: docker.io/smartgic
+      uv_prerelease:
+        type: string
+        default: allow
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: false
+      DOCKERHUB_TOKEN:
+        required: false
+
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: OVOS channel
+        type: choice
+        options: [alpha, testing, stable]
+        default: alpha
+      targets:
+        description: Space-separated bake targets or groups
+        type: string
+        default: default
+      ovos_releases_ref:
+        description: ovos-releases git ref for the constraints file
+        type: string
+        default: main
+      push:
+        description: Push to the registry
+        type: boolean
+        default: false
+      registry:
+        description: Registry
+        type: string
+        default: docker.io/smartgic
+      uv_prerelease:
+        description: uv --prerelease mode
+        type: string
+        default: allow
+
+permissions:
+  contents: read
+
+jobs:
+  resolve:
+    name: Resolve inputs
+    runs-on: ubuntu-24.04
+    outputs:
+      ovos_releases_sha: ${{ steps.ref.outputs.sha }}
+      targets: ${{ steps.targets.outputs.list }}
+      images: ${{ steps.targets.outputs.images }}
+      build_date: ${{ steps.meta.outputs.build_date }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Resolve ovos-releases ref to a commit
+        id: ref
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: ${{ inputs.ovos_releases_ref }}
+        run: |
+          sha=$(gh api "repos/OpenVoiceOS/ovos-releases/commits/${REF}" --jq .sha)
+          echo "ovos-releases ${REF} -> ${sha}"
+          echo "sha=${sha}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Expand bake targets
+        id: targets
+        env:
+          TARGETS: ${{ inputs.targets }}
+          REGISTRY: ${{ inputs.registry }}
+          TAG: ${{ inputs.channel }}
+        run: |
+          # shellcheck disable=SC2086
+          docker buildx bake --print $TARGETS > bake.json
+          # concrete targets (groups expanded) and, for each, the repository the image lives in
+          jq -c '.target | keys' bake.json | tee targets.json
+          jq -c '.target | with_entries(.value = (.value.tags[0] | split(":")[0]))' bake.json | tee images.json
+          echo "list=$(cat targets.json)" >> "$GITHUB_OUTPUT"
+          echo "images=$(cat images.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Build metadata
+        id: meta
+        run: echo "build_date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.arch }}
+    needs: resolve
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            platform: linux/amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            platform: linux/arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 240
+    concurrency:
+      group: build-images-${{ inputs.channel }}-${{ matrix.arch }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL \
+                      /usr/local/share/boost /usr/share/swift /usr/local/.ghcup
+          sudo docker image prune -af >/dev/null 2>&1 || true
+          df -h / | tail -1
+
+      - name: Registry credentials available?
+        id: creds
+        env:
+          U: ${{ secrets.DOCKERHUB_USERNAME }}
+          T: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -n "$U" ] && [ -n "$T" ]; then echo "available=true" >> "$GITHUB_OUTPUT"; else echo "available=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Refuse to push without credentials
+        if: inputs.push && steps.creds.outputs.available != 'true'
+        run: |
+          echo "::error::push=true but DOCKERHUB_USERNAME/DOCKERHUB_TOKEN are not set"
+          exit 1
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        if: steps.creds.outputs.available == 'true'
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Bake ${{ inputs.targets }} for ${{ matrix.platform }}
+        env:
+          REGISTRY: ${{ inputs.registry }}
+          # arch-suffixed tag; the channel tag is created by the merge job
+          TAG: ${{ inputs.channel }}-${{ matrix.arch }}
+          CHANNEL: ${{ inputs.channel }}
+          VERSION: ${{ inputs.channel }}
+          UV_PRERELEASE: ${{ inputs.uv_prerelease }}
+          OVOS_RELEASES_REF: ${{ needs.resolve.outputs.ovos_releases_sha }}
+          BUILD_DATE: ${{ needs.resolve.outputs.build_date }}
+          GIT_SHA: ${{ github.sha }}
+          TARGETS: ${{ inputs.targets }}
+          PLATFORM: ${{ matrix.platform }}
+          PUSH: ${{ inputs.push }}
+        run: |
+          set -x
+          args=(--set "*.platform=${PLATFORM}")
+          if [ "$PUSH" = "true" ]; then args+=(--push); fi
+          # shellcheck disable=SC2086
+          docker buildx bake $TARGETS "${args[@]}"
+
+  verify:
+    name: Verify pushed images
+    needs: [resolve, build]
+    if: inputs.push
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Check every arch image exists, matches its platform and records the constraints ref
+        env:
+          IMAGES: ${{ needs.resolve.outputs.images }}
+          CHANNEL: ${{ inputs.channel }}
+          EXPECTED_REF: ${{ needs.resolve.outputs.ovos_releases_sha }}
+        run: |
+          fail=0
+          for repo in $(echo "$IMAGES" | jq -r '.[]' | sort -u); do
+            for arch in amd64 arm64; do
+              ref="${repo}:${CHANNEL}-${arch}"
+              if ! docker buildx imagetools inspect "$ref" --format '{{json .Image}}' > image.json 2> err.txt; then
+                echo "::error::${ref}: $(cat err.txt)"; fail=1; continue
+              fi
+              python3 - "$ref" "$arch" "$EXPECTED_REF" <<'PY'
+          import json, sys
+          ref, arch, expected = sys.argv[1:]
+          obj = json.load(open("image.json"))
+          # single image -> config object; image index (attestations) -> {platform: config}
+          img = obj if "config" in obj else next(iter(obj.values()))
+          got_arch = img.get("architecture")
+          got_ref = (img.get("config") or {}).get("Labels", {}).get("io.openvoiceos.constraints.ref")
+          ok = got_arch == arch and got_ref == expected
+          print(f"{'OK ' if ok else 'BAD'} {ref}: architecture={got_arch} constraints.ref={got_ref}")
+          sys.exit(0 if ok else 1)
+          PY
+              [ $? -eq 0 ] || fail=1
+            done
+          done
+          exit $fail
+
+  merge:
+    name: Create ${{ inputs.channel }} manifests
+    needs: [resolve, build, verify]
+    if: inputs.push
+    runs-on: ubuntu-24.04
+    concurrency:
+      group: merge-images-${{ inputs.channel }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Create manifest lists
+        env:
+          TARGETS: ${{ inputs.targets }}
+          REGISTRY: ${{ inputs.registry }}
+          TAG: ${{ inputs.channel }}
+          CHANNEL: ${{ inputs.channel }}
+        run: |
+          # The bake file decides the final tags (<repo>:<channel>, plus :latest when stable).
+          # shellcheck disable=SC2086
+          docker buildx bake --print $TARGETS > bake.json
+          for target in $(jq -r '.target | keys[]' bake.json); do
+            mapfile -t tags < <(jq -r --arg t "$target" '.target[$t].tags[]' bake.json)
+            repo="${tags[0]%%:*}"
+            args=()
+            for t in "${tags[@]}"; do args+=(-t "$t"); done
+            echo "==> ${target}: ${tags[*]}  <-  ${repo}:${CHANNEL}-amd64 + ${repo}:${CHANNEL}-arm64"
+            docker buildx imagetools create "${args[@]}" "${repo}:${CHANNEL}-amd64" "${repo}:${CHANNEL}-arm64"
+          done
+
+      - name: Summary
+        env:
+          TARGETS: ${{ inputs.targets }}
+          REGISTRY: ${{ inputs.registry }}
+          TAG: ${{ inputs.channel }}
+        run: |
+          {
+            echo "### Published \`${TAG}\` images"
+            echo
+            echo "| Image | Platforms |"
+            echo "|---|---|"
+            # shellcheck disable=SC2086
+            for t in $(docker buildx bake --print $TARGETS | jq -r '.target[].tags[0]' | sort -u); do
+              p=$(docker buildx imagetools inspect "$t" --format '{{range .Manifest.Manifests}}{{if ne .Platform.Architecture "unknown"}}{{.Platform.OS}}/{{.Platform.Architecture}} {{end}}{{end}}')
+              echo "| \`$t\` | $p |"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
