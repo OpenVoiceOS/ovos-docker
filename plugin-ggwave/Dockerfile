@@ -43,7 +43,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update \
  && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends --no-install-suggests portaudio19-dev build-essential python3-dev \
  && uv pip install -f 'https://whl.smartgic.io/' ggwave \
- && uv pip install --prerelease=${UV_PRERELEASE} ovos-audio-transformer-plugin-ggwave padacioso -c /tmp/constraints.txt \
+ # 1.0.0a1 removed the ovos-ggwave-listener console script (the plugin now only loads
+ # inside ovos-audio as an opm.transformer.audio plugin); this image exists to run the
+ # standalone listener, and the package is not in the constraints file, so hold it back.
+ && uv pip install --prerelease=${UV_PRERELEASE} "ovos-audio-transformer-plugin-ggwave<1.0.0" padacioso -c /tmp/constraints.txt \
  && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \
  && apt-get --purge autoremove -y \
  && rm -rf /var/log/{apt,dpkg.log} /tmp/* /var/tmp/*
