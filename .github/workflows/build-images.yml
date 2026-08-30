@@ -308,8 +308,11 @@ jobs:
           MIRROR: ${{ inputs.mirror_registry }}
           ARCH: ${{ matrix.arch }}
         run: |
-          set +e   # report every bad image, then fail once at the end
-          fail=0
+          # Verification gates per image: every target ends up in passed.txt or failed.txt (with a reason).
+          # merge publishes only what passed on both architectures and fails the run if anything failed,
+          # so one broken image never blocks the others, and never gets its tag moved.
+          set +e
+          : > passed.txt; : > failed.txt
           for target in $(echo "$TARGETS" | jq -r '.[]'); do
             # digests are identical on both registries; read from the mirror (no pull-rate limit)
             repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]' | sed "s#^${REGISTRY}/#${MIRROR}/#")
@@ -318,7 +321,7 @@ jobs:
               if [ -z "$digest" ]; then echo "::error::${target}/${arch}: no digest in bake metadata"; fail=1; continue; fi
               ref="${repo}@${digest}"
               if ! docker buildx imagetools inspect "$ref" --format '{{json .Image}}' > image.json 2> err.txt; then
-                echo "::error::${ref}: $(cat err.txt)"; fail=1; continue
+                echo "::error::${ref}: $(cat err.txt)"; echo "${target} inspect: $(head -c 200 err.txt)" >> failed.txt; continue
               fi
               if python3 - "$ref" "$arch" "$EXPECTED_REF" <<'PY'
           import json, sys
@@ -332,10 +335,10 @@ jobs:
           print(f"{'OK ' if ok else 'BAD'} {ref}: architecture={got_arch} constraints.ref={got_ref}")
           sys.exit(0 if ok else 1)
           PY
-              then :; else fail=1; fi
+              then :; else echo "${target} platform/label check failed" >> failed.txt; fi
             done
           done
-          exit $fail
+          echo "checked $(echo "$TARGETS" | jq length) target(s); failed so far: $(wc -l < failed.txt)"
 
       - name: Smoke-run every image (from the mirror, this architecture)
         env:
@@ -346,26 +349,37 @@ jobs:
           ARCH: ${{ matrix.arch }}
         run: |
           set +e
-          fail=0
           for target in $(echo "$TARGETS" | jq -r '.[]'); do
+            if grep -q "^${target} " failed.txt; then continue; fi
             repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]' | sed "s#^${REGISTRY}/#${MIRROR}/#")
             ref="${repo}@$(jq -r --arg t "$target" '.[$t]["containerimage.digest"]' "bake-meta-${ARCH}.json")"
             echo "::group::${target} (${ARCH})"
-            if ! docker pull -q "$ref" > /dev/null; then echo "::error::${target}: pull failed"; fail=1; echo "::endgroup::"; continue; fi
+            if ! docker pull -q "$ref" > /dev/null; then echo "::error::${target}: pull failed"; echo "${target} pull failed" >> failed.txt; echo "::endgroup::"; continue; fi
             # the binary the image starts: first ENTRYPOINT element unless that is a shell/script, else first CMD element
             bin=$(docker image inspect "$ref" --format '{{json .Config}}' | jq -r '
               (.Entrypoint // []) as $e | (.Cmd // []) as $c
               | if ($e | length) > 0 and ($e[0] | test("^(/bin/(ba)?sh|bash|sh)$") | not) and ($e[0] | test("\\.sh$") | not) then $e[0]
                 elif ($c | length) > 0 and ($c[0] | test("\\.sh$") | not) then $c[0] else "" end')
-            if docker run --rm -i -e SMOKE_BIN="$bin" --entrypoint /bin/bash "$ref" -s < scripts/ci/smoke.sh; then
-              echo "OK  ${target}"
+            if docker run --rm -i -e SMOKE_BIN="$bin" --entrypoint /bin/bash "$ref" -s < scripts/ci/smoke.sh 2>&1 | tee smoke.log; then
+              echo "OK  ${target}"; echo "${target}" >> passed.txt
             else
-              echo "::error::${target} (${ARCH}): smoke test failed"; fail=1
+              reason=$(grep -aiE 'requirement|No module|not found|Error' smoke.log | head -1 | cut -c1-160)
+              echo "::error::${target} (${ARCH}): smoke test failed: ${reason}"; echo "${target} smoke: ${reason}" >> failed.txt
             fi
             docker image rm -f "$ref" > /dev/null 2>&1 || true
             echo "::endgroup::"
           done
-          exit $fail
+          echo "passed: $(wc -l < passed.txt), failed: $(wc -l < failed.txt)"
+          if [ -s failed.txt ]; then echo "::warning::${ARCH}: $(wc -l < failed.txt) image(s) failed verification and will not be published"; cat failed.txt; fi
+
+      - name: Upload verification results
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: verified-${{ matrix.arch }}
+          path: |
+            passed.txt
+            failed.txt
+          retention-days: 7
 
   scan:
     name: Vulnerability scan
@@ -445,6 +459,10 @@ jobs:
           pattern: bake-meta-*
           merge-multiple: true
 
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          pattern: verified-*
+
       - name: Install cosign
         if: inputs.sign
         uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
@@ -472,7 +490,13 @@ jobs:
           # shellcheck disable=SC2086
           docker buildx bake --print $TARGETS > bake.json
           echo "[]" > entries.json
+          # only images that passed verification on both architectures are published
+          sort -u verified-amd64/passed.txt > passed-amd64.txt; sort -u verified-arm64/passed.txt > passed-arm64.txt
+          comm -12 passed-amd64.txt passed-arm64.txt > publish.txt
+          cat verified-amd64/failed.txt verified-arm64/failed.txt 2> /dev/null | sort -u > failed.txt
+          echo "publishing $(wc -l < publish.txt) of $(echo "$TARGET_LIST" | jq length) target(s)"
           for target in $(echo "$TARGET_LIST" | jq -r '.[]'); do
+            if ! grep -qx "$target" publish.txt; then echo "==> ${target}: NOT published (failed verification)"; continue; fi
             repo=$(echo "$IMAGES" | jq -r --arg t "$target" '.[$t]')
             mirror=$(echo "$repo" | sed "s#^${REGISTRY}/#${MIRROR_REGISTRY}/#")
             mapfile -t tags < <(jq -r --arg t "$target" '.target[$t].tags[]' bake.json)
@@ -499,6 +523,10 @@ jobs:
             jq --arg t "$target" --arg r "$repo" --arg m "$mirror" --arg d "$digest" --arg a "${src[0]#*@}" \
                '. + [{target: $t, repo: $r, mirror: $m, digest: $d, amd64_digest: $a}]' entries.json > entries.tmp && mv entries.tmp entries.json
           done
+          if [ -s failed.txt ]; then
+            echo "::error::not published (failed verification):"; sed 's/^/  /' failed.txt
+            echo "FAILED=1" >> "$GITHUB_ENV"
+          fi
 
       - name: Hand what was published to record-state.yml
         env:
@@ -531,4 +559,9 @@ jobs:
               s=$([ "$SIGN" = "true" ] && echo "cosign" || echo "no")
               echo "| \`${repo}:${CHANNEL}\` (+ \`${mirror}:${CHANNEL}\`) | $p | \`${d:0:19}…\` | $s |"
             done
+            if [ -s failed.txt ]; then
+              echo; echo "#### Not published (failed verification)"; echo
+              sed 's/^/- /' failed.txt
+            fi
           } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${FAILED:-0}" = "1" ]; then exit 1; fi
