@@ -360,7 +360,10 @@ jobs:
               (.Entrypoint // []) as $e | (.Cmd // []) as $c
               | if ($e | length) > 0 and ($e[0] | test("^(/bin/(ba)?sh|bash|sh)$") | not) and ($e[0] | test("\\.sh$") | not) then $e[0]
                 elif ($c | length) > 0 and ($c[0] | test("\\.sh$") | not) then $c[0] else "" end')
-            if docker run --rm -i -e SMOKE_BIN="$bin" --entrypoint /bin/bash "$ref" -s < scripts/ci/smoke.sh 2>&1 | tee smoke.log; then
+            # capture the container's own exit status (a pipe into tee would report tee's)
+            docker run --rm -i -e SMOKE_BIN="$bin" --entrypoint /bin/bash "$ref" -s < scripts/ci/smoke.sh > smoke.log 2>&1; rc=$?
+            cat smoke.log
+            if [ "$rc" -eq 0 ]; then
               echo "OK  ${target}"; echo "${target}" >> passed.txt
             else
               reason=$(grep -aiE 'requirement|No module|not found|Error' smoke.log | head -1 | cut -c1-160)
