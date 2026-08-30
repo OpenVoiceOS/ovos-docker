@@ -26,6 +26,8 @@ args = parser.parse_args()
 msg_type = f"{args.ns}.{args.svc}.is_ready"
 request = {"type": msg_type, "data": {}, "context": {"source": ["docker"], "destination": [args.svc]}}
 
+status = 1
+ws = None
 try:
     ws = websocket.create_connection(args.url, timeout=args.timeout)
     ws.send(json.dumps(request))
@@ -41,7 +43,14 @@ try:
         except (TypeError, ValueError):
             continue
         if message.get("type") == msg_type + ".response":
-            sys.exit(0 if (message.get("data") or {}).get("status") else 1)
+            status = 0 if (message.get("data") or {}).get("status") else 1
+            break
 except Exception:
-    pass
-sys.exit(1)
+    status = 1
+finally:
+    if ws is not None:
+        try:
+            ws.close()
+        except Exception:
+            pass
+sys.exit(status)
