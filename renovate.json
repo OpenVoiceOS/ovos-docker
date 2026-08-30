@@ -4,5 +4,13 @@
     "config:recommended",
     "docker:pinDigests",
     "helpers:pinGitHubActionDigests"
+  ],
+  "packageRules": [
+    {
+      "description": "Python 3.13 is the newest version OpenVoiceOS/ovos-releases tests (build_tests.yml); bump this when 3.14 is added there",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["python"],
+      "allowedVersions": "<3.14"
+    }
   ]
 }

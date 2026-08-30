@@ -80,7 +80,8 @@ USER root
 SHELL ["/bin/bash", "-c"]
 
 RUN --mount=type=bind,from=builder,source=/tmp/wheels,target=/tmp/wheels \
-    python -m pip install --no-index --find-links=/tmp/wheels pyalsaaudio
+    python -m pip install --no-index --find-links=/tmp/wheels pyalsaaudio \
+ && python -m compileall -q -j 0 "/home/${USER}/.venv/lib"
 
 ARG USER=ovos
 USER "${USER}"

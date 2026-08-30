@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.26
 # One reference for FROM and the base.name label, so a Renovate bump updates both.
-ARG PYTHON_IMAGE=python:3.14.7-slim-trixie@sha256:cae66f2ef0ec51a9891263eeee7f987dacf0a9879e8aa9353d5606e0530619a5
+ARG PYTHON_IMAGE=python:3.13.15-slim-trixie@sha256:7ce4b6dfe35e55397b7cda544f8a13f191b7ae28dc5aad71fe664dbc9bc2623f
 FROM ${PYTHON_IMAGE}
 ARG PYTHON_IMAGE
 
@@ -39,7 +39,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    UV_LINK_MODE=copy
+    UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1
 
 SHELL ["/bin/bash", "-c"]
 
@@ -63,6 +64,9 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 # The venv keeps the pip bundled with the (digest-pinned) Python image. setuptools is still needed at
 # runtime by packages using pkg_resources; pinned like ovos-installer does (setuptools<82).
+# Bytecode is compiled at install time (UV_COMPILE_BYTECODE, and compileall after pip installs) so
+# services start fast on small devices; PYTHONDONTWRITEBYTECODE keeps the running container from
+# writing .pyc files into its layer.
 RUN --mount=type=cache,target=/root/.cache/uv,sharing=locked \
     groupadd --gid "$USER_GID" "$USER" \
  && useradd --no-log-init --uid "$USER_UID" --gid "$USER_GID" -m -c "Open Voice OS user" "$USER" \

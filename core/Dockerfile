@@ -91,6 +91,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # Same pre-release policy for the offline install.
 RUN --mount=type=bind,from=builder,source=/tmp/wheels,target=/tmp/wheels \
     python -m pip install --no-index --find-links=/tmp/wheels $( [ "${UV_PRERELEASE}" = "allow" ] && echo --pre ) -r /tmp/requirements.txt \
+ && python -m compileall -q -j 0 "/home/${USER}/.venv/lib" \
  && mkdir -p "/home/${USER}/.local/share/mycroft/skills" "/home/${USER}/nltk_data" \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
  && rm -f /tmp/requirements.txt
