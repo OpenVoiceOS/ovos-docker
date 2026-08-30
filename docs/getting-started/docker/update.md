@@ -44,4 +44,8 @@ Because the `pull_policy` option of each service is set to `always`, every time 
 
 !!! tip "Change the version"
 
-    If you want to change the image tag to deploy, update the [.env](./composition.md#environment-files) file with the right one. The `alpha` [tag](./images.md#tags) images are rebuilt every night with the latest commits from the `dev` branch.
+    If you want to change the image tag to deploy, update the [.env](./composition.md#environment-files) file with the right one. Channel [tags](./images.md#tags) are rebuilt automatically: when a commit lands on the `dev` branch of `ovos-docker`, when the channel's constraints in [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) change (checked hourly), and once a week regardless.
+
+!!! tip "Registry pull budget"
+
+    Every `up` with `pull_policy: always` asks the registry about each image; with a full stack that is about 35 requests, and Docker Hub allows 100 per hour for anonymous users. If you update several times in a row, `docker login` first or set `PULL_POLICY=missing` in `.env` and run `docker compose pull` explicitly when you want an update.

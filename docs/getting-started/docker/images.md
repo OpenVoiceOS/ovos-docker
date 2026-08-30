@@ -47,10 +47,12 @@ Container image tags allow you to deploy a specific version of Open Voice OS. Th
 
 | Image tag                                                      | Description                                                          |
 | -------------------------------------------------------------- | -------------------------------------------------------------------- |
-| :material-check-circle-outline:{ style="color: green"} `alpha` | Nightly build based on alpha releases from [PyPi](https://pypi.org/) |
-| :material-check-circle-outline:{ style="color: green"} `stable` | Published when stable releases are available                         |
-| :material-check-circle-outline:{ style="color: green"} `latest` | Alias for the stable build (published only when `stable` is built)   |
-| :material-check-circle-outline:{ style="color: green"} `x.y.z` | Pinned release tag (when published)                                  |
+| :material-check-circle-outline:{ style="color: green"} `alpha` | Built from `constraints-alpha.txt` of [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases): alpha releases from [PyPI](https://pypi.org/), rebuilt automatically when the constraints change |
+| :material-check-circle-outline:{ style="color: green"} `testing` | Built from `constraints-testing.txt`: stable versions selected for testing (the installer's default channel) |
+| :material-check-circle-outline:{ style="color: green"} `stable` | Built from `constraints-stable.txt`                                  |
+| :material-check-circle-outline:{ style="color: green"} `latest` | Always the same image as `stable`                                    |
+| :material-check-circle-outline:{ style="color: green"} `<channel>-YYYYMMDD` | Immutable copy of a channel tag as published on that day, for rollbacks |
+| :material-information-outline:{ style="color: grey"} `<channel>-amd64`, `<channel>-arm64` | Single-architecture images the build pipeline publishes before merging them; not meant to be pulled directly |
 
 !!! warning "Tag availability"
 
@@ -61,6 +63,29 @@ Container image tags allow you to deploy a specific version of Open Voice OS. Th
 
     When building locally, `TAG=stable` also tags `LATEST_TAG` (default
     `latest`). Override `LATEST_TAG` if you want a different alias.
+
+## What is inside
+
+All Python images share one base (`ovos-base`, Debian slim with Python 3.13,
+a virtual environment and a pinned [uv](https://github.com/astral-sh/uv));
+services needing sound add `ovos-sound-base`, skills add `ovos-skill-base`.
+Every channel tag is a multi-architecture manifest list (`amd64` + `arm64`)
+carrying an SBOM and SLSA provenance attestation, signed with cosign, and
+labelled with:
+
+| Label                                 | Content                                                                      |
+| ------------------------------------- | ---------------------------------------------------------------------------- |
+| `org.opencontainers.image.revision`   | `ovos-docker` commit the image was built from                                |
+| `io.openvoiceos.constraints.ref`      | `ovos-releases` commit whose `constraints-<channel>.txt` pinned the packages  |
+| `org.opencontainers.image.created`    | Build time                                                                    |
+
+Verify a signature with:
+
+```shell
+cosign verify docker.io/smartgic/ovos-core:stable \
+  --certificate-identity-regexp 'https://github.com/OpenVoiceOS/ovos-docker/' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+```
 
 ## Build images locally
 
