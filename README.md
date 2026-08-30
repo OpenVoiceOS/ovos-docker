@@ -8,7 +8,7 @@
 [![Chat](https://img.shields.io/matrix/openvoiceos:matrix.org)](https://matrix.to/#/#OpenVoiceOS:matrix.org)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ebeee74fb69f43b0b255416208f884de)](https://app.codacy.com/gh/OpenVoiceOS/ovos-docker/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-[![Open Voice OS logo](https://raw.githubusercontent.com/OpenVoiceOS/ovos-docker/dev/docs/assets/logo.png)](https://openvoiceos.org/)
+[![Open Voice OS logo](https://openvoiceos.github.io/ovos-docker/assets/logo.png)](https://openvoiceos.org/)
 
 This repository holds the Dockerfiles, the Docker Buildx Bake configuration, and the
 compose files for the container images of [Open Voice OS](https://openvoiceos.org/), an
@@ -52,8 +52,6 @@ The same images, with the same tags and digests, are available from the mirror
 | `stable` | Built from `constraints-stable.txt` |
 | `latest` | The same image as `stable` |
 | `<channel>-YYYYMMDD` | An immutable copy of a channel tag, for rollbacks |
-
-For the compose files, the audio setup, and the device mapping, read the documentation.
 
 ## Build requirements
 
@@ -137,7 +135,7 @@ supplied its constraints.
 ## Support
 
 - [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
-- [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
+- [Contribute to Open Voice OS](https://www.openvoiceos.org/contribution)
 - [Report bugs related to these container images](https://github.com/OpenVoiceOS/ovos-docker/issues)
 
 ## License
