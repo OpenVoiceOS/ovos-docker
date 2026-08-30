@@ -1,8 +1,21 @@
 ---
 x-podman: &podman
   userns_mode: keep-id
+  # A minimal init (PID 1) reaps the children a service may spawn and forwards signals.
+  init: true
   security_opt:
     - "label=disable"
+
+# Services that only talk to the message bus need no Linux capability at all:
+# drop every capability and forbid privilege escalation.
+x-hardened: &hardened
+  userns_mode: keep-id
+  init: true
+  cap_drop:
+    - ALL
+  security_opt:
+    - "label=disable"
+    - "no-new-privileges:true"
 
 x-logging: &default-logging
   driver: json-file
@@ -69,7 +82,7 @@ volumes:
 
 services:
   ovos_messagebus:
-    <<: [*podman, *resource-limits]
+    <<: [*hardened, *resource-limits]
     container_name: ovos_messagebus
     hostname: ovos_messagebus
     restart: unless-stopped
@@ -231,7 +244,7 @@ services:
         condition: service_started
 
   ovos_core:
-    <<: [*podman, *core-resource-limits]
+    <<: [*hardened, *core-resource-limits]
     container_name: ovos_core
     hostname: ovos_core
     restart: unless-stopped
@@ -260,7 +273,7 @@ services:
         condition: service_started
 
   ovos_cli:
-    <<: [*podman, *resource-limits]
+    <<: [*hardened, *resource-limits]
     container_name: ovos_cli
     hostname: ovos_cli
     restart: unless-stopped
