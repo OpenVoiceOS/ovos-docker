@@ -68,8 +68,7 @@ ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${O
 
 # pre-releases only for the alpha channel (UV_PRERELEASE=allow)
 RUN --mount=type=cache,target=/root/.cache/pip \
-    PIP_NO_CACHE_DIR=0 python -m pip install --upgrade pip setuptools wheel \
- && PIP_NO_CACHE_DIR=0 python -m pip wheel $( [ "${UV_PRERELEASE}" = "allow" ] && echo --pre ) -r /tmp/requirements.txt \
+    PIP_NO_CACHE_DIR=0 python -m pip wheel $( [ "${UV_PRERELEASE}" = "allow" ] && echo --pre ) -r /tmp/requirements.txt \
         -c /tmp/constraints.txt \
         -w /tmp/wheels
 
@@ -88,14 +87,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update \
  && apt-get install -y --no-install-recommends libfann2
 
-COPY --from=builder /tmp/wheels /tmp/wheels
-COPY --from=builder /tmp/requirements.txt /tmp/requirements.txt
-
-# same pre-release policy for the offline install
-RUN python -m pip install --no-index --find-links=/tmp/wheels $( [ "${UV_PRERELEASE}" = "allow" ] && echo --pre ) -r /tmp/requirements.txt \
+# The wheelhouse is bind-mounted from the builder stage instead of copied, so it never becomes a layer.
+# Same pre-release policy for the offline install.
+RUN --mount=type=bind,from=builder,source=/tmp/wheels,target=/tmp/wheels \
+    python -m pip install --no-index --find-links=/tmp/wheels $( [ "${UV_PRERELEASE}" = "allow" ] && echo --pre ) -r /tmp/requirements.txt \
+ && python -m compileall -q -j 0 "/home/${USER}/.venv/lib" \
  && mkdir -p "/home/${USER}/.local/share/mycroft/skills" "/home/${USER}/nltk_data" \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
- && rm -rf /tmp/wheels /tmp/requirements.txt
+ && rm -f /tmp/requirements.txt
 
 USER "$USER"
 WORKDIR "/home/${USER}"

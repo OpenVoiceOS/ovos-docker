@@ -1,0 +1,62 @@
+name: Publish on push
+
+# A commit on dev rebuilds the images whose build context changed (plus everything built on top of
+# them) for every channel. Channels run one at a time to stay within the registry's pull budget.
+
+on:
+  push:
+    branches: [dev]
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+
+concurrency:
+  group: publish-push
+  cancel-in-progress: false
+
+jobs:
+  select:
+    name: Affected targets
+    runs-on: ubuntu-24.04
+    outputs:
+      targets: ${{ steps.sel.outputs.targets }}
+      count: ${{ steps.sel.outputs.count }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
+      - id: sel
+        env:
+          BEFORE: ${{ github.event.before }}
+          HEAD: ${{ github.sha }}
+        run: |
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE" 2> /dev/null; then
+            echo "no usable base commit -> building everything"
+            files="docker-bake.hcl"
+          else
+            files=$(git diff --name-only "$BEFORE" "$HEAD")
+          fi
+          printf '%s\n' "$files"
+          targets=$(printf '%s\n' "$files" | python3 scripts/affected.py paths)
+          echo "targets: $targets"
+          echo "targets=$(echo "$targets" | jq -r 'join(" ")')" >> "$GITHUB_OUTPUT"
+          echo "count=$(echo "$targets" | jq length)" >> "$GITHUB_OUTPUT"
+
+  publish:
+    name: ${{ matrix.channel }}
+    needs: select
+    if: needs.select.outputs.count != '0'
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        channel: [alpha, testing, stable]
+    uses: ./.github/workflows/build-images.yml
+    with:
+      channel: ${{ matrix.channel }}
+      targets: ${{ needs.select.outputs.targets }}
+      push: true
+    secrets: inherit

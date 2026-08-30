@@ -9,6 +9,8 @@ ARG GIT_SHA=unknown
 ARG OVOS_RELEASES_REF=main
 
 
+# A failed check kills PID 1 on purpose: Docker marks a container unhealthy but never restarts it, and
+# the bus is the one service everything else reconnects to, so a wedged bus must restart itself.
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
     CMD curl --header "Connection: Upgrade" --header "Upgrade: Websocket" http://127.0.0.1:8181/core || kill 1
 

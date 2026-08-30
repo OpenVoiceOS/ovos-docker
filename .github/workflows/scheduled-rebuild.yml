@@ -1,0 +1,52 @@
+name: Weekly rebuild
+
+# Rebuilds every image of a channel once a week so base-OS fixes reach the images even when
+# nothing in this repository or in the constraints changed. Channels are two hours apart to
+# stay within the registry's pull budget.
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"   # alpha
+    - cron: "0 5 * * 1"   # testing
+    - cron: "0 7 * * 1"   # stable
+  workflow_dispatch:
+    inputs:
+      channel:
+        type: choice
+        options: [alpha, testing, stable]
+        default: alpha
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+
+jobs:
+  pick:
+    name: Channel
+    runs-on: ubuntu-24.04
+    outputs:
+      channel: ${{ steps.pick.outputs.channel }}
+    steps:
+      - id: pick
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          INPUT: ${{ inputs.channel }}
+        run: |
+          case "$SCHEDULE" in
+            "0 3 * * 1") ch=alpha ;;
+            "0 5 * * 1") ch=testing ;;
+            "0 7 * * 1") ch=stable ;;
+            *) ch="$INPUT" ;;
+          esac
+          echo "channel=$ch" >> "$GITHUB_OUTPUT"
+
+  rebuild:
+    name: ${{ needs.pick.outputs.channel }}
+    needs: pick
+    uses: ./.github/workflows/build-images.yml
+    with:
+      channel: ${{ needs.pick.outputs.channel }}
+      targets: default
+      push: true
+    secrets: inherit

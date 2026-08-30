@@ -80,6 +80,23 @@ Examples:
 - `TAG=stable CHANNEL=stable ./scripts/bake.sh -T services`
 - `OVOS_RELEASES_REF=<commit sha> ./scripts/bake.sh -T listener` (pin the constraints to one ovos-releases commit)
 
+## Automation
+
+Images are built by GitHub Actions on native amd64 and arm64 runners and published as multi-arch
+manifest lists (see `.github/workflows/`):
+
+| Workflow | Trigger | What it builds |
+|---|---|---|
+| `on-push.yml` | commit on `dev` | the targets whose build context changed, plus everything built on top of them, for `alpha`, `testing` and `stable` |
+| `on-constraints.yml` | `repository_dispatch` from ovos-releases, hourly poll, manual | per channel, the images that contain a package whose `constraints-<channel>.txt` line changed since they were last built |
+| `pull-request.yml` | pull request | the affected targets, both architectures, no push |
+| `scheduled-rebuild.yml` | weekly | every image of a channel |
+| `build-images.yml` | called by the above, or manually | the reusable build: resolve → build per arch → verify → merge (+ cosign, `<channel>-YYYYMMDD` tag) |
+
+`scripts/affected.py` is the selector; the `build-state` branch records what each channel was built
+from (digest, ovos-releases commit, installed packages). Every image carries the label
+`io.openvoiceos.constraints.ref` with the ovos-releases commit its constraints came from.
+
 ## Support
 
 - [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)

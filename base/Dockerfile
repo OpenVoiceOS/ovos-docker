@@ -1,5 +1,8 @@
 # syntax=docker/dockerfile:1.26
-FROM python:3.14.7-slim-trixie@sha256:cae66f2ef0ec51a9891263eeee7f987dacf0a9879e8aa9353d5606e0530619a5
+# One reference for FROM and the base.name label, so a Renovate bump updates both.
+ARG PYTHON_IMAGE=python:3.13.15-slim-trixie@sha256:7ce4b6dfe35e55397b7cda544f8a13f191b7ae28dc5aad71fe664dbc9bc2623f
+FROM ${PYTHON_IMAGE}
+ARG PYTHON_IMAGE
 
 ARG BUILD_DATE=unknown
 ARG CHANNEL=alpha
@@ -17,7 +20,7 @@ LABEL org.opencontainers.image.title="Open Voice OS OCI base image" \
       org.opencontainers.image.vendor="Open Voice OS" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.authors="Open Voice OS Community" \
-      org.opencontainers.image.base.name="python:3.13.11-slim-trixie@sha256:56ab277ddf459858f94052252565945c34617c841818faf8f34f6896de06cffe" \
+      org.opencontainers.image.base.name="${PYTHON_IMAGE}" \
       org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker" \
       org.opencontainers.image.ref.name="${IMAGE_REF}" \
       org.opencontainers.image.revision="${GIT_SHA}" \
@@ -27,13 +30,19 @@ ARG USER=ovos
 ARG USER_UID=1000
 ARG USER_GID=1000
 
+# uv as a pinned static binary (Renovate tracks the image reference); no unpinned "pip install uv"
+COPY --from=ghcr.io/astral-sh/uv:0.12.7@sha256:95f2aa1fe59274951cfe9b0cbc7972e879ff1004bc8945d130a32eb0dbd85945 /uv /uvx /usr/local/bin/
+# MALLOC_ARENA_MAX=2: the services are heavily threaded; fewer glibc arenas means less RSS on small devices.
 COPY --chmod=0755 files/ovos-hc.py /usr/local/bin/ovos-hc
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1 \
+    MALLOC_ARENA_MAX=2
 
 SHELL ["/bin/bash", "-c"]
 
@@ -55,12 +64,17 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     fi \
  && rm -rf /var/log/{apt,dpkg.log} /tmp/* /var/tmp/*
 
-RUN --mount=type=cache,target=/root/.cache/pip \
+# The venv keeps the pip bundled with the (digest-pinned) Python image. setuptools is still needed at
+# runtime by packages using pkg_resources; pinned like ovos-installer does (setuptools<82).
+# Bytecode is compiled at install time (UV_COMPILE_BYTECODE, and compileall after pip installs) so
+# services start fast on small devices; PYTHONDONTWRITEBYTECODE keeps the running container from
+# writing .pyc files into its layer.
+RUN --mount=type=cache,target=/root/.cache/uv,sharing=locked \
     groupadd --gid "$USER_GID" "$USER" \
  && useradd --no-log-init --uid "$USER_UID" --gid "$USER_GID" -m -c "Open Voice OS user" "$USER" \
  && python -m venv "/home/${USER}/.venv" \
  && source "/home/${USER}/.venv/bin/activate" \
- && PIP_NO_CACHE_DIR=0 pip install --upgrade pip setuptools wheel uv \
+ && uv pip install "setuptools<82" \
  && mkdir -p "/home/${USER}"/.{config,cache,local/{state,share}}/{mycroft,OpenVoiceOS} \
  && chown "${USER}:${USER}" -R "/home/${USER}"
 

@@ -30,24 +30,9 @@ LABEL org.opencontainers.image.revision="${GIT_SHA}"
 LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 # ovos-audio is required because of https://github.com/OpenVoiceOS/skill-ovos-date-time/issues/22
 
-USER root
-
-RUN --mount=type=cache,target=/var/cache/apk \
-    apk update \
- && apk add --virtual .build-deps build-base cmake
-
-USER "$USER"
-
 ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
 
 RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000,sharing=locked \
     uv pip install ovos-skill-date-time ovos-audio -c /tmp/constraints.txt
-
-USER root
-
-RUN --mount=type=cache,target=/var/cache/apk \
-    apk del .build-deps
-
-USER "$USER"
 
 CMD ["ovos-skill-launcher", "ovos-skill-date-time.openvoiceos"]

@@ -79,9 +79,9 @@ FROM runtime
 USER root
 SHELL ["/bin/bash", "-c"]
 
-COPY --from=builder /tmp/wheels /tmp/wheels
-RUN python -m pip install --no-index --find-links=/tmp/wheels pyalsaaudio \
- && rm -rf /tmp/wheels
+RUN --mount=type=bind,from=builder,source=/tmp/wheels,target=/tmp/wheels \
+    python -m pip install --no-index --find-links=/tmp/wheels pyalsaaudio \
+ && python -m compileall -q -j 0 "/home/${USER}/.venv/lib"
 
 ARG USER=ovos
 USER "${USER}"

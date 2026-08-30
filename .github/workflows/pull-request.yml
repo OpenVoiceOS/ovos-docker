@@ -1,0 +1,56 @@
+name: PR build
+
+# Builds (without pushing) the images a pull request touches, for both architectures, so a base
+# image bump or a Dockerfile change is proven before it lands on dev. Changes to the build
+# machinery itself are exercised on messagebus (base + one small service).
+
+on:
+  pull_request:
+    branches: [dev]
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  select:
+    name: Affected targets
+    runs-on: ubuntu-24.04
+    outputs:
+      targets: ${{ steps.sel.outputs.targets }}
+      count: ${{ steps.sel.outputs.count }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
+      - id: sel
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          files=$(git diff --name-only "$BASE" "$HEAD")
+          printf '%s\n' "$files"
+          targets=$(printf '%s\n' "$files" | python3 scripts/affected.py paths)
+          if [ "$(echo "$targets" | jq length)" = "0" ] && printf '%s\n' "$files" | grep -qE '^(\.github/workflows/build-images\.yml|scripts/)'; then
+            targets='["messagebus"]'
+          fi
+          echo "targets: $targets"
+          echo "targets=$(echo "$targets" | jq -r 'join(" ")')" >> "$GITHUB_OUTPUT"
+          echo "count=$(echo "$targets" | jq length)" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: alpha (dry run)
+    needs: select
+    if: needs.select.outputs.count != '0'
+    uses: ./.github/workflows/build-images.yml
+    with:
+      channel: alpha
+      targets: ${{ needs.select.outputs.targets }}
+      push: false
+    secrets: inherit

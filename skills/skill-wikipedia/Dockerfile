@@ -29,24 +29,9 @@ LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-skill-wikipedia:${TAG}
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
 LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
-USER root
-
-RUN --mount=type=cache,target=/var/cache/apk \
-    apk update \
- && apk add --virtual .build-deps gcc g++
-
-USER "$USER"
-
 ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
 
 RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000,sharing=locked \
     uv pip install ovos-skill-wikipedia -c /tmp/constraints.txt
-
-USER root
-
-RUN --mount=type=cache,target=/var/cache/apk \
-    apk del .build-deps
-
-USER "$USER"
 
 CMD ["ovos-skill-launcher", "skill-ovos-wikipedia.openvoiceos"]

@@ -8,7 +8,7 @@
 #   base ─┬─ sound-base ─┬─ core
 #         │              ├─ audio, listener, phal ─ phal-admin, plugin-ggwave
 #         ├─ cli, gui-websocket, messagebus
-#   skill-base ─ skill-<name>  (see SKILLS)
+#         └─ skill-base ─ skill-<name>  (see SKILLS)
 #   gui-original, gui-shell    (standalone, Debian based)
 
 # ---------- Variables (override via env or scripts/bake.sh) ----------
@@ -133,6 +133,8 @@ target "sound-base" {
 target "skill-base" {
   inherits   = ["common"]
   context    = "skills/skill-base"
+  contexts   = { "ovos-base" = "target:base" }
+  args       = { BASE_IMAGE = "ovos-base" }
   tags       = tags("ovos-skill-base")
   cache-from = cache_from("ovos-skill-base")
   cache-to   = cache_to("ovos-skill-base")
