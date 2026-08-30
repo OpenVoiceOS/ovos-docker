@@ -10,6 +10,10 @@ name: Build images
 # merge work on digests, two overlapping runs of the same channel can never be mixed, and a
 # failed or missing arch never moves the tag the installer pulls.
 #
+# What was published is handed to record-state.yml (workflow_run) as an artifact; that workflow
+# writes the build-state branch with its own permissions, so this one only needs contents: read
+# and can be called from pull requests, including forks.
+#
 # The build cache lives on GHCR (ghcr.io/openvoiceos/ovos-docker-cache), which has no pull-rate
 # limits; Docker Hub only sees the image pushes themselves.
 
@@ -90,7 +94,7 @@ on:
         default: true
 
 permissions:
-  contents: write   # build-state branch (what each channel was built from)
+  contents: read
   packages: write   # GHCR build cache
   id-token: write   # cosign keyless signing
 
@@ -369,36 +373,20 @@ jobs:
                '. + [{target: $t, repo: $r, digest: $d, amd64_digest: $a}]' entries.json > entries.tmp && mv entries.tmp entries.json
           done
 
-      - name: Record build state
+      - name: Hand what was published to record-state.yml
         env:
           CHANNEL: ${{ inputs.channel }}
           OVOS_RELEASES_SHA: ${{ needs.resolve.outputs.ovos_releases_sha }}
         run: |
-          # state/<channel>.json on the build-state branch: repo, digest, constraints ref and the Python
-          # packages (from the SBOM) of every image just published. scripts/affected.py reads it to decide
-          # what a constraints change requires rebuilding, without any registry request.
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git ls-remote --exit-code --heads origin build-state > /dev/null 2>&1; then
-            git fetch --depth=1 origin build-state
-            git worktree add state-wt FETCH_HEAD
-            git -C state-wt checkout -q -B build-state
-          else
-            git worktree add --detach state-wt
-            git -C state-wt checkout -q --orphan build-state
-            git -C state-wt rm -rfq .
-            printf '# build-state\n\nWhat each channel was last built from. Written by build-images.yml, read by scripts/affected.py.\n' > state-wt/README.md
-          fi
-          mkdir -p state-wt/state
-          python3 scripts/ci/record-state.py "state-wt/state/${CHANNEL}.json" "$CHANNEL" "$OVOS_RELEASES_SHA" entries.json
-          git -C state-wt add -A
-          git -C state-wt commit -qm "state(${CHANNEL}): $(jq length entries.json) image(s) from ovos-releases@${OVOS_RELEASES_SHA:0:7}"
-          for attempt in 1 2 3 4 5; do
-            git -C state-wt push origin build-state && break
-            echo "push rejected (attempt ${attempt}); rebasing on the current build-state"
-            git -C state-wt fetch origin build-state
-            git -C state-wt rebase FETCH_HEAD
-          done
+          mkdir -p build-state
+          cp entries.json build-state/entries.json
+          printf '{"channel": "%s", "ovos_releases_ref": "%s"}\n' "$CHANNEL" "$OVOS_RELEASES_SHA" > build-state/meta.json
+
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: build-state-${{ inputs.channel }}
+          path: build-state/
+          retention-days: 7
 
       - name: Summary
         env:

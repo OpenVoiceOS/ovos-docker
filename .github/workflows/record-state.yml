@@ -1,0 +1,85 @@
+name: Record build state
+
+# After a publishing run completes, writes state/<channel>.json on the build-state branch: for
+# every image just published, its repository, manifest-list digest, the ovos-releases commit its
+# constraints came from and the Python packages it contains (from the SBOM). scripts/affected.py
+# reads this to decide what a constraints change requires rebuilding, without any registry request.
+#
+# Runs as a separate workflow (workflow_run) so build-images.yml itself never needs write access
+# to the repository and can be called from pull requests, including forks.
+
+on:
+  workflow_run:
+    workflows: ["Build images", "Publish on push", "Publish on constraints change", "Weekly rebuild"]
+    types: [completed]
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: build-state
+  cancel-in-progress: false
+
+jobs:
+  record:
+    name: Record
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Download what the run published
+        id: dl
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          mkdir -p handoff
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern 'build-state-*' --dir handoff 2> dl.err || true
+          n=$(find handoff -name meta.json | wc -l)
+          echo "artifacts=$n" >> "$GITHUB_OUTPUT"
+          echo "run ${RUN_ID}: ${n} channel artifact(s)"
+          [ "$n" = "0" ] && cat dl.err || true
+
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
+        if: steps.dl.outputs.artifacts != '0'
+
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
+        if: steps.dl.outputs.artifacts != '0'
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Update the build-state branch
+        if: steps.dl.outputs.artifacts != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin build-state > /dev/null 2>&1; then
+            git fetch --depth=1 origin build-state
+            git worktree add state-wt FETCH_HEAD
+            git -C state-wt checkout -q -B build-state
+          else
+            git worktree add --detach state-wt
+            git -C state-wt checkout -q --orphan build-state
+            git -C state-wt rm -rfq .
+            printf '# build-state\n\nWhat each channel was last built from. Written by record-state.yml, read by scripts/affected.py.\n' > state-wt/README.md
+          fi
+          mkdir -p state-wt/state
+          msg=""
+          for meta in handoff/*/meta.json; do
+            dir=$(dirname "$meta")
+            channel=$(jq -r .channel "$meta"); ref=$(jq -r .ovos_releases_ref "$meta")
+            python3 scripts/ci/record-state.py "state-wt/state/${channel}.json" "$channel" "$ref" "$dir/entries.json"
+            msg="${msg}${channel}: $(jq length "$dir/entries.json") image(s) from ovos-releases@${ref:0:7}; "
+          done
+          git -C state-wt add -A
+          if git -C state-wt diff --cached --quiet; then echo "nothing changed"; exit 0; fi
+          git -C state-wt commit -qm "state: ${msg}"
+          for attempt in 1 2 3 4 5; do
+            git -C state-wt push origin build-state && break
+            echo "push rejected (attempt ${attempt}); rebasing on the current build-state"
+            git -C state-wt fetch origin build-state
+            git -C state-wt rebase FETCH_HEAD
+          done
