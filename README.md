@@ -19,7 +19,6 @@ Please follow the dedicated [documentation](https://openvoiceos.github.io/ovos-d
 - Base layers: `ovos-base`, `ovos-sound-base`
 - Core runtime: `ovos-core`
 - Services: `ovos-audio`, `ovos-cli`, `ovos-listener`, `ovos-messagebus`, `ovos-phal`, `ovos-phal-admin`, `ovos-plugin-ggwave`, `ovos-gui-websocket`
-- GUIs: `ovos-gui-original`, `ovos-gui-shell`
 - Skills: `ovos-skill-base` plus the default skill images in `docker-bake.hcl`
 
 ## Run images
@@ -55,7 +54,7 @@ Bake contexts.
 
 ### Targets
 
-- Groups: `default`, `stack`, `services`, `skills`, `guis`
+- Groups: `default`, `stack`, `services`, `skills`
 - Individual targets are defined in `docker-bake.hcl`
 
 ### Configuration
