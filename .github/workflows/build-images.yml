@@ -368,7 +368,9 @@ jobs:
             if [ "$rc" -eq 0 ]; then
               echo "OK  ${target}"; echo "${target}" >> passed.txt
             else
-              reason=$(grep -aiE 'requirement|No module|not found|Error' smoke.log | head -1 | cut -c1-160)
+              # the failing command's output is at the end (set -e); pip check's
+            # "No broken requirements found." must never be reported as the reason
+            reason=$(grep -avE '^\s*$' smoke.log | grep -av 'No broken requirements' | tail -2 | tr '\n' ' ' | cut -c1-200)
               echo "::error::${target} (${ARCH}): smoke test failed: ${reason}"; echo "${target} smoke: ${reason}" >> failed.txt
             fi
             docker image rm -f "$ref" > /dev/null 2>&1 || true
@@ -471,6 +473,11 @@ jobs:
       - name: Install cosign
         if: inputs.sign
         uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+        with:
+          # v3 stores signatures only as OCI referrer bundles, even with
+          # --registry-referrers-mode=legacy, so the sha256-<digest>.sig tag the
+          # signature copy to Docker Hub relies on is never created. v2 keeps tag storage.
+          cosign-release: 'v2.6.5'
 
       - name: Install crane
         if: inputs.sign

@@ -66,6 +66,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 # The venv keeps the pip bundled with the (digest-pinned) Python image. setuptools is still needed at
 # runtime by packages using pkg_resources; pinned like ovos-installer does (setuptools<82).
+# websocket-client makes ovos-hc (the HEALTHCHECK of every service image) work everywhere,
+# including images that install no bus client of their own.
 # Bytecode is compiled at install time (UV_COMPILE_BYTECODE, and compileall after pip installs) so
 # services start fast on small devices; PYTHONDONTWRITEBYTECODE keeps the running container from
 # writing .pyc files into its layer.
@@ -74,7 +76,7 @@ RUN --mount=type=cache,target=/root/.cache/uv,sharing=locked \
  && useradd --no-log-init --uid "$USER_UID" --gid "$USER_GID" -m -c "Open Voice OS user" "$USER" \
  && python -m venv "/home/${USER}/.venv" \
  && source "/home/${USER}/.venv/bin/activate" \
- && uv pip install "setuptools<82" \
+ && uv pip install "setuptools<82" websocket-client \
  && mkdir -p "/home/${USER}"/.{config,cache,local/{state,share}}/{mycroft,OpenVoiceOS} \
  && chown "${USER}:${USER}" -R "/home/${USER}"
 
