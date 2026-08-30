@@ -78,5 +78,5 @@ Thanks to [@mikejgray](https://github.com/mikejgray/) and community member Ben f
 ## Support
 
 *   [Matrix channel](https://matrix.to/#/#openvoiceos:matrix.org)
-*   [Contribute to Open Voice OS](https://openvoiceos.github.io/community-docs/contributing/)
+*   [Contribute to Open Voice OS](https://www.openvoiceos.org/contribution)
 *   [Report bugs related to these Docker images](https://github.com/OpenVoiceOS/ovos-docker/issues)
