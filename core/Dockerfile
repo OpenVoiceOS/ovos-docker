@@ -49,6 +49,7 @@ FROM ${SOUND_BASE_IMAGE} AS builder
 ARG OVOS_CHANNEL=alpha
 ENV OVOS_CHANNEL=${OVOS_CHANNEL}
 ARG OVOS_RELEASES_REF=main
+ARG UV_PRERELEASE=allow
 
 USER root
 SHELL ["/bin/bash", "-c"]
@@ -65,10 +66,10 @@ COPY files/requirements.txt /tmp/requirements.txt
 
 ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
 
-# ✅ allow pre-releases while building the wheelhouse
+# pre-releases only for the alpha channel (UV_PRERELEASE=allow)
 RUN --mount=type=cache,target=/root/.cache/pip \
     PIP_NO_CACHE_DIR=0 python -m pip install --upgrade pip setuptools wheel \
- && PIP_NO_CACHE_DIR=0 python -m pip wheel --pre -r /tmp/requirements.txt \
+ && PIP_NO_CACHE_DIR=0 python -m pip wheel $( [ "${UV_PRERELEASE}" = "allow" ] && echo --pre ) -r /tmp/requirements.txt \
         -c /tmp/constraints.txt \
         -w /tmp/wheels
 
@@ -77,6 +78,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 ############################
 FROM runtime
 ARG USER=ovos
+ARG UV_PRERELEASE=allow
 USER root
 SHELL ["/bin/bash", "-c"]
 
@@ -89,8 +91,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 COPY --from=builder /tmp/wheels /tmp/wheels
 COPY --from=builder /tmp/requirements.txt /tmp/requirements.txt
 
-# ✅ allow pre-releases during offline install too
-RUN python -m pip install --no-index --find-links=/tmp/wheels --pre -r /tmp/requirements.txt \
+# same pre-release policy for the offline install
+RUN python -m pip install --no-index --find-links=/tmp/wheels $( [ "${UV_PRERELEASE}" = "allow" ] && echo --pre ) -r /tmp/requirements.txt \
  && mkdir -p "/home/${USER}/.local/share/mycroft/skills" "/home/${USER}/nltk_data" \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
  && rm -rf /tmp/wheels /tmp/requirements.txt
