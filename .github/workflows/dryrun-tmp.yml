@@ -1,0 +1,13 @@
+# Temporary: exercises build-images.yml on this branch before it exists on dev. Removed before merge.
+name: Dry run (temporary)
+on:
+  push:
+    branches: [feat/build-workflow]
+jobs:
+  messagebus:
+    uses: ./.github/workflows/build-images.yml
+    with:
+      channel: alpha
+      targets: messagebus
+      push: false
+    secrets: inherit
