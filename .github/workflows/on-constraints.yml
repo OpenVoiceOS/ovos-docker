@@ -1,0 +1,85 @@
+name: Publish on constraints change
+
+# Rebuilds, per channel, the images that contain a package whose line in
+# OpenVoiceOS/ovos-releases constraints-<channel>.txt changed since that image was last built.
+# Triggered by ovos-releases (repository_dispatch) and by an hourly poll; both compare the
+# build-state branch with ovos-releases, so the poll costs no registry requests.
+
+on:
+  repository_dispatch:
+    types: [constraints-updated]
+  schedule:
+    - cron: "25 * * * *"
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Channel to evaluate
+        type: choice
+        options: [all, alpha, testing, stable]
+        default: all
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+
+concurrency:
+  group: publish-constraints
+  cancel-in-progress: false
+
+jobs:
+  select:
+    name: Affected targets
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.sel.outputs.matrix }}
+      count: ${{ steps.sel.outputs.count }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
+      - id: sel
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WANT: ${{ github.event.client_payload.channel || inputs.channel || 'all' }}
+        run: |
+          case "$WANT" in all) channels="alpha testing stable" ;; *) channels="$WANT" ;; esac
+          head=$(gh api repos/OpenVoiceOS/ovos-releases/commits/main --jq .sha)
+          echo "[]" > matrix.json
+          for ch in $channels; do
+            if content=$(gh api "repos/${GITHUB_REPOSITORY}/contents/state/${ch}.json?ref=build-state" --jq .content 2> /dev/null); then
+              echo "$content" | base64 -d > state.json
+            else
+              echo '{}' > state.json
+            fi
+            rm -rf before && mkdir before
+            for ref in $(jq -r '[.images[]?.constraints_ref // empty] | unique[]' state.json); do
+              curl -fsSL "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${ref}/constraints-${ch}.txt" -o "before/${ref}.txt" || true
+            done
+            curl -fsSL "https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${head}/constraints-${ch}.txt" -o after.txt
+            targets=$(python3 scripts/affected.py constraints --state state.json --before-dir before --after after.txt)
+            n=$(echo "$targets" | jq length)
+            echo "::group::${ch}: ${n} target(s) against ovos-releases@${head:0:7}"; echo "$targets"; echo "::endgroup::"
+            if [ "$n" != "0" ]; then
+              jq --arg ch "$ch" --arg t "$(echo "$targets" | jq -r 'join(" ")')" --arg ref "$head" \
+                 '. + [{channel: $ch, targets: $t, ref: $ref}]' matrix.json > m.tmp && mv m.tmp matrix.json
+            fi
+          done
+          echo "matrix=$(jq -c . matrix.json)" >> "$GITHUB_OUTPUT"
+          echo "count=$(jq length matrix.json)" >> "$GITHUB_OUTPUT"
+
+  publish:
+    name: ${{ matrix.channel }}
+    needs: select
+    if: needs.select.outputs.count != '0'
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(needs.select.outputs.matrix) }}
+    uses: ./.github/workflows/build-images.yml
+    with:
+      channel: ${{ matrix.channel }}
+      targets: ${{ matrix.targets }}
+      ovos_releases_ref: ${{ matrix.ref }}
+      push: true
+    secrets: inherit
