@@ -1,16 +1,30 @@
 ---
 x-podman: &podman
   userns_mode: keep-id
+  # A minimal init (PID 1) reaps the children a service may spawn and forwards signals.
+  init: true
   security_opt:
     - "label=disable"
+
+# Services that only talk to the message bus need no Linux capability at all:
+# drop every capability and forbid privilege escalation.
+x-hardened: &hardened
+  userns_mode: keep-id
+  init: true
+  cap_drop:
+    - ALL
+  security_opt:
+    - "label=disable"
+    - "no-new-privileges:true"
 
 x-logging: &default-logging
   driver: json-file
   options:
     mode: non-blocking
     max-buffer-size: 4m
-    max-size: "200m"
-    max-file: "1"
+    # 3 x 10 MB per container: enough history to debug, bounded on SD cards (35 containers ≈ 1 GB max)
+    max-size: "10m"
+    max-file: "3"
 
 x-common-environment: &common-environment
   TZ: ${TZ:-UTC}
@@ -24,7 +38,7 @@ x-resource-limits: &resource-limits
   deploy:
     resources:
       limits:
-        memory: 512M
+        memory: ${STANDARD_MEMORY_LIMIT:-1G}
       reservations:
         memory: 128M
 
@@ -32,8 +46,7 @@ x-core-resource-limits: &core-resource-limits
   deploy:
     resources:
       limits:
-        memory: 1G
-        cpus: "1.0"
+        memory: ${CORE_MEMORY_LIMIT:-2G}
       reservations:
         memory: 256M
         cpus: "0.25"
@@ -60,7 +73,9 @@ volumes:
 
 services:
   ovos_messagebus:
-    <<: [*podman, *resource-limits]
+    <<: [*hardened, *resource-limits]
+    # the bus is the last thing the kernel should kill
+    oom_score_adj: -500
     container_name: ovos_messagebus
     hostname: ovos_messagebus
     restart: unless-stopped
@@ -193,7 +208,7 @@ services:
         condition: service_started
 
   ovos_core:
-    <<: [*podman, *core-resource-limits]
+    <<: [*hardened, *core-resource-limits]
     container_name: ovos_core
     hostname: ovos_core
     restart: unless-stopped
@@ -218,7 +233,7 @@ services:
         condition: service_started
 
   ovos_cli:
-    <<: [*podman, *resource-limits]
+    <<: [*hardened, *resource-limits]
     container_name: ovos_cli
     hostname: ovos_cli
     restart: unless-stopped

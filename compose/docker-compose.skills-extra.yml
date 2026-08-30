@@ -1,16 +1,30 @@
 ---
 x-podman: &podman
   userns_mode: keep-id
+  # A minimal init (PID 1) reaps the children a service may spawn and forwards signals.
+  init: true
   security_opt:
     - "label=disable"
+
+# Services that only talk to the message bus need no Linux capability at all:
+# drop every capability and forbid privilege escalation.
+x-hardened: &hardened
+  userns_mode: keep-id
+  init: true
+  cap_drop:
+    - ALL
+  security_opt:
+    - "label=disable"
+    - "no-new-privileges:true"
 
 x-logging: &default-logging
   driver: json-file
   options:
     mode: non-blocking
     max-buffer-size: 4m
-    max-size: "200m"
-    max-file: "1"
+    # 3 x 10 MB per container: enough history to debug, bounded on SD cards (35 containers ≈ 1 GB max)
+    max-size: "10m"
+    max-file: "3"
 
 x-common-environment: &common-environment
   TZ: ${TZ:-UTC}
@@ -19,12 +33,14 @@ x-skill-resource-limits: &skill-resource-limits
   deploy:
     resources:
       limits:
-        memory: 256M
+        memory: ${LIGHT_MEMORY_LIMIT:-512M}
       reservations:
         memory: 64M
 
 x-skill-base: &skill-base
-  <<: [*podman, *skill-resource-limits]
+  # a skill is the first thing the kernel should kill under memory pressure, the bus the last
+  oom_score_adj: 300
+  <<: [*hardened, *skill-resource-limits]
   restart: unless-stopped
   logging: *default-logging
   pull_policy: ${PULL_POLICY:-always}
