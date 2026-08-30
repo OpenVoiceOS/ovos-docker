@@ -46,10 +46,12 @@ def main():
     entries = json.load(open(entries_file))   # [{target, repo, digest, amd64_digest}]
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     for e in entries:
-        pkgs = sbom_python_packages(f"{e['repo']}@{e['amd64_digest']}")
+        # digests are identical on every registry the image was pushed to; read the SBOM from the
+        # mirror when there is one (no pull-rate limit)
+        pkgs = sbom_python_packages(f"{e.get('mirror') or e['repo']}@{e['amd64_digest']}")
         state["images"][e["target"]] = {
-            "repo": e["repo"], "digest": e["digest"], "constraints_ref": constraints_ref,
-            "packages": pkgs, "built": now,
+            "repo": e["repo"], "mirror": e.get("mirror", ""), "digest": e["digest"],
+            "constraints_ref": constraints_ref, "packages": pkgs, "built": now,
         }
         print(f"{e['target']}: {len(pkgs)} python packages", file=sys.stderr)
     state["ovos_releases_ref"] = constraints_ref

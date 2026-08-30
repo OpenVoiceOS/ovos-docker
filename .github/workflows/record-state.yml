@@ -16,6 +16,7 @@ on:
 permissions:
   contents: write
   actions: read
+  packages: read
 
 concurrency:
   group: build-state
@@ -48,8 +49,9 @@ jobs:
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
         if: steps.dl.outputs.artifacts != '0'
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
 
       - name: Update the build-state branch
         if: steps.dl.outputs.artifacts != '0'
