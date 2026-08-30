@@ -453,9 +453,9 @@
    "repo": "docker.io/smartgic/ovos-gui-websocket"
   },
   "listener": {
-   "built": "2026-08-30T21:50:14Z",
+   "built": "2026-08-30T23:07:51Z",
    "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:49103310b1087018f7c26cb9cadfe5e2c3f134e89f2c8559b144e2b64feb392c",
+   "digest": "sha256:c001ef9d0bd000ad80ae1384cc54f43ba2f3dec5b07a0581c3f36148f7f6077d",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-listener",
    "packages": [
     "CacheControl",
@@ -2720,6 +2720,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "5cc4f650affbe78244c17d435724f0d49737ced2",
- "updated": "2026-08-30T22:26:39Z"
+ "ovos_releases_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
+ "updated": "2026-08-30T23:07:51Z"
 }
