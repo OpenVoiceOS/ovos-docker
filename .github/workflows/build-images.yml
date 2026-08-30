@@ -229,7 +229,7 @@ jobs:
           exit $fail
 
   merge:
-    name: Create ${{ inputs.channel }} manifests
+    name: Create channel manifests
     needs: [resolve, build, verify]
     if: inputs.push
     runs-on: ubuntu-24.04

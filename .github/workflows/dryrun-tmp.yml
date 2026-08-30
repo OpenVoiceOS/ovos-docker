@@ -4,10 +4,10 @@ on:
   push:
     branches: [feat/build-workflow]
 jobs:
-  messagebus:
+  all:
     uses: ./.github/workflows/build-images.yml
     with:
       channel: alpha
-      targets: messagebus
+      targets: default
       push: false
     secrets: inherit
