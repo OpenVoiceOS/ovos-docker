@@ -8,9 +8,20 @@
   "packageRules": [
     {
       "description": "Python 3.13 is the newest version OpenVoiceOS/ovos-releases tests (build_tests.yml); bump this when 3.14 is added there",
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["python"],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "python"
+      ],
       "allowedVersions": "<3.14"
+    },
+    {
+      "matchPackageNames": [
+        "sigstore/cosign"
+      ],
+      "allowedVersions": "<3.0.0",
+      "description": "cosign v3 stores signatures only as OCI referrer bundles (no sha256-<digest>.sig tag), which breaks the signature copy to Docker Hub"
     }
   ]
 }
