@@ -6,6 +6,7 @@ FROM ${BASE_IMAGE}
 ARG TAG
 ARG REGISTRY
 ARG GIT_SHA=unknown
+ARG OVOS_RELEASES_REF=main
 
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=60s \
@@ -28,6 +29,7 @@ LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-base:${TAG}"
 LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
 LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-gui-websocket:${TAG}"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 ARG USER=ovos
 
@@ -37,8 +39,10 @@ USER root
 
 SHELL ["/bin/bash", "-c"]
 
+ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
+
 RUN --mount=type=cache,target=/root/.cache/uv,sharing=locked \
-    uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+    uv pip install -r /tmp/requirements.txt -c /tmp/constraints.txt \
   && mkdir -p "/home/${USER}/.cache/ovos_gui_file_server" /etc/xdg \
   && chown "${USER}:${USER}" -R "/home/${USER}" \
   && rm -rf /tmp/* /var/tmp/*

@@ -6,6 +6,7 @@ FROM ${SOUND_BASE_IMAGE}
 ARG TAG
 ARG REGISTRY
 ARG GIT_SHA=unknown
+ARG OVOS_RELEASES_REF=main
 ARG UV_PRERELEASE=allow
 
 
@@ -29,6 +30,7 @@ LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-sound-base:${TAG}"
 LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
 LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-listener:${TAG}"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 ARG USER=ovos
 
@@ -39,13 +41,15 @@ USER root
 
 SHELL ["/bin/bash", "-c"]
 
+ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
+
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     --mount=type=cache,target=/root/.cache/uv,sharing=locked \
     apt-get update \
  && apt-get install -o Dpkg::Options::="--force-confold" -y --no-install-recommends --no-install-suggests libatomic1 portaudio19-dev libpulse-dev build-essential python3-dev \
  && uv pip install -f 'https://whl.smartgic.io/' tflite_runtime \
- && uv pip install --prerelease=${UV_PRERELEASE} -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt \
+ && uv pip install --prerelease=${UV_PRERELEASE} -r /tmp/requirements.txt -c /tmp/constraints.txt \
  && mkdir -p "/home/${USER}/.local/share/vosk" "/home/${USER}/.local/share/precise-lite" "/home/${USER}/.local/share/mycroft/listener" \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
  && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \

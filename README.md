@@ -66,6 +66,7 @@ Defaults are defined in `docker-bake.hcl` and `scripts/bake.sh`:
 - `TAG` and `VERSION` (default `alpha`)
 - `LATEST_TAG` (default `latest`, only applied when `TAG=stable`)
 - `CHANNEL` (default `alpha`, used for constraints files)
+- `OVOS_RELEASES_REF` (default `main`, git ref of [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) the `constraints-${CHANNEL}.txt` file is taken from; pass a commit SHA for a reproducible build)
 - `PLATFORMS` (default `linux/amd64,linux/arm64`)
 - `UV_PRERELEASE` (default `allow`)
 - `ENSURE_BINFMT` (default `auto`, set `true` to force or `false` to skip)
@@ -75,6 +76,7 @@ Examples:
 
 - `REGISTRY=docker.io/smartgic TAG=alpha CHANNEL=alpha ./scripts/bake.sh`
 - `TAG=stable CHANNEL=stable ./scripts/bake.sh -T services`
+- `OVOS_RELEASES_REF=<commit sha> ./scripts/bake.sh -T listener` (pin the constraints to one ovos-releases commit)
 
 ## Support
 

@@ -6,6 +6,7 @@ FROM ${SKILL_BASE_IMAGE}
 ARG TAG
 ARG REGISTRY
 ARG GIT_SHA=unknown
+ARG OVOS_RELEASES_REF=main
 
 
 ARG BUILD_DATE=unknown
@@ -26,6 +27,7 @@ LABEL org.opencontainers.image.base.name="${REGISTRY}/ovos-skill-base:${TAG}"
 LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
 LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-skill-wikipedia:${TAG}"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL io.openvoiceos.constraints.ref="${OVOS_RELEASES_REF}"
 
 USER root
 
@@ -35,8 +37,10 @@ RUN --mount=type=cache,target=/var/cache/apk \
 
 USER "$USER"
 
+ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
+
 RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000,sharing=locked \
-    uv pip install ovos-skill-wikipedia -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${OVOS_CHANNEL}.txt
+    uv pip install ovos-skill-wikipedia -c /tmp/constraints.txt
 
 USER root
 
