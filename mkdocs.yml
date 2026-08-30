@@ -173,7 +173,7 @@ nav:
               - Configuration: getting-started/docker/installation/configuration.md
               - Core components: getting-started/docker/installation/basic.md
               - Skills: getting-started/docker/installation/skills.md
-              - GUI: getting-started/docker/installation/gui.md
+              - GUI (unsupported): getting-started/docker/installation/gui.md
           - Security:
               - System hardening: getting-started/docker/security/hardening.md
               - HiveMind: getting-started/docker/security/hivemind.md
