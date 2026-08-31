@@ -55,11 +55,6 @@ services:
     healthcheck:
       disable: true
 
-  ovos_plugin_ggwave:
-    <<: *pi-resource-limits
-    healthcheck:
-      disable: true
-
   ovos_audio:
     <<: *pi-resource-limits
     healthcheck:
