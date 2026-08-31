@@ -454,9 +454,9 @@
    "repo": "docker.io/smartgic/ovos-gui-websocket"
   },
   "listener": {
-   "built": "2026-08-31T13:17:50Z",
+   "built": "2026-08-31T13:29:10Z",
    "constraints_ref": "deb09b9b7c381141fbddb0568f8bd2381a8c4a0a",
-   "digest": "sha256:95051eef2655837385c0933abc7412d0bbbbb9ae9d19b634ca18d3be396429de",
+   "digest": "sha256:c22f38cc121e1883a2cd4662c7d3bc1872765793bd084da1ebe37ea2fb6afb72",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-listener",
    "packages": [
     "CacheControl",
@@ -498,7 +498,9 @@
     "ovos-spec-tools",
     "ovos-stt-plugin-server",
     "ovos-utils",
+    "ovos-vad-plugin-noise",
     "ovos-vad-plugin-silero",
+    "ovos-vad-plugin-webrtcvad",
     "ovos-ww-plugin-precise-onnx",
     "ovos-ww-plugin-vosk",
     "packaging",
@@ -540,6 +542,7 @@
     "urllib3",
     "vosk",
     "watchdog",
+    "webrtcvad-wheels",
     "websocket-client",
     "websockets",
     "wheel",
@@ -2800,5 +2803,5 @@
   }
  },
  "ovos_releases_ref": "deb09b9b7c381141fbddb0568f8bd2381a8c4a0a",
- "updated": "2026-08-31T13:17:50Z"
+ "updated": "2026-08-31T13:29:10Z"
 }

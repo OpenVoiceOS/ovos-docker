@@ -429,9 +429,9 @@
    "repo": "docker.io/smartgic/ovos-gui-websocket"
   },
   "listener": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:30a6c6ba55682143c15e1c51fa14263e21e845177ad2914b2e16af1b7bf75274",
+   "built": "2026-08-31T13:29:12Z",
+   "constraints_ref": "deb09b9b7c381141fbddb0568f8bd2381a8c4a0a",
+   "digest": "sha256:aced1f8749f3f9771f9922785e05220a09d8c76d0475d675cc275dd49ecdc6e6",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-listener",
    "packages": [
     "CacheControl",
@@ -442,11 +442,13 @@
     "cffi",
     "charset-normalizer",
     "click",
+    "coloredlogs",
     "combo-lock",
     "distlib",
     "distro",
     "filelock",
     "flatbuffers",
+    "humanfriendly",
     "idna",
     "importlib-metadata",
     "jaraco-context",
@@ -459,6 +461,7 @@
     "mdurl",
     "memory-tempfile",
     "more-itertools",
+    "mpmath",
     "msgpack",
     "my-test-package",
     "numpy",
@@ -471,7 +474,9 @@
     "ovos-plugin-manager",
     "ovos-stt-plugin-server",
     "ovos-utils",
+    "ovos-vad-plugin-noise",
     "ovos-vad-plugin-silero",
+    "ovos-vad-plugin-webrtcvad",
     "ovos-ww-plugin-precise-onnx",
     "ovos-ww-plugin-vosk",
     "packaging",
@@ -502,6 +507,7 @@
     "srt",
     "standard-aifc",
     "standard-chunk",
+    "sympy",
     "tomli",
     "tomli-w",
     "tqdm",
@@ -510,6 +516,7 @@
     "urllib3",
     "vosk",
     "watchdog",
+    "webrtcvad",
     "websocket-client",
     "websockets",
     "wheel",
@@ -2732,6 +2739,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
- "updated": "2026-08-31T11:40:23Z"
+ "ovos_releases_ref": "deb09b9b7c381141fbddb0568f8bd2381a8c4a0a",
+ "updated": "2026-08-31T13:29:12Z"
 }
