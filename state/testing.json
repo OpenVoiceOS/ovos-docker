@@ -2,9 +2,9 @@
  "channel": "testing",
  "images": {
   "audio": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:21c5636e01405b2b6c11c07bb1e99829a3dd21f1dd25f6d1d63b1677b8fe4331",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:08fbcd930dcee4c5eb56d3f43ccc8d519c3ce248d49c91b15acb643a832103c1",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-audio",
    "packages": [
     "CacheControl",
@@ -128,9 +128,9 @@
    "repo": "docker.io/smartgic/ovos-audio"
   },
   "base": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:3f6b5a0b7bd1c9647dcc34e9b5920399f3face205c101128eee0e8bcd9d2f664",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:a030e0ba21f62a4c0d85956f4172148efade4d222057c725fe26a793c651776a",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-base",
    "packages": [
     "CacheControl",
@@ -167,9 +167,9 @@
    "repo": "docker.io/smartgic/ovos-base"
   },
   "cli": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:37946601d7394c16d299b5a6837c4e9c54840df70bf7135b39fa43f6edee7d6f",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:b207fcf4239eb625045e51a80984a9bb99b33fd34a8f4d3eedcf02e6692d8aed",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-cli",
    "packages": [
     "CacheControl",
@@ -238,9 +238,9 @@
    "repo": "docker.io/smartgic/ovos-cli"
   },
   "core": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:60bb766d6ebc2c50a07a0d074388ae0d2e2bae8d919e384f5f321934d99d6e67",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:ab7b64be7bf3535d2ec7f63c17dc381b575b33455861d8d361fa4905e7017eed",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-core",
    "packages": [
     "CacheControl",
@@ -358,9 +358,9 @@
    "repo": "docker.io/smartgic/ovos-core"
   },
   "gui-websocket": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:eb604f6cfe051ef484a53622cd87d213188fe66192babead0b0e0f1390d0f77c",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:c35c1ccc7aedd223592fa41afaced737a2114a238ecb865b2b7145b2e78ab9ae",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-gui-websocket",
    "packages": [
     "CacheControl",
@@ -429,9 +429,9 @@
    "repo": "docker.io/smartgic/ovos-gui-websocket"
   },
   "listener": {
-   "built": "2026-08-31T13:29:12Z",
-   "constraints_ref": "deb09b9b7c381141fbddb0568f8bd2381a8c4a0a",
-   "digest": "sha256:aced1f8749f3f9771f9922785e05220a09d8c76d0475d675cc275dd49ecdc6e6",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:dabf09e4e99c953f29ad83189e8dc53c590857d5198f13000582b3b58ad56ecd",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-listener",
    "packages": [
     "CacheControl",
@@ -525,9 +525,9 @@
    "repo": "docker.io/smartgic/ovos-listener"
   },
   "messagebus": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:07f4e5b7591df057ad697d64a7f4e710ce25d2cd7cd156834ea75d5932541516",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:708f164ccfc320717eb8db3612d590cd1d05bd93bdab2bd6b46f0ec20c195230",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-messagebus",
    "packages": [
     "CacheControl",
@@ -587,9 +587,9 @@
    "repo": "docker.io/smartgic/ovos-messagebus"
   },
   "phal": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:612c21191e56e3f08e2113d4c1b5188daebc900e789883b1918c53e99c019bb3",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:7833721a081f459f3d599f7f54c203cf6e46502b22cb61f8c57ca12b5b43bb8e",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-phal",
    "packages": [
     "CacheControl",
@@ -676,9 +676,9 @@
    "repo": "docker.io/smartgic/ovos-phal"
   },
   "phal-admin": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:d2af241778ba78fffbca8b104c1e015e7f7199f66169f7235aa63c2841fa1b6d",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:b65b94c306d8b8b22826a28eb6a9856b892b4540b1563d3c042de5ec12b906ea",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-phal-admin",
    "packages": [
     "CacheControl",
@@ -835,9 +835,9 @@
    "repo": "docker.io/smartgic/ovos-plugin-ggwave"
   },
   "skill-alerts": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:fd778aa6f0a9b8b61485b6aee27af37cfbf8ea23ed78cdf03a120562b1f7d0b8",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:1e9411bbaec3017f11f0934cbaabff59ae195aebc5b8781654875936d3176aa8",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-alerts",
    "packages": [
     "CacheControl",
@@ -933,9 +933,9 @@
    "repo": "docker.io/smartgic/ovos-skill-alerts"
   },
   "skill-base": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:4876123fa91ce3d5336ac592c70e63b48f4fcbfe7ba92266afd7f2dd3f00daa8",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:1a332113b2a095f23fa6b7bc3879b2dca6418f8384c5f7df49ea63e6f8e1b8e4",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-base",
    "packages": [
     "CacheControl",
@@ -1016,9 +1016,9 @@
    "repo": "docker.io/smartgic/ovos-skill-base"
   },
   "skill-camera": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:3c067afd02702ed6a40381ac38aa74a8ce43cc1cce9feb458f95f0a9f521ed6f",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:c46495b6e2c7410a7015174abe8b43d3be94bc0bc771e224318113d9637ab5e7",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-camera",
    "packages": [
     "CacheControl",
@@ -1100,9 +1100,9 @@
    "repo": "docker.io/smartgic/ovos-skill-camera"
   },
   "skill-date-time": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:8818c914f3946dc954cb3ae293a15235c78775357506a49dee4d5bee7bbc2067",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:a3fcd4a2abcca227fcdbdea16ff7db1b5c4f6b991e2ef9ae50290b3bc75f50ff",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-date-time",
    "packages": [
     "CacheControl",
@@ -1203,9 +1203,9 @@
    "repo": "docker.io/smartgic/ovos-skill-date-time"
   },
   "skill-duckduckgo": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:80661b0246a3873e18acfdd95066dd834be2fab7aab0493beb125ae9fc9cb7c2",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:d56ca5b8d08c3668ed896c6a4c1421a8f16af32a7b9122036e03167d5a77dc27",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-duckduckgo",
    "packages": [
     "CacheControl",
@@ -1307,9 +1307,9 @@
    "repo": "docker.io/smartgic/ovos-skill-duckduckgo"
   },
   "skill-easter-eggs": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:5e8d3be3a376c821538aca64503a52cc9ee939a362ad655d1f028ccadba20159",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:a45df2543b2f8c0ddf25b55c3f786cf3b4fde2b880c697d5fcc15dc10b45789e",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-easter-eggs",
    "packages": [
     "CacheControl",
@@ -1392,9 +1392,9 @@
    "repo": "docker.io/smartgic/ovos-skill-easter-eggs"
   },
   "skill-fallback-unknown": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:c7757c2ef5106751dd83fd83f22c0dca78fed4bc39187f9cefa23a8de93c706b",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:33901aadf03c17167b5a8e90a84ad12e9d8e906c7a12693d60ce90dd5a0d74c7",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-fallback-unknown",
    "packages": [
     "CacheControl",
@@ -1476,9 +1476,9 @@
    "repo": "docker.io/smartgic/ovos-skill-fallback-unknown"
   },
   "skill-ggwave": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:257316222b0648a9338ca554019c495117242611140d982c263ba3c6676a5ab4",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:7f54963970c77b31c9f675fe57c8d2a202126cac470b74231d997f6cd3bd6ec6",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-ggwave",
    "packages": [
     "CacheControl",
@@ -1560,9 +1560,9 @@
    "repo": "docker.io/smartgic/ovos-skill-ggwave"
   },
   "skill-hello-world": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:2c2586361041a16094ec2b673f829191db1045d2533627ea303402e66ce7e4e1",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:d2583b8729a20b17abbb1863d39698c4df5872eec979c12699c4ec58d26960b9",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-hello-world",
    "packages": [
     "CacheControl",
@@ -1644,9 +1644,9 @@
    "repo": "docker.io/smartgic/ovos-skill-hello-world"
   },
   "skill-homeassistant": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:41d47dc1f80cec46551e052f2a70d1c8dd17456a14055665292db6b869f3d488",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:925d97a635d376837e97c78d1e59e8c6b4172f28c6857ed6b54969a6a00838dc",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-homeassistant",
    "packages": [
     "CacheControl",
@@ -1730,9 +1730,9 @@
    "repo": "docker.io/smartgic/ovos-skill-homeassistant"
   },
   "skill-jokes": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:142634d30a890260dd5b05e4e22c9a3a649a845cd14ed553a131a2928fe21e5d",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:d920a189757077f911d1bec2e5fc2dbbb0a838696a6020808457e107d9e573e6",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-jokes",
    "packages": [
     "CacheControl",
@@ -1814,9 +1814,9 @@
    "repo": "docker.io/smartgic/ovos-skill-jokes"
   },
   "skill-parrot": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:9d87a868e57ba3df1d9fc9bf4a723140783329b0561e1ed7d0f882991a68e647",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:d12012a3cad94860c702018dc5c4bbf5ec655c3ad5d4297305ae343a42d9d3cb",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-parrot",
    "packages": [
     "CacheControl",
@@ -1898,9 +1898,9 @@
    "repo": "docker.io/smartgic/ovos-skill-parrot"
   },
   "skill-personal": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:f0e22b10b50e1abfe9b2f89118884df3f99cc0e01d31dc50874031cefc7a5044",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:2b61669ca2d682fca87f9f00ced853599da6478d4f5d91d696f44cf8ed614127",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-personal",
    "packages": [
     "CacheControl",
@@ -1982,9 +1982,9 @@
    "repo": "docker.io/smartgic/ovos-skill-personal"
   },
   "skill-randomness": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:55c61440827ad5c35995df99378e60404d97867287549734bf9155d05a129527",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:6d34ec17fedd4ded34e9d548c4fdcb0418274aac4e24ac74df2028edcd6fe647",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-randomness",
    "packages": [
     "CacheControl",
@@ -2066,9 +2066,9 @@
    "repo": "docker.io/smartgic/ovos-skill-randomness"
   },
   "skill-tunein": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:47f4d4a28a4447439ecf13420fdeaccb3cd2434697407eff336af41565e42596",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:1c8041c98815b9b6919c5c46069631a52455f5e3ec3bce560d698e97742f75dc",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-tunein",
    "packages": [
     "CacheControl",
@@ -2157,9 +2157,9 @@
    "repo": "docker.io/smartgic/ovos-skill-tunein"
   },
   "skill-volume": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:d392befda84c01c8981de017f3caca847863c1dff23f9bde4f99e6939286b733",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:68c66e1ea4b5b059c7f4b46e89739176477d1017f43bb5c2b059d413b491afb6",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-volume",
    "packages": [
     "CacheControl",
@@ -2244,9 +2244,9 @@
    "repo": "docker.io/smartgic/ovos-skill-volume"
   },
   "skill-weather": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:035e137404fca15fd479597c73679903067648ff0e03a98f1df3745594a716e5",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:7fbd7f659399a1c172e2039b2a273c287f3170032e5144b83618d3f296f577eb",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-weather",
    "packages": [
     "CacheControl",
@@ -2335,9 +2335,9 @@
    "repo": "docker.io/smartgic/ovos-skill-weather"
   },
   "skill-wikihow": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:6ba7bffb8c6e9b5b7d75a181d6a9f39ccbca9798aecdfe67d8c7800a7ce24808",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:edcfd2503947806e9ab2e8612f18a8c2b520b0ef6d1eae652cf71e4e9907f50b",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wikihow",
    "packages": [
     "CacheControl",
@@ -2427,9 +2427,9 @@
    "repo": "docker.io/smartgic/ovos-skill-wikihow"
   },
   "skill-wikipedia": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:3494e6d2c7ff56b949661e6c553cc8bf4a063313b16e7b92a505884aa6883b14",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:de48824d2b722101a3bfbf6e4a32e9d7ebf26295013f59ca6c4e9d6dbe12befd",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wikipedia",
    "packages": [
     "CacheControl",
@@ -2530,9 +2530,9 @@
    "repo": "docker.io/smartgic/ovos-skill-wikipedia"
   },
   "skill-wolfie": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:ed362b478903e59089f84d834a905c016e8662e42ebc624326f43df9712f6311",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:b9a24a511a4c2793c4520c57c2c29d6b53245b44cfc3eb70782754677b95a998",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wolfie",
    "packages": [
     "CacheControl",
@@ -2615,9 +2615,9 @@
    "repo": "docker.io/smartgic/ovos-skill-wolfie"
   },
   "skill-wordnet": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:10e2cc5658007ec05071e0b85b466b672991353ec3537e3b79d88703fd7c971b",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:54c25b430eeae8730d123ac852692a0ac9b69f5084796a5afc034a55950c2d18",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wordnet",
    "packages": [
     "CacheControl",
@@ -2699,9 +2699,9 @@
    "repo": "docker.io/smartgic/ovos-skill-wordnet"
   },
   "sound-base": {
-   "built": "2026-08-31T11:40:23Z",
-   "constraints_ref": "614b5aa2ee2c3f53c0006a97d397d1f9beefc511",
-   "digest": "sha256:b796f67ec4f90720375ee42c83e03294899a62b0fcdc123da02d40a4ebc73e6b",
+   "built": "2026-08-31T15:12:18Z",
+   "constraints_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+   "digest": "sha256:9527cb35c90b88d893b7e3316369959cc270dedd84b12630ab8e716f595c7438",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-sound-base",
    "packages": [
     "CacheControl",
@@ -2739,6 +2739,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "deb09b9b7c381141fbddb0568f8bd2381a8c4a0a",
- "updated": "2026-08-31T13:29:12Z"
+ "ovos_releases_ref": "dab8ead4df145094aaa04cc949c569ba18ad4656",
+ "updated": "2026-08-31T15:12:18Z"
 }
