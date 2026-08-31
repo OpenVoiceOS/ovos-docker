@@ -45,7 +45,6 @@ The list below is not exhaustive and doesn't mention anything about skill contai
 | `ovos_core`          | [Read more about ovos-core](../../about/glossary/components.md#ovos-core)                     |
 | `ovos_cli`           | [Read more about ovos-cli](../../about/glossary/components.md#ovos-cli)                       |
 | `ovos_gui_websocket` | [Read more about ovos-gui-websocket](../../about/glossary/components.md#ovos-gui-websocket)  |
-| `ovos_plugin_ggwave` | [Read more about ovos-plugin-ggwave](../../about/glossary/components.md#ovos-plugin-ggwave)   |
 
 ## Tags
 

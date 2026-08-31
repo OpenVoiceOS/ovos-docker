@@ -66,11 +66,6 @@ The message bus service provides a websocket where all internal events travel, y
 
     The bus is considered as an internal and private websocket, external clients should not connect directly to it. Please check [HiveMind](terms.md#hivemind) for more information. For more details, go to the [System Hardening](../../getting-started/docker/security/hardening.md) section.
 
-## :material-waveform: ovos-plugin-ggwave
-
-Audio data transfer plugin container based on ggwave. It enables ultrasonic
-communication features used by compatible skills.
-
 ## :material-memory: ovos-phal
 
 Plugin-based Hardware Abstraction Layer is a wrapper for system-level abstraction. Based on the environment, either through known configuration or via fingerprinting, only specific plugins load to interface with the system and specific hardware.

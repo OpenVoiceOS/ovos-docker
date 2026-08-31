@@ -14,9 +14,8 @@ for every deployment:
 | `security_opt: no-new-privileges:true`   | same services                                                                                  | no privilege escalation through setuid binaries                     |
 | non-root user (`ovos`, UID 1000)         | all images except `ovos_phal_admin`                                                            | processes never run as root                                         |
 
-`ovos_phal` and `ovos_phal_admin` (hardware access) and `ovos_listener`,
-`ovos_audio` and `ovos_plugin_ggwave` (sound devices) keep the device access
-they need.
+`ovos_phal` and `ovos_phal_admin` (hardware access) and `ovos_listener`
+and `ovos_audio` (sound devices) keep the device access they need.
 
 ## AppArmor
 
@@ -91,7 +90,6 @@ docker container list --quiet --all --filter "name=ovos" | xargs docker inspect 
 /ovos_phal_admin: AppArmorProfile=unconfined
 /ovos_messagebus: AppArmorProfile=docker-default
 /ovos_cli: AppArmorProfile=docker-default
-/ovos_plugin_ggwave: AppArmorProfile=docker-default
 ```
 
 !!! note "`ovos_phal_admin` container is not confined"
