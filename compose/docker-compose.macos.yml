@@ -157,33 +157,6 @@ services:
       ovos_phal:
         condition: service_started
 
-  ovos_plugin_ggwave:
-    <<: [*podman, *resource-limits]
-    container_name: ovos_plugin_ggwave
-    hostname: ovos_plugin_ggwave
-    restart: unless-stopped
-    image: docker.io/smartgic/ovos-plugin-ggwave:${VERSION}
-    logging: *default-logging
-    pull_policy: ${PULL_POLICY:-always}
-    environment:
-      <<: *audio-environment
-    network_mode: host
-    volumes:
-      - ~/.config/pulse/cookie:/home/${OVOS_USER}/.config/pulse/cookie:ro
-      - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro
-      - ${TMP_FOLDER}:/tmp/mycroft
-    depends_on:
-      ovos_messagebus:
-        condition: service_started
-      ovos_phal:
-        condition: service_started
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "ggwave"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 15s
-
   ovos_audio:
     <<: [*podman, *resource-limits]
     container_name: ovos_audio

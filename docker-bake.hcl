@@ -6,7 +6,7 @@
 #
 # Image graph:
 #   base ─┬─ sound-base ─┬─ core
-#         │              ├─ audio, listener, phal ─ phal-admin, plugin-ggwave
+#         │              ├─ audio, listener, phal ─ phal-admin
 #         ├─ cli, gui-websocket, messagebus
 #         └─ skill-base ─ skill-<name>  (see SKILLS)
 
@@ -95,7 +95,7 @@ function "cache_to" {
 # ---------- Groups ----------
 group "default"  { targets = ["stack", "services", "skills"] }
 group "stack"    { targets = ["base", "sound-base", "core"] }
-group "services" { targets = ["audio", "cli", "core", "gui-websocket", "listener", "messagebus", "phal", "phal-admin", "plugin-ggwave"] }
+group "services" { targets = ["audio", "cli", "core", "gui-websocket", "listener", "messagebus", "phal", "phal-admin"] }
 group "skills"   { targets = concat(["skill-base"], formatlist("skill-%s", SKILLS)) }
 
 # ---------- Common settings ----------
@@ -233,15 +233,6 @@ target "phal-admin" {
   cache-to   = cache_to("ovos-phal-admin")
 }
 
-target "plugin-ggwave" {
-  inherits   = ["common"]
-  context    = "plugin-ggwave"
-  contexts   = { "ovos-sound-base" = "target:sound-base" }
-  tags       = tags("ovos-plugin-ggwave")
-  args       = { SOUND_BASE_IMAGE = "ovos-sound-base" }
-  cache-from = cache_from("ovos-plugin-ggwave")
-  cache-to   = cache_to("ovos-plugin-ggwave")
-}
 
 # ---------- Skills (one target per SKILLS entry, named skill-<name>) ----------
 target "skill" {

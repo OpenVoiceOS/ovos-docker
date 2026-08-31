@@ -26,7 +26,7 @@ the audio setup, and the device mapping.
 - Base layers: `ovos-base`, `ovos-sound-base`, `ovos-skill-base`
 - Core runtime: `ovos-core`
 - Services: `ovos-audio`, `ovos-cli`, `ovos-listener`, `ovos-messagebus`, `ovos-phal`,
-  `ovos-phal-admin`, `ovos-plugin-ggwave`, `ovos-gui-websocket`
+  `ovos-phal-admin`, `ovos-gui-websocket`
 - Skills: one image per entry of the `SKILLS` list in `docker-bake.hcl`
 
 All Python images share `ovos-base` (Debian slim, Python 3.13, a virtual environment, and a
