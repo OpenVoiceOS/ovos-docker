@@ -36,7 +36,7 @@ REGISTRY=docker.io/smartgic TAG=alpha CHANNEL=alpha ./scripts/bake.sh
 | ------------ | ----------------------------------------------------------------------------------------- |
 | `default`    | All images defined in `docker-bake.hcl`                                                    |
 | `stack`      | `base`, `sound-base`, `core`                                                              |
-| `services`   | `audio`, `cli`, `core`, `gui-websocket`, `listener`, `messagebus`, `phal`, `phal-admin`, `plugin-ggwave` |
+| `services`   | `audio`, `cli`, `core`, `gui-websocket`, `listener`, `messagebus`, `phal`, `phal-admin` |
 | `skills`     | `skill-base` plus one `skill-<name>` image per entry of the `SKILLS` list in `docker-bake.hcl` |
 
 Adding a skill is one entry in `SKILLS` plus a `skills/skill-<name>/Dockerfile`;

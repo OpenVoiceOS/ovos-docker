@@ -174,7 +174,6 @@ At this point of the installation, here are the containers that should be up and
     98110d0b4b97   docker.io/smartgic/ovos-phal-admin:alpha        "/bin/bash /usr/loca…"   25 hours ago   Up 8 hours                       ovos_phal_admin
     8a179e135a6f   docker.io/smartgic/ovos-messagebus:alpha        "/bin/bash -c ovos-m…"   25 hours ago   Up 8 hours (healthy)             ovos_messagebus
     9c5fbad6c50d   docker.io/smartgic/ovos-cli:alpha               "sleep infinity"         25 hours ago   Up 8 hours                       ovos_cli
-    f0a451e1b14d   docker.io/smartgic/ovos-plugin-ggwave:alpha     "sleep infinity"         25 hours ago   Up 8 hours                       ovos_plugin_ggwave
     ```
 
 === "Podman"
@@ -200,5 +199,4 @@ At this point of the installation, here are the containers that should be up and
     98110d0b4b97   docker.io/smartgic/ovos-phal-admin:alpha        "/bin/bash /usr/loca…"   25 hours ago   Up 8 hours                       ovos_phal_admin
     8a179e135a6f   docker.io/smartgic/ovos-messagebus:alpha        "/bin/bash -c ovos-m…"   25 hours ago   Up 8 hours (healthy)             ovos_messagebus
     9c5fbad6c50d   docker.io/smartgic/ovos-cli:alpha               "sleep infinity"         25 hours ago   Up 8 hours                       ovos_cli
-    f0a451e1b14d   docker.io/smartgic/ovos-plugin-ggwave:alpha     "sleep infinity"         25 hours ago   Up 8 hours                       ovos_plugin_ggwave
     ```
