@@ -2,3 +2,9 @@
 # (STT/VAD/wake word) are channel-dependent and installed by the Dockerfile where
 # the channel's constraints allow them.
 ovos-dinkum-listener[linux]
+# Every VAD plugin the configuration can name: silero arrives with [extras] for capable
+# CPUs, webrtcvad is what ovos-installer selects for the rest, and noise is the fallback
+# OVOSVADFactory retries with. A configured plugin the image cannot load kills the
+# listener at startup, so all three have to be here.
+ovos-vad-plugin-webrtcvad
+ovos-vad-plugin-noise
