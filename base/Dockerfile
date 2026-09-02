@@ -31,7 +31,7 @@ ARG USER_UID=1000
 ARG USER_GID=1000
 
 # uv as a pinned static binary (Renovate tracks the image reference); no unpinned "pip install uv"
-COPY --from=ghcr.io/astral-sh/uv:0.12.8@sha256:d1cbaeadc234fe19c0d93daabcf5e98738cd93c6d1dd4918ef6aa30735feb23a /uv /uvx /usr/local/bin/
+COPY --from=ghcr.io/astral-sh/uv:0.12.9@sha256:8b940d3a9d65bed080436972241af2e21c84b5e8c9193f7014ed71479ee795ff /uv /uvx /usr/local/bin/
 # MALLOC_ARENA_MAX=2: the services are heavily threaded; fewer glibc arenas means less RSS on small devices.
 COPY --chmod=0755 files/ovos-hc.py /usr/local/bin/ovos-hc
 
