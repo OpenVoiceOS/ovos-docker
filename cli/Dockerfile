@@ -54,6 +54,9 @@ USER "$USER"
 
 ENV EDITOR=vim
 ENV TERM=linux
+# ovos-tui renders in 16 colours without this and in full colour with it.
+# TERM stays "linux" because vim and nano are used in here too.
+ENV COLORTERM=truecolor
 
 ENTRYPOINT ["sleep", "infinity"]
 

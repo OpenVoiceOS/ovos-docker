@@ -25,13 +25,30 @@ the audio setup, and the device mapping.
 
 - Base layers: `ovos-base`, `ovos-sound-base`, `ovos-skill-base`
 - Core runtime: `ovos-core`
-- Services: `ovos-audio`, `ovos-cli`, `ovos-listener`, `ovos-messagebus`, `ovos-phal`,
-  `ovos-phal-admin`, `ovos-gui-websocket`
+- Services: `ovos-audio`, `ovos-cli` (also a terminal client, see below), `ovos-listener`,
+  `ovos-messagebus`, `ovos-phal`, `ovos-phal-admin`, `ovos-gui-websocket`
 - Skills: one image per entry of the `SKILLS` list in `docker-bake.hcl`
 
 All Python images share `ovos-base` (Debian slim, Python 3.13, a virtual environment, and a
 pinned [uv](https://github.com/astral-sh/uv)). Each image has a `HEALTHCHECK`, an SBOM, a
 provenance attestation, and a cosign signature.
+
+## Talking to OVOS from a terminal
+
+The `ovos-cli` image ships [ovos-tui-client](https://github.com/andlo/ovos-tui-client),
+a split-pane terminal for talking to OVOS without a microphone: type what you would have
+said, read the reply, and watch which skill answered.
+
+```shell
+docker exec -it ovos_cli ovos-tui
+```
+
+No flags needed. The container runs with `network_mode: host`, so it reaches the
+messagebus on `127.0.0.1:8181`, and the config and state volumes are already mounted
+where the client looks for them.
+
+`-it` is required: unlike the other services this is an interactive program and needs a
+terminal attached.
 
 ## Run images
 
