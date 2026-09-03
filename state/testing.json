@@ -167,9 +167,9 @@
    "repo": "docker.io/smartgic/ovos-base"
   },
   "cli": {
-   "built": "2026-09-03T00:27:33Z",
+   "built": "2026-09-03T00:35:08Z",
    "constraints_ref": "5fd078a4f157b5aa9e1cb0257c23458b70a252ec",
-   "digest": "sha256:84aba04bdd4a690f0895edafc996d1736d3c96a6d5a0153d87703d87f8454f23",
+   "digest": "sha256:23b803eff7f4cbbab9db800de7bc0d8ad39ffe599150eff4e9b1fa52c74cda4f",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-cli",
    "packages": [
     "CacheControl",
@@ -203,6 +203,7 @@
     "ovos-config",
     "ovos-docs-viewer",
     "ovos-plugin-manager",
+    "ovos-tui-client",
     "ovos-utils",
     "packaging",
     "pexpect",
@@ -2740,5 +2741,5 @@
   }
  },
  "ovos_releases_ref": "5fd078a4f157b5aa9e1cb0257c23458b70a252ec",
- "updated": "2026-09-03T00:27:33Z"
+ "updated": "2026-09-03T00:35:08Z"
 }
