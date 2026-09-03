@@ -26,7 +26,6 @@ LABEL org.opencontainers.image.url="https://openvoiceos.github.io/ovos-docker"
 LABEL org.opencontainers.image.ref.name="${REGISTRY}/ovos-core-buildroot:${TAG}"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
 
-ARG ALPHA=false
 ARG USER=ovos
 
 USER root
@@ -34,23 +33,30 @@ USER root
 COPY files/requirements.txt /tmp/requirements.txt
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/entrypoint.sh
 
+ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt /tmp/constraints.txt
+
 SHELL ["/bin/bash", "-c"]
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     --mount=type=cache,target=/root/.cache/uv,sharing=locked \
-    apt-get update \
-    && apt-get install -y --no-install-recommends libfann-dev build-essential python3-dev  \
-    && if [ "${ALPHA}" == "true" ]; then \
-    uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
+    padatious_major="$(sed -n 's/^ovos[-_]padatious[^0-9]*\([0-9][0-9]*\).*/\1/p' /tmp/constraints.txt | head -1)" \
+    && padatious_major="${padatious_major:-1}" \
+    && if [ "${padatious_major}" -lt 2 ]; then \
+    fann2_build="libfann-dev"; \
     else \
-    uv pip install -r /tmp/requirements.txt -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-${CHANNEL}.txt; \
+    fann2_build=""; \
+    sed -i 's/^ovos-core\[lgpl,plugins\]$/ovos-core[plugins]/' /tmp/requirements.txt; \
     fi \
+    && echo "ovos-padatious ${padatious_major}.x -> $(grep '^ovos-core\[' /tmp/requirements.txt)${fann2_build:+ (+ fann2 headers)}" \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends build-essential python3-dev ${fann2_build} \
+    && uv pip install -r /tmp/requirements.txt -c /tmp/constraints.txt \
     && mkdir -p "/home/${USER}/.local/share/mycroft/skills" "/home/${USER}/nltk_data" \
     && chown "${USER}:${USER}" -R "/home/${USER}" \
     && apt-get --purge remove -y build-essential python3-dev \
     && apt-get --purge autoremove -y \
-    && rm -rf /var/log/{apt,dpkg.log} /tmp/requirements.txt
+    && rm -rf /var/log/{apt,dpkg.log} /tmp/requirements.txt /tmp/constraints.txt
 
 USER "$USER"
 
