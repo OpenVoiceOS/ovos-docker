@@ -1828,9 +1828,9 @@
    "repo": "docker.io/smartgic/ovos-skill-hello-world"
   },
   "skill-homeassistant": {
-   "built": "2026-09-03T18:29:02Z",
-   "constraints_ref": "a08966260cc59a2432bfab25b56b2972673dd46d",
-   "digest": "sha256:50533205ad11697f7d419006f50dbd4c6db2c4648bf065381597087ef1261c82",
+   "built": "2026-09-03T20:44:03Z",
+   "constraints_ref": "0746a694da0bda7d227b5501623d33884be41610",
+   "digest": "sha256:c85be792ad125454e1b2276a2943274f93099d25430704ae8680ddb8f3e9efee",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-homeassistant",
    "packages": [
     "CacheControl",
@@ -2160,9 +2160,9 @@
    "repo": "docker.io/smartgic/ovos-skill-parrot"
   },
   "skill-personal": {
-   "built": "2026-09-03T18:29:02Z",
-   "constraints_ref": "a08966260cc59a2432bfab25b56b2972673dd46d",
-   "digest": "sha256:0c2753f544b95043d47ccb3ed22eb903fb7703eb756daba5d4f609bbc16a6702",
+   "built": "2026-09-03T20:44:03Z",
+   "constraints_ref": "0746a694da0bda7d227b5501623d33884be41610",
+   "digest": "sha256:a55657ea4e0a546ec399cd31db4af1230ca82d9d086e3b8bf286d9b84e42cf3c",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-personal",
    "packages": [
     "CacheControl",
@@ -3219,6 +3219,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "a08966260cc59a2432bfab25b56b2972673dd46d",
- "updated": "2026-09-03T20:29:33Z"
+ "ovos_releases_ref": "0746a694da0bda7d227b5501623d33884be41610",
+ "updated": "2026-09-03T20:44:03Z"
 }
