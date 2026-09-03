@@ -54,17 +54,32 @@ ARG UV_PRERELEASE=allow
 USER root
 SHELL ["/bin/bash", "-c"]
 
-# Build deps (incl. swig) and swig2.0 shim for fann2
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
-    apt-get update \
- && apt-get install -y --no-install-recommends --no-install-suggests \
-      libfann-dev build-essential python3-dev git swig pkg-config \
- && if [ ! -x /usr/bin/swig2.0 ]; then ln -s /usr/bin/swig /usr/bin/swig2.0; fi
-
 COPY files/requirements.txt /tmp/requirements.txt
 
 ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${OVOS_CHANNEL}.txt /tmp/constraints.txt
+
+# Build deps, plus the swig toolchain and swig2.0 shim only where fann2 is still built.
+#
+# fann2 is a dependency of ovos-padatious 1.x, which reaches the venv through the lgpl extra.
+# The 2.x line dropped fann2 and moved padatious into plugins, so a channel on it needs neither
+# the toolchain nor lgpl - asking for that extra there only earns an unknown-extra warning. The
+# decision comes from the channel's own padatious pin rather than its name, so it keeps holding
+# once stable and testing move to a 2.x core, and an unreadable pin falls back to building fann2.
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    padatious_major="$(sed -n 's/^ovos[-_]padatious[^0-9]*\([0-9][0-9]*\).*/\1/p' /tmp/constraints.txt | head -1)" \
+ && padatious_major="${padatious_major:-1}" \
+ && if [ "${padatious_major}" -lt 2 ]; then \
+      fann2_build="libfann-dev swig pkg-config"; \
+    else \
+      fann2_build=""; \
+      sed -i 's/^ovos-core\[lgpl,plugins\]$/ovos-core[plugins]/' /tmp/requirements.txt; \
+    fi \
+ && echo "ovos-padatious ${padatious_major}.x -> $(grep '^ovos-core\[' /tmp/requirements.txt)${fann2_build:+ (+ fann2 toolchain)}" \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends --no-install-suggests \
+      build-essential python3-dev git ${fann2_build} \
+ && if [ -n "${fann2_build}" ] && [ ! -x /usr/bin/swig2.0 ]; then ln -s /usr/bin/swig /usr/bin/swig2.0; fi
 
 # pre-releases only for the alpha channel (UV_PRERELEASE=allow)
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -81,11 +96,21 @@ ARG UV_PRERELEASE=allow
 USER root
 SHELL ["/bin/bash", "-c"]
 
-# Runtime lib needed by fann2 wheel
+# This stage inherits /tmp/requirements.txt from `runtime`, so it is the untouched copy - the
+# builder edited its own. Rather than re-deriving the padatious major here, both halves hang off
+# one observable fact: whether the builder actually produced a fann2 wheel. Present means
+# padatious 1.x, which needs the libfann2 runtime and the lgpl extra; absent means 2.x, which
+# needs neither, and asking for lgpl there only earns an unknown-extra warning.
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
-    apt-get update \
- && apt-get install -y --no-install-recommends libfann2
+    --mount=type=bind,from=builder,source=/tmp/wheels,target=/tmp/wheels \
+    if compgen -G "/tmp/wheels/fann2-*.whl" > /dev/null; then \
+      echo "fann2 wheel present -> libfann2 + ovos-core[lgpl,plugins]"; \
+      apt-get update && apt-get install -y --no-install-recommends libfann2; \
+    else \
+      echo "no fann2 wheel -> no libfann2, ovos-core[plugins]"; \
+      sed -i 's/^ovos-core\[lgpl,plugins\]$/ovos-core[plugins]/' /tmp/requirements.txt; \
+    fi
 
 # The wheelhouse is bind-mounted from the builder stage instead of copied, so it never becomes a layer.
 # Same pre-release policy for the offline install.
