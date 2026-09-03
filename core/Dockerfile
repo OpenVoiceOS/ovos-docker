@@ -121,48 +121,11 @@ RUN --mount=type=bind,from=builder,source=/tmp/wheels,target=/tmp/wheels \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
  && rm -f /tmp/requirements.txt
 
-# Fail the build rather than ship an image with no intent engine.
-#
-# padatious reaches the venv only through an ovos-core extra, and which extra carries it changed
-# between the 1.x and 2.x lines. That makes it quietly droppable: an upstream extra rename, or a
-# well-meant "the lgpl extra is obsolete" edit, leaves every build green and every image useless.
-# Asserting here rather than in CI means it runs in each build that already happens - pull request
-# dry runs included, on both architectures and every channel - with no image loading needed.
-#
-# The fann2 half is derived from the padatious that actually landed, not from the channel, so it
-# keeps holding once stable and testing move to a 2.x core.
-RUN <<'PY' python
-from importlib.metadata import PackageNotFoundError, version
-
-
-def installed(name):
-    try:
-        return version(name)
-    except PackageNotFoundError:
-        return None
-
-
-padatious = installed("ovos-padatious")
-if padatious is None:
-    raise SystemExit(
-        "no intent engine: ovos-padatious is not installed. It reaches this image only "
-        "through an ovos-core extra, so an extra changed without a replacement requirement."
-    )
-
-fann2 = installed("fann2")
-needs_fann2 = int(padatious.split(".")[0]) < 2
-
-if needs_fann2 and fann2 is None:
-    raise SystemExit(
-        f"ovos-padatious {padatious} is a 1.x release and needs fann2, but fann2 is not "
-        "installed - the build chain was skipped where it was still required."
-    )
-
-if not needs_fann2 and fann2 is not None:
-    print(f"note: ovos-padatious {padatious} does not need fann2, yet fann2 {fann2} is present")
-
-print(f"intent engine ok: ovos-padatious {padatious}, fann2 {fann2 or 'not needed'}")
-PY
+# Fail the build rather than ship an image with no intent engine: padatious reaches it only
+# through an ovos-core extra, so an upstream extra rename would otherwise leave the build green
+# and the image useless. Runs in every build that already happens - pull request dry runs
+# included, on both architectures and every channel. See the script for the reasoning.
+RUN ovos-assert-intent-engine
 
 USER "$USER"
 WORKDIR "/home/${USER}"

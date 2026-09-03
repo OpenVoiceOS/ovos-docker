@@ -34,6 +34,8 @@ ARG USER_GID=1000
 COPY --from=ghcr.io/astral-sh/uv:0.12.9@sha256:8b940d3a9d65bed080436972241af2e21c84b5e8c9193f7014ed71479ee795ff /uv /uvx /usr/local/bin/
 # MALLOC_ARENA_MAX=2: the services are heavily threaded; fewer glibc arenas means less RSS on small devices.
 COPY --chmod=0755 files/ovos-hc.py /usr/local/bin/ovos-hc
+# Shared by every image that installs ovos-core, so the guard cannot drift between them.
+COPY --chmod=0755 files/assert-intent-engine.py /usr/local/bin/ovos-assert-intent-engine
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
