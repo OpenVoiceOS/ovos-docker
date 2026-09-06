@@ -2,9 +2,9 @@
  "channel": "alpha",
  "images": {
   "audio": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:280ce4f28a61c4e7baab1cfef4d8a4fa6333b7bda9899b753703cd55a7c0ade0",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:32c391a4df7a28f6a0f16b65a1f3983e290f2beb1a8f67137a9101bc8e381ea4",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-audio",
    "packages": [
     "CacheControl",
@@ -175,9 +175,9 @@
    "repo": "docker.io/smartgic/ovos-base"
   },
   "cli": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:5dcedd2b345737b8b2831d545a8b32889c113328d8b6e38e1d4c685c4d060149",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:b27b5d93fb40ccfa591be3934bfbd49eabbf9e95d034984352f8c9e15d4a61ca",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-cli",
    "packages": [
     "CacheControl",
@@ -252,9 +252,9 @@
    "repo": "docker.io/smartgic/ovos-cli"
   },
   "core": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:cd2662e3b000c311ddbffb79fb5067426bd295587936a152e751dc4d910a3134",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:b67d827b3b6123cf212410511341e18d9aae54f746f54eaaf12b0d190b053c51",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-core",
    "packages": [
     "CacheControl",
@@ -308,6 +308,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -326,6 +327,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -384,9 +386,9 @@
    "repo": "docker.io/smartgic/ovos-core"
   },
   "gui-websocket": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:bf68e7f0583fbbe481b05c52365f87cd29c79a9aa244804387f7c3853212ba7e",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:9653c05a0e28d3faa83d5d83b7f318f40843748fb75eeb291af6fb073b42f141",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-gui-websocket",
    "packages": [
     "CacheControl",
@@ -459,9 +461,9 @@
    "repo": "docker.io/smartgic/ovos-gui-websocket"
   },
   "listener": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:e29c1263d670ae6ee9c605710cd8a518e4f59a5bb31ad093c49844061181495a",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:4a4d3bd67d1c29ba289711e25cc4c0811aa1b93a7c39367f10d7d949318f65ef",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-listener",
    "packages": [
     "CacheControl",
@@ -556,9 +558,9 @@
    "repo": "docker.io/smartgic/ovos-listener"
   },
   "messagebus": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:d2d0b46ca08a86b9b4457f60cc58fb7a35e04bdc273c38ddf9cf3680d075199b",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:a475b9c1ad1678855d1aee71129fe93d31dabe21ff6aa7252ac36be36f7e2881",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-messagebus",
    "packages": [
     "CacheControl",
@@ -620,9 +622,9 @@
    "repo": "docker.io/smartgic/ovos-messagebus"
   },
   "phal": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:7aec5c0f8c89f9c155c4d52e1954136c4a168f3722ca7e70d8d37ac535777aec",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:b0c5ac126bf8a933862169903b7db0bc7cc623cd424ccb5fa53560009409c4de",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-phal",
    "packages": [
     "CacheControl",
@@ -714,9 +716,9 @@
    "repo": "docker.io/smartgic/ovos-phal"
   },
   "phal-admin": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:d86e0ad4d9b87782e69bdeacc67f8a5edf1d4bfaf0ec0caa60e45c0b5a5c4054",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:72ade6dad1e955f8b0ffb3121f732f9556bf8b44a4b99f1505cc564fb7455267",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-phal-admin",
    "packages": [
     "CacheControl",
@@ -886,9 +888,9 @@
    "repo": "docker.io/smartgic/ovos-plugin-ggwave"
   },
   "skill-alerts": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:1c1fd99d13a1ed77e671a5011f5c853209b607b7d53e220232335f7fe8fa4cc5",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:bc146dee69ac3eead7214123410c4faa482448b584f9eec7e0d6550b755e9bb6",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-alerts",
    "packages": [
     "CacheControl",
@@ -944,6 +946,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -962,6 +965,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -1023,9 +1027,9 @@
    "repo": "docker.io/smartgic/ovos-skill-alerts"
   },
   "skill-base": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:ae438cf1a963e0b01b2ab82ff1148b78c39457e4efb42686c042a292220a27f3",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:4f5fb6c2bc0a60f3867b27b0c37ef2be7d2a11c3ae5f22a63986426d2bfd37d9",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-base",
    "packages": [
     "CacheControl",
@@ -1078,6 +1082,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -1095,6 +1100,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -1152,9 +1158,9 @@
    "repo": "docker.io/smartgic/ovos-skill-base"
   },
   "skill-camera": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:19849b6da28300dec59f3de7f1a829d9b18477dd3fe8f554599e191b4d350814",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:c125b381ffd9b28a38e59c09ad91d6e691b3e9ab692c0c646bace82265ba6901",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-camera",
    "packages": [
     "CacheControl",
@@ -1207,6 +1213,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -1225,6 +1232,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -1282,9 +1290,9 @@
    "repo": "docker.io/smartgic/ovos-skill-camera"
   },
   "skill-date-time": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:f0b214f14675e4ac719f7ae92113db028aa8c2460429b5720b502a6aae38aeb1",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:b4ed13bb39b12759392bb6ef5d95f5604617dc3d5db1fbd91898cc7fa523307f",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-date-time",
    "packages": [
     "CacheControl",
@@ -1344,6 +1352,7 @@
     "ovos-audio",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -1362,6 +1371,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -1423,9 +1433,9 @@
    "repo": "docker.io/smartgic/ovos-skill-date-time"
   },
   "skill-duckduckgo": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:7d83d1eee1c17a1e132bd4f61ce3b3009301d8b06bd1b7a8c8506056636842f9",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:2a87b95e00b6b5ba5408500e176027b90e8f6cd115ff2bb301d644bc5ba04c37",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-duckduckgo",
    "packages": [
     "CacheControl",
@@ -1478,6 +1488,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -1497,6 +1508,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -1554,9 +1566,9 @@
    "repo": "docker.io/smartgic/ovos-skill-duckduckgo"
   },
   "skill-easter-eggs": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:606a0046a9ae5a2426ded6b3dbb75a8c3b962b4251f1a69c63e156f763bd50ac",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:4bdf672488825bec259fae288137df5a2f441d790aeb047129d9828bb7fdd237",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-easter-eggs",
    "packages": [
     "CacheControl",
@@ -1609,6 +1621,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -1627,6 +1640,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -1685,9 +1699,9 @@
    "repo": "docker.io/smartgic/ovos-skill-easter-eggs"
   },
   "skill-fallback-unknown": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:2c2c095d62562f304b784886bf40be67e3af453eb5104d2c58bc37c2defe5314",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:7d4587fd35b4eb526edd418e9c84b3cb2c96daa9a2f5ec65369b3e432ea7464b",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-fallback-unknown",
    "packages": [
     "CacheControl",
@@ -1740,6 +1754,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -1758,6 +1773,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -1815,9 +1831,9 @@
    "repo": "docker.io/smartgic/ovos-skill-fallback-unknown"
   },
   "skill-ggwave": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:1525d98b2758c59ba1a7de3cc8030bcfac1a80ac72ea19fbb24b8f1fea51e7ac",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:89877801ce7142987c4d0968a7a1cee6ff6ac1e1f4e4e0f18b82ea9cd9dce60b",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-ggwave",
    "packages": [
     "CacheControl",
@@ -1870,6 +1886,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -1888,6 +1905,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -1945,9 +1963,9 @@
    "repo": "docker.io/smartgic/ovos-skill-ggwave"
   },
   "skill-hello-world": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:5a03075a4933d121a0ee8b49e765534904024ef73633173cc39bf72b84795719",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:c6d0de6f214a40a2d40f12663d3e129e5228798cf420aa271e6517443922107e",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-hello-world",
    "packages": [
     "CacheControl",
@@ -2000,6 +2018,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -2018,6 +2037,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -2075,9 +2095,9 @@
    "repo": "docker.io/smartgic/ovos-skill-hello-world"
   },
   "skill-homeassistant": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:74dd1ff63e8e06a5100c03f2e5d82b8a534d9431586eb419f66934f9a6d50eb5",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:ec4b1d879087ad01e39875fd778dd63683f643f0690b4b6f6967529909207e3f",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-homeassistant",
    "packages": [
     "CacheControl",
@@ -2131,6 +2151,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -2148,6 +2169,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -2207,9 +2229,9 @@
    "repo": "docker.io/smartgic/ovos-skill-homeassistant"
   },
   "skill-jokes": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:d478d7b887d6ef147a5f32f7ade424cff0d63f1b46ff9adc7f9f2e6437255828",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:27b2178f0cf6e32ddcc0bfd672f1179bc856294f7874061d5f472c9fcffa3d48",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-jokes",
    "packages": [
     "CacheControl",
@@ -2262,6 +2284,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -2280,6 +2303,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -2337,9 +2361,9 @@
    "repo": "docker.io/smartgic/ovos-skill-jokes"
   },
   "skill-parrot": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:1c1cfa58425fe0e8f45384986ec088fd2a822267660a38b5e64e73eddc67546e",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:456b2d9ef944accdcf1886813d38e23d2f66ee1fbd75087c70e5fd011f16813b",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-parrot",
    "packages": [
     "CacheControl",
@@ -2392,6 +2416,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -2410,6 +2435,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -2467,9 +2493,9 @@
    "repo": "docker.io/smartgic/ovos-skill-parrot"
   },
   "skill-personal": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:15fbc0a9a0a24bc093ea82e2151f349b8b6d76f198d1d55fee2e346a053e247c",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:163c1617f2f24424d3a682adfeb33c15d078875d57fc213019203a8ad442140b",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-personal",
    "packages": [
     "CacheControl",
@@ -2522,6 +2548,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -2540,6 +2567,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -2597,9 +2625,9 @@
    "repo": "docker.io/smartgic/ovos-skill-personal"
   },
   "skill-randomness": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:7e46efec8c9b99bb34d8044d94668d05a9d1971cbd42a5ac46546f73c0903087",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:9daadcfd1fb0782a10ea6a5d48102f343ccbfa60d9f0d85b938be4b515920919",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-randomness",
    "packages": [
     "CacheControl",
@@ -2652,6 +2680,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -2670,6 +2699,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -2727,9 +2757,9 @@
    "repo": "docker.io/smartgic/ovos-skill-randomness"
   },
   "skill-tunein": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:264590a7598e76af86a0a4b87c3ef9485a8db448ece994e2619f3a22fcb7d26d",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:edda16077797db15c20adaf72d0f5371f2bdb305b7467139331adc3f98e9feb5",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-tunein",
    "packages": [
     "CacheControl",
@@ -2782,6 +2812,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -2800,6 +2831,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -2858,9 +2890,9 @@
    "repo": "docker.io/smartgic/ovos-skill-tunein"
   },
   "skill-volume": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:2c84b8852c868f9357b597dd387c74a9822d83b59e9e4ac8a1f15f4328cde4ab",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:dc725815d7a4e1f4d5837f47b7f848d47f8cbb4b27cafe5c03a3c05549afe2a2",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-volume",
    "packages": [
     "CacheControl",
@@ -2913,6 +2945,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -2931,6 +2964,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -2988,9 +3022,9 @@
    "repo": "docker.io/smartgic/ovos-skill-volume"
   },
   "skill-weather": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:aed3b96e391b703652e9475c7ee7b7cb5d81c25edde44c37250071f00e8a71a6",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:89618666cdc1007924a63afdbcd452c2ce41e07d5d30bef50fc7a365647b6d88",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-weather",
    "packages": [
     "CacheControl",
@@ -3046,6 +3080,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -3064,6 +3099,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -3124,9 +3160,9 @@
    "repo": "docker.io/smartgic/ovos-skill-weather"
   },
   "skill-wikihow": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:0eb06bf0bac9fc6baed334fe8bd70d7aa2cadbde719189baac2dfc41d8288c8c",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:2b94a6d7b164e2d59b1bddf85aae12ff99d840e033511e17c71bb9205cdc23b1",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wikihow",
    "packages": [
     "CacheControl",
@@ -3183,6 +3219,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -3201,6 +3238,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -3262,9 +3300,9 @@
    "repo": "docker.io/smartgic/ovos-skill-wikihow"
   },
   "skill-wikipedia": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:c917fe6e901a345f581b327e32b37f1d7ce5b6fb2f3b590554f9d4e06d387b83",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:6021553d40ad5356975007cfeb5d5615915f44fe859f84e678f6ac145c4284bb",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wikipedia",
    "packages": [
     "CacheControl",
@@ -3317,6 +3355,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -3335,6 +3374,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -3393,9 +3433,9 @@
    "repo": "docker.io/smartgic/ovos-skill-wikipedia"
   },
   "skill-wolfie": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:8007745ad402910daa13d3c9c90ab77b47b4240eb537dd789c4a9b72b1162aa6",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:b130f4b2858f123438b3e129e9d5780ec6f36c6932e91a7908d1c57c75e72b53",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wolfie",
    "packages": [
     "CacheControl",
@@ -3448,6 +3488,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -3466,6 +3507,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -3524,9 +3566,9 @@
    "repo": "docker.io/smartgic/ovos-skill-wolfie"
   },
   "skill-wordnet": {
-   "built": "2026-09-06T15:20:26Z",
-   "constraints_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
-   "digest": "sha256:604e90249be02c36986bd92481a4aa9d6478fa4f9db605155eabbb5b06a3b9ad",
+   "built": "2026-09-06T20:23:47Z",
+   "constraints_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+   "digest": "sha256:f005ef4ab05085ac9597f4ae28835d4ce6b45e49fed82ca3a125ff252ba2908e",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wordnet",
    "packages": [
     "CacheControl",
@@ -3579,6 +3621,7 @@
     "ovos-adapt-parser",
     "ovos-bidirectional-translation-plugin",
     "ovos-bus-client",
+    "ovos-color-parser",
     "ovos-common-query-pipeline-plugin",
     "ovos-config",
     "ovos-core",
@@ -3597,6 +3640,7 @@
     "ovos-solver-failure-plugin",
     "ovos-spec-tools",
     "ovos-translate-server-plugin",
+    "ovos-typed-slots-transformer",
     "ovos-utils",
     "ovos-utterance-corrections-plugin",
     "ovos-utterance-normalizer",
@@ -3696,6 +3740,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "ec75172482c25485d39dae22a3fbc027fa27d4ad",
- "updated": "2026-09-06T15:20:26Z"
+ "ovos_releases_ref": "0bf81d51f05e4c01cdaec7a5204b5382ccd364fc",
+ "updated": "2026-09-06T20:23:47Z"
 }
