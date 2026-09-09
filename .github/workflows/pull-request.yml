@@ -18,6 +18,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  contract:
+    name: Contract
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - run: pip install --disable-pip-version-check pyyaml
+      # contract.yml is what ovos-installer pins this repository for: the compose file names, the
+      # container names it execs into, the variables the compose reads and the images it pulls.
+      # Any of those can change here and break an install with no failure in this repository, so
+      # the declaration is checked against compose/ on every pull request.
+      - run: python3 scripts/contract.py
+
   select:
     name: Affected targets
     runs-on: ubuntu-24.04
