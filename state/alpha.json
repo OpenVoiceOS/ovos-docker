@@ -3002,9 +3002,9 @@
    "repo": "docker.io/smartgic/ovos-skill-tunein"
   },
   "skill-volume": {
-   "built": "2026-09-09T17:44:16Z",
-   "constraints_ref": "c5e710ab18b45f218702683a69af5796305290ca",
-   "digest": "sha256:090b654f9ba95c81e0df871b5032d1752fff6cf8a70dc5645793f138d1de5888",
+   "built": "2026-09-10T03:24:02Z",
+   "constraints_ref": "fcbcd2bf618406e07aa184c079c849248e471e6d",
+   "digest": "sha256:1cfe3cdf4b4e0e7c10c528149f733b89ff2bc663c4e603c3de454549378b45dd",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-volume",
    "packages": [
     "CacheControl",
@@ -3894,6 +3894,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "c5e710ab18b45f218702683a69af5796305290ca",
- "updated": "2026-09-09T17:44:16Z"
+ "ovos_releases_ref": "fcbcd2bf618406e07aa184c079c849248e471e6d",
+ "updated": "2026-09-10T03:24:02Z"
 }
