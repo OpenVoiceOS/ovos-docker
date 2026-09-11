@@ -4,8 +4,9 @@
 
     The compose bundles in `compose/` reference images hosted on Docker Hub
     under `docker.io/smartgic`. The same images, with the same tags and
-    digests, are also published to `ghcr.io/openvoiceos` (for example
-    `ghcr.io/openvoiceos/ovos-core:alpha`), a mirror without pull-rate limits;
+    digests, are also published to `ghcr.io/openvoiceos/ovos-docker` (for
+    example `ghcr.io/openvoiceos/ovos-docker/ovos-core:alpha`), a mirror
+    without pull-rate limits;
     point the `image:` references of your compose files there if Docker Hub
     rate-limits you. Buildx Bake defaults to `docker.io/smartgic`; if you
     publish to a different registry, update the `image:` references in your
@@ -76,7 +77,8 @@ a virtual environment and a pinned [uv](https://github.com/astral-sh/uv));
 services needing sound add `ovos-sound-base`, skills add `ovos-skill-base`.
 Every channel tag is a multi-architecture manifest list (`amd64` + `arm64`)
 carrying an SBOM and SLSA provenance attestation, signed with cosign, published
-to both `docker.io/smartgic` and `ghcr.io/openvoiceos` with identical digests,
+to both `docker.io/smartgic` and `ghcr.io/openvoiceos/ovos-docker` with
+identical digests,
 and labelled with:
 
 | Label                                 | Content                                                                      |

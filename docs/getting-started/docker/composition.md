@@ -7,6 +7,17 @@ The easiest and quickest way to deploy Open Voice OS containers is to use a [com
     Compose files live under `compose/` in the repository. Run commands from
     that directory or pass `--env-file compose/.env` and `--file compose/<name>`.
 
+!!! warning "Compose files and images move at different speeds"
+
+    A compose file is whatever your checkout holds, while `VERSION` selects a
+    [channel tag](./images.md#tags) that keeps moving. `docker compose pull`
+    therefore fetches newer images against the compose file you already have,
+    and a service gains a mounted path or an environment variable in `compose/`
+    before the image expecting it reaches you — or after, if your checkout is
+    old. Update the checkout and the images together: pull the repository at a
+    release tag, then `docker compose pull`, then recreate the stack. Pinning
+    `VERSION` to a digest holds an image still if you need a fixed target.
+
 ## Composition files
 
 Composition files provide an easy way to provision the stack _(services and volumes)_ with the required options and configuration for each of the services. The names below reflect the bundle layout shipped in `compose/`.
