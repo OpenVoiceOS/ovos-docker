@@ -69,7 +69,7 @@ Time per period = 3.278807
 
 ## How to use these images
 
-Please refer to [this section](README.md#how-to-use-these-images) of the documentation.
+Please refer to [this section](README.md#run-images) of the documentation.
 
 ## Thanks
 

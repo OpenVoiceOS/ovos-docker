@@ -124,7 +124,7 @@ PulseAudio may use a different audio output (sink) than the one actually used by
 
 ## How to use these images
 
-Please refer to [this section](README.md#how-to-use-these-images) of the documentation.
+Please refer to [this section](README.md#run-images) of the documentation.
 
 ## Thanks
 
