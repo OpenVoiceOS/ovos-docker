@@ -33,6 +33,13 @@ All Python images share `ovos-base` (Debian slim, Python 3.13, a virtual environ
 pinned [uv](https://github.com/astral-sh/uv)). Each image has a `HEALTHCHECK`, an SBOM, a
 provenance attestation, and a cosign signature.
 
+The compose files under `compose/` are consumed by other projects, not only by people: the
+[OVOS installer](https://github.com/OpenVoiceOS/ovos-installer) clones this repository at a
+release tag and runs them. The compose file names, the container names, the environment
+variables the compose reads and the images it pulls are therefore a published interface, and
+`contract.yml` declares all four. Run `scripts/contract.py --write` after editing `compose/`;
+CI fails when the declaration and the compose files disagree.
+
 ## Talking to OVOS from a terminal
 
 The `ovos-cli` image ships [ovos-tui-client](https://github.com/andlo/ovos-tui-client),
@@ -128,7 +135,7 @@ multi-arch manifest lists. The workflows are in `.github/workflows/`:
 
 | Workflow | Trigger | What it builds |
 |---|---|---|
-| `on-push.yml` | A commit on `dev` | The targets whose build context changed, plus the targets built on top of them, for `alpha`, `testing`, and `stable` |
+| `on-push.yml` | A commit on `dev` | The targets whose build context changed since the last commit this workflow published, plus the targets built on top of them, for `alpha`, `testing`, and `stable` |
 | `on-constraints.yml` | A `repository_dispatch` from ovos-releases, an hourly poll, or a manual run | For each channel, the images that contain a package whose `constraints-<channel>.txt` line changed since the last build |
 | `pull-request.yml` | A pull request | The affected targets, for both architectures, without a push |
 | `scheduled-rebuild.yml` | Once a week | Every image of a channel |
