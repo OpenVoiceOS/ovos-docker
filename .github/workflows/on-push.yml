@@ -20,6 +20,15 @@ jobs:
   select:
     name: Affected targets
     runs-on: ubuntu-24.04
+    # This job reads this workflow's own run history, which the workflow-level block does not
+    # grant - and a job-level block replaces it, so the checkout's contents: read is restated
+    # while the write access this job never needed is dropped. The lookup happens to succeed
+    # today because the repository is public and its Actions API is readable anonymously; that
+    # is a property of the repository, not of the permissions, and it would stop being true the
+    # day the repository turned private.
+    permissions:
+      actions: read
+      contents: read
     outputs:
       targets: ${{ steps.sel.outputs.targets }}
       count: ${{ steps.sel.outputs.count }}
@@ -40,11 +49,30 @@ jobs:
           # the cancelled push's head, so whatever that push would have rebuilt is skipped for good
           # rather than retried. That is not hypothetical: the sibling repository shipped a
           # base/Dockerfile change that stayed unpublished for two days for exactly this reason.
-          last=$(gh run list --workflow on-push.yml --branch "$GITHUB_REF_NAME" \
-                   --status success --limit 1 --json headSha -q '.[0].headSha' 2>/dev/null || true)
-          if [ -n "$last" ] && git cat-file -e "$last" 2> /dev/null; then
-            echo "diffing from the last successful publish: $last"
-            BEFORE="$last"
+          # "There is no previous successful publish" and "we could not find out" are different
+          # answers and must not share a branch. The first is normal on a new branch. The second
+          # used to be swallowed by `|| true`, which fell back to this push's parent - the exact
+          # base that drops a cancelled run's work - while the log said nothing and the job
+          # stayed green. Failing the lookup now builds everything: wasteful, visible, and it
+          # never drops a publish.
+          if last=$(gh run list --workflow on-push.yml --branch "$GITHUB_REF_NAME" \
+                      --status success --limit 1 --json headSha -q '.[0].headSha' 2>/dev/null); then
+            if [ -z "$last" ]; then
+              echo "no previous successful publish on this branch; diffing from this push's parent"
+            elif git cat-file -e "$last" 2> /dev/null; then
+              echo "diffing from the last successful publish: $last"
+              BEFORE="$last"
+            else
+              # A third answer, and not the same as having none: a publish happened and this
+              # clone cannot see the commit, which a rewritten branch produces. Diffing from the
+              # push parent here would skip whatever that publish did not cover, which is the
+              # defect this whole step exists to avoid.
+              echo "::warning::the last successful publish ($last) is not in this clone, so what it covered cannot be determined; building every target rather than diffing from this push's parent"
+              BEFORE=""
+            fi
+          else
+            echo "::warning::could not read this workflow's run history; building every target rather than diffing from this push's parent, which drops work when a run is cancelled"
+            BEFORE=""
           fi
           if [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE" 2> /dev/null; then
             echo "no usable base commit -> building everything"
