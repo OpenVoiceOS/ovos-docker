@@ -45,9 +45,61 @@ class IndentedDumper(yaml.SafeDumper):
 COMPOSE_DIR = Path("compose")
 CONTRACT = Path("contract.yml")
 
-# ${VAR}, ${VAR:-default}, ${VAR-default} and bare $VAR. A variable is "required" only when it is
-# used at least once with no inline default: elsewhere the compose can stand on its own.
-VAR = re.compile(r"\$\{([A-Z][A-Z0-9_]*)(:?-)?[^}]*\}|\$([A-Z][A-Z0-9_]*)")
+NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
+# Compose operators that let a value stand on its own when the variable is unset. `-` and `:-`
+# substitute the default; `+` and `:+` substitute nothing, which is still a usable empty string.
+# `?` and `:?` are the opposite: they state no default and fail, so they leave the name required.
+OPTIONAL_OPERATORS = ("-", ":-", "+", ":+")
+
+
+def compose_variables(value: str):
+    """Yield (name, optional) for every variable compose interpolates in this scalar.
+
+    A regex cannot do this. `${PRIMARY:-${FALLBACK}}` nests, and any pattern that ends the
+    expression at the first `}` stops inside the default and never sees FALLBACK, which compose
+    both interpolates and warns about when it is unset. So braces are matched by depth and the
+    text after the operator is scanned in turn, because it is a value like any other.
+
+    `$$` is compose's escape for a literal dollar and yields nothing. Compose does not restrict
+    names to upper case, so neither does this.
+    """
+    index, end = 0, len(value)
+    while index < end:
+        char = value[index]
+        if char != "$":
+            index += 1
+            continue
+        if value.startswith("$$", index):
+            index += 2
+            continue
+        if value.startswith("${", index):
+            depth, cursor = 1, index + 2
+            while cursor < end and depth:
+                if value[cursor] == "{":
+                    depth += 1
+                elif value[cursor] == "}":
+                    depth -= 1
+                cursor += 1
+            if depth:
+                # An unterminated `${`: compose would reject the file, so there is no
+                # interpolation here to report.
+                return
+            body = value[index + 2:cursor - 1]
+            match = NAME.match(body)
+            if match:
+                operator = body[match.end():]
+                yield match.group(0), operator.startswith(OPTIONAL_OPERATORS)
+                # The default or replacement is itself interpolated.
+                yield from compose_variables(operator)
+            index = cursor
+            continue
+        match = NAME.match(value, index + 1)
+        if match:
+            # A bare $VAR cannot carry a default.
+            yield match.group(0), False
+            index = match.end()
+        else:
+            index += 1
 
 
 def canonical_image(image: str) -> str:
@@ -56,11 +108,47 @@ def canonical_image(image: str) -> str:
     The compose files spell the same registry both ways - "smartgic/x" and "docker.io/smartgic/x" -
     so without this the contract would report a change whenever one of them was edited.
     """
-    repository = re.sub(r":\$\{?[A-Z_]+\}?$", "", image)
+    repository = re.sub(r":\$\{?[A-Za-z_][A-Za-z0-9_]*\}?$", "", image)
     host = repository.split("/", 1)[0]
     if "." not in host and ":" not in host and host != "localhost":
         repository = f"docker.io/{repository}"
     return repository
+
+
+def interpolated_values(node):
+    """Yield the scalars compose interpolates.
+
+    Compose substitutes into values, never into keys, so walking the parsed document instead of
+    the raw text keeps a key - or a comment - that happens to contain a dollar sign out of the
+    contract.
+    """
+    if isinstance(node, dict):
+        for value in node.values():
+            yield from interpolated_values(value)
+    elif isinstance(node, list):
+        for value in node:
+            yield from interpolated_values(value)
+    elif isinstance(node, str):
+        yield node
+
+
+def passthrough_env(body: dict):
+    """Yield the variables a service passes through from the host environment.
+
+    `environment: [- NAME]` and `environment: {NAME: }` name a variable and give it no value, so
+    compose takes it from the host. That is a value the consumer has to supply, and no `$NAME`
+    appears anywhere for the scan above to find, so the contract would otherwise miss it. A
+    pass-through cannot carry a default, so it is always required.
+    """
+    env = body.get("environment")
+    if isinstance(env, list):
+        for entry in env:
+            if isinstance(entry, str) and "=" not in entry:
+                yield entry.strip()
+    elif isinstance(env, dict):
+        for name, value in env.items():
+            if value is None:
+                yield str(name)
 
 
 def derive() -> dict:
@@ -69,18 +157,22 @@ def derive() -> dict:
 
     for path in sorted(COMPOSE_DIR.glob("docker-compose*.yml")):
         compose_files.append(path.name)
-        text = path.read_text()
+        # an empty or comment-only compose file parses to None, and the glob accepts any
+        # docker-compose*.yml, so this has to read as "no services" rather than crash the gate
+        document = yaml.safe_load(path.read_text()) or {}
 
-        for match in VAR.finditer(text):
-            name, default, bare = match.group(1), match.group(2), match.group(3)
-            name = name or bare
-            used_in.setdefault(name, set()).add(path.name)
-            if bare or not default:
-                required.add(name)
+        for value in interpolated_values(document):
+            for name, optional in compose_variables(value):
+                used_in.setdefault(name, set()).add(path.name)
+                if not optional:
+                    required.add(name)
 
-        for service, body in (yaml.safe_load(text).get("services") or {}).items():
+        for service, body in (document.get("services") or {}).items():
             if not isinstance(body, dict):
                 continue
+            for name in passthrough_env(body):
+                used_in.setdefault(name, set()).add(path.name)
+                required.add(name)
             if body.get("container_name"):
                 # Keyed by compose file, not by service: the same service name appears in more
                 # than one file (hivemind_cli is in both the stack and the satellite compose), and
