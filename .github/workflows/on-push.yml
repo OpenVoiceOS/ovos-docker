@@ -31,8 +31,21 @@ jobs:
       - id: sel
         env:
           BEFORE: ${{ github.event.before }}
+          GH_TOKEN: ${{ github.token }}
           HEAD: ${{ github.sha }}
         run: |
+          # Diff from the last commit this workflow actually published, not from this push's own
+          # parent. Only one run may sit pending in a concurrency group, so when several merges land
+          # minutes apart the middle ones are cancelled - and the next push's github.event.before is
+          # the cancelled push's head, so whatever that push would have rebuilt is skipped for good
+          # rather than retried. That is not hypothetical: the sibling repository shipped a
+          # base/Dockerfile change that stayed unpublished for two days for exactly this reason.
+          last=$(gh run list --workflow on-push.yml --branch "$GITHUB_REF_NAME" \
+                   --status success --limit 1 --json headSha -q '.[0].headSha' 2>/dev/null || true)
+          if [ -n "$last" ] && git cat-file -e "$last" 2> /dev/null; then
+            echo "diffing from the last successful publish: $last"
+            BEFORE="$last"
+          fi
           if [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE" 2> /dev/null; then
             echo "no usable base commit -> building everything"
             files="docker-bake.hcl"
