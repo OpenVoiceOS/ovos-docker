@@ -31,6 +31,8 @@ jobs:
       # Any of those can change here and break an install with no failure in this repository, so
       # the declaration is checked against compose/ on every pull request.
       - run: python3 scripts/contract.py
+      # the gate is only worth having if it reads the compose files the way compose does
+      - run: python3 scripts/test_contract.py
 
   select:
     name: Affected targets
