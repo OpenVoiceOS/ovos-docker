@@ -24,7 +24,7 @@ parser.add_argument("--url", help="message bus URL", default=os.environ.get("OVO
 args = parser.parse_args()
 
 msg_type = f"{args.ns}.{args.svc}.is_ready"
-request = {"type": msg_type, "data": {}, "context": {"source": ["docker"], "destination": [args.svc]}}
+request = {"type": msg_type, "data": {}, "context": {"source": "docker", "destination": args.svc}}
 
 status = 1
 ws = None
