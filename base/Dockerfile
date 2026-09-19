@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.27@sha256:bde3983e9c939224420ddaf6b784cc30e09b035a4dea01f581230c50809f372e
 # One reference for FROM and the base.name label, so a Renovate bump updates both.
-ARG PYTHON_IMAGE=python:3.13.15-slim-trixie@sha256:9d2e5553305c7c7b0097999bb17187c69b921ccd6bc9d40e4bb5ebe652c00285
+ARG PYTHON_IMAGE=python:3.13.15-slim-trixie@sha256:64259673bf7dc32a42821929e59682f6cfda0341f0a5345af35d209db236940e
 FROM ${PYTHON_IMAGE}
 ARG PYTHON_IMAGE
 
