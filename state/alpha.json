@@ -1322,9 +1322,9 @@
    "repo": "docker.io/smartgic/ovos-skill-camera"
   },
   "skill-date-time": {
-   "built": "2026-09-19T15:47:05Z",
-   "constraints_ref": "d1fbfb8ec19c90c2ef3da32cbf96b865b7dcba49",
-   "digest": "sha256:5350fef9a47d261cd9bd9fcf4e8774466914681fb013544c56a4f60098af09d8",
+   "built": "2026-09-20T20:28:07Z",
+   "constraints_ref": "c1d8bee717e15ba0638a68b93b39cb4edf833666",
+   "digest": "sha256:23b2dc5b229231613a4a71a17141ee140633b5ddae5f2f5b4ae1a1b2e139b292",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-date-time",
    "packages": [
     "CacheControl",
@@ -3916,6 +3916,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "d1fbfb8ec19c90c2ef3da32cbf96b865b7dcba49",
- "updated": "2026-09-19T15:47:05Z"
+ "ovos_releases_ref": "c1d8bee717e15ba0638a68b93b39cb4edf833666",
+ "updated": "2026-09-20T20:28:07Z"
 }
