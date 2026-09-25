@@ -19,7 +19,7 @@ concurrency:
 jobs:
   select:
     name: Affected targets
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # This job reads this workflow's own run history, which the workflow-level block does not
     # grant - and a job-level block replaces it, so the checkout's contents: read is restated
     # while the write access this job never needed is dropped. The lookup happens to succeed
