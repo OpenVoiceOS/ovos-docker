@@ -2,9 +2,9 @@
  "channel": "alpha",
  "images": {
   "audio": {
-   "built": "2026-10-03T04:24:29Z",
-   "constraints_ref": "e61a37adb1d1d23501bb0565da91142dc817b85d",
-   "digest": "sha256:f33688da541cdb58059df10778734befc865ca43c3e4ba7997d9f755a880171e",
+   "built": "2026-10-03T15:53:10Z",
+   "constraints_ref": "6f5a659eb492c094dcc9b07862f3b4a4fa9d4c70",
+   "digest": "sha256:fbf9f35d417de0e83a565646636eb2cb74fc2e40783325958d1553a92590efd7",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-audio",
    "packages": [
     "CacheControl",
@@ -3916,6 +3916,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "e61a37adb1d1d23501bb0565da91142dc817b85d",
- "updated": "2026-10-03T04:24:29Z"
+ "ovos_releases_ref": "6f5a659eb492c094dcc9b07862f3b4a4fa9d4c70",
+ "updated": "2026-10-03T15:53:10Z"
 }
