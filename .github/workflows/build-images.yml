@@ -112,7 +112,7 @@ permissions:
 jobs:
   resolve:
     name: Resolve inputs
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     outputs:
       ovos_releases_sha: ${{ steps.ref.outputs.sha }}
       targets: ${{ steps.targets.outputs.list }}
@@ -392,7 +392,7 @@ jobs:
     name: Vulnerability scan
     needs: [resolve, build]
     if: inputs.push
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     continue-on-error: true   # informational for now; flip once the baseline is clean
     steps:
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
@@ -441,7 +441,7 @@ jobs:
     name: Create channel manifests
     needs: [resolve, build, verify]
     if: inputs.push
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     concurrency:
       group: merge-images-${{ inputs.channel }}
       cancel-in-progress: false
