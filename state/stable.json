@@ -2,9 +2,9 @@
  "channel": "stable",
  "images": {
   "audio": {
-   "built": "2026-10-06T22:06:33Z",
+   "built": "2026-10-06T22:52:48Z",
    "constraints_ref": "a25310f2b785d5e9b2c67330ece4413bd685a292",
-   "digest": "sha256:10994923e60ebc4cfdd5e26cd4198ae1206814950f583b388f31c2749df59070",
+   "digest": "sha256:64047233711830b01df8394792493e5faa67edfab5583711bd6cc561bd671961",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-audio",
    "packages": [
     "CacheControl",
@@ -411,9 +411,9 @@
    "repo": "docker.io/smartgic/ovos-gui-websocket"
   },
   "listener": {
-   "built": "2026-10-06T22:06:33Z",
+   "built": "2026-10-06T22:52:48Z",
    "constraints_ref": "a25310f2b785d5e9b2c67330ece4413bd685a292",
-   "digest": "sha256:7e5d2a207f425f39af9aad9543caa7825bece52a5b9fbd908b8fe4d7677bc9d4",
+   "digest": "sha256:6a02a34986521894d3419a411cc3584c69b0686c7024e9e1cb9d8946bc122347",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-listener",
    "packages": [
     "CacheControl",
@@ -3220,5 +3220,5 @@
   }
  },
  "ovos_releases_ref": "a25310f2b785d5e9b2c67330ece4413bd685a292",
- "updated": "2026-10-06T22:06:33Z"
+ "updated": "2026-10-06T22:52:48Z"
 }
