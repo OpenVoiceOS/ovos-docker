@@ -2,9 +2,9 @@
  "channel": "alpha",
  "images": {
   "audio": {
-   "built": "2026-10-06T05:31:02Z",
+   "built": "2026-10-06T22:06:30Z",
    "constraints_ref": "a25310f2b785d5e9b2c67330ece4413bd685a292",
-   "digest": "sha256:84181a6ca9746b91bf37d44ed43ed3d0b94b18b5c4ba21745eccde906f67abab",
+   "digest": "sha256:aab332eccacd86f89db174c2ce4eadd8a0ef3c532a2fd7fa4338e761b2f64f0e",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-audio",
    "packages": [
     "CacheControl",
@@ -469,9 +469,9 @@
    "repo": "docker.io/smartgic/ovos-gui-websocket"
   },
   "listener": {
-   "built": "2026-10-06T05:31:02Z",
+   "built": "2026-10-06T22:06:30Z",
    "constraints_ref": "a25310f2b785d5e9b2c67330ece4413bd685a292",
-   "digest": "sha256:64c097a375cdaa1ca56f04a47d608d26a05a1ebc0b4dbb05adc4b95ea140ba62",
+   "digest": "sha256:c60faab798ca15060efa519477013947921dde73ed961d1c33cdc448401d179b",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-listener",
    "packages": [
     "CacheControl",
@@ -510,6 +510,7 @@
     "msgpack",
     "my-test-package",
     "numpy",
+    "onnx-asr",
     "onnxruntime",
     "ovos-bus-client",
     "ovos-config",
@@ -518,6 +519,7 @@
     "ovos-microphone-plugin-sounddevice",
     "ovos-plugin-manager",
     "ovos-spec-tools",
+    "ovos-stt-plugin-onnx-asr",
     "ovos-stt-plugin-server",
     "ovos-utils",
     "ovos-vad-plugin-noise",
@@ -3925,5 +3927,5 @@
   }
  },
  "ovos_releases_ref": "a25310f2b785d5e9b2c67330ece4413bd685a292",
- "updated": "2026-10-06T05:31:02Z"
+ "updated": "2026-10-06T22:06:30Z"
 }
