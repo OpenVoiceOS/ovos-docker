@@ -43,6 +43,26 @@ x-resource-limits: &resource-limits
       reservations:
         memory: 128M
 
+# The listener and the audio service load speech models when speech runs on the device
+# (ovos-installer's local speech): onnx-asr's recognition model alone needs more than the
+# standard limit. Both fall back to STANDARD_MEMORY_LIMIT, so nothing changes unless the
+# variable is set.
+x-listener-resource-limits: &listener-resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: ${LISTENER_MEMORY_LIMIT:-${STANDARD_MEMORY_LIMIT:-1G}}
+      reservations:
+        memory: 128M
+
+x-audio-resource-limits: &audio-resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: ${AUDIO_MEMORY_LIMIT:-${STANDARD_MEMORY_LIMIT:-1G}}
+      reservations:
+        memory: 128M
+
 x-core-resource-limits: &core-resource-limits
   deploy:
     resources:
@@ -72,6 +92,13 @@ volumes:
     driver: local
   ovos_tts_cache:
     name: ovos_tts_cache
+    driver: local
+  # Models downloaded by the on-device speech plugins, kept across image updates.
+  ovos_stt_models:
+    name: ovos_stt_models
+    driver: local
+  ovos_tts_models:
+    name: ovos_tts_models
     driver: local
   ovos_nltk:
     name: ovos_nltk
@@ -157,7 +184,7 @@ services:
         condition: service_started
 
   ovos_listener:
-    <<: [*podman, *resource-limits]
+    <<: [*podman, *listener-resource-limits]
     container_name: ovos_listener
     hostname: ovos_listener
     restart: unless-stopped
@@ -176,6 +203,7 @@ services:
       - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ovos_models:/home/${OVOS_USER}/.local/share/precise-lite
       - ovos_vosk:/home/${OVOS_USER}/.local/share/vosk
+      - ovos_stt_models:/home/${OVOS_USER}/.local/share/ovos_stt_plugin_onnxasr
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro
       - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:ro
@@ -186,7 +214,7 @@ services:
         condition: service_started
 
   ovos_audio:
-    <<: [*podman, *resource-limits]
+    <<: [*podman, *audio-resource-limits]
     container_name: ovos_audio
     hostname: ovos_audio
     restart: unless-stopped
@@ -204,6 +232,7 @@ services:
       - ${OVOS_CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft
       - ovos_local_state:/home/${OVOS_USER}/.local/state/mycroft
       - ovos_tts_cache:/home/${OVOS_USER}/.cache/mycroft
+      - ovos_tts_models:/home/${OVOS_USER}/.cache/phoonnx
       - ${TMP_FOLDER}:/tmp/mycroft
       - ${XDG_RUNTIME_DIR}/bus:${XDG_RUNTIME_DIR}/bus:ro
       - ${XDG_RUNTIME_DIR}/pipewire-0:${XDG_RUNTIME_DIR}/pipewire-0:ro

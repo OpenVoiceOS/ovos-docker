@@ -9,6 +9,24 @@ x-pi-resource-limits: &pi-resource-limits
       reservations:
         memory: 64M
 
+# See x-listener-resource-limits in docker-compose.yml: on-device speech needs more than
+# the Pi's standard limit, and only when LISTENER/AUDIO_MEMORY_LIMIT ask for it.
+x-pi-listener-resource-limits: &pi-listener-resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: ${LISTENER_MEMORY_LIMIT:-${STANDARD_MEMORY_LIMIT:-512M}}
+      reservations:
+        memory: 64M
+
+x-pi-audio-resource-limits: &pi-audio-resource-limits
+  deploy:
+    resources:
+      limits:
+        memory: ${AUDIO_MEMORY_LIMIT:-${STANDARD_MEMORY_LIMIT:-512M}}
+      reservations:
+        memory: 64M
+
 x-pi-core-resource-limits: &pi-core-resource-limits
   deploy:
     resources:
@@ -51,12 +69,12 @@ services:
       - "${SPI_GID}"
 
   ovos_listener:
-    <<: *pi-resource-limits
+    <<: *pi-listener-resource-limits
     healthcheck:
       disable: true
 
   ovos_audio:
-    <<: *pi-resource-limits
+    <<: *pi-audio-resource-limits
     healthcheck:
       disable: true
 

@@ -56,7 +56,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
  && (uv pip install --prerelease=${UV_PRERELEASE} -c /tmp/constraints.txt "ovos-dinkum-listener[extras,onnx]" \
      || uv pip install --prerelease=${UV_PRERELEASE} -c /tmp/constraints.txt "ovos-dinkum-listener[extras]" \
      || echo "plugin extras unavailable on this channel; add plugins via listener.list") \
- && mkdir -p "/home/${USER}/.local/share/vosk" "/home/${USER}/.local/share/precise-lite" "/home/${USER}/.local/share/mycroft/listener" \
+ # Speech recognition on the device, which ovos-installer configures when local speech
+ # is chosen. Like [onnx] it needs ovos-plugin-manager>=2, so stable skips it; onnx-asr
+ # downloads its models through huggingface_hub, which only its hub extra brings in.
+ && (uv pip install --prerelease=${UV_PRERELEASE} -c /tmp/constraints.txt "ovos-stt-plugin-onnx-asr" "onnx-asr[cpu,hub]" \
+     || echo "onnx-asr STT plugin unavailable on this channel; add it via listener.list") \
+ && mkdir -p "/home/${USER}/.local/share/vosk" "/home/${USER}/.local/share/precise-lite" "/home/${USER}/.local/share/mycroft/listener" "/home/${USER}/.local/share/ovos_stt_plugin_onnxasr" \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
  && apt-get --purge remove -y portaudio19-dev libpulse-dev build-essential python3-dev \
  && apt-get --purge autoremove -y \

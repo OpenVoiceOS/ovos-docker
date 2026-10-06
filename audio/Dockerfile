@@ -49,7 +49,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update \
  && apt-get install -y --no-install-recommends --no-install-suggests portaudio19-dev build-essential python3-dev mpv libespeak-ng1 espeak-ng \
  && uv pip install -r /tmp/requirements.txt -c /tmp/constraints.txt \
- && mkdir -p "/home/${USER}/.cache/mycroft" \
+ && mkdir -p "/home/${USER}/.cache/mycroft" "/home/${USER}/.cache/phoonnx" \
  && chown "${USER}:${USER}" -R "/home/${USER}" \
  && apt-get --purge remove -y portaudio19-dev build-essential python3-dev \
  && apt-get --purge autoremove -y \
