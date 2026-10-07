@@ -266,7 +266,7 @@ jobs:
 
       - name: Upload bake metadata
         if: inputs.push
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: bake-meta-${{ matrix.arch }}
           path: bake-meta-${{ matrix.arch }}.json
@@ -380,7 +380,7 @@ jobs:
           if [ -s failed.txt ]; then echo "::warning::${ARCH}: $(wc -l < failed.txt) image(s) failed verification and will not be published"; cat failed.txt; fi
 
       - name: Upload verification results
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: verified-${{ matrix.arch }}
           path: |
@@ -551,7 +551,7 @@ jobs:
           cp entries.json build-state/entries.json
           printf '{"channel": "%s", "ovos_releases_ref": "%s"}\n' "$CHANNEL" "$OVOS_RELEASES_SHA" > build-state/meta.json
 
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: build-state-${{ inputs.channel }}
           path: build-state/
