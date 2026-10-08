@@ -362,8 +362,10 @@ jobs:
               (.Entrypoint // []) as $e | (.Cmd // []) as $c
               | if ($e | length) > 0 and ($e[0] | test("^(/bin/(ba)?sh|bash|sh)$") | not) and ($e[0] | test("\\.sh$") | not) then $e[0]
                 elif ($c | length) > 0 and ($c[0] | test("\\.sh$") | not) then $c[0] else "" end')
+            # skill images must carry their saved skill id; skill-base registers no skill
+            case "$target" in skill-base) smoke_skill=0 ;; skill-*) smoke_skill=1 ;; *) smoke_skill=0 ;; esac
             # capture the container's own exit status (a pipe into tee would report tee's)
-            docker run --rm -i -e SMOKE_BIN="$bin" --entrypoint /bin/bash "$ref" -s < scripts/ci/smoke.sh > smoke.log 2>&1; rc=$?
+            docker run --rm -i -e SMOKE_BIN="$bin" -e SMOKE_SKILL="$smoke_skill" --entrypoint /bin/bash "$ref" -s < scripts/ci/smoke.sh > smoke.log 2>&1; rc=$?
             cat smoke.log
             if [ "$rc" -eq 0 ]; then
               echo "OK  ${target}"; echo "${target}" >> passed.txt

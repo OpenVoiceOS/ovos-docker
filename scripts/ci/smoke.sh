@@ -21,7 +21,14 @@ for f in /usr/local/bin/entrypoint.sh /usr/local/bin/skill-entrypoint.sh; do
   fi
 done
 
-if command -v ovos-skill-id > /dev/null && [ -f "${VIRTUAL_ENV:-/home/ovos/.venv}/ovos-skill-id" ]; then
+skill_id_file="${VIRTUAL_ENV:-/home/ovos/.venv}/ovos-skill-id"
+# A skill image (SMOKE_SKILL=1, set by the workflow for every skill-* target but skill-base)
+# must carry the helper and the id it saved at build time; without them it cannot start.
+if [ "${SMOKE_SKILL:-0}" = 1 ]; then
+  command -v ovos-skill-id > /dev/null || { echo "skill image without ovos-skill-id (is skill-base current?)"; exit 1; }
+  [ -f "$skill_id_file" ] || { echo "skill image without a saved skill id ($skill_id_file)"; exit 1; }
+fi
+if command -v ovos-skill-id > /dev/null && [ -f "$skill_id_file" ]; then
   skill_id="$(ovos-skill-id)"
   command -v ovos-skill-launcher > /dev/null
   python -c "import ovos_workshop, ovos_bus_client"
