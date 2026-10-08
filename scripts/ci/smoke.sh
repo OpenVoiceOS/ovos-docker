@@ -24,7 +24,18 @@ done
 if [ -n "${SKILL_ID:-}" ]; then
   command -v ovos-skill-launcher > /dev/null
   python -c "import ovos_workshop, ovos_bus_client"
-  echo "skill ${SKILL_ID}: launcher and workshop present"
+  # The launcher finds the skill by the id its package registers. An id no package
+  # registers makes the container exit at start ("unknown skill_id") and restart
+  # forever: six skill images did, on both channels, after their skills were renamed.
+  python - "$SKILL_ID" << 'REGISTERED'
+import sys
+from importlib.metadata import entry_points
+wanted = sys.argv[1]
+ids = sorted({ep.name for group in ("opm.skill", "ovos.plugin.skill") for ep in entry_points(group=group)})
+if wanted not in ids:
+    sys.exit(f"skill {wanted}: no installed package registers it; registered: {', '.join(ids) or 'none'}")
+REGISTERED
+  echo "skill ${SKILL_ID}: launcher and workshop present, and its package registers that id"
 fi
 if [ -n "${SMOKE_BIN:-}" ]; then
   command -v "$SMOKE_BIN" > /dev/null
