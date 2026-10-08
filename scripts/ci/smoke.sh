@@ -21,13 +21,20 @@ for f in /usr/local/bin/entrypoint.sh /usr/local/bin/skill-entrypoint.sh; do
   fi
 done
 
-if [ -n "${SKILL_ID:-}" ]; then
+skill_id_file="${VIRTUAL_ENV:-/home/ovos/.venv}/ovos-skill-id"
+# A skill image (SMOKE_SKILL=1, set by the workflow for every skill-* target but skill-base)
+# must carry the helper and the id it saved at build time; without them it cannot start.
+if [ "${SMOKE_SKILL:-0}" = 1 ]; then
+  command -v ovos-skill-id > /dev/null || { echo "skill image without ovos-skill-id (is skill-base current?)"; exit 1; }
+  [ -f "$skill_id_file" ] || { echo "skill image without a saved skill id ($skill_id_file)"; exit 1; }
+fi
+if command -v ovos-skill-id > /dev/null && [ -f "$skill_id_file" ]; then
+  skill_id="$(ovos-skill-id)"
   command -v ovos-skill-launcher > /dev/null
   python -c "import ovos_workshop, ovos_bus_client"
   # The launcher finds the skill by the id its package registers. An id no package
-  # registers makes the container exit at start ("unknown skill_id") and restart
-  # forever: six skill images did, on both channels, after their skills were renamed.
-  python - "$SKILL_ID" << 'REGISTERED'
+  # registers makes the container exit at start ("unknown skill_id") and restart forever.
+  python - "$skill_id" << 'REGISTERED'
 import sys
 from importlib.metadata import entry_points
 wanted = sys.argv[1]
@@ -35,7 +42,7 @@ ids = sorted({ep.name for group in ("opm.skill", "ovos.plugin.skill") for ep in 
 if wanted not in ids:
     sys.exit(f"skill {wanted}: no installed package registers it; registered: {', '.join(ids) or 'none'}")
 REGISTERED
-  echo "skill ${SKILL_ID}: launcher and workshop present, and its package registers that id"
+  echo "skill ${skill_id}: launcher and workshop present, and its package registers that id"
 fi
 if [ -n "${SMOKE_BIN:-}" ]; then
   command -v "$SMOKE_BIN" > /dev/null

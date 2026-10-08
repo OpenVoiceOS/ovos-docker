@@ -33,12 +33,14 @@ ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${O
 RUN --mount=type=cache,target=/home/ovos/.cache/uv,uid=1000,gid=1000,sharing=locked \
     uv pip install ovos-skill-homescreen -c /tmp/constraints.txt
 
-ENV SKILL_ID="skill-ovos-homescreen.openvoiceos"
+# The id this skill's package registers, saved for the launcher and the health check
+# (ovos-skill-id in skill-base): it can differ between channels.
+RUN ovos-skill-id --save
 
 # A loaded skill answers mycroft.<skill_id>.is_ready (ovos-workshop ProcessStatus); the start period
 # covers waiting for ovos-core to become ready before the skill loads.
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=180s \
-  CMD ovos-hc -s "$SKILL_ID" || exit 1
+  CMD ovos-hc -s "$(ovos-skill-id)" || exit 1
 
-# Shell form, so the launcher gets the id SKILL_ID holds; exec keeps it PID 1.
-CMD exec ovos-skill-launcher "$SKILL_ID"
+# Shell form, so the id is read when the container starts; exec keeps the launcher PID 1.
+CMD exec ovos-skill-launcher "$(ovos-skill-id)"

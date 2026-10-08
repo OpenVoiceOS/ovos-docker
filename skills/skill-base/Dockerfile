@@ -32,6 +32,7 @@ USER root
 SHELL ["/bin/bash", "-c"]
 
 COPY --chmod=0755 files/entrypoint.sh /usr/local/bin/skill-entrypoint.sh
+COPY --chmod=0755 files/skill-id.sh /usr/local/bin/ovos-skill-id
 
 ADD --chmod=0644 https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/${OVOS_RELEASES_REF}/constraints-${CHANNEL}.txt /tmp/constraints.txt
 
