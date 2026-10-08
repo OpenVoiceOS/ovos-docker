@@ -41,4 +41,5 @@ ENV SKILL_ID="skill-ovos-tunein.openvoiceos"
 HEALTHCHECK --interval=60s --timeout=10s --retries=3 --start-period=180s \
   CMD ovos-hc -s "$SKILL_ID" || exit 1
 
-CMD ["ovos-skill-launcher", "skill-ovos-tunein.openvoiceos"]
+# Shell form, so the launcher gets the id SKILL_ID holds; exec keeps it PID 1.
+CMD exec ovos-skill-launcher "$SKILL_ID"
