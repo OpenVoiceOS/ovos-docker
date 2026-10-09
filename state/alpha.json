@@ -1192,9 +1192,9 @@
    "repo": "docker.io/smartgic/ovos-skill-base"
   },
   "skill-camera": {
-   "built": "2026-10-09T05:07:45Z",
-   "constraints_ref": "4264cd5cc9b2bf5513ca5a7142aa2a466e40cef7",
-   "digest": "sha256:061eee20e1bc6382af93e9814e2c0c68c80e723a188b1658e6ad1ddf5559a7f6",
+   "built": "2026-10-09T12:44:32Z",
+   "constraints_ref": "0ef6a38b9d1518cea96beb61430f64797ff24c33",
+   "digest": "sha256:783444b1adf8c42e868a66f8cb0f8bb4bac2f7c725ebc6554b5e852651c7b3d2",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-camera",
    "packages": [
     "CacheControl",
@@ -1218,8 +1218,8 @@
     "ftfy",
     "h11",
     "hf-xet",
-    "httpcore",
-    "httpx",
+    "httpcore2",
+    "httpx2",
     "huggingface-hub",
     "idna",
     "importlib-metadata",
@@ -3028,9 +3028,9 @@
    "repo": "docker.io/smartgic/ovos-skill-tunein"
   },
   "skill-volume": {
-   "built": "2026-10-09T05:07:45Z",
-   "constraints_ref": "4264cd5cc9b2bf5513ca5a7142aa2a466e40cef7",
-   "digest": "sha256:41962572c8ed97580b921eff7df7861267d494520e05062cc47ee998e768bfb2",
+   "built": "2026-10-09T12:44:32Z",
+   "constraints_ref": "0ef6a38b9d1518cea96beb61430f64797ff24c33",
+   "digest": "sha256:2aa4674aad42960f1686dc209c7f461c32e011ad870c66016e81684512c8b761",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-volume",
    "packages": [
     "CacheControl",
@@ -3054,8 +3054,8 @@
     "ftfy",
     "h11",
     "hf-xet",
-    "httpcore",
-    "httpx",
+    "httpcore2",
+    "httpx2",
     "huggingface-hub",
     "idna",
     "importlib-metadata",
@@ -3926,6 +3926,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "4264cd5cc9b2bf5513ca5a7142aa2a466e40cef7",
- "updated": "2026-10-09T05:07:45Z"
+ "ovos_releases_ref": "0ef6a38b9d1518cea96beb61430f64797ff24c33",
+ "updated": "2026-10-09T12:44:32Z"
 }
