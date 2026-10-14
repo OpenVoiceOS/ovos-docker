@@ -3314,9 +3314,9 @@
    "repo": "docker.io/smartgic/ovos-skill-weather"
   },
   "skill-wikihow": {
-   "built": "2026-10-13T14:05:05Z",
-   "constraints_ref": "18d7cef72668082dfdff0974bdc2b72e5c715db3",
-   "digest": "sha256:0168d1cef099822dda9e627cd6a0fb7f0fea495f2cf9b0824000bff3072b112b",
+   "built": "2026-10-14T11:22:07Z",
+   "constraints_ref": "0c71933d66c22de1ed99644ea67826f407d520b1",
+   "digest": "sha256:c229e8479cbc6059ca35b64002aeb14f4cacec4893850f402e1845d69294b224",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-wikihow",
    "packages": [
     "CacheControl",
@@ -3928,6 +3928,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "d591b858a99f7df2d44d0c57c960e788738e5d81",
- "updated": "2026-10-13T22:24:33Z"
+ "ovos_releases_ref": "0c71933d66c22de1ed99644ea67826f407d520b1",
+ "updated": "2026-10-14T11:22:07Z"
 }
