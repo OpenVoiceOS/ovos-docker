@@ -3168,9 +3168,9 @@
    "repo": "docker.io/smartgic/ovos-skill-volume"
   },
   "skill-weather": {
-   "built": "2026-10-23T03:56:21Z",
-   "constraints_ref": "83d7cb50b5cddc55ba3453ecf348b7e1da3ff57f",
-   "digest": "sha256:07537f0d9128bbfbd5d6d90ed656247e0233f34915452672be5a4ab7b86b5499",
+   "built": "2026-10-24T03:34:08Z",
+   "constraints_ref": "42f1846372295ea535d11321519acb17a8879ff7",
+   "digest": "sha256:aa3f2826def78bb6c244ac79e8a6046d6a9e5c59c021bd9466b8f15947bf0930",
    "mirror": "ghcr.io/openvoiceos/ovos-docker/ovos-skill-weather",
    "packages": [
     "CacheControl",
@@ -3927,6 +3927,6 @@
    "repo": "docker.io/smartgic/ovos-sound-base"
   }
  },
- "ovos_releases_ref": "83d7cb50b5cddc55ba3453ecf348b7e1da3ff57f",
- "updated": "2026-10-23T03:56:21Z"
+ "ovos_releases_ref": "42f1846372295ea535d11321519acb17a8879ff7",
+ "updated": "2026-10-24T03:34:08Z"
 }
