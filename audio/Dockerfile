@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.28@sha256:bb22d9815c728170f72750f4e5b0d672e06176142e1d602c7e66c050100b7e5b
+# syntax=docker/dockerfile:1.29@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
 ARG TAG=0.1.0
 ARG REGISTRY=docker.io/smartgic
 ARG SOUND_BASE_IMAGE=${REGISTRY}/ovos-sound-base:${TAG}
